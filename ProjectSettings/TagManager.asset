@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - a
+  - b
+  - c
   layers:
   - Default
   - TransparentFX
@@ -14,9 +16,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - layer_8
+  - layer_9
+  - layer_10
   - 
   - 
   - 
@@ -41,4 +43,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: sortLayer_1
+    uniqueID: 315152823
+    locked: 0
+  - name: sortLayer_2
+    uniqueID: 417523569
+    locked: 0
+  - name: sortLayer_3
+    uniqueID: 417523569
+    locked: 0
+  - name: sortLayer_4
+    uniqueID: 417523569
+    locked: 0
+  - name: sortLayer_5
+    uniqueID: 417523569
+    locked: 0
+  - name: sortLayer_6
+    uniqueID: 417523569
     locked: 0

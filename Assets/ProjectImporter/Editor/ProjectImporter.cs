@@ -9,7 +9,7 @@ public class ProjectImporter:Editor{
 
 	[MenuItem("ProImporter/import")]
     public static void import(){
-		importProject("D:/kingBook/projects/unity_a");
+		importProject("E:/kingBook/projects/unity-tags");
 	}
 
 	private static void importProject(string path){
@@ -25,25 +25,42 @@ public class ProjectImporter:Editor{
 		string projectImportSettingPath=childProjectPath+"/projectImportSetting";
 		Directory.CreateDirectory(projectImportSettingPath);
 
-		//导入tags
-		importTagManager(path,projectImportSettingPath,projectName);
+		//导入tags和Layers
+		importTagsAndLayers(path,projectImportSettingPath,projectName);
 	}
 
-	private static void importTagManager(string path,string projectImportSettingPath,string projectName){
+	private static void importTagsAndLayers(string path,string projectImportSettingPath,string projectName){
 		string sourceTagFilePath=path+"/ProjectSettings/TagManager.asset";
 		string destTagFilePath=projectImportSettingPath+"/TagManager.asset";
 		copyFile(sourceTagFilePath,destTagFilePath,true);
 
 		string destTagAssetPath="Assets/"+projectName+"/projectImportSetting/TagManager.asset";
-		SerializedObject tagManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destTagAssetPath));
+		SerializedObject copyTagManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destTagAssetPath));
 
-		var it=tagManager.GetIterator();
+		SerializedObject myTagManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
+
+		var it=copyTagManager.GetIterator();
 		while (it.NextVisible(true)){
 			if (it.name=="tags"){
 				int len=it.arraySize;
 				for(int i=0;i<len;i++){
 					SerializedProperty tagElement=it.GetArrayElementAtIndex(i);
-					addTag(tagElement.stringValue);
+					UnityEditorInternal.InternalEditorUtility.AddTag(tagElement.stringValue);
+					//addTag(tagElement.stringValue);
+				}
+			}else if(it.name=="layers"){
+				int len=it.arraySize;
+				for(int i=8;i<len;i++){
+					SerializedProperty layerElement=it.GetArrayElementAtIndex(i);
+					setLayer(myTagManager,i,layerElement.stringValue);
+				}
+			}else if(it.name=="m_SortingLayers"){
+				int len=it.arraySize;
+				for(int i=1;i<len;i++){
+					SerializedProperty sortingLayerElement=it.GetArrayElementAtIndex(i);
+					SerializedProperty nameElement=sortingLayerElement.FindPropertyRelative("name");
+					
+					setSortingLayer(myTagManager,i,nameElement.stringValue);
 				}
 			}
 		}
@@ -56,26 +73,52 @@ public class ProjectImporter:Editor{
 	private static void addTag(string tag){
 		if(isHasTag(tag))return;
 		SerializedObject tagManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
-		SerializedProperty it=tagManager.GetIterator();
-		while (it.NextVisible(true)){
-			if(it.name=="tags"){
-				int count=it.arraySize;
-				it.InsertArrayElementAtIndex(count);
-				SerializedProperty newElement = it.GetArrayElementAtIndex(count);
-				newElement.stringValue=tag;
-				tagManager.ApplyModifiedProperties();
-			}
-		}
+		SerializedProperty it=tagManager.FindProperty("tags");
+
+		int count=it.arraySize;
+		it.InsertArrayElementAtIndex(count);
+		SerializedProperty newElement=it.GetArrayElementAtIndex(count);
+		newElement.stringValue=tag;
+
+		tagManager.ApplyModifiedProperties();
 	}
 
 	private static bool isHasTag(string tag){
-		for (int i=0;i<UnityEditorInternal.InternalEditorUtility.tags.Length;i++){
-			if(UnityEditorInternal.InternalEditorUtility.tags[i].Equals(tag)){
+		string[] tags=UnityEditorInternal.InternalEditorUtility.tags;
+		int len=tags.Length;
+		for (int i=0;i<len;i++){
+			if(tags[i].Equals(tag)){
 				return true;
 			}
 		}
 		return false;
 	}
+
+	private static void setLayer(SerializedObject myTagManager,int index,string layer){
+		if(string.IsNullOrEmpty(layer))return;
+
+		SerializedProperty it=myTagManager.FindProperty("layers");
+
+		int len=it.arraySize;
+				
+		SerializedProperty element=it.GetArrayElementAtIndex(index);
+		element.stringValue="layer_"+index;
+		myTagManager.ApplyModifiedProperties();
+	}
+
+	private static void setSortingLayer(SerializedObject myTagManager,int index,string layer){
+		SerializedProperty it=myTagManager.FindProperty("m_SortingLayers");
+
+		int len=it.arraySize;
+		if(index>=len)it.InsertArrayElementAtIndex(len);
+
+		SerializedProperty element=it.GetArrayElementAtIndex(index);
+		SerializedProperty nameElement=element.FindPropertyRelative("name");
+		nameElement.stringValue="sortLayer_"+index;
+
+		myTagManager.ApplyModifiedProperties();
+	}
+
 
 	private static void copyFile(string source,string dest,bool isRefreshAsset=false){
 		if(File.Exists(dest))FileUtil.ReplaceFile(source,dest);
