@@ -19,12 +19,6 @@ public class TagsAndLayersImporter{
 					UnityEditorInternal.InternalEditorUtility.AddTag(tagElement.stringValue);
 					//addTag(tagElement.stringValue);
 				}
-			}else if(it.name=="layers"){
-				int len=it.arraySize;
-				for(int i=8;i<len;i++){
-					SerializedProperty layerElement=it.GetArrayElementAtIndex(i);
-					setLayer(myTagManager,i,layerElement.stringValue);
-				}
 			}else if(it.name=="m_SortingLayers"){
 				int len=it.arraySize;
 				for(int i=1;i<len;i++){
@@ -32,6 +26,12 @@ public class TagsAndLayersImporter{
 					SerializedProperty nameElement=sortingLayerElement.FindPropertyRelative("name");
 					
 					setSortingLayer(myTagManager,i,nameElement.stringValue);
+				}
+			}else if(it.name=="layers"){
+				int len=it.arraySize;
+				for(int i=8;i<len;i++){
+					SerializedProperty layerElement=it.GetArrayElementAtIndex(i);
+					setLayer(myTagManager,i,layerElement.stringValue);
 				}
 			}
 		}
@@ -71,7 +71,7 @@ public class TagsAndLayersImporter{
 		SerializedProperty it=myTagManager.FindProperty("layers");
 
 		int len=it.arraySize;
-				
+		
 		SerializedProperty element=it.GetArrayElementAtIndex(index);
 		element.stringValue="layer_"+index;//重命名Layer
 		myTagManager.ApplyModifiedProperties();

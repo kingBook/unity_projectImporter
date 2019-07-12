@@ -1,10 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Security.AccessControl;
 using UnityEditor;
 using UnityEngine;
 
-public class ProjectImporter:Editor{
+public class ProjectImporterEditor:Editor{
 	
 	private static readonly string projectPath=Environment.CurrentDirectory;
 
@@ -30,7 +29,7 @@ public class ProjectImporter:Editor{
 
 		//导入Assets文件夹
 		FileUtil2.copyDirectory(path+"/Assets",childProjectPath+"/Assets",true);
-
+		
 
 	}
 
