@@ -1,6 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿namespace UnityProjectImporter{
+	using UnityEngine;
+	using System.Collections;
 
-public class CSharpeParser{
+	public class CSharpeParser{
 	
+	}
 }

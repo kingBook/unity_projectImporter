@@ -5,6 +5,7 @@ public class UntitledInstaller : ScriptableObject
 {
     public string name;
     public string age;
+	public string[] layers;
 
     public TestClass tc;
 }

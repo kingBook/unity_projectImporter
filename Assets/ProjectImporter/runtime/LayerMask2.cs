@@ -1,8 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿namespace UnityProjectImporter{
+	using System.Collections;
+	using System.Collections.Generic;
+	using UnityEngine;
 
-public struct LayerMask2{
+	public struct LayerMask2{
 		public int value;
 
 		//需要改
@@ -39,4 +40,5 @@ public struct LayerMask2{
 			mask.value=mask2.value;
 			return mask;
 		}
+	}
 }

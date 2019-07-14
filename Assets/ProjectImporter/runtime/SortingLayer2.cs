@@ -1,15 +1,15 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿namespace UnityProjectImporter{ 
+	using UnityEngine;
+	using System.Collections;
 
-public struct SortingLayer2{
-	private static SortingLayer[] _layers;
+	public struct SortingLayer2{
+		private static SortingLayer[] _layers;
+		//需要改
+		public static SortingLayer[] layers{
+			get => _layers;
+		}
 
-	//需要改
-	public static SortingLayer[] layers{
-		get => _layers;
-	}
-
-	public int id { get; }
+		public int id { get; }
 		
 		public string name { get; }
 		public int value { get; }
@@ -33,4 +33,5 @@ public struct SortingLayer2{
 		public static int NameToID(string name){
 			return SortingLayer.NameToID(name);
 		}
+	}
 }

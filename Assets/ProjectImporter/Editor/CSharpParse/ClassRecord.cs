@@ -1,7 +1,8 @@
-﻿
-public class ClassRecord{
-	public string[] keywords;
-	public string name;
-	public string[] extends;
+﻿namespace UnityProjectImporter{
+	public class ClassRecord{
+		public string[] keywords;
+		public string name;
+		public string[] extends;
 	
+	}
 }
