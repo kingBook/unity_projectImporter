@@ -3,7 +3,7 @@
 	using System.Collections;
 
 	public struct SortingLayer2{
-		private static SortingLayer[] _layers;
+		private static SortingLayer[] _layers=null;
 		//需要改
 		public static SortingLayer[] layers{
 			get => _layers;

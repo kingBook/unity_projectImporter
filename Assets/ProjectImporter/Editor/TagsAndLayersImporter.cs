@@ -17,8 +17,7 @@
 			//复制TagManager.asset
 			FileUtil2.copyFile(sourceTagFilePath,destTagFilePath,true);
 			//加载并转换成SerializedObject
-			string destTagAssetPath=projectImporterTempPath+"/TagManager.asset";
-			SerializedObject copyTagManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destTagAssetPath));
+			SerializedObject copyTagManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destTagFilePath));
 			//加载当前项目的TagManager.asset并转换成SerializedObject
 			SerializedObject myTagManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
 
@@ -67,7 +66,7 @@
 				}
 			}
 			//删除复制过来的"TagManager.asset"
-			FileUtil.DeleteFileOrDirectory(destTagFilePath);
+			AssetDatabase.DeleteAsset(destTagFilePath);
 			AssetDatabase.Refresh();
 
 		}
