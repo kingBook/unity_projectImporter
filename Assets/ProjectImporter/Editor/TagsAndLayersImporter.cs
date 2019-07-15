@@ -2,14 +2,14 @@
 	using UnityEditor;
 	using UnityEngine;
 
-	public class TagsAndLayersImporter{
+	public class TagsAndLayersImporter:Importer{
 		/// <summary>
 		/// 导入项目的TagsAndLayers 
 		/// </summary>
 		/// <param name="path">需要导入TagsAndLayers的项目路径</param>
 		/// <param name="projectImporterTempPath">临时文件夹</param>
 		/// <param name="projectName">需要导入项目名称</param>
-		public void import(string path,string projectImporterTempPath,string projectName){
+		public override void import(string path,string projectImporterTempPath,string projectName){
 			//TagManager.asset原来的位置
 			string sourceTagFilePath=path+"/ProjectSettings/TagManager.asset";
 			//TagManager.asset复制过来的位置

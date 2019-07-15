@@ -3,14 +3,14 @@
 	using UnityEditor;
 	using UnityEngine;
 
-	public class PhysicsImporter{
+	public class PhysicsImporter:Importer{
 		/// <summary>
-		/// 导入项目的Physics
+		/// 导入项目的PhysicsSettings
 		/// </summary>
-		/// <param name="path">需要导入Physics的项目路径</param>
+		/// <param name="path">需要导入PhysicsSettings的项目路径</param>
 		/// <param name="projectImporterTempPath">临时文件夹</param>
 		/// <param name="projectName">需要导入项目名称</param>
-		public void import(string path,string projectImporterTempPath,string projectName){
+		public override void import(string path,string projectImporterTempPath,string projectName){
 			//DynamicsManager.asset原来的位置
 			string sourceTagFilePath=path+"/ProjectSettings/DynamicsManager.asset";
 			//DynamicsManager.asset复制过来的位置
@@ -20,8 +20,6 @@
 			//加载并转换成SerializedObject
 			string destTagAssetPath=projectImporterTempPath+"/DynamicsManager.asset";
 			SerializedObject copyDynamicsManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destTagAssetPath));
-			//加载当前项目的DynamicsManager.asset并转换成SerializedObject
-			SerializedObject myDynamicsManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/DynamicsManager.asset")[0]);
 
 			PhysicsData physicsData=ScriptableObject.CreateInstance<PhysicsData>();
 

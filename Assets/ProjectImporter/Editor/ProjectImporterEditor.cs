@@ -10,7 +10,7 @@
 
 		[MenuItem("ProjectImporter/import")]
 		public static void import(){
-			importProject("D:/kingBook/projects/unity_tags");
+			importProject("E:/kingBook/projects/unity_tags");
 		}
 
 		private static void importProject(string path){
@@ -34,6 +34,9 @@
 			//导入Physics
 			var physicsImporter=new PhysicsImporter();
 			physicsImporter.import(path,projectImporterTempPath,projectName);
+
+			var physics2DImporter=new Physics2DImporter();
+			physics2DImporter.import(path,projectImporterTempPath,projectName);
 		
 			//所有事情完成，删除"ProjectImporter/temp"临时文件夹
 			AssetDatabase.DeleteAsset(projectImporterTempPath);
