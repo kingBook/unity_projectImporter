@@ -38,7 +38,7 @@
 					//获取默认物理材质
 					int fileId=it.FindPropertyRelative("m_FileID").intValue;
 					string defaultPhysicsMaterialPath = AssetDatabase.GetAssetPath(fileId);
-					physicsData.defaultMaterial=AssetDatabase.LoadAssetAtPath<PhysicMaterial>(defaultPhysicsMaterialPath);//当没有设置是会自动为None
+					physicsData.defaultMaterial=AssetDatabase.LoadAssetAtPath<PhysicMaterial>(defaultPhysicsMaterialPath);//当没有设置时会自动为None
 				}else if(itName=="m_BounceThreshold"){
 					physicsData.bounceThreshold=it.floatValue;
 				}else if(itName=="m_SleepThreshold"){
