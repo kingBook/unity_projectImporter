@@ -46,7 +46,11 @@
 			//导入Quality
 			var qualityImporter=new QualityImporter();
 			qualityImporter.import(path,projectImporterTempPath,projectName);
-		
+			
+			//导入BuildSettings
+			var buildSettingsImporter=new BuildSettingsImporter();
+			buildSettingsImporter.import(path,projectImporterTempPath,projectName);
+
 			//所有事情完成，删除"ProjectImporter/temp"临时文件夹
 			AssetDatabase.DeleteAsset(projectImporterTempPath);
 		}
