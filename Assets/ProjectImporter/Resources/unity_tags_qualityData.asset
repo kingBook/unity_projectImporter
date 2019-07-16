@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8ec933ed9fdcd341a644261468db5c5, type: 3}
-  m_Name: unity_tags_sortingLayersData
+  m_Script: {fileID: 11500000, guid: 79642af9e0cdccb4fa34768a6e405ce7, type: 3}
+  m_Name: unity_tags_qualityData
   m_EditorClassIdentifier: 
-  list:
-  - Default
+  currentQuality: 3
+  qualitySettings: []
+  perPlatformDefaultQuality: []

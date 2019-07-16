@@ -68,7 +68,6 @@
 			//删除复制过来的"TagManager.asset"
 			AssetDatabase.DeleteAsset(destTagFilePath);
 			AssetDatabase.Refresh();
-
 		}
 
 		private static void addTag(string tag){

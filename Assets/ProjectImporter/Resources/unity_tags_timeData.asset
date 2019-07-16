@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8ec933ed9fdcd341a644261468db5c5, type: 3}
-  m_Name: unity_tags_sortingLayersData
+  m_Script: {fileID: 11500000, guid: 32f31595c612dca4c84fc26fb33d2081, type: 3}
+  m_Name: unity_tags_timeData
   m_EditorClassIdentifier: 
-  list:
-  - Default
+  fixedTimestep: 0.02
+  maximumAllowedTimestep: 0.1
+  timeScale: 1
+  maximumParticleTimestep: 0.03

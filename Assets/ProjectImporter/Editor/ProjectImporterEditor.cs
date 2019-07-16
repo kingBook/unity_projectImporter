@@ -10,7 +10,7 @@
 
 		[MenuItem("ProjectImporter/import")]
 		public static void import(){
-			importProject("E:/kingBook/projects/unity_tags");
+			importProject("D:/kingBook/projects/unity_tags");
 		}
 
 		private static void importProject(string path){
@@ -30,13 +30,22 @@
 
 			//导入Assets文件夹
 			FileUtil2.copyDirectory(path+"/Assets",childProjectPath+"/Assets",true);
-			
+
+			//导入Time
+			var timeImporter=new TimeImporter();
+			timeImporter.import(path,projectImporterTempPath,projectName);
+
 			//导入Physics
 			var physicsImporter=new PhysicsImporter();
 			physicsImporter.import(path,projectImporterTempPath,projectName);
 
+			//导入Physics2D
 			var physics2DImporter=new Physics2DImporter();
 			physics2DImporter.import(path,projectImporterTempPath,projectName);
+
+			//导入Quality
+			var qualityImporter=new QualityImporter();
+			qualityImporter.import(path,projectImporterTempPath,projectName);
 		
 			//所有事情完成，删除"ProjectImporter/temp"临时文件夹
 			AssetDatabase.DeleteAsset(projectImporterTempPath);

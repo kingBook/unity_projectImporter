@@ -6,4 +6,5 @@ Physics2D
 Quality
 Tags and Layers
 Time
-
+-------------------------
+EditorBuildSettings

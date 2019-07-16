@@ -126,7 +126,6 @@
 			AssetDatabase.CreateAsset(physics2dData,"Assets/ProjectImporter/Resources/"+projectName+"_physics2dData.asset");
 			//删除复制过来的"Physics2DSettings.asset"
 			AssetDatabase.DeleteAsset(destTagFilePath);
-			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 		}
 	}
