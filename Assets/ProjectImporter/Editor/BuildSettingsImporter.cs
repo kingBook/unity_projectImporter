@@ -32,8 +32,8 @@
 						var element=it.GetArrayElementAtIndex(i);
 						Scene scene=new Scene();
 						scene.enabled=element.FindPropertyRelative("enabled").boolValue;
-						scene.path=element.FindPropertyRelative("path").stringValue;
-						//scene.guid=element.FindPropertyRelative("guid").stringValue;
+						scene.path="Assets/"+projectName+"/"+element.FindPropertyRelative("path").stringValue;
+						//scene.guid=element.FindPropertyRelative("guid").stringValue;//没用到
 						buildSettingsData.scenes[i]=scene;
 					}
 				}
