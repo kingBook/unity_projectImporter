@@ -10,7 +10,7 @@
 
 		[MenuItem("ProjectImporter/import")]
 		public static void import(){
-			importProject("D:/kingBook/projects/unity_tags");
+			importProject("E:/kingBook/projects/unity_tags");
 		}
 
 		private static void importProject(string path){

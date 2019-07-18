@@ -2,6 +2,7 @@
 	using UnityEngine;
 	using System.Collections;
     using UnityEditor;
+    using System.Collections.Generic;
 
     public class BuildSettingsImporter:Importer{
 		/// <summary>
@@ -20,7 +21,10 @@
 			//加载并转换成SerializedObject
 			string destTagAssetPath=projectImporterTempPath+"/EditorBuildSettings.asset";
 			SerializedObject copyDynamicsManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destTagAssetPath));
-
+			//BuildSettings窗口场景列表
+			List<EditorBuildSettingsScene> editorBuildsettingsscenes=new List<EditorBuildSettingsScene>();
+			editorBuildsettingsscenes.AddRange(EditorBuildSettings.scenes);
+			//创建发布设置数据
 			BuildSettingsData buildSettingsData=ScriptableObject.CreateInstance<BuildSettingsData>();
 			var it=copyDynamicsManager.GetIterator();
 			while (it.Next(true)){
@@ -30,15 +34,21 @@
 					buildSettingsData.scenes=new Scene[len];
 					for(int i=0;i<len;i++){
 						var element=it.GetArrayElementAtIndex(i);
+						//场景数据结构体
 						Scene scene=new Scene();
 						scene.enabled=element.FindPropertyRelative("enabled").boolValue;
 						scene.path="Assets/"+projectName+"/"+element.FindPropertyRelative("path").stringValue;
-						//scene.guid=element.FindPropertyRelative("guid").stringValue;//没用到
+						//添加到场景发布设置数据
 						buildSettingsData.scenes[i]=scene;
+						//合并到当前BuildSettings窗口列表
+						var editorBuildSettingsScene=new EditorBuildSettingsScene(scene.path,scene.enabled);
+						editorBuildsettingsscenes.Add(editorBuildSettingsScene);
 					}
 				}
 			}
-
+			//赋值到BuildSettings窗口场景列表
+			EditorBuildSettings.scenes=editorBuildsettingsscenes.ToArray();
+			//保存发布设置数据到本地
 			AssetDatabase.CreateAsset(buildSettingsData,"Assets/ProjectImporter/Resources/"+projectName+"_buildSettingsData.asset");
 			//删除复制过来的"EditorBuildSettings.asset"
 			AssetDatabase.DeleteAsset(destTagFilePath);

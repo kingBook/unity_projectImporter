@@ -32,6 +32,7 @@ namespace UnityProjectImporter{
 			//加载SortingLayersData
 			_sortingLayersData=Resources.Load<SortingLayersData>(projectFolderName+"_sortingLayersData");
 			//加载项目的主场景
+			Debug.Log(_buildSettingsData.scenes);
 			_sceneLoader.loadAsync(getMainSceneName(_buildSettingsData),LoadSceneMode.Additive);
 		}
 
