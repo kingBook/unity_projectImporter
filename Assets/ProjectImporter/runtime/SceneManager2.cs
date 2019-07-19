@@ -1,9 +1,9 @@
-﻿namespace UnityProjectImporter {
+﻿namespace UnityEngine.SceneManagement {
 	using System;
 	using UnityEngine;
-	using UnityEngine.SceneManagement;
+    using UnityProjectImporter;
 
-	public class SceneManager2{
+    public class SceneManager2{
 		public static Scene GetSceneByName(string name){
 			name=getBuildSettingsScenePath(name,false);
 			return SceneManager.GetSceneByName(name);

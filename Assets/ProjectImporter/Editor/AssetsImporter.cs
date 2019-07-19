@@ -41,31 +41,65 @@
 		/// <summary>
 		/// 修改.cs文件
 		/// </summary>
-		/// <param name="filePath">.cs文件路径(如果是'\'路径,需要加@转换，只接收转换后的路径)</param>
+		/// <param name="filePath">.cs文件路径，如果是'\'路径,需要加@转换，如:editCSharpFile(@"E:\unity_tags\Assets\Main.cs")。</param>
 		/// <param name="projectName">导入的项目名称</param>
 		private void editCSharpFile(string filePath,string projectName){
-			Debug.Log(filePath);
-			//var fs=File.OpenWrite(@filePath);
+			//Debug.Log(filePath);
 			var streamReader=File.OpenText(@filePath);
 
-			List<string> lines=new List<string>();
+			List<string> fileLines=new List<string>();
 			string line;
 			while((line=streamReader.ReadLine())!=null){
-				line=line+'\n';
-				lines.Add(line);
+				line+='\n';//行尾加回车
+				fileLines.Add(line);
 			}
 			streamReader.Dispose();
 
+			//修正不兼容的"SceneManager"代码,使用"SceneManager2"类替换
+			fixSceneManagerCode(fileLines);
 			//添加以项目命名的namespace到.cs文件
-			addNameSpaceToCSharpFile(lines,projectName);
+			addNameSpaceToCSharpFile(fileLines,projectName);
 			//重新写入文件
-			writeFileLines(lines.ToArray(),filePath);
+			writeFileLines(fileLines.ToArray(),filePath);
+		}
+
+		/// <summary>
+		/// 修正"SceneManager"代码，将使用"SceneManager2"类替换
+		/// </summary>
+		/// <param name="fileLines">.cs文件读取出来的行数组</param>
+		private void fixSceneManagerCode(List<string> fileLines){
+			string[] matchStrings=new string[]{
+				"SceneManager.LoadSceneAsync",
+				"SceneManager.LoadScene",
+				"SceneManager.UnloadSceneAsync",
+				"SceneManager.UnloadScene",
+				"SceneManager.GetSceneByName",
+				"SceneManager.GetSceneByPath"
+			};
+			const string sceneManagerStr="SceneManager";
+			int matchStringsLen=matchStrings.Length;
+			int len=fileLines.Count;
+			for(int i=0;i<len;i++){
+				string line=fileLines[i];
+				//行是否匹配想要替换的字符
+				bool isMatch=false;
+				for(int j=0;j<matchStringsLen;j++){
+					isMatch=line.IndexOf(matchStrings[j])>-1;
+					if(isMatch)break;
+				}
+				//匹配则将"SceneManager"替换为"SceneManager2"
+				if(isMatch){
+					int id=line.IndexOf(sceneManagerStr)+sceneManagerStr.Length;
+					line=line.Insert(id,"2");
+					fileLines[i]=line;
+				}
+			}
 		}
 
 		/// <summary>
 		/// 添加命名空间到.cs文件
 		/// </summary>
-		/// <param name="fileLines">.cs读取出来的行数组</param>
+		/// <param name="fileLines">.cs文件读取出来的行数组</param>
 		/// <param name="namespaceStr">需要添加的命名空间字符串</param>
 		private void addNameSpaceToCSharpFile(List<string> fileLines,string namespaceStr){
 			int len=fileLines.Count;
@@ -83,7 +117,7 @@
 		/// 将行字符数组写入到本地
 		/// </summary>
 		/// <param name="fileLines">行字符数组</param>
-		/// <param name="filePath">写入文件路径</param>
+		/// <param name="filePath">写入文件的路径</param>
 		private void writeFileLines(string[] fileLines,string filePath){
 			File.Delete(filePath);
 			var fileStream=File.Create(filePath);
@@ -93,7 +127,8 @@
 			for(int i=0;i<len;i++){
 				strBuilder.Append(fileLines[i]);
 			}
-			byte[] bytes=new UTF8Encoding(true).GetBytes(strBuilder.ToString());
+			UTF8Encoding utf8Bom=new UTF8Encoding(true);
+			byte[] bytes=utf8Bom.GetBytes(strBuilder.ToString());
 			fileStream.Write(bytes,0,bytes.Length);
 			fileStream.Dispose();
 		}

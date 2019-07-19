@@ -19,7 +19,7 @@ namespace UnityProjectImporter{
 		
 		private void Start(){
 			//test
-			openProject("unity_tags");
+			openProject("unity_parkinggame");
 			
 		}
 
