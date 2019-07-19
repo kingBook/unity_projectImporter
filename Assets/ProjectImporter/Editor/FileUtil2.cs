@@ -20,8 +20,8 @@
 			if(isRefreshAsset)AssetDatabase.Refresh();
 		}
 
-		public static void createDirectory(string path,bool isExistReplace=true){
-			if(isExistReplace&&Directory.Exists(path)){
+		public static void createDirectory(string path,bool isExistDelete=true){
+			if(isExistDelete&&Directory.Exists(path)){
 				FileUtil.DeleteFileOrDirectory(path);
 			}
 			Directory.CreateDirectory(path);

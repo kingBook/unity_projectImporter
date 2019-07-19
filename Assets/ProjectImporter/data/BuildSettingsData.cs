@@ -3,12 +3,12 @@
 	using System.Collections;
 
 	[System.Serializable]
-	public struct Scene{
+	public struct SceneData{
 		public bool enabled;
 		public string path;
 	}
 
 	public class BuildSettingsData:ScriptableObject{
-		public Scene[] scenes;
+		public SceneData[] scenes;
 	}
 }

@@ -20,6 +20,7 @@ namespace UnityProjectImporter{
 		private void Start(){
 			//test
 			openProject("unity_tags");
+			
 		}
 
 		/// <summary>
@@ -32,8 +33,8 @@ namespace UnityProjectImporter{
 			//加载SortingLayersData
 			_sortingLayersData=Resources.Load<SortingLayersData>(projectFolderName+"_sortingLayersData");
 			//加载项目的主场景
-			Debug.Log(_buildSettingsData.scenes);
 			_sceneLoader.loadAsync(getMainSceneName(_buildSettingsData),LoadSceneMode.Additive);
+
 		}
 
 		/// <summary>
@@ -67,8 +68,9 @@ namespace UnityProjectImporter{
 			_instance=null;
 		}
 
-		public ProjectImporter instance{ get => _instance; }
+		public static ProjectImporter instance{ get => _instance; }
 		public SceneLoader sceneLoader{ get => _sceneLoader; }
+		public BuildSettingsData buildSettingsData{ get => _buildSettingsData; }
 		public SortingLayersData sortingLayersData{ get => _sortingLayersData; }
 	}
 }

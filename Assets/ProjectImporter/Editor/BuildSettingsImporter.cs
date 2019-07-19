@@ -31,17 +31,17 @@
 				string itName=it.name;
 				if(itName=="m_Scenes"){
 					int len=it.arraySize;
-					buildSettingsData.scenes=new Scene[len];
+					buildSettingsData.scenes=new SceneData[len];
 					for(int i=0;i<len;i++){
 						var element=it.GetArrayElementAtIndex(i);
 						//场景数据结构体
-						Scene scene=new Scene();
-						scene.enabled=element.FindPropertyRelative("enabled").boolValue;
-						scene.path="Assets/"+projectName+"/"+element.FindPropertyRelative("path").stringValue;
+						SceneData sceneData=new SceneData();
+						sceneData.enabled=element.FindPropertyRelative("enabled").boolValue;
+						sceneData.path="Assets/"+projectName+"/"+element.FindPropertyRelative("path").stringValue;
 						//添加到场景发布设置数据
-						buildSettingsData.scenes[i]=scene;
+						buildSettingsData.scenes[i]=sceneData;
 						//合并到当前BuildSettings窗口列表
-						var editorBuildSettingsScene=new EditorBuildSettingsScene(scene.path,scene.enabled);
+						var editorBuildSettingsScene=new EditorBuildSettingsScene(sceneData.path,sceneData.enabled);
 						editorBuildsettingsscenes.Add(editorBuildSettingsScene);
 					}
 				}
