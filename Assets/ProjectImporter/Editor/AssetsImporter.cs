@@ -4,7 +4,7 @@
 	using System.IO;
 	using System.Collections.Generic;
 	using System.Text;
-
+	using System.Text.RegularExpressions;
 	public class AssetsImporter:Importer{
 		/// <summary>
 		/// 导入项目的Assets文件夹，并修改.cs文件解决冲突
@@ -57,8 +57,8 @@
 
 			//修正不兼容的"SceneManager"代码,使用"SceneManager2"类替换
 			fixSceneManagerCode(fileLines);
-			//添加以项目命名的namespace到.cs文件
-			addNameSpaceToCSharpFile(fileLines,projectName);
+			//检测并添加以项目命名的namespace到.cs文件
+			checkAndAddNameSpaceToCSharpFile(fileLines,projectName,filePath);
 			//重新写入文件
 			writeFileLines(fileLines.ToArray(),filePath);
 		}
@@ -68,23 +68,23 @@
 		/// </summary>
 		/// <param name="fileLines">.cs文件读取出来的行数组</param>
 		private void fixSceneManagerCode(List<string> fileLines){
-			string[] matchStrings=new string[]{
-				"SceneManager.LoadSceneAsync",
-				"SceneManager.LoadScene",
-				"SceneManager.UnloadSceneAsync",
-				"SceneManager.UnloadScene",
-				"SceneManager.GetSceneByName",
-				"SceneManager.GetSceneByPath"
+			Regex[] matchRegexs=new Regex[]{
+				new Regex(@"SceneManager\s*.\s*LoadSceneAsync",RegexOptions.Compiled),
+				new Regex(@"SceneManager\s*.\s*LoadScene",RegexOptions.Compiled),
+				new Regex(@"SceneManager\s*.\s*UnloadSceneAsync",RegexOptions.Compiled),
+				new Regex(@"SceneManager\s*.\s*UnloadScene",RegexOptions.Compiled),
+				new Regex(@"SceneManager\s*.\s*GetSceneByName",RegexOptions.Compiled),
+				new Regex(@"SceneManager\s*.\s*GetSceneByPath",RegexOptions.Compiled)
 			};
 			const string sceneManagerStr="SceneManager";
-			int matchStringsLen=matchStrings.Length;
+			int matchRegexsLen=matchRegexs.Length;
 			int len=fileLines.Count;
 			for(int i=0;i<len;i++){
 				string line=fileLines[i];
 				//行是否匹配想要替换的字符
 				bool isMatch=false;
-				for(int j=0;j<matchStringsLen;j++){
-					isMatch=line.IndexOf(matchStrings[j])>-1;
+				for(int j=0;j<matchRegexsLen;j++){
+					isMatch=matchRegexs[j].IsMatch(line);
 					if(isMatch)break;
 				}
 				//匹配则将"SceneManager"替换为"SceneManager2"
@@ -97,11 +97,24 @@
 		}
 
 		/// <summary>
+		/// 检测并添加命名空间到.cs文件
+		/// </summary>
+		/// <param name="fileLines">.cs文件读取出来的行数组</param>
+		/// <param name="namespaceStr">需要添加的命名空间字符串</param>
+		/// <param name="filePath">.cs文件路径</param>
+		private void checkAndAddNameSpaceToCSharpFile(List<string> fileLines,string namespaceStr,string filePath){
+			if(getNameSpaceNull(fileLines.ToArray(),filePath)){ 
+				addNameSpaceToCSharpFile(fileLines,namespaceStr,filePath);
+			}
+		}
+
+		/// <summary>
 		/// 添加命名空间到.cs文件
 		/// </summary>
 		/// <param name="fileLines">.cs文件读取出来的行数组</param>
 		/// <param name="namespaceStr">需要添加的命名空间字符串</param>
-		private void addNameSpaceToCSharpFile(List<string> fileLines,string namespaceStr){
+		/// <param name="filePath">.cs文件路径</param>
+		private void addNameSpaceToCSharpFile(List<string> fileLines,string namespaceStr,string filePath){
 			int len=fileLines.Count;
 			for(int i=0;i<len;i++){
 				//每一行首加入Tab
@@ -111,6 +124,35 @@
 			string namespaceEnd="\n}";
 			fileLines.Insert(0,namespaceStart);
 			fileLines.Add(namespaceEnd);
+		}
+
+		/// <summary>
+		/// 如果命名空间为空
+		/// </summary>
+		/// <param name="fileLines">.cs文件读取出来的行数组</param>
+		/// <param name="filePath">.cs文件路径</param>
+		/// <returns></returns>
+		private bool getNameSpaceNull(string[] fileLines,string filePath){
+			Regex namespaceRegex=new Regex(@"namespace\s+\S+",RegexOptions.Compiled);
+			Regex classRegex=new Regex(@"class\s+\S+",RegexOptions.Compiled);
+			//是否存在命名空间
+			bool isNameSpaceNull=true;
+			int len=fileLines.Length;
+			for(int i=0;i<len;i++){
+				string line=fileLines[i];
+				if(namespaceRegex.IsMatch(line)){
+					isNameSpaceNull=false;
+					//将已存在的命名空间log出来
+					string tempPath=filePath.Substring(filePath.IndexOf("Assets")+7);//去掉Asset之前的字符路径
+					Debug.Log("已存在 "+namespaceRegex.Match(line)+"将不再添加命名空间，请确保此命名空间不会在项目中产生冲突。"+tempPath);
+					break;
+				}
+				if(classRegex.IsMatch(line)){
+					//从开头找到class声明的位置则停止
+					break;
+				}
+			}
+			return isNameSpaceNull;
 		}
 
 		/// <summary>

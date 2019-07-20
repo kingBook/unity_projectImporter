@@ -10,8 +10,8 @@
 
 		[MenuItem("ProjectImporter/import")]
 		public static void import(){
-			//importProject("E:/kingBook/projects/unity_parkinggame");
-			deleteProject("unity_parkinggame");
+			importProject("E:/kingBook/projects/unity_tags");
+			//deleteProject("unity_parkinggame");
 		}
 
 		public static void importProject(string path){

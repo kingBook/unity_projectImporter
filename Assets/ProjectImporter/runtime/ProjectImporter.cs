@@ -19,11 +19,10 @@ namespace UnityProjectImporter{
 		
 		private void Start(){
 			//test
-			openProject("unity_parkinggame");
+			openProject("unity_tags");
 			
 		}
-
-		/// <summary>
+		// <summary>
 		/// 打开一个项目
 		/// </summary>
 		/// <param name="projectName">项目文件夹名</param>
