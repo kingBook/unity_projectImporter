@@ -4,7 +4,7 @@
 QualitySettings:
   m_ObjectHideFlags: 0
   serializedVersion: 5
-  m_CurrentQuality: 3
+  m_CurrentQuality: 2
   m_QualitySettings:
   - serializedVersion: 2
     name: Very Low
@@ -42,7 +42,6 @@ QualitySettings:
     resolutionScalingFixedDPIFactor: 1
     excludedTargetPlatforms:
     - WebGL
-    - Android
   - serializedVersion: 2
     name: Low
     pixelLightCount: 0
@@ -115,7 +114,7 @@ QualitySettings:
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: High
-    pixelLightCount: 15
+    pixelLightCount: 2
     shadows: 0
     shadowResolution: 1
     shadowProjection: 1

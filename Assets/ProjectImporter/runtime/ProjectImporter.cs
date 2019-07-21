@@ -10,6 +10,8 @@ namespace UnityProjectImporter{
 		private static ProjectImporter _instance;
 
 		private BuildSettingsData _buildSettingsData;
+
+		private QualityData _qualityData;
 		private SortingLayersData _sortingLayersData;
 
 		private void Awake(){
@@ -29,11 +31,15 @@ namespace UnityProjectImporter{
 		public void openProject(string projectFolderName){
 			//加载BuildSettingsData
 			_buildSettingsData=Resources.Load<BuildSettingsData>(projectFolderName+"_buildSettingsData");
+			//加载QualityData
+			_qualityData=Resources.Load<QualityData>(projectFolderName+"_qualityData");
 			//加载SortingLayersData
 			_sortingLayersData=Resources.Load<SortingLayersData>(projectFolderName+"_sortingLayersData");
+
+
+
 			//加载项目的主场景
 			_sceneLoader.loadAsync(getMainSceneName(_buildSettingsData),LoadSceneMode.Additive);
-
 		}
 
 		/// <summary>
@@ -70,6 +76,7 @@ namespace UnityProjectImporter{
 		public static ProjectImporter instance{ get => _instance; }
 		public SceneLoader sceneLoader{ get => _sceneLoader; }
 		public BuildSettingsData buildSettingsData{ get => _buildSettingsData; }
+		public QualityData qualityData{ get => _qualityData; }
 		public SortingLayersData sortingLayersData{ get => _sortingLayersData; }
 	}
 }
