@@ -90,8 +90,7 @@
 				//匹配则将"SceneManager"替换为"SceneManager2"
 				if(isMatch){
 					int id=line.IndexOf(sceneManagerStr)+sceneManagerStr.Length;
-					line=line.Insert(id,"2");
-					fileLines[i]=line;
+					fileLines[i]=line.Insert(id,"2");
 				}
 			}
 		}
@@ -127,7 +126,7 @@
 		}
 
 		/// <summary>
-		/// 如果命名空间为空
+		/// 返回.cs文件命名空间是否为空
 		/// </summary>
 		/// <param name="fileLines">.cs文件读取出来的行数组</param>
 		/// <param name="filePath">.cs文件路径</param>
