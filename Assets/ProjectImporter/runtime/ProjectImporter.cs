@@ -1,9 +1,9 @@
-namespace UnityProjectImporter{
+ï»¿namespace UnityProjectImporter{
 	using UnityEngine;
     using UnityEngine.SceneManagement;
 
     public class ProjectImporter:MonoBehaviour{
-		[Tooltip("³¡¾°¼ÓÔØÆ÷")]
+		[Tooltip("åœºæ™¯åŠ è½½å™¨")]
 		[SerializeField]
 		private SceneLoader _sceneLoader=null;
 		
@@ -16,7 +16,7 @@ namespace UnityProjectImporter{
 
 		private void Awake(){
 			_instance=this;
-			DontDestroyOnLoad(gameObject);//¼ÓÔØĞÂ³¡¾°Ê±±£Áô
+			DontDestroyOnLoad(gameObject);//åŠ è½½æ–°åœºæ™¯æ—¶ä¿ç•™
 		}
 		
 		private void Start(){
@@ -25,33 +25,33 @@ namespace UnityProjectImporter{
 			
 		}
 		// <summary>
-		/// ´ò¿ªÒ»¸öÏîÄ¿
+		/// æ‰“å¼€ä¸€ä¸ªé¡¹ç›®
 		/// </summary>
-		/// <param name="projectName">ÏîÄ¿ÎÄ¼ş¼ĞÃû</param>
+		/// <param name="projectName">é¡¹ç›®æ–‡ä»¶å¤¹å</param>
 		public void openProject(string projectFolderName){
-			//¼ÓÔØBuildSettingsData
+			//åŠ è½½BuildSettingsData
 			_buildSettingsData=Resources.Load<BuildSettingsData>(projectFolderName+"_buildSettingsData");
-			//¼ÓÔØQualityData
+			//åŠ è½½QualityData
 			_qualityData=Resources.Load<QualityData>(projectFolderName+"_qualityData");
-			//¼ÓÔØSortingLayersData
+			//åŠ è½½SortingLayersData
 			_sortingLayersData=Resources.Load<SortingLayersData>(projectFolderName+"_sortingLayersData");
 
 
 
-			//¼ÓÔØÏîÄ¿µÄÖ÷³¡¾°
+			//åŠ è½½é¡¹ç›®çš„ä¸»åœºæ™¯
 			_sceneLoader.loadAsync(getMainSceneName(_buildSettingsData),LoadSceneMode.Additive);
 		}
 
 		/// <summary>
-		/// ¹Ø±ÕÒ»¸öÏîÄ¿
+		/// å…³é—­ä¸€ä¸ªé¡¹ç›®
 		/// </summary>
-		/// <param name="projectName">ÏîÄ¿ÎÄ¼ş¼ĞÃû</param>
+		/// <param name="projectName">é¡¹ç›®æ–‡ä»¶å¤¹å</param>
 		public void closeProject(string projectFolderName){
 			
 		}
 
 		/// <summary>
-		/// ·µ»ØÏîÄ¿µÄÖ÷³¡¾°Â·¾¶Ãû³Æ
+		/// è¿”å›é¡¹ç›®çš„ä¸»åœºæ™¯è·¯å¾„åç§°
 		/// </summary>
 		/// <param name="buildSettingsData"></param>
 		/// <returns></returns>
