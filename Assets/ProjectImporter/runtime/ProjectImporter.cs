@@ -23,12 +23,8 @@
 			openProject("unity_tags");
 			
 		}
-<<<<<<< HEAD
 
 		/// <summary>
-=======
-		// <summary>
->>>>>>> e28479922696ed1692d04c2f89a0d9995dcb8434
 		/// 打开一个项目
 		/// </summary>
 		/// <param name="projectName">项目文件夹名</param>
@@ -41,11 +37,6 @@
 			_sortingLayersData=Resources.Load<SortingLayersData>(projectFolderName+"_sortingLayersData");
 			//
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> e28479922696ed1692d04c2f89a0d9995dcb8434
 			//加载项目的主场景
 			_sceneLoader.loadAsync(getMainSceneName(_buildSettingsData),LoadSceneMode.Additive);
 		}
