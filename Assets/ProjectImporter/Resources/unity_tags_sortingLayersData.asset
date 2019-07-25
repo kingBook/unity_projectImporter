@@ -14,9 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   list:
   - Default
-  - New Layer
-  - New Layer
-  - New Layer
-  - New Layer
-  - sf
-  - New Layer
+  - New Layer1
+  - New Layer2
+  - New Layer3

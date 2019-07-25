@@ -1,5 +1,6 @@
 ﻿namespace UnityProjectImporter{
 	using UnityEditor;
+	using UnityEditor.SceneManagement;
 	using UnityEngine;
 
 	public class TagsAndLayersImporter:Importer{
@@ -34,7 +35,7 @@
 					int len=it.arraySize;
 
 					string[] strings=new string[len];
-
+					
 					for(int i=0;i<len;i++){
 						SerializedProperty sortingLayerElement=it.GetArrayElementAtIndex(i);
 						SerializedProperty nameElement=sortingLayerElement.FindPropertyRelative("name");
@@ -70,7 +71,7 @@
 			AssetDatabase.Refresh();
 		}
 
-		private static void addTag(string tag){
+		private void addTag(string tag){
 			if(isHasTag(tag))return;
 			SerializedObject tagManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
 			SerializedProperty it=tagManager.FindProperty("tags");
@@ -83,7 +84,7 @@
 			tagManager.ApplyModifiedProperties();
 		}
 
-		private static bool isHasTag(string tag){
+		private bool isHasTag(string tag){
 			string[] tags=UnityEditorInternal.InternalEditorUtility.tags;
 			int len=tags.Length;
 			for (int i=0;i<len;i++){
@@ -94,7 +95,7 @@
 			return false;
 		}
 
-		private static void setLayer(SerializedObject myTagManager,int index,string layer){
+		private void setLayer(SerializedObject myTagManager,int index,string layer){
 			if(string.IsNullOrEmpty(layer))return;
 
 			SerializedProperty it=myTagManager.FindProperty("layers");
@@ -106,17 +107,60 @@
 			myTagManager.ApplyModifiedProperties();
 		}
 
-		private static void setSortingLayer(SerializedObject myTagManager,int index,string layer){
-			SerializedProperty it=myTagManager.FindProperty("m_SortingLayers");
+		private void setSortingLayer(SerializedObject myTagManager,int index,string layer){
+			var it=myTagManager.FindProperty("m_SortingLayers");
 
 			int len=it.arraySize;
 			if(index>=len)it.InsertArrayElementAtIndex(len);
 
-			SerializedProperty element=it.GetArrayElementAtIndex(index);
-			SerializedProperty nameElement=element.FindPropertyRelative("name");
+			var element=it.GetArrayElementAtIndex(index);
+
+			var nameElement=element.FindPropertyRelative("name");
 			nameElement.stringValue="sortLayer_"+index;//重命名SortingLayer
 
+			//uniqueID:取得区间[0,int.MaxValue]
+			var uniqueIDElement=element.FindPropertyRelative("uniqueID");
+			Debug.Log(uniqueIDElement.intValue);
+			if(uniqueIDElement.intValue<=0){
+				uniqueIDElement.intValue=getSortingLayerUniqueID();
+			}
 			myTagManager.ApplyModifiedProperties();
+			
+		}
+
+		/// <summary>
+		/// 返回一个在当前项目SortingLayers中唯一的ID
+		/// </summary>
+		/// <returns></returns>
+		private int getSortingLayerUniqueID(){
+			int id=0;
+			while(true){
+				//uniqueID:取得区间[0,int.MaxValue]
+				id=Random.Range(0,int.MaxValue);
+				Debug.LogFormat("{0},{1}",isUniqueSortingLayerID(id),id);
+				if(isUniqueSortingLayerID(id)){
+					break;
+				}
+			}
+			return id;
+		}
+
+		/// <summary>
+		/// 判断id在当前项目SortingLayers中是否唯一的
+		/// </summary>
+		/// <param name="sortingLayerID"></param>
+		/// <returns></returns>
+		private bool isUniqueSortingLayerID(int sortingLayerID){
+			bool isUnique=true;
+			var layers=SortingLayer.layers;
+			int i=layers.Length;
+			while(--i>=0){
+				if(layers[i].id==sortingLayerID){
+					isUnique=false;
+					break;
+				}
+			}
+			return isUnique;
 		}
 	
 	}

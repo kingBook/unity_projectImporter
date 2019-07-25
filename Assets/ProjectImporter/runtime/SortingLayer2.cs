@@ -1,12 +1,9 @@
-﻿namespace UnityProjectImporter{ 
-	using UnityEngine;
-	using System.Collections;
-
+﻿namespace UnityEngine{ 
+	
 	public struct SortingLayer2{
-		private static SortingLayer[] _layers=null;
-		//需要改
+		
 		public static SortingLayer[] layers{
-			get => _layers;
+			get => SortingLayer.layers;
 		}
 
 		public int id { get; }
@@ -32,6 +29,17 @@
 		//需要改
 		public static int NameToID(string name){
 			return SortingLayer.NameToID(name);
+		}
+
+		public static implicit operator SortingLayer2(SortingLayer sortingLayer){
+			var sortingLayer2=new SortingLayer2();
+			//sortingLayer2.value=sortingLayer.value;
+			return sortingLayer2;
+		}
+		public static implicit operator SortingLayer(SortingLayer2 sortingLayer2){
+			var sortingLayer=new SortingLayer();
+			//sortingLayer.value=sortingLayer2.value;
+			return sortingLayer;
 		}
 	}
 }

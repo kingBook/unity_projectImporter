@@ -2,14 +2,15 @@
 	using System;
     using System.Collections.Generic;
     using UnityEditor;
-	using UnityEngine;
+    using UnityEditor.SceneManagement;
+    using UnityEngine;
 
 	public class ProjectImporterEditor:Editor{
 
 		[MenuItem("ProjectImporter/import")]
 		public static void import(){
-			importCurrentProjectSettings();
-			importProject("E:/kingBook/projects/unity_tags");
+			//importCurrentProjectSettings();
+			importProject("D:/kingBook/projects/unity_tags");
 			//deleteProject("unity_parkinggame");
 			
 		}
@@ -77,6 +78,9 @@
 
 			//所有事情完成，删除"ProjectImporter/temp"临时文件夹
 			AssetDatabase.DeleteAsset(projectImporterTempPath);
+
+			//保存场景，才能更新ProjectSettings里的.asset
+			EditorSceneManager.SaveOpenScenes();
 		}
 
 		/// <summary>

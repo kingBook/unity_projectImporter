@@ -15,13 +15,17 @@
 
 		private void Awake(){
 			_instance=this;
-			DontDestroyOnLoad(gameObject);//加载新场景时保留
 		}
 		
 		private void Start(){
 			//test
 			openProject("unity_tags");
-			
+			//
+			var layers=SortingLayer.layers;
+			Debug.Log("len:"+layers.Length);
+			for(int i=0;i<layers.Length;i++){
+				Debug.LogFormat("name:{0},id:{1},value:{2}",layers[i].name,layers[i].id,layers[i].value);
+			}
 		}
 
 		/// <summary>

@@ -17,3 +17,5 @@ MonoBehaviour:
     path: Assets/unity_tags/Assets/Scenes/SampleScene.unity
   - enabled: 1
     path: Assets/unity_tags/Assets/Scenes/New Scene.unity
+  - enabled: 1
+    path: Assets/unity_tags/Assets/Scenes/New Scene 1.unity

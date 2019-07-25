@@ -57,6 +57,8 @@
 
 			//修正不兼容的"SceneManager"代码,使用"SceneManager2"类替换
 			fixSceneManagerCode(fileLines);
+			//
+			
 			//检测并添加以项目命名的namespace到.cs文件
 			checkAndAddNameSpaceToCSharpFile(fileLines,projectName,filePath);
 			//重新写入文件
@@ -134,6 +136,8 @@
 		private bool getNameSpaceNull(string[] fileLines,string filePath){
 			Regex namespaceRegex=new Regex(@"namespace\s+\S+",RegexOptions.Compiled);
 			Regex classRegex=new Regex(@"class\s+\S+",RegexOptions.Compiled);
+			Regex structRegex=new Regex(@"struct\s+\S+",RegexOptions.Compiled);
+			Regex enumRegex=new Regex(@"enum\s+\S+",RegexOptions.Compiled);
 			//是否存在命名空间
 			bool isNameSpaceNull=true;
 			int len=fileLines.Length;
@@ -146,8 +150,8 @@
 					Debug.Log("已存在 "+namespaceRegex.Match(line)+"将不再添加命名空间，请确保此命名空间不会在项目中产生冲突。"+tempPath);
 					break;
 				}
-				if(classRegex.IsMatch(line)){
-					//从开头找到class声明的位置则停止
+				if(classRegex.IsMatch(line)||structRegex.IsMatch(line)||enumRegex.IsMatch(line)){
+					//从开头找到class声明或struct声明或enum声明的位置则停止
 					break;
 				}
 			}
