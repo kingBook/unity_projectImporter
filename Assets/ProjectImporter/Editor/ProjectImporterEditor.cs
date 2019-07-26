@@ -9,10 +9,9 @@
 
 		[MenuItem("ProjectImporter/import")]
 		public static void import(){
-			//importCurrentProjectSettings();
+			importCurrentProjectSettings();
 			importProject("D:/kingBook/projects/unity_tags");
 			//deleteProject("unity_parkinggame");
-			
 		}
 
 		/// <summary>
@@ -50,7 +49,7 @@
 			tagsAndLayersImporter.import(path,projectImporterTempPath,projectName);
 
 			if(isImportAssets){
-				//导入Assets文件夹,并修改.cs文件解决冲突
+				//导入Assets文件夹,并修改.cs文件解决冲突,必须在导入tags和Layers之后执行
 				var assetsImporter=new AssetsImporter();
 				assetsImporter.import(path,projectImporterTempPath,projectName);
 			}

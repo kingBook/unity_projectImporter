@@ -5,6 +5,8 @@
 	using System.Collections.Generic;
 	using System.Text;
 	using System.Text.RegularExpressions;
+	using UnityEditor;
+
 	public class AssetsImporter:Importer{
 		/// <summary>
 		/// 导入项目的Assets文件夹，并修改.cs文件解决冲突
@@ -18,30 +20,52 @@
 			FileUtil2.createDirectory(childProjectPath,true);
 			//导入项目的Assets文件夹到子项目路径
 			FileUtil2.copyDirectory(path+"/Assets",childProjectPath+"/Assets");
-			//修改文件夹下的.cs解决冲突
-			foreachAndEditFolderCSharpFiles(childProjectPath+"/Assets",projectName);
+			//修改文件夹下的文件解决冲突
+			foreachAndEditFolderFiles(childProjectPath+"/Assets",projectName);
+			//必须更新，否则无法使用AssetDatabase加截文件修改
+			AssetDatabase.Refresh();
+			
 		}
 
 		/// <summary>
-		/// 遍历和修改文件夹下的所有.cs文件
+		/// 遍历和修改文件夹下的所有文件
 		/// </summary>
-		/// <param name="folderPath">包含.cs文件的文件夹目录</param>
+		/// <param name="folderPath">文件夹目录</param>
 		/// <param name="projectName">导入的项目名称</param>
-		private void foreachAndEditFolderCSharpFiles(string folderPath,string projectName){
+		private void foreachAndEditFolderFiles(string folderPath,string projectName){
 			//Debug.Log(Directory.Exists(folderPath));
 			var directoryInfo=new DirectoryInfo(folderPath);
-			var files=directoryInfo.GetFiles("*.cs",SearchOption.AllDirectories);
+			var files=directoryInfo.GetFiles("*",SearchOption.AllDirectories);
 			for(int i=0;i<files.Length;i++){
 				//Debug.Log( "FullName:" + files[i].FullName );  
 				//Debug.Log( "DirectoryName:" + files[i].DirectoryName ); 
-				editCSharpFile(@files[i].FullName,projectName);
+				var file=files[i];
+				string fileName=file.Name;
+				if(StringUtil.endsWith(fileName,".meta"))continue;
+				if(StringUtil.endsWith(fileName,".unity")){
+					//修改.unity场景文件
+					editUnityFile(@file.FullName,projectName);
+				}else if(StringUtil.endsWith(fileName,".cs")){
+					//修改.cs文件
+					editCSharpFile(@file.FullName,projectName);
+				}
 			}
 		}
+		
+		/// <summary>
+		/// 修改.unity文件
+		/// </summary>
+		/// <param name="filePath">文件路径，如果是'\'路径,需要加@转换，如:editCSharpFile(@"E:\unity_tags\Assets\main.unity")。</param>
+		/// <param name="projectName">导入的项目名称</param>
+		private void editUnityFile(string filePath,string projectName){
+			
+		}
 
+		#region editCSharpFile
 		/// <summary>
 		/// 修改.cs文件
 		/// </summary>
-		/// <param name="filePath">.cs文件路径，如果是'\'路径,需要加@转换，如:editCSharpFile(@"E:\unity_tags\Assets\Main.cs")。</param>
+		/// <param name="filePath">文件路径，如果是'\'路径,需要加@转换，如:editCSharpFile(@"E:\unity_tags\Assets\Main.cs")。</param>
 		/// <param name="projectName">导入的项目名称</param>
 		private void editCSharpFile(string filePath,string projectName){
 			//Debug.Log(filePath);
@@ -157,7 +181,8 @@
 			}
 			return isNameSpaceNull;
 		}
-
+		#endregion
+		
 		/// <summary>
 		/// 将行字符数组写入到本地
 		/// </summary>

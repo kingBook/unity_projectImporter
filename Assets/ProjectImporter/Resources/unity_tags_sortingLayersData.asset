@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: unity_tags_sortingLayersData
   m_EditorClassIdentifier: 
   list:
-  - Default
-  - New Layer1
-  - New Layer2
-  - New Layer3
+  - name: Default
+    uniqueID: 0
+  - name: New Layer1
+    uniqueID: 3602296965
+  - name: New Layer2
+    uniqueID: 89716819
+  - name: New Layer3
+    uniqueID: 1606937301
+  - name: New Layer4
+    uniqueID: 574024299

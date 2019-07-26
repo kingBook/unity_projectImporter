@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: default_sortingLayersData
   m_EditorClassIdentifier: 
   list:
-  - Default
-  - sortLayer_1
-  - sortLayer_2
-  - sortLayer_3
+  - name: Default
+    uniqueID: 0
+  - name: sortLayer_1
+    uniqueID: 1050353212
+  - name: sortLayer_2
+    uniqueID: 1974986043
+  - name: sortLayer_3
+    uniqueID: 1411589488
+  - name: sortLayer_4
+    uniqueID: 1971963801

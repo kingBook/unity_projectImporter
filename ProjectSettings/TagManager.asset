@@ -45,11 +45,14 @@ TagManager:
     uniqueID: 0
     locked: 0
   - name: sortLayer_1
-    uniqueID: 802131761
+    uniqueID: 1050353212
     locked: 0
   - name: sortLayer_2
-    uniqueID: 802131761
+    uniqueID: 1974986043
     locked: 0
   - name: sortLayer_3
-    uniqueID: 802131761
+    uniqueID: 1411589488
+    locked: 0
+  - name: sortLayer_4
+    uniqueID: 1971963801
     locked: 0
