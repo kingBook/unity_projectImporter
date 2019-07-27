@@ -6,6 +6,7 @@
 	using System.Text;
 	using System.Text.RegularExpressions;
 	using UnityEditor;
+	using UnityEngine.SceneManagement;
 
 	public class AssetsImporter:Importer{
 		/// <summary>
@@ -18,50 +19,37 @@
 			//创建子项目目录,如果目录存在则先删除
 			string childProjectPath=Application.dataPath+"/"+projectName;
 			FileUtil2.createDirectory(childProjectPath,true);
+			//子项目Assets目录
+			string childProjectAssetsPath=childProjectPath+"/Assets";
 			//导入项目的Assets文件夹到子项目路径
-			FileUtil2.copyDirectory(path+"/Assets",childProjectPath+"/Assets");
-			//修改文件夹下的文件解决冲突
-			foreachAndEditFolderFiles(childProjectPath+"/Assets",projectName);
-			//必须更新，否则无法使用AssetDatabase加截文件修改
-			AssetDatabase.Refresh();
+			FileUtil2.copyDirectory(path+"/Assets",childProjectAssetsPath);
+			//修改文件夹下的.cs文件解决冲突
+			foreachAndEditCSharpFiles(childProjectAssetsPath,projectName);
 			
+			//修改文件夹下的.unity文件解决冲突
+			foreachAndEditUnityFiles(childProjectAssetsPath,projectName);
 		}
 
+		#region foreachAndEditCSharpFiles
 		/// <summary>
-		/// 遍历和修改文件夹下的所有文件
+		/// 遍历和修改文件夹下的.cs文件
 		/// </summary>
 		/// <param name="folderPath">文件夹目录</param>
 		/// <param name="projectName">导入的项目名称</param>
-		private void foreachAndEditFolderFiles(string folderPath,string projectName){
+		private void foreachAndEditCSharpFiles(string folderPath,string projectName){
 			//Debug.Log(Directory.Exists(folderPath));
 			var directoryInfo=new DirectoryInfo(folderPath);
-			var files=directoryInfo.GetFiles("*",SearchOption.AllDirectories);
-			for(int i=0;i<files.Length;i++){
+			var files=directoryInfo.GetFiles("*.cs",SearchOption.AllDirectories);
+			int len=files.Length;
+			for(int i=0;i<len;i++){
 				//Debug.Log( "FullName:" + files[i].FullName );  
 				//Debug.Log( "DirectoryName:" + files[i].DirectoryName ); 
 				var file=files[i];
-				string fileName=file.Name;
-				if(StringUtil.endsWith(fileName,".meta"))continue;
-				if(StringUtil.endsWith(fileName,".unity")){
-					//修改.unity场景文件
-					editUnityFile(@file.FullName,projectName);
-				}else if(StringUtil.endsWith(fileName,".cs")){
-					//修改.cs文件
-					editCSharpFile(@file.FullName,projectName);
-				}
+				//修改.cs文件
+				editCSharpFile(@file.FullName,projectName);
 			}
 		}
-		
-		/// <summary>
-		/// 修改.unity文件
-		/// </summary>
-		/// <param name="filePath">文件路径，如果是'\'路径,需要加@转换，如:editCSharpFile(@"E:\unity_tags\Assets\main.unity")。</param>
-		/// <param name="projectName">导入的项目名称</param>
-		private void editUnityFile(string filePath,string projectName){
-			
-		}
 
-		#region editCSharpFile
 		/// <summary>
 		/// 修改.cs文件
 		/// </summary>
@@ -183,6 +171,42 @@
 		}
 		#endregion
 		
+		#region foreachAndEditUnityFiles
+		/// <summary>
+		/// 遍历和修改文件夹下的.unity文件
+		/// </summary>
+		/// <param name="folderPath">文件夹目录</param>
+		/// <param name="projectName">导入的项目名称</param>
+		private void foreachAndEditUnityFiles(string folderPath,string projectName){
+			//Debug.Log(Directory.Exists(folderPath));
+			var directoryInfo=new DirectoryInfo(folderPath);
+			var files=directoryInfo.GetFiles("*.unity",SearchOption.AllDirectories);
+			int len=files.Length;
+			for(int i=0;i<len;i++){
+				//Debug.Log( "FullName:" + files[i].FullName );  
+				//Debug.Log( "DirectoryName:" + files[i].DirectoryName ); 
+				var file=files[i];
+				//修改.unity文件
+				editUnityFile(@file.FullName,projectName);
+			}
+		}
+
+		/// <summary>
+		/// 修改.unity文件
+		/// </summary>
+		/// <param name="filePath">文件路径，如果是'\'路径,需要加@转换，如:editCSharpFile(@"E:\unity_tags\Assets\main.unity")。</param>
+		/// <param name="projectName">导入的项目名称</param>
+		private void editUnityFile(string filePath,string projectName){
+			int assetsCharIndex=filePath.IndexOf("Assets");
+			filePath=filePath.Substring(assetsCharIndex);
+			Debug.Log(filePath);
+			AssetDatabase.Refresh();
+			//Object[] unityFile=AssetDatabase.LoadAllAssetsAtPath("Assets/unity_tags/Assets/Scenes/SampleScene.unity");
+			var unityFile=AssetDatabase.LoadAssetAtPath<SceneAsset>("Assets/unity_tags/Assets/Scenes/SampleScene.unity");
+			Debug.Log("unityFile:"+unityFile);
+		}
+		#endregion
+
 		/// <summary>
 		/// 将行字符数组写入到本地
 		/// </summary>

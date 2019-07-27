@@ -9,8 +9,8 @@
 
 		[MenuItem("ProjectImporter/import")]
 		public static void import(){
-			importCurrentProjectSettings();
-			importProject("D:/kingBook/projects/unity_tags");
+			//importCurrentProjectSettings();
+			importProject("E:/kingBook/projects/unity_tags");
 			//deleteProject("unity_parkinggame");
 		}
 

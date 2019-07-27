@@ -4,24 +4,25 @@ namespace unity_tags{
 	using UnityEngine;
 	using UnityEngine.SceneManagement;
 	
-	public class Main : MonoBehaviour{
-		
-	    void Start(){
-			/*for(int i=0;i<100;i++){
-				Debug.Log(Random.Range(int.MinValue,int.MaxValue));
-			}*/
-			Debug.Log(int.MinValue+","+int.MaxValue);
-	        Invoke("enterNewScene",2);
-	    }
+	public class Main : MonoBehaviour
+	{
+		// Start is called before the first frame update
+		void Start()
+		{
+			Invoke("createNewScene",2.0f);
 	
-	    
-		private void enterNewScene(){
-			SceneManager2.LoadSceneAsync("New Scene",LoadSceneMode.Additive);
 		}
 	
-	    void Update(){
-	        
-	    }
+		private void createNewScene(){
+			SceneManager2	.  LoadSceneAsync("Scenes/New Scene");
+		}
+	
+		// Update is called once per frame
+		void Update()
+		{
+			
+		}
 	}
+	
 
 }
