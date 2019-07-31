@@ -11,6 +11,8 @@
 		public Image imageMid;
 		[Tooltip("百分比文本框")]
 		public Text txt;
+		[Tooltip("场景加完成后，是否调用SceneManager.SetActiveScene(scene)激活场景")]
+		public bool isSetActiveScene=true;
 
 		private AsyncOperation _asyncOperation;
 
@@ -19,6 +21,10 @@
 			canvasGroup.alpha=1.0f;
 
 			gameObject.SetActive(false);
+		}
+		
+		private void OnEnable() {
+			SceneManager.sceneLoaded+=onSceneLoaded;
 		}
 
 		/// <summary>
@@ -57,7 +63,7 @@
 
 		IEnumerator loadSceneAsync(string sceneName,LoadSceneMode mode){
 			_asyncOperation=SceneManager.LoadSceneAsync(sceneName,mode);
-			_asyncOperation.completed+=onComplete;
+			_asyncOperation.completed+=onAsyncComplete;
 			_asyncOperation.allowSceneActivation=false;
 			while(!_asyncOperation.isDone){
 				float progress=_asyncOperation.progress;
@@ -73,10 +79,21 @@
 			}
 		}
 
-		private void onComplete(AsyncOperation asyncOperation){
+		private void onAsyncComplete(AsyncOperation asyncOperation){
 			gameObject.SetActive(false);
-			_asyncOperation.completed-=onComplete;
+			_asyncOperation.completed-=onAsyncComplete;
 			_asyncOperation=null;
+		}
+		
+		private void onSceneLoaded(Scene scene,LoadSceneMode mode){
+			if(isSetActiveScene){
+				SceneManager.SetActiveScene(scene);
+			}
+			gameObject.SetActive(false);
+		}
+		
+		private void OnDisable() {
+			SceneManager.sceneLoaded-=onSceneLoaded;
 		}
 
 		private void OnDestroy(){
