@@ -98,7 +98,7 @@
 
 		private void OnDestroy(){
 			if(_asyncOperation!=null){
-				_asyncOperation.completed-=onComplete;
+				_asyncOperation.completed-=onAsyncComplete;
 			}
 		}
 

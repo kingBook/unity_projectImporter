@@ -197,14 +197,45 @@
 		/// <param name="filePath">文件路径，如果是'\'路径,需要加@转换，如:editCSharpFile(@"E:\unity_tags\Assets\main.unity")。</param>
 		/// <param name="projectName">导入的项目名称</param>
 		private void editUnityFile(string filePath,string projectName){
-			int assetsCharIndex=filePath.IndexOf("Assets");
-			filePath=filePath.Substring(assetsCharIndex);
-			Debug.Log(filePath);
-			AssetDatabase.Refresh();
-			//Object[] unityFile=AssetDatabase.LoadAllAssetsAtPath("Assets/unity_tags/Assets/Scenes/SampleScene.unity");
-			var unityFile=AssetDatabase.LoadAssetAtPath<SceneAsset>("Assets/unity_tags/Assets/Scenes/SampleScene.unity");
-			Debug.Log("unityFile:"+unityFile);
+			var streamReader=File.OpenText(@filePath);
+
+			List<string> fileLines=new List<string>();
+			string line;
+			while((line=streamReader.ReadLine())!=null){
+				line+='\n';//行尾加回车
+				fileLines.Add(line);
+			}
+			streamReader.Dispose();
+			//
+			fixSortingLayerID(fileLines);
+			//
+			Debug.Log("reWrite:"+filePath);
+			//重新写入文件
+			writeFileLines(fileLines.ToArray(),filePath);
 		}
+
+		private void fixSortingLayerID(List<string> fileLines){
+			Regex SortingLayerIDRegex=new Regex(@"m_SortingLayerID:\s\d+",RegexOptions.Compiled);
+			Regex sortingLayerValueRegex=new Regex(@"m_SortingLayer:\s\d+",RegexOptions.Compiled);
+			int len=fileLines.Count;
+			int maxIndex=len-1;
+			for(int i=0;i<len;i++){
+				string line=fileLines[i];
+				//当前行匹配"m_SortingLayerID: xxx"(xxx是任意正整数)
+				if(SortingLayerIDRegex.IsMatch(line)){
+					if(i<maxIndex){
+						//下一行匹配"m_SortingLayer: xxx"(xxx是任意正整数)
+						string nextLine=fileLines[i+1];
+						if(sortingLayerValueRegex.IsMatch(nextLine)){
+							Regex numRegex=new Regex(@"\d+",RegexOptions.Compiled);
+							fileLines[i]=numRegex.Replace(line,"123");
+							Debug.Log(fileLines[i]);
+						}
+					}
+				}
+			}
+		}
+
 		#endregion
 
 		/// <summary>

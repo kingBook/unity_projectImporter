@@ -15,15 +15,11 @@ MonoBehaviour:
   list:
   - name: Default
     uniqueID: 0
-  - name: New Layer
-    uniqueID: 890623027
-  - name: New Layer
-    uniqueID: 3977071701
-  - name: New Layer
-    uniqueID: 2680876783
-  - name: New Layer
-    uniqueID: 4071737743
-  - name: sf
-    uniqueID: 3713930483
-  - name: New Layer
-    uniqueID: 2653980137
+  - name: New Layer1
+    uniqueID: 3602296965
+  - name: New Layer2
+    uniqueID: 89716819
+  - name: New Layer3
+    uniqueID: 1606937301
+  - name: New Layer4
+    uniqueID: 574024299
