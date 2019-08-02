@@ -1,24 +1,52 @@
-﻿namespace UnityProjectImporter{
-	using System.Collections;
+﻿namespace UnityEngine{
 	using System.Collections.Generic;
-	using UnityEngine;
+	using UnityProjectImporter;
 
 	public struct LayerMask2{
 		public int value;
 
-		//需要改
 		public static int GetMask(params string[] layerNames){
-			return LayerMask.GetMask(layerNames);
+			int result=0;
+			//去除重复项
+			List<string> layerNameList=new List<string>(layerNames);
+			for (int i=0; i<layerNameList.Count;i++){
+				for (int j=layerNameList.Count-1;j>i;j--){
+					if (layerNameList[i]==layerNameList[j]){
+						layerNameList.RemoveAt(j);
+					}
+				}
+			}
+			layerNames=layerNameList.ToArray();
+			//
+			string[] layers=ProjectImporter.instance.layersData.list;
+			int layerNamesLen=layerNames.Length;
+			int layersLen=layers.Length;
+			for(int i=0;i<layerNamesLen;i++){
+				for(int j=8;j<layersLen;j++){
+					if(layerNames[i]==layers[j]){
+						result+=1<<j;
+						break;
+					}
+				}
+			}
+			return result;
 		}
 
-		//需要改
 		public static string LayerToName(int layer){
-			return LayerMask.LayerToName(layer);
+			return ProjectImporter.instance.layersData.list[layer];
 		}
 
-		//需要改
 		public static int NameToLayer(string layerName){
-			return LayerMask.NameToLayer(layerName);
+			int result=-1;
+			string[] layers=ProjectImporter.instance.layersData.list;
+			int len=layers.Length;
+			for(int i=0;i<len;i++){
+				if(layers[i]==layerName){
+					result=i;
+					break;
+				}
+			}
+			return result;
 		}
 
 		public static implicit operator int(LayerMask2 mask){

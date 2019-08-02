@@ -65,6 +65,8 @@
 			streamReader.Dispose();
 			//修正不兼容的"SortingLayer"代码,使用"SortingLayer2"替换
 			fixSortingLayerCode(fileLines);
+			//修正不兼容的"LayerMask"代码,使用"LayerMask2"替换
+			fixLayerMaskCode(fileLines);
 			//修正不兼容的"SceneManager"代码,使用"SceneManager2"类替换
 			fixSceneManagerCode(fileLines);
 			//检测并添加以项目命名的namespace到.cs文件
@@ -82,15 +84,35 @@
 				new Regex(@"SortingLayer\s*\[\s*\]\s*\S+\s*=\s*SortingLayer\s*.\s*layers",RegexOptions.Compiled),
 				//匹配"var xxx=SortingLayer.layers"
 				new Regex(@"var\s+\S+\s*=\s*SortingLayer\s*.\s*layers",RegexOptions.Compiled),
+				//匹配"Array xxx=SortingLayer.layers"
+				new Regex(@"Array\s+\S+\s*=\s*SortingLayer\s*.\s*layers",RegexOptions.Compiled),
 				new Regex(@"SortingLayer\s*.\s*GetLayerValueFromID",RegexOptions.Compiled),
 				new Regex(@"SortingLayer\s*.\s*GetLayerValueFromName",RegexOptions.Compiled),
 				new Regex(@"SortingLayer\s*.\s*IDToName",RegexOptions.Compiled),
 				new Regex(@"SortingLayer\s*.\s*IsValid",RegexOptions.Compiled),
 				new Regex(@"SortingLayer\s*.\s*NameToID",RegexOptions.Compiled),
 				//匹配"SortingLayer xxx=xxx"
-				new Regex(@"SortingLayer\s+\S+\s*=\s*\S+",RegexOptions.Compiled)
+				new Regex(@"SortingLayer\s+\S+\s*=\s*",RegexOptions.Compiled),
+				//匹配"(SortingLayer)xxx"
+				new Regex(@"\(\s*SortingLayer\s*\)\s*\S+",RegexOptions.Compiled)
 			};
 			replaceWithMatchRegexs(fileLines,matchRegexs,"SortingLayer","SortingLayer2");
+		}
+
+		/// <summary>
+		/// 修正"LayerMask"代码，将使用"LayerMask2"替换
+		/// </summary>
+		private void fixLayerMaskCode(List<string> fileLines){
+			Regex[] matchRegexs=new Regex[]{
+				new Regex(@"LayerMask\s*.\s*GetMask",RegexOptions.Compiled),
+				new Regex(@"LayerMask\s*.\s*LayerToName",RegexOptions.Compiled),
+				new Regex(@"LayerMask\s*.\s*NameToLayer",RegexOptions.Compiled),
+				//匹配"LayerMask xxx=xxx"
+				new Regex(@"LayerMask\s+\S+\s*=\s*\S+",RegexOptions.Compiled),
+				//匹配"(LayerMask)xxx"
+				new Regex(@"\(\s*LayerMask\s*\)\s*\S+",RegexOptions.Compiled)
+			};
+			replaceWithMatchRegexs(fileLines,matchRegexs,"LayerMask","LayerMask2");
 		}
 
 		/// <summary>

@@ -19,12 +19,12 @@ TagManager:
   - layer_8
   - layer_9
   - layer_10
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - layer_11
+  - layer_12
+  - layer_13
+  - layer_14
+  - layer_15
+  - layer_16
   - 
   - 
   - 
@@ -55,4 +55,10 @@ TagManager:
     locked: 0
   - name: sortLayer_4
     uniqueID: 2053889696
+    locked: 0
+  - name: sortLayer_5
+    uniqueID: 1324411855
+    locked: 0
+  - name: sortLayer_6
+    uniqueID: 1030135117
     locked: 0

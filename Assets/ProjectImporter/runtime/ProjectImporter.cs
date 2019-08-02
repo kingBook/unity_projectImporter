@@ -12,6 +12,8 @@
 		private BuildSettingsData _buildSettingsData;
 		private QualityData _qualityData;
 		private SortingLayersData _sortingLayersData;
+		private LayersData _layersData;
+		private TimeData _timeData;
 
 		private void Awake(){
 			_instance=this;
@@ -34,8 +36,11 @@
 			_qualityData=Resources.Load<QualityData>(projectFolderName+"_qualityData");
 			//加载SortingLayersData
 			_sortingLayersData=Resources.Load<SortingLayersData>(projectFolderName+"_sortingLayersData");
-			//
-
+			//加载LayersData
+			_layersData=Resources.Load<LayersData>(projectFolderName+"_layersData");
+			//加载TimeData
+			_timeData=Resources.Load<TimeData>(projectFolderName+"_timeData");
+			setTimeWithData(_timeData);
 			//加载项目的主场景
 			_sceneLoader.loadAsync(getMainSceneName(_buildSettingsData),LoadSceneMode.Additive);
 		}
@@ -45,7 +50,7 @@
 		/// </summary>
 		/// <param name="projectName">项目文件夹名</param>
 		public void closeProject(string projectFolderName){
-			
+			//setTimeWithData(_defaultTimeData);
 		}
 
 		/// <summary>
@@ -67,6 +72,13 @@
 			return sceneName;
 		}
 
+		private void setTimeWithData(TimeData timeData){
+			Time.fixedDeltaTime=timeData.fixedTimestep;
+			Time.maximumDeltaTime=timeData.maximumAllowedTimestep;
+			Time.timeScale=timeData.timeScale;
+			Time.maximumParticleDeltaTime=timeData.maximumParticleTimestep;
+		}
+
 		private void OnDestroy() {
 			_instance=null;
 		}
@@ -76,5 +88,7 @@
 		public BuildSettingsData buildSettingsData{ get => _buildSettingsData; }
 		public QualityData qualityData{ get => _qualityData; }
 		public SortingLayersData sortingLayersData{ get => _sortingLayersData; }
+		public LayersData layersData{ get => _layersData; }
+		public TimeData timeData{ get => _timeData; }
 	}
 }
