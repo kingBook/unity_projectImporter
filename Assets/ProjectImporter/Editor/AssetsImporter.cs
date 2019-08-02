@@ -1,12 +1,10 @@
-﻿namespace UnityProjectImporter{
-	using UnityEngine;
-	using System.Collections;
-	using System.IO;
+﻿namespace UnityProjectImporter {
 	using System.Collections.Generic;
+	using System.IO;
 	using System.Text;
 	using System.Text.RegularExpressions;
-	using UnityEditor;
-	using UnityEngine.SceneManagement;
+	using UnityEditor.SceneManagement;
+	using UnityEngine;
 
 	public class AssetsImporter:Importer{
 		/// <summary>
@@ -25,8 +23,7 @@
 			FileUtil2.copyDirectory(path+"/Assets",childProjectAssetsPath);
 			//修改文件夹下的.cs文件解决冲突
 			foreachAndEditCSharpFiles(childProjectAssetsPath,projectName);
-			
-			//修改文件夹下的.unity文件解决冲突
+			//修改文件夹下的.unity文件,修正SortingLayer等
 			foreachAndEditUnityFiles(childProjectAssetsPath,projectName);
 		}
 
@@ -66,15 +63,34 @@
 				fileLines.Add(line);
 			}
 			streamReader.Dispose();
-
+			//修正不兼容的"SortingLayer"代码,使用"SortingLayer2"替换
+			fixSortingLayerCode(fileLines);
 			//修正不兼容的"SceneManager"代码,使用"SceneManager2"类替换
 			fixSceneManagerCode(fileLines);
-			//
-			
 			//检测并添加以项目命名的namespace到.cs文件
 			checkAndAddNameSpaceToCSharpFile(fileLines,projectName,filePath);
 			//重新写入文件
 			writeFileLines(fileLines.ToArray(),filePath);
+		}
+
+		/// <summary>
+		/// 修正"SortingLayer"代码，将使用"SortingLayer2"替换
+		/// </summary>
+		private void fixSortingLayerCode(List<string> fileLines){
+			Regex[] matchRegexs=new Regex[]{
+				//匹配"SortingLayer[] xxx=SortingLayer.layers"
+				new Regex(@"SortingLayer\s*\[\s*\]\s*\S+\s*=\s*SortingLayer\s*.\s*layers",RegexOptions.Compiled),
+				//匹配"var xxx=SortingLayer.layers"
+				new Regex(@"var\s+\S+\s*=\s*SortingLayer\s*.\s*layers",RegexOptions.Compiled),
+				new Regex(@"SortingLayer\s*.\s*GetLayerValueFromID",RegexOptions.Compiled),
+				new Regex(@"SortingLayer\s*.\s*GetLayerValueFromName",RegexOptions.Compiled),
+				new Regex(@"SortingLayer\s*.\s*IDToName",RegexOptions.Compiled),
+				new Regex(@"SortingLayer\s*.\s*IsValid",RegexOptions.Compiled),
+				new Regex(@"SortingLayer\s*.\s*NameToID",RegexOptions.Compiled),
+				//匹配"SortingLayer xxx=xxx"
+				new Regex(@"SortingLayer\s+\S+\s*=\s*\S+",RegexOptions.Compiled)
+			};
+			replaceWithMatchRegexs(fileLines,matchRegexs,"SortingLayer","SortingLayer2");
 		}
 
 		/// <summary>
@@ -90,22 +106,32 @@
 				new Regex(@"SceneManager\s*.\s*GetSceneByName",RegexOptions.Compiled),
 				new Regex(@"SceneManager\s*.\s*GetSceneByPath",RegexOptions.Compiled)
 			};
-			const string sceneManagerStr="SceneManager";
+			replaceWithMatchRegexs(fileLines,matchRegexs,"SceneManager","SceneManager2");
+		}
+
+		/// <summary>
+		/// 遍历每一个行，在每一行中查找匹配正则表达式的字符串，
+		/// <br>然后在匹配正则表达式的字符串中再查找并替换字符</br>
+		/// </summary>
+		/// <param name="fileLines">.cs文件读取出来的行数组</param>
+		/// <param name="matchRegexs">需要匹配的正则表达式数组</param>
+		/// <param name="oldStr">原来的字符串</param>
+		/// <param name="newStr">替换的字符串</param>
+		private void replaceWithMatchRegexs(List<string> fileLines,Regex[] matchRegexs,string oldStr,string newStr){
+			var matchEvaluator=new MatchEvaluator((Match m)=>{
+				string mStr=m.Value;
+				mStr=mStr.Replace(oldStr,newStr);
+				return mStr;
+			});
+
 			int matchRegexsLen=matchRegexs.Length;
 			int len=fileLines.Count;
 			for(int i=0;i<len;i++){
 				string line=fileLines[i];
-				//行是否匹配想要替换的字符
-				bool isMatch=false;
 				for(int j=0;j<matchRegexsLen;j++){
-					isMatch=matchRegexs[j].IsMatch(line);
-					if(isMatch)break;
+					line=matchRegexs[j].Replace(line,matchEvaluator);
 				}
-				//匹配则将"SceneManager"替换为"SceneManager2"
-				if(isMatch){
-					int id=line.IndexOf(sceneManagerStr)+sceneManagerStr.Length;
-					fileLines[i]=line.Insert(id,"2");
-				}
+				fileLines[i]=line;
 			}
 		}
 
@@ -174,6 +200,7 @@
 		#region foreachAndEditUnityFiles
 		/// <summary>
 		/// 遍历和修改文件夹下的.unity文件
+		/// 注意：请确保需要修改的.unity文件没有在编辑器中打开，否则会修改不成功
 		/// </summary>
 		/// <param name="folderPath">文件夹目录</param>
 		/// <param name="projectName">导入的项目名称</param>
@@ -193,12 +220,23 @@
 
 		/// <summary>
 		/// 修改.unity文件
+		/// 注意：请确保需要修改的.unity文件没有在编辑器中打开，否则会修改不成功
 		/// </summary>
 		/// <param name="filePath">文件路径，如果是'\'路径,需要加@转换，如:editCSharpFile(@"E:\unity_tags\Assets\main.unity")。</param>
 		/// <param name="projectName">导入的项目名称</param>
 		private void editUnityFile(string filePath,string projectName){
+			//是否在编辑器中打开.unity
+			string tempFilePath=filePath.Replace('\\','/');
+			int sceneCount=EditorSceneManager.sceneCount;
+			for(int i=0;i<sceneCount;i++){
+				var scene=EditorSceneManager.GetSceneAt(i);
+				if(tempFilePath.IndexOf(scene.path)>-1){
+					Debug.LogError("请关闭"+scene.path+"再重新导入");
+					break;
+				}
+			}
+			//
 			var streamReader=File.OpenText(@filePath);
-
 			List<string> fileLines=new List<string>();
 			string line;
 			while((line=streamReader.ReadLine())!=null){
@@ -206,14 +244,16 @@
 				fileLines.Add(line);
 			}
 			streamReader.Dispose();
-			//
+			//修正引用的SortingLayer.id
 			fixSortingLayerID(fileLines);
-			//
-			Debug.Log("reWrite:"+filePath);
 			//重新写入文件
 			writeFileLines(fileLines.ToArray(),filePath);
 		}
 
+		/// <summary>
+		/// 修正SortingLayer.id
+		/// </summary>
+		/// <param name="fileLines">.unity文件读取出来的文本行数组</param>
 		private void fixSortingLayerID(List<string> fileLines){
 			Regex SortingLayerIDRegex=new Regex(@"m_SortingLayerID:\s\d+",RegexOptions.Compiled);
 			Regex sortingLayerValueRegex=new Regex(@"m_SortingLayer:\s\d+",RegexOptions.Compiled);
@@ -228,14 +268,16 @@
 						string nextLine=fileLines[i+1];
 						if(sortingLayerValueRegex.IsMatch(nextLine)){
 							Regex numRegex=new Regex(@"\d+",RegexOptions.Compiled);
-							fileLines[i]=numRegex.Replace(line,"123");
-							Debug.Log(fileLines[i]);
+							//需要修改UniqueID的SortingLayer的id(在第几层)
+							int orderIndex=int.Parse(numRegex.Match(nextLine).Value);
+							//修改为当前编辑器SrtingLayer设置中的对应UniqueID
+							uint defaultUniqueID=(uint)SortingLayer.layers[orderIndex].id;
+							fileLines[i]=numRegex.Replace(line,defaultUniqueID.ToString());
 						}
 					}
 				}
 			}
 		}
-
 		#endregion
 
 		/// <summary>

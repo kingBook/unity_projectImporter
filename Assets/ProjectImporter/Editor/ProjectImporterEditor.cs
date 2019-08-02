@@ -9,7 +9,7 @@
 
 		[MenuItem("ProjectImporter/import")]
 		public static void import(){
-			//importCurrentProjectSettings();
+			importCurrentProjectSettings();
 			importProject("D:/kingBook/projects/unity_tags");
 			//deleteProject("unity_parkinggame");
 		}
@@ -135,5 +135,7 @@
 			AssetDatabase.DeleteAsset("Assets/ProjectImporter/Resources/"+projectName+"_sortingLayersData.asset");
 			AssetDatabase.DeleteAsset("Assets/ProjectImporter/Resources/"+projectName+"_timeData.asset");
 		}
+
+
 	}
 }
