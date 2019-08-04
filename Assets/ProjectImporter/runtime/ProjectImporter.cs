@@ -34,6 +34,7 @@
 			_buildSettingsData=Resources.Load<BuildSettingsData>(projectFolderName+"_buildSettingsData");
 			//加载QualityData
 			_qualityData=Resources.Load<QualityData>(projectFolderName+"_qualityData");
+			setQualityWithData(_qualityData);
 			//加载SortingLayersData
 			_sortingLayersData=Resources.Load<SortingLayersData>(projectFolderName+"_sortingLayersData");
 			//加载LayersData
@@ -70,6 +71,10 @@
 				}
 			}
 			return sceneName;
+		}
+
+		private void setQualityWithData(QualityData qualityData){
+			
 		}
 
 		private void setTimeWithData(TimeData timeData){
