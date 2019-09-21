@@ -73,9 +73,51 @@
 			return sceneName;
 		}
 
+		#region setQualityWithData
 		private void setQualityWithData(QualityData qualityData){
+			///UnityEngine.QualitySettings.
+			
+			QualitySettings qualitySettings=getPlatformDefaultQualitySettings(qualityData);
+
 			
 		}
+
+		/// <summary>返回当前运行时平台的默认品质设置</summary>
+		private QualitySettings getPlatformDefaultQualitySettings(QualityData qualityData){
+			RuntimePlatform platform=Application.platform;
+			if(platform==RuntimePlatform.IPhonePlayer){
+				return getQualitySettingsWithPlatformName(qualityData,"iPhone");
+			}else if(platform==RuntimePlatform.Android){
+				return getQualitySettingsWithPlatformName(qualityData,"Android");
+			}else if(platform==RuntimePlatform.WebGLPlayer){
+				return getQualitySettingsWithPlatformName(qualityData,"WebGL");
+			}else if(platform==RuntimePlatform.WindowsPlayer||platform==RuntimePlatform.OSXPlayer||platform==RuntimePlatform.LinuxPlayer){
+				return getQualitySettingsWithPlatformName(qualityData,"Standalone");
+			}else if(platform==RuntimePlatform.PS4){
+				return getQualitySettingsWithPlatformName(qualityData,"PS4");
+			}else if(platform==RuntimePlatform.WSAPlayerARM||platform==RuntimePlatform.WSAPlayerX86||platform==RuntimePlatform.WSAPlayerX64){
+				return getQualitySettingsWithPlatformName(qualityData,"Windows Store Apps");
+			}else if(platform==RuntimePlatform.XboxOne){
+				return getQualitySettingsWithPlatformName(qualityData,"XboxOne");
+			}else if(platform==RuntimePlatform.tvOS){
+				return getQualitySettingsWithPlatformName(qualityData,"tvOS");
+			} 
+			//默认返回编辑器中高亮显示的品质设置
+			return qualityData.qualitySettings[qualityData.currentQuality];
+		}
+		private QualitySettings getQualitySettingsWithPlatformName(QualityData qualityData,string platformName){
+			int len=qualityData.qualitySettings.Length;
+			for(int i=0;i<len;i++){
+				QualitySettings tempQualitySettings=qualityData.qualitySettings[i];
+				if(tempQualitySettings.name==platformName){
+					return tempQualitySettings;
+				}
+
+			}
+			Debug.LogError("没找到"+platformName+"平台的品质设置数据，请确认平台："+platformName+"是否存在。");
+			return new QualitySettings();
+		}
+		#endregion setQualityWithData
 
 		private void setTimeWithData(TimeData timeData){
 			Time.fixedDeltaTime=timeData.fixedTimestep;
