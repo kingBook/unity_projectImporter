@@ -21,7 +21,7 @@
 		
 		private void Start(){
 			//test
-			openProject("unity_tags");
+			openProject("unity_wawawu");
 			
 		}
 
@@ -75,11 +75,41 @@
 
 		#region setQualityWithData
 		private void setQualityWithData(QualityData qualityData){
-			///UnityEngine.QualitySettings.
-			
 			QualitySettings qualitySettings=getPlatformDefaultQualitySettings(qualityData);
 
-			
+			UnityEngine.QualitySettings.pixelLightCount=qualitySettings.pixelLightCount;
+			UnityEngine.QualitySettings.shadows=(ShadowQuality)qualitySettings.shadows;
+			UnityEngine.QualitySettings.shadowResolution=(ShadowResolution)qualitySettings.shadowResolution;
+			UnityEngine.QualitySettings.shadowProjection=(ShadowProjection)qualitySettings.shadowProjection;
+			UnityEngine.QualitySettings.shadowCascades=qualitySettings.shadowCascades;
+			UnityEngine.QualitySettings.shadowDistance=qualitySettings.shadowDistance;
+			UnityEngine.QualitySettings.shadowNearPlaneOffset=qualitySettings.shadowNearPlaneOffset;
+			UnityEngine.QualitySettings.shadowCascade2Split=qualitySettings.shadowCascade2Split;
+			UnityEngine.QualitySettings.shadowCascade4Split=qualitySettings.shadowCascade4Split;
+			UnityEngine.QualitySettings.shadowmaskMode=(ShadowmaskMode)qualitySettings.shadowmaskMode;
+			UnityEngine.QualitySettings.skinWeights=(SkinWeights)qualitySettings.skinWeights;
+			//UnityEngine.QualitySettings.textureQuality=qualitySettings.textureQuality;
+			//UnityEngine.QualitySettings.anisotropicTextures=qualitySettings.anisotropicTextures;
+			UnityEngine.QualitySettings.antiAliasing=qualitySettings.antiAliasing;
+			UnityEngine.QualitySettings.softParticles=qualitySettings.softParticles;
+			UnityEngine.QualitySettings.softVegetation=qualitySettings.softVegetation;
+			UnityEngine.QualitySettings.realtimeReflectionProbes=qualitySettings.realtimeReflectionProbes;
+			UnityEngine.QualitySettings.billboardsFaceCameraPosition=qualitySettings.billboardsFaceCameraPosition;
+			UnityEngine.QualitySettings.vSyncCount=qualitySettings.vSyncCount;
+			UnityEngine.QualitySettings.lodBias=qualitySettings.lodBias;
+			UnityEngine.QualitySettings.maximumLODLevel=qualitySettings.maximumLODLevel;
+			UnityEngine.QualitySettings.streamingMipmapsActive=qualitySettings.streamingMipmapsActive;
+			UnityEngine.QualitySettings.streamingMipmapsAddAllCameras=qualitySettings.streamingMipmapsAddAllCameras;
+			UnityEngine.QualitySettings.streamingMipmapsMemoryBudget=qualitySettings.streamingMipmapsMemoryBudget;
+			UnityEngine.QualitySettings.streamingMipmapsRenderersPerFrame=qualitySettings.streamingMipmapsRenderersPerFrame;
+			UnityEngine.QualitySettings.streamingMipmapsMaxLevelReduction=qualitySettings.streamingMipmapsMaxLevelReduction;
+			UnityEngine.QualitySettings.streamingMipmapsMaxFileIORequests=qualitySettings.streamingMipmapsMaxFileIORequests;
+			UnityEngine.QualitySettings.particleRaycastBudget=qualitySettings.particleRaycastBudget;
+			UnityEngine.QualitySettings.asyncUploadTimeSlice=qualitySettings.asyncUploadTimeSlice;
+			UnityEngine.QualitySettings.asyncUploadBufferSize=qualitySettings.asyncUploadBufferSize;
+			UnityEngine.QualitySettings.asyncUploadPersistentBuffer=qualitySettings.asyncUploadPersistentBuffer;
+			UnityEngine.QualitySettings.resolutionScalingFixedDPIFactor=qualitySettings.resolutionScalingFixedDPIFactor;
+			//UnityEngine.QualitySettings.excludedTargetPlatforms=qualitySettings.excludedTargetPlatforms;
 		}
 
 		/// <summary>返回当前运行时平台的默认品质设置</summary>

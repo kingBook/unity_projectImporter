@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79642af9e0cdccb4fa34768a6e405ce7, type: 3}
   m_Name: default_qualityData
   m_EditorClassIdentifier: 
-  currentQuality: 2
+  currentQuality: 3
   qualitySettings:
   - name: Very Low
     pixelLightCount: 0
