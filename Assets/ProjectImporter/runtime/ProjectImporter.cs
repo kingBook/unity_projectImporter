@@ -21,8 +21,7 @@
 		
 		private void Start(){
 			//test
-			openProject("unity_wawawu");
-			
+			openProject("unity_parkinggame");
 		}
 
 		/// <summary>
@@ -34,7 +33,9 @@
 			_buildSettingsData=Resources.Load<BuildSettingsData>(projectFolderName+"_buildSettingsData");
 			//加载QualityData
 			_qualityData=Resources.Load<QualityData>(projectFolderName+"_qualityData");
-			setQualityWithData(_qualityData);
+			int qualityLevel=getPlatformDefaultQualityLevel(qualityData);
+			QualitySettings2.setQualityLevelValue(qualityLevel);//初始化QualitySettings2.qualityLevel
+			setQualityWithSettings(qualityData.qualitySettings[qualityLevel]);
 			//加载SortingLayersData
 			_sortingLayersData=Resources.Load<SortingLayersData>(projectFolderName+"_sortingLayersData");
 			//加载LayersData
@@ -74,9 +75,11 @@
 		}
 
 		#region setQualityWithData
-		private void setQualityWithData(QualityData qualityData){
-			QualitySettings qualitySettings=getPlatformDefaultQualitySettings(qualityData);
-
+		/// <summary>
+		/// 根据一个UnityProjectImporter.QualitySettings设置品质
+		/// </summary>
+		/// <param name="qualitySettings">UnityProjectImporter.QualitySettings</param>
+		public void setQualityWithSettings(QualitySettings qualitySettings){
 			UnityEngine.QualitySettings.pixelLightCount=qualitySettings.pixelLightCount;
 			UnityEngine.QualitySettings.shadows=(ShadowQuality)qualitySettings.shadows;
 			UnityEngine.QualitySettings.shadowResolution=(ShadowResolution)qualitySettings.shadowResolution;
@@ -111,41 +114,43 @@
 			UnityEngine.QualitySettings.resolutionScalingFixedDPIFactor=qualitySettings.resolutionScalingFixedDPIFactor;
 			//UnityEngine.QualitySettings.excludedTargetPlatforms=qualitySettings.excludedTargetPlatforms;
 		}
-
-		/// <summary>返回当前运行时平台的默认品质设置</summary>
-		private QualitySettings getPlatformDefaultQualitySettings(QualityData qualityData){
+		
+		/// <summary>返回当前运行时平台的默认品质级别</summary>
+		public int getPlatformDefaultQualityLevel(QualityData qualityData){
 			RuntimePlatform platform=Application.platform;
 			if(platform==RuntimePlatform.IPhonePlayer){
-				return getQualitySettingsWithPlatformName(qualityData,"iPhone");
+				return getDefaultQualityLevelWithPlatformName(qualityData,"iPhone");
 			}else if(platform==RuntimePlatform.Android){
-				return getQualitySettingsWithPlatformName(qualityData,"Android");
+				return getDefaultQualityLevelWithPlatformName(qualityData,"Android");
 			}else if(platform==RuntimePlatform.WebGLPlayer){
-				return getQualitySettingsWithPlatformName(qualityData,"WebGL");
+				return getDefaultQualityLevelWithPlatformName(qualityData,"WebGL");
 			}else if(platform==RuntimePlatform.WindowsPlayer||platform==RuntimePlatform.OSXPlayer||platform==RuntimePlatform.LinuxPlayer){
-				return getQualitySettingsWithPlatformName(qualityData,"Standalone");
+				return getDefaultQualityLevelWithPlatformName(qualityData,"Standalone");
 			}else if(platform==RuntimePlatform.PS4){
-				return getQualitySettingsWithPlatformName(qualityData,"PS4");
+				return getDefaultQualityLevelWithPlatformName(qualityData,"PS4");
 			}else if(platform==RuntimePlatform.WSAPlayerARM||platform==RuntimePlatform.WSAPlayerX86||platform==RuntimePlatform.WSAPlayerX64){
-				return getQualitySettingsWithPlatformName(qualityData,"Windows Store Apps");
+				return getDefaultQualityLevelWithPlatformName(qualityData,"Windows Store Apps");
 			}else if(platform==RuntimePlatform.XboxOne){
-				return getQualitySettingsWithPlatformName(qualityData,"XboxOne");
+				return getDefaultQualityLevelWithPlatformName(qualityData,"XboxOne");
 			}else if(platform==RuntimePlatform.tvOS){
-				return getQualitySettingsWithPlatformName(qualityData,"tvOS");
+				return getDefaultQualityLevelWithPlatformName(qualityData,"tvOS");
 			} 
 			//默认返回编辑器中高亮显示的品质设置
-			return qualityData.qualitySettings[qualityData.currentQuality];
+			return qualityData.currentQuality;
 		}
-		private QualitySettings getQualitySettingsWithPlatformName(QualityData qualityData,string platformName){
-			int len=qualityData.qualitySettings.Length;
+		
+		/// <summary>根据平台名称返回平台默认的品质级别</summary>
+		private int getDefaultQualityLevelWithPlatformName(QualityData qualityData,string platformName){
+			PlatformDefaultQuality[] platformDefaultQualities=qualityData.perPlatformDefaultQuality;
+			int len=platformDefaultQualities.Length;
 			for(int i=0;i<len;i++){
-				QualitySettings tempQualitySettings=qualityData.qualitySettings[i];
-				if(tempQualitySettings.name==platformName){
-					return tempQualitySettings;
+				PlatformDefaultQuality platformDefaultQuality=platformDefaultQualities[i];
+				if(platformDefaultQuality.platform==platformName){
+					return platformDefaultQuality.qualityLevel;
 				}
-
 			}
-			Debug.LogError("没找到"+platformName+"平台的品质设置数据，请确认平台："+platformName+"是否存在。");
-			return new QualitySettings();
+			Debug.LogError("没找到"+platformName+"平台的默认品质级别，请确认平台："+platformName+"是否存在。");
+			return -1;
 		}
 		#endregion setQualityWithData
 

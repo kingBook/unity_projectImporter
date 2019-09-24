@@ -1,9 +1,10 @@
 ﻿namespace UnityEngine{
 	using System;
 	using System.ComponentModel;
+    using UnityProjectImporter;
 
-	public class QualitySettings2{
-		public static int particleRaycastBudget { get; set; }
+    public class QualitySettings2{
+		/*public static int particleRaycastBudget { get; set; }
 		
 		public static bool softVegetation { get; set; }
 		
@@ -80,31 +81,53 @@
 		public static AnisotropicFiltering anisotropicFiltering { get; set; }
 		
 		public static ShadowResolution shadowResolution { get; set; }
-
+		*/
+		
+		#region custom
+		private static int _qualityLevel=-1;
+		
+		/// <summary>设置_qualityLevel的值。</summary>
+		public static void setQualityLevelValue(int value){
+			_qualityLevel=value;
+		}
+		#endregion
+		
+		/// <summary>降低当前的品质级别。</summary>
 		public static void DecreaseLevel(){
-			
+			SetQualityLevel(--_qualityLevel);
 		}
 		
-		public static void DecreaseLevel([DefaultValue("false")] bool applyExpensiveChanges){
-			
+		/// <summary>降低当前的品质级别。</summary>
+		public static void DecreaseLevel(bool applyExpensiveChanges=false){
+			//这里无法实现applyExpensiveChanges参数
+			DecreaseLevel();
 		}
 		
 		public static int GetQualityLevel(){
-			return 0;
+			return _qualityLevel;
 		}
+		
+		/// <summary>提高当前的品质级别。</summary>
 		public static void IncreaseLevel(){
-			
+			SetQualityLevel(++_qualityLevel);
 		}
 		
-		public static void IncreaseLevel([DefaultValue("false")] bool applyExpensiveChanges){
-			
+		/// <summary>提高当前的品质级别。</summary>
+		public static void IncreaseLevel(bool applyExpensiveChanges=false){
+			//这里无法实现applyExpensiveChanges参数
+			IncreaseLevel();
 		}
 		
-		public static void SetQualityLevel(int index,[DefaultValue("true")] bool applyExpensiveChanges){
-			
+		public static void SetQualityLevel(int index,bool applyExpensiveChanges=true){
+			//这里无法实现applyExpensiveChanges参数
+			SetQualityLevel(index);
 		}
+		
 		public static void SetQualityLevel(int index){
-			
+			var settingsList=ProjectImporter.instance.qualityData.qualitySettings;
+			index=Mathf.Clamp(index,0,settingsList.Length-1);
+			ProjectImporter.instance.setQualityWithSettings(settingsList[index]);
+			_qualityLevel=index;
 		}
 	}
 }

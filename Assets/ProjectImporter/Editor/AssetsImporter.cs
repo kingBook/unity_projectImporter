@@ -69,6 +69,8 @@
 			fixLayerMaskCode(fileLines);
 			//修正不兼容的"SceneManager"代码,使用"SceneManager2"类替换
 			fixSceneManagerCode(fileLines);
+			//修正不兼容的"QualitySettings"代码,使用"QualitySettings2"类替换
+			fixQualitySettingsCode(fileLines);
 			//检测并添加以项目命名的namespace到.cs文件
 			checkAndAddNameSpaceToCSharpFile(fileLines,projectName,filePath);
 			//重新写入文件
@@ -129,6 +131,16 @@
 				new Regex(@"SceneManager\s*.\s*GetSceneByPath",RegexOptions.Compiled)
 			};
 			replaceWithMatchRegexs(fileLines,matchRegexs,"SceneManager","SceneManager2");
+		}
+		
+		private void fixQualitySettingsCode(List<string> fileLines){
+			Regex[] matchRegexs=new Regex[]{
+				new Regex(@"QualitySettings\s*.\s*DecreaseLevel",RegexOptions.Compiled),
+				new Regex(@"QualitySettings\s*.\s*GetQualityLevel",RegexOptions.Compiled),
+				new Regex(@"QualitySettings\s*.\s*IncreaseLevel",RegexOptions.Compiled),
+				new Regex(@"QualitySettings\s*.\s*SetQualityLevel",RegexOptions.Compiled)
+			};
+			replaceWithMatchRegexs(fileLines,matchRegexs,"QualitySettings","QualitySettings2");
 		}
 
 		/// <summary>
