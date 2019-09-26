@@ -21,7 +21,7 @@
 		
 		private void Start(){
 			//test
-			openProject("unity_parkinggame");
+			//openProject("unity_parkinggame");
 		}
 
 		/// <summary>

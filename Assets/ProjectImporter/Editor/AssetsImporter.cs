@@ -115,6 +115,11 @@
 				new Regex(@"\(\s*LayerMask\s*\)\s*\S+",RegexOptions.Compiled)
 			};
 			replaceWithMatchRegexs(fileLines,matchRegexs,"LayerMask","LayerMask2");
+
+			//public LayerMask xxx;
+
+			//[SerlizeFiled]
+			//private LayerMask xxx;
 		}
 
 		/// <summary>
