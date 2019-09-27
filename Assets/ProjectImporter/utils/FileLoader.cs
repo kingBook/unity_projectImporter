@@ -25,9 +25,8 @@
 		/// <br>如果文件不存在将在onComplete(byte[][] bytesList)事件参数bytesList添加一个null</br>
 		/// </summary>
 		/// <param name="filePaths">可变长度文件路径列表，如: @"C:\Users\Administrator\Desktop\views0.xml"</param>
-		/// <param name="progressBarVisible">是否显示进度条</param>
-		public async void loadAsync(bool progressbarVisible,params string[] filePaths){
-			onLoadStart(progressbarVisible);
+		public async void loadAsync(params string[] filePaths){
+			onLoadStart();
 
 			byte[][] outBytesList=new byte[filePaths.Length][];
 			for(int i=0;i<filePaths.Length;i++){
@@ -57,7 +56,7 @@
 			}
 		}
 
-		private void onLoadStart(bool progressbarVisible){
+		private void onLoadStart(){
 			_isLoading=true;
 		}
 
