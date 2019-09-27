@@ -110,7 +110,8 @@
 				new Regex(@"LayerMask\s*.\s*LayerToName",RegexOptions.Compiled),
 				new Regex(@"LayerMask\s*.\s*NameToLayer",RegexOptions.Compiled),
 				//匹配"LayerMask xxx=xxx"
-				new Regex(@"LayerMask\s+\S+\s*=\s*\S+",RegexOptions.Compiled),
+				//new Regex(@"LayerMask\s+\S+\s*=\s*\S+",RegexOptions.Compiled),//public LayerMask xxx;序列化时，改为LayerMask2会出错
+                
 				//匹配"(LayerMask)xxx"
 				new Regex(@"\(\s*LayerMask\s*\)\s*\S+",RegexOptions.Compiled)
 			};

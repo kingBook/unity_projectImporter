@@ -7,12 +7,12 @@
 
 	public class ProjectImporterEditor:Editor{
 
-		[MenuItem("ProjectImporter/import")]
+		/*[MenuItem("ProjectImporter/import")]
 		public static void import(){
 			importCurrentProjectSettings();
-			importProject("E:/kingBook/projects/unity_parkinggame");
+			importProject("D:/kingBook/projects/unity_parkinggame");
 			//deleteProject("unity_parkinggame");
-		}
+		}*/
 
 		/// <summary>
 		/// 将当前的项目设置导入到"ProjectImporter/Resources"保存

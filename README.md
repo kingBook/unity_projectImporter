@@ -10,5 +10,7 @@ Time
 EditorBuildSettings
 
 
-待修复
-public LayerMask xx
+
+待完成：
+忽略Editor、Plug-in等文件夹
+DoTween等插件冲突

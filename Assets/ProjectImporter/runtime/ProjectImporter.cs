@@ -1,8 +1,8 @@
 ﻿namespace UnityProjectImporter{
 	using UnityEngine;
-    using UnityEngine.SceneManagement;
-
-    public class ProjectImporter:MonoBehaviour{
+	using UnityEngine.SceneManagement;
+	
+	public class ProjectImporter:MonoBehaviour{
 		[Tooltip("场景加载器")]
 		[SerializeField]
 		private SceneLoader _sceneLoader=null;
@@ -10,6 +10,8 @@
 		private static ProjectImporter _instance;
 
 		private BuildSettingsData _buildSettingsData;
+		private PhysicsData _physicsData;
+		private Physics2dData _physics2dData;
 		private QualityData _qualityData;
 		private SortingLayersData _sortingLayersData;
 		private LayersData _layersData;
@@ -31,6 +33,12 @@
 		public void openProject(string projectFolderName){
 			//加载BuildSettingsData
 			_buildSettingsData=Resources.Load<BuildSettingsData>(projectFolderName+"_buildSettingsData");
+			//加载PhysicsData
+			_physicsData=Resources.Load<PhysicsData>(projectFolderName+"_physicsData");
+			setPhysicsWithData(_physicsData);
+			//加载Physics2dData
+			_physics2dData=Resources.Load<Physics2dData>(projectFolderName+"_physics2dData");
+			setPhysics2dWithData(_physics2dData);
 			//加载QualityData
 			_qualityData=Resources.Load<QualityData>(projectFolderName+"_qualityData");
 			int qualityLevel=getPlatformDefaultQualityLevel(qualityData);
@@ -73,7 +81,111 @@
 			}
 			return sceneName;
 		}
-
+		
+		/// <summary>根据指定的数据设置3d物理引擎参数</summary>
+		public void setPhysicsWithData(PhysicsData physicsData){
+			Physics.gravity=physicsData.gravity;
+			//physicsData.defaultMaterial;
+			Physics.bounceThreshold=physicsData.bounceThreshold;
+			Physics.sleepThreshold=physicsData.sleepThreshold;
+			Physics.defaultContactOffset=physicsData.defaultContactOffset;
+			Physics.defaultSolverIterations=physicsData.defaultSolverIterations;
+			Physics.defaultSolverVelocityIterations=physicsData.defaultSolverVelocityIterations;
+			Physics.queriesHitBackfaces=physicsData.queriesHitBackfaces;
+			Physics.queriesHitTriggers=physicsData.queriesHitTriggers;
+			//physicsData.enableAdaptiveForce;
+			Physics.interCollisionDistance=physicsData.clothInterCollisionDistance;
+			Physics.interCollisionStiffness=physicsData.clothInterCollisionStiffness;
+			//physicsData.contactsGeneration;
+			//设置layerCollisionMatrix
+			int layerValue=0;
+			for(int i=0;i<32;i++){
+				layerValue=1<<i;
+				for(int j=0;j<32;j++){
+					bool ignore=(layerValue&physicsData.layerCollisionMatrix[j])==0;
+					Physics.IgnoreLayerCollision(i,j,ignore);
+				}
+			}
+			//
+			Physics.autoSimulation=physicsData.autoSimulation;
+			Physics.autoSyncTransforms=physicsData.autoSyncTransforms;
+			Physics.reuseCollisionCallbacks=physicsData.reuseCollisionCallbacks;
+			Physics.interCollisionSettingsToggle=physicsData.clothInterCollisionSettingsToggle;
+			Physics.clothGravity=physicsData.clothGravity;
+			//physicsData.contactPairsMode;
+			//physicsData.broadphaseType;
+			//physicsData.worldBounds;
+			//physicsData.worldSubdivisions;
+			//physicsData.frictionType;
+			//physicsData.enableEnhancedDeterminism;
+			//physicsData.enableUnifiedHeightmaps;
+			Physics.defaultMaxAngularSpeed=physicsData.defaultMaxAngularSpeed;
+		}
+		
+		/// <summary>根据指定的数据设置2d物理引擎参数</summary>
+		public void setPhysics2dWithData(Physics2dData physics2dData){
+			Physics2D.gravity=physics2dData.gravity;
+			//physics2dData.defaultMaterial;
+			Physics2D.velocityIterations=physics2dData.velocityIterations;
+			Physics2D.positionIterations=physics2dData.positionIterations;
+			Physics2D.velocityThreshold=physics2dData.velocityThreshold;
+			Physics2D.maxLinearCorrection=physics2dData.maxLinearCorrection;
+			Physics2D.maxAngularCorrection=physics2dData.maxAngularCorrection;
+			Physics2D.maxTranslationSpeed=physics2dData.maxTranslationSpeed;
+			Physics2D.maxRotationSpeed=physics2dData.maxRotationSpeed;
+			Physics2D.baumgarteScale=physics2dData.baumgarteScale;
+			Physics2D.baumgarteTOIScale=physics2dData.baumgarteTimeOfImpactScale;
+			Physics2D.timeToSleep=physics2dData.timeToSleep;
+			Physics2D.linearSleepTolerance=physics2dData.linearSleepTolerance;
+			Physics2D.angularSleepTolerance=physics2dData.angularSleepTolerance;
+			Physics2D.defaultContactOffset=physics2dData.defaultContactOffset;
+			//设置jobOptions
+			var jobOptions=new PhysicsJobOptions2D();
+			jobOptions.useMultithreading=physics2dData.jobOptions.useMultithreading;
+			jobOptions.useConsistencySorting=physics2dData.jobOptions.useConsistencySorting;
+			jobOptions.interpolationPosesPerJob=physics2dData.jobOptions.interpolationPosesPerJob;
+			jobOptions.newContactsPerJob=physics2dData.jobOptions.newContactsPerJob;
+			jobOptions.collideContactsPerJob=physics2dData.jobOptions.collideContactsPerJob;
+			jobOptions.clearFlagsPerJob=physics2dData.jobOptions.clearFlagsPerJob;
+			jobOptions.clearBodyForcesPerJob=physics2dData.jobOptions.clearBodyForcesPerJob;
+			jobOptions.syncDiscreteFixturesPerJob=physics2dData.jobOptions.syncDiscreteFixturesPerJob;
+			jobOptions.syncContinuousFixturesPerJob=physics2dData.jobOptions.syncContinuousFixturesPerJob;
+			jobOptions.findNearestContactsPerJob=physics2dData.jobOptions.findNearestContactsPerJob;
+			jobOptions.updateTriggerContactsPerJob=physics2dData.jobOptions.updateTriggerContactsPerJob;
+			jobOptions.islandSolverCostThreshold=physics2dData.jobOptions.islandSolverCostThreshold;
+			jobOptions.islandSolverBodyCostScale=physics2dData.jobOptions.islandSolverBodyCostScale;
+			jobOptions.islandSolverContactCostScale=physics2dData.jobOptions.islandSolverContactCostScale;
+			jobOptions.islandSolverJointCostScale=physics2dData.jobOptions.islandSolverJointCostScale;
+			jobOptions.islandSolverBodiesPerJob=physics2dData.jobOptions.islandSolverBodiesPerJob;
+			jobOptions.islandSolverContactsPerJob=physics2dData.jobOptions.islandSolverContactsPerJob;
+			Physics2D.jobOptions=jobOptions;
+			//
+			Physics2D.autoSimulation=physics2dData.autoSimulation;
+			Physics2D.queriesHitTriggers=physics2dData.queriesHitTriggers;
+			Physics2D.queriesStartInColliders=physics2dData.queriesStartInColliders;
+			Physics2D.callbacksOnDisable=physics2dData.callbacksOnDisable;
+			Physics2D.reuseCollisionCallbacks=physics2dData.reuseCollisionCallbacks;
+			Physics2D.autoSyncTransforms=physics2dData.autoSyncTransforms;
+			Physics2D.alwaysShowColliders=physics2dData.alwaysShowColliders;
+			Physics2D.showColliderSleep=physics2dData.showColliderSleep;
+			Physics2D.showColliderContacts=physics2dData.showColliderContacts;
+			Physics2D.showColliderAABB=physics2dData.showColliderAABB;
+			Physics2D.contactArrowScale=physics2dData.contactArrowScale;
+			Physics2D.colliderAwakeColor=physics2dData.colliderAwakeColor;
+			Physics2D.colliderAsleepColor=physics2dData.colliderAsleepColor;
+			Physics2D.colliderContactColor=physics2dData.colliderContactColor;
+			Physics2D.colliderAABBColor=physics2dData.colliderAABBColor;
+			//设置layerCollisionMatrix
+			int layerValue=0;
+			for(int i=0;i<32;i++){
+				layerValue=1<<i;
+				for(int j=0;j<32;j++){
+					bool ignore=(layerValue&physics2dData.layerCollisionMatrix[j])==0;
+					Physics2D.IgnoreLayerCollision(i,j,ignore);
+				}
+			}
+		}
+		
 		#region setQualityWithData
 		/// <summary>
 		/// 根据一个UnityProjectImporter.QualitySettings设置品质
@@ -91,8 +203,8 @@
 			UnityEngine.QualitySettings.shadowCascade4Split=qualitySettings.shadowCascade4Split;
 			UnityEngine.QualitySettings.shadowmaskMode=(ShadowmaskMode)qualitySettings.shadowmaskMode;
 			UnityEngine.QualitySettings.skinWeights=(SkinWeights)qualitySettings.skinWeights;
-			//UnityEngine.QualitySettings.textureQuality=qualitySettings.textureQuality;
-			//UnityEngine.QualitySettings.anisotropicTextures=qualitySettings.anisotropicTextures;
+			//ualitySettings.textureQuality;
+			//qualitySettings.anisotropicTextures;
 			UnityEngine.QualitySettings.antiAliasing=qualitySettings.antiAliasing;
 			UnityEngine.QualitySettings.softParticles=qualitySettings.softParticles;
 			UnityEngine.QualitySettings.softVegetation=qualitySettings.softVegetation;
@@ -112,7 +224,7 @@
 			UnityEngine.QualitySettings.asyncUploadBufferSize=qualitySettings.asyncUploadBufferSize;
 			UnityEngine.QualitySettings.asyncUploadPersistentBuffer=qualitySettings.asyncUploadPersistentBuffer;
 			UnityEngine.QualitySettings.resolutionScalingFixedDPIFactor=qualitySettings.resolutionScalingFixedDPIFactor;
-			//UnityEngine.QualitySettings.excludedTargetPlatforms=qualitySettings.excludedTargetPlatforms;
+			//qualitySettings.excludedTargetPlatforms;
 		}
 		
 		/// <summary>返回当前运行时平台的默认品质级别</summary>
@@ -164,10 +276,11 @@
 		private void OnDestroy() {
 			_instance=null;
 		}
-
+	
 		public static ProjectImporter instance{ get => _instance; }
 		public SceneLoader sceneLoader{ get => _sceneLoader; }
 		public BuildSettingsData buildSettingsData{ get => _buildSettingsData; }
+		public PhysicsData physicsData{ get => _physicsData; }
 		public QualityData qualityData{ get => _qualityData; }
 		public SortingLayersData sortingLayersData{ get => _sortingLayersData; }
 		public LayersData layersData{ get => _layersData; }

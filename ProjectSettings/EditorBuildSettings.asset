@@ -8,10 +8,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ProjectImporter/Scenes/ProjectImporter.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/unity_tags/Assets/Scenes/SampleScene.unity
-    guid: eafdfe99a4967224bb85a959e9fd3e4f
-  - enabled: 1
-    path: Assets/unity_tags/Assets/Scenes/New Scene.unity
-    guid: b4b96466c219a7f4698c0a7748107222
   m_configObjects: {}
