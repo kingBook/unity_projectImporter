@@ -19,12 +19,31 @@
 			FileUtil2.createDirectory(childProjectPath,true);
 			//子项目Assets目录
 			string childProjectAssetsPath=childProjectPath+"/Assets";
-			//导入项目的Assets文件夹到子项目路径
+			//复制项目的Assets文件夹到子项目路径
 			FileUtil2.copyDirectory(path+"/Assets",childProjectAssetsPath);
+			//删除不需要导入的文件夹，如Editor、Gizmos、Plugins等
+			foreachAndDeleteIgnoreFolders(childProjectAssetsPath);
 			//修改文件夹下的.cs文件解决冲突
 			foreachAndEditCSharpFiles(childProjectAssetsPath,projectName);
 			//修改文件夹下的.unity文件,修正SortingLayer等
 			foreachAndEditUnityFiles(childProjectAssetsPath,projectName);
+		} 
+
+		/// <summary>
+		/// 遍历删除不需要的子文件夹
+		/// </summary>
+		/// <param name="folderPath">文件夹目录</param>
+		private void foreachAndDeleteIgnoreFolders(string folderPath){
+			string[] ignoreRootFolderNames=new string[]{"EditorDefaultResources","Gizmos","Plugins"};
+			string[] ignoreFolderNames=new string[]{"Editor"};
+			//
+			DirectoryInfo rootFolder=new DirectoryInfo(folderPath);
+			DirectoryInfo[] directories=rootFolder.GetDirectories();
+			int len=directories.Length;
+			for(int i=0;i<len;i++){
+				DirectoryInfo directory=directories[i];
+				Debug.Log("directory.Name:"+directory.Name);
+			}
 		}
 
 		#region foreachAndEditCSharpFiles

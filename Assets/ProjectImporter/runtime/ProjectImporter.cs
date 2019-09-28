@@ -23,7 +23,12 @@
 		
 		private void Start(){
 			//test
-			//openProject("unity_parkinggame");
+			openProject("unity_tags");
+			Invoke("onTimeout",3);
+		}
+		private void onTimeout(){
+			Debug.Log("onTimeout");
+			closeProject("unity_tags");
 		}
 
 		/// <summary>
@@ -60,7 +65,37 @@
 		/// </summary>
 		/// <param name="projectName">项目文件夹名</param>
 		public void closeProject(string projectFolderName){
-			//setTimeWithData(_defaultTimeData);
+			//卸载项目的所有场景
+			unloadProjectAllScenes(projectFolderName);
+			//
+			var defaultPhysicsData=Resources.Load<PhysicsData>("default_physicsData");
+			setPhysicsWithData(defaultPhysicsData);
+			//
+			var defaultPhysics2dData=Resources.Load<Physics2dData>("default_physics2dData");
+			setPhysics2dWithData(defaultPhysics2dData);
+			//
+			var defaultQualityData=Resources.Load<QualityData>("default_qualityData");
+			int qualityLevel=getPlatformDefaultQualityLevel(defaultQualityData);
+			setQualityWithSettings(defaultQualityData.qualitySettings[qualityLevel]);
+			//
+			var defaultTimeData=Resources.Load<TimeData>("default_timeData");
+			setTimeWithData(defaultTimeData);
+		}
+
+		/// <summary>
+		/// 卸载指定项目的所有场景
+		/// </summary>
+		/// <param name="projectFolderName"></param>
+		private void unloadProjectAllScenes(string projectFolderName){
+			var projectBuildSettingsData=Resources.Load<BuildSettingsData>(projectFolderName+"_buildSettingsData");
+			int i=projectBuildSettingsData.scenes.Length;
+			while(--i>=0){
+				string scenePath=projectBuildSettingsData.scenes[i].path;
+				Scene scene=SceneManager.GetSceneByPath(scenePath);
+				if(scene.IsValid()){
+					SceneManager.UnloadSceneAsync(scenePath);
+				}
+			}
 		}
 
 		/// <summary>
@@ -276,7 +311,7 @@
 		private void OnDestroy() {
 			_instance=null;
 		}
-	
+		
 		public static ProjectImporter instance{ get => _instance; }
 		public SceneLoader sceneLoader{ get => _sceneLoader; }
 		public BuildSettingsData buildSettingsData{ get => _buildSettingsData; }
