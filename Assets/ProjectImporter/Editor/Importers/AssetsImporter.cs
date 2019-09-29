@@ -1,15 +1,12 @@
 ﻿namespace UnityProjectImporter {
+	using System;
 	using System.Collections.Generic;
 	using System.IO;
-	using System.Text;
 	using System.Text.RegularExpressions;
 	using UnityEditor.SceneManagement;
 	using UnityEngine;
-    using System;
 
 	public class AssetsImporter:Importer{
-		
-		private string[] _oldGuidList;
 		
 		/// <summary>
 		/// 导入项目的Assets文件夹，并修改.cs文件解决冲突
@@ -21,7 +18,7 @@
 			//当前项目的Assets文件夹的全路径,路径中使用"/"分隔,不是"\"。
 			string assetsPath=Application.dataPath;
 			//备份当前项目的所有GUID用于判断是否重复
-			_oldGuidList=GuidUtil.getFolderGuidList(assetsPath);
+			string[] oldGuidList=GuidUtil.getFolderGuidList(assetsPath);
 			//创建子项目目录,如果目录存在则先删除
 			string childProjectPath=assetsPath+"/"+projectName;
 			FileUtil2.createDirectory(childProjectPath,true);
@@ -37,6 +34,8 @@
 			foreachAndEditCSharpFiles(childProjectAssetsPath,projectName);
 			//修改文件夹下的.unity文件,修正SortingLayer等
 			foreachAndEditUnityFiles(childProjectAssetsPath,projectName);
+			//修改冲突的GUID
+			foreachAndEditGuids(childProjectAssetsPath,oldGuidList);
 		}
 
 		/// <summary>
@@ -82,7 +81,6 @@
                     Directory.Delete(@directory.FullName,true);//删除
                     //对应的.meta文件也删除
                     string metaFilePath=@directory.FullName+".meta";
-					Debug.Log(metaFilePath);
                     if(File.Exists(metaFilePath))File.Delete(metaFilePath);
                 }else{
 				    foreacAndDeleteFolders(directory,false,deleteRootNames,deleteNames);//递归,不检测root
@@ -98,13 +96,10 @@
 		/// <param name="folderPath">文件夹目录</param>
 		/// <param name="projectName">导入的项目名称</param>
 		private void foreachAndEditCSharpFiles(string folderPath,string projectName){
-			//Debug.Log(Directory.Exists(folderPath));
 			var directoryInfo=new DirectoryInfo(folderPath);
 			var files=directoryInfo.GetFiles("*.cs",SearchOption.AllDirectories);
 			int len=files.Length;
 			for(int i=0;i<len;i++){
-				//Debug.Log( "FullName:" + files[i].FullName );  
-				//Debug.Log( "DirectoryName:" + files[i].DirectoryName ); 
 				var file=files[i];
 				//修改.cs文件
 				editCSharpFile(@file.FullName,projectName);
@@ -117,7 +112,7 @@
 		/// <param name="filePath">文件路径，如果是'\'路径,需要加@转换，如:editCSharpFile(@"E:\unity_tags\Assets\Main.cs")。</param>
 		/// <param name="projectName">导入的项目名称</param>
 		private void editCSharpFile(string filePath,string projectName){
-			List<string> fileLines=FileUtil2.getFileLines(filePath);
+			List<string> fileLines=FileUtil2.getFileLines(filePath,true);
 			//修正不兼容的"SortingLayer"代码,使用"SortingLayer2"替换
 			fixSortingLayerCode(fileLines);
 			//修正不兼容的"LayerMask"代码,使用"LayerMask2"替换
@@ -326,7 +321,7 @@
 				}
 			}
 			//
-			List<string> fileLines=FileUtil2.getFileLines(filePath);
+			List<string> fileLines=FileUtil2.getFileLines(filePath,true);
 			//修正引用的SortingLayer.id
 			fixSortingLayerID(fileLines);
 			//重新写入文件
@@ -361,6 +356,27 @@
 				}
 			}
 		}
+		#endregion
+
+		#region foreachAndEditGuids
+		/// <summary>
+		/// 遍历和修改指定文件夹下各个文件有冲突的guid
+		/// </summary>
+		/// <param name="folderPath">要修改的文件夹</param>
+		/// <param name="excludeGuidList">如果文件夹下各个文件的guid与该列表中项重复，则需要修改</param>
+		private void foreachAndEditGuids(string folderPath,string[] excludeGuidList){
+			List<string> duplicateList=new List<string>();
+			DirectoryInfo directoryInfo=new DirectoryInfo(folderPath);
+			FileInfo[] fileInfos=directoryInfo.GetFiles("*",SearchOption.AllDirectories);
+			int len=fileInfos.Length;
+			for(int i=0;i<len;i++){
+				FileInfo fileInfo=fileInfos[i];
+				//fileInfo.FullName
+				Debug.Log(fileInfo.Extension);
+			}
+		}
+
+
 		#endregion
 	}
 

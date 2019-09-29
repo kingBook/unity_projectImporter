@@ -11,15 +11,27 @@ namespace unity_framework{
 		/// 返回文件的所有行
 		/// </summary>
 		/// <param name="filePath">文件路径,如果是'\'路径,需要加@转换，如:getFileLines(@"E:\unity_tags\Assets\test.txt")</param>
+		/// <param name="isAddLineEndEnter">行尾是否添加回车</param>
+		/// <param name="readCount">读取的行数，-1或<0:读取所有行</param>
 		/// <returns></returns>
-		public static List<string> getFileLines(string filePath){
+		public static List<string> getFileLines(string filePath,bool isAddLineEndEnter,int readCount=-1){
 			StreamReader streamReader=File.OpenText(filePath);
 	
 			List<string> fileLines=new List<string>();
 			string line;
-			while((line=streamReader.ReadLine())!=null){
-				line+='\n';//行尾加回车
-				fileLines.Add(line);
+			int count=0;
+			if(readCount!=0){
+				while((line=streamReader.ReadLine())!=null){
+					if(isAddLineEndEnter){
+						line+='\n';//行尾加回车
+					}
+					fileLines.Add(line);
+	
+					count++;
+					if(readCount>0&&count>=readCount){
+						break;
+					}
+				}
 			}
 			streamReader.Dispose();
 			return fileLines;
