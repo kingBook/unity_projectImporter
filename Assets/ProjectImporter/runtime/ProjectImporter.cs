@@ -23,13 +23,13 @@
 		
 		private void Start(){
 			//test
-			openProject("unity_tags");
-			Invoke("onTimeout",3);
+			//openProject("unity_wawawu");
+			//Invoke("onTimeout",3);
 		}
-		private void onTimeout(){
+		/*private void onTimeout(){
 			Debug.Log("onTimeout");
 			closeProject("unity_tags");
-		}
+		}*/
 
 		/// <summary>
 		/// 打开一个项目

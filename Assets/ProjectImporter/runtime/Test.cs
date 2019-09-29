@@ -1,23 +1,29 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System.Text.RegularExpressions;
-using UnityProjectImporter;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Test:MonoBehaviour{
-	public Camera camera;
-	private void Start() {
-		
-	}
+public class Test : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+		string str="effd2d16da2d75d4886f902f5962d16b";
+        Debug.Log(str.Length);
+    }
 
-	private void Update(){
-		var pos=Input.mousePosition;
-		//pos.z=cam.transform.position.z+10;
-		pos.z=11-camera.transform.position.z;
-		pos=camera.ScreenToWorldPoint(pos);
-		Debug.Log(camera.transform.position.z+","+camera.nearClipPlane+","+pos.z);
-		transform.position=pos;
+    // Update is called once per frame
+    void Update()
+    {
+        if(Input.GetMouseButtonDown(0)){
+			string str=getGUID();
+			Debug.Log(str+","+str.Length);
+		}
+    }
 
-
-		transform.rotation=camera.transform.rotation;
+	private string getGUID(){
+		System.Guid guid=new System.Guid();
+		guid=Guid.NewGuid();
+		return guid.ToString("N");
 	}
 }

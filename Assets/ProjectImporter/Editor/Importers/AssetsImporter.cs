@@ -5,8 +5,12 @@
 	using System.Text.RegularExpressions;
 	using UnityEditor.SceneManagement;
 	using UnityEngine;
+    using System;
 
 	public class AssetsImporter:Importer{
+		
+		private string[] _oldGuidList;
+		
 		/// <summary>
 		/// 导入项目的Assets文件夹，并修改.cs文件解决冲突
 		/// </summary>
@@ -14,37 +18,78 @@
 		/// <param name="projectImporterTempPath">临时文件夹</param>
 		/// <param name="projectName">需要导入项目名称</param>
 		public override void import(string path,string projectImporterTempPath,string projectName){
+			//当前项目的Assets文件夹的全路径,路径中使用"/"分隔,不是"\"。
+			string assetsPath=Application.dataPath;
+			//备份当前项目的所有GUID用于判断是否重复
+			_oldGuidList=GuidUtil.getFolderGuidList(assetsPath);
 			//创建子项目目录,如果目录存在则先删除
-			string childProjectPath=Application.dataPath+"/"+projectName;
+			string childProjectPath=assetsPath+"/"+projectName;
 			FileUtil2.createDirectory(childProjectPath,true);
 			//子项目Assets目录
 			string childProjectAssetsPath=childProjectPath+"/Assets";
 			//复制项目的Assets文件夹到子项目路径
 			FileUtil2.copyDirectory(path+"/Assets",childProjectAssetsPath);
+            //删除DOTweenSettings.asset
+            deleteDOTweenSettingsAsset(childProjectAssetsPath);
 			//删除不需要导入的文件夹，如Editor、Gizmos、Plugins等
 			foreachAndDeleteIgnoreFolders(childProjectAssetsPath);
 			//修改文件夹下的.cs文件解决冲突
 			foreachAndEditCSharpFiles(childProjectAssetsPath,projectName);
 			//修改文件夹下的.unity文件,修正SortingLayer等
 			foreachAndEditUnityFiles(childProjectAssetsPath,projectName);
-		} 
+		}
 
+		/// <summary>
+		/// 删除DOTween在Assets/Resources下生成的DOTweenSettings.asset
+		/// </summary>
+		/// <param name="childProjectAssetsPath"></param>
+		private void deleteDOTweenSettingsAsset(string childProjectAssetsPath){
+			string doTweenSettingsAssetPath=childProjectAssetsPath+"/Resources/DOTweenSettings.asset";
+            string doTweenSettingsAssetMetaPath=childProjectAssetsPath+"/Resources/DOTweenSettings.asset.meta";
+            if(File.Exists(doTweenSettingsAssetPath))File.Delete(doTweenSettingsAssetPath);
+            if(File.Exists(doTweenSettingsAssetMetaPath))File.Delete(doTweenSettingsAssetMetaPath);
+		}
+        
+        #region foreachAndDeleteIgnoreFolders
 		/// <summary>
 		/// 遍历删除不需要的子文件夹
 		/// </summary>
-		/// <param name="folderPath">文件夹目录</param>
+		/// <param name="folderPath">遍历的文件夹目录</param>
 		private void foreachAndDeleteIgnoreFolders(string folderPath){
-			string[] ignoreRootFolderNames=new string[]{"EditorDefaultResources","Gizmos","Plugins"};
-			string[] ignoreFolderNames=new string[]{"Editor"};
+			//只能在Assets文件夹下的一级子目录的特殊文件夹
+			string[] ignoreRootFolderNames=new string[]{"EditorDefaultResources","Gizmos","Plugins","StandardAssets","StreamingAssets"};
+			//可以在Assets文件夹下的任意子目录的特殊文件夹
+			string[] ignoreFolderNames=new string[]{"Editor","DOTween"};
 			//
 			DirectoryInfo rootFolder=new DirectoryInfo(folderPath);
+			foreacAndDeleteFolders(rootFolder,true,ignoreRootFolderNames,ignoreFolderNames);
+		}
+        /// <summary>
+        /// 遍历删除不需要的子文件夹
+        /// </summary>
+        /// <param name="rootFolder">遍历的文件夹</param>
+        /// <param name="isCheckRoot">如果true,将删除名称匹配deleteRootNames的文件夹</param>
+        /// <param name="deleteRootNames">如果参数isCheckRoot为true,将删除名称匹配的文件夹</param>
+        /// <param name="deleteNames">将在所有子级检测并删除名称匹配的文件夹</param>
+		private void foreacAndDeleteFolders(DirectoryInfo rootFolder,bool isCheckRoot,string[] deleteRootNames,string[] deleteNames){
 			DirectoryInfo[] directories=rootFolder.GetDirectories();
 			int len=directories.Length;
 			for(int i=0;i<len;i++){
 				DirectoryInfo directory=directories[i];
-				Debug.Log("directory.Name:"+directory.Name);
+                bool isDelete=Array.IndexOf(deleteNames,directory.Name)>-1;
+                isDelete=isDelete|| (isCheckRoot&&Array.IndexOf(deleteRootNames,directory.Name)>-1);
+                if(isDelete){
+                    Directory.Delete(@directory.FullName,true);//删除
+                    //对应的.meta文件也删除
+                    string metaFilePath=@directory.FullName+".meta";
+					Debug.Log(metaFilePath);
+                    if(File.Exists(metaFilePath))File.Delete(metaFilePath);
+                }else{
+				    foreacAndDeleteFolders(directory,false,deleteRootNames,deleteNames);//递归,不检测root
+                }
 			}
 		}
+        #endregion
 
 		#region foreachAndEditCSharpFiles
 		/// <summary>
@@ -72,16 +117,7 @@
 		/// <param name="filePath">文件路径，如果是'\'路径,需要加@转换，如:editCSharpFile(@"E:\unity_tags\Assets\Main.cs")。</param>
 		/// <param name="projectName">导入的项目名称</param>
 		private void editCSharpFile(string filePath,string projectName){
-			//Debug.Log(filePath);
-			var streamReader=File.OpenText(@filePath);
-
-			List<string> fileLines=new List<string>();
-			string line;
-			while((line=streamReader.ReadLine())!=null){
-				line+='\n';//行尾加回车
-				fileLines.Add(line);
-			}
-			streamReader.Dispose();
+			List<string> fileLines=FileUtil2.getFileLines(filePath);
 			//修正不兼容的"SortingLayer"代码,使用"SortingLayer2"替换
 			fixSortingLayerCode(fileLines);
 			//修正不兼容的"LayerMask"代码,使用"LayerMask2"替换
@@ -93,7 +129,7 @@
 			//检测并添加以项目命名的namespace到.cs文件
 			checkAndAddNameSpaceToCSharpFile(fileLines,projectName,filePath);
 			//重新写入文件
-			writeFileLines(fileLines.ToArray(),filePath);
+			FileUtil2.writeFileLines(fileLines.ToArray(),filePath);
 		}
 
 		/// <summary>
@@ -135,11 +171,6 @@
 				new Regex(@"\(\s*LayerMask\s*\)\s*\S+",RegexOptions.Compiled)
 			};
 			replaceWithMatchRegexs(fileLines,matchRegexs,"LayerMask","LayerMask2");
-
-			//public LayerMask xxx;
-
-			//[SerlizeFiled]
-			//private LayerMask xxx;
 		}
 
 		/// <summary>
@@ -295,18 +326,11 @@
 				}
 			}
 			//
-			var streamReader=File.OpenText(@filePath);
-			List<string> fileLines=new List<string>();
-			string line;
-			while((line=streamReader.ReadLine())!=null){
-				line+='\n';//行尾加回车
-				fileLines.Add(line);
-			}
-			streamReader.Dispose();
+			List<string> fileLines=FileUtil2.getFileLines(filePath);
 			//修正引用的SortingLayer.id
 			fixSortingLayerID(fileLines);
 			//重新写入文件
-			writeFileLines(fileLines.ToArray(),filePath);
+			FileUtil2.writeFileLines(fileLines.ToArray(),filePath);
 		}
 
 		/// <summary>
@@ -338,26 +362,6 @@
 			}
 		}
 		#endregion
-
-		/// <summary>
-		/// 将行字符数组写入到本地
-		/// </summary>
-		/// <param name="fileLines">行字符数组</param>
-		/// <param name="filePath">写入文件的路径</param>
-		private void writeFileLines(string[] fileLines,string filePath){
-			File.Delete(filePath);
-			var fileStream=File.Create(filePath);
-
-			StringBuilder strBuilder=new StringBuilder();
-			int len=fileLines.Length;
-			for(int i=0;i<len;i++){
-				strBuilder.Append(fileLines[i]);
-			}
-			UTF8Encoding utf8Bom=new UTF8Encoding(true);
-			byte[] bytes=utf8Bom.GetBytes(strBuilder.ToString());
-			fileStream.Write(bytes,0,bytes.Length);
-			fileStream.Dispose();
-		}
 	}
 
 }

@@ -8,20 +8,27 @@ Tags and Layers
 Time
 -------------------------
 EditorBuildSettings
-
+-------------------------
 
 
 待完成：
-忽略Editor、Plug-in等文件夹
-DoTween等插件冲突
-
-
-
+文件uid相同导致的引用错误(如不同项目的App类绑定不正确)***
+打开子项目场景导致无法删除场景
+正在编译代码时导入或删除子项目
 在unity里删除项目文件夹时
 版本号
 
 
-特殊文件夹
+
+
+
+
+
+
+
+
+-------------------------
+特殊文件夹:
 可以在Assets的任意子目录
 Editor
 Resources
@@ -32,3 +39,17 @@ Gizmos
 Plugins
 StandardAssets
 StreamingAssets
+
+///////导入项目时将会忽略以下文件夹/////////////
+Editor
+
+EditorDefaultResources
+Gizmos
+Plugins
+StandardAssets
+StreamingAssets
+
+DOTween
+-------------------------
+
+
