@@ -12,11 +12,11 @@
 	public static class GuidUtil{
 		
 		/// <summary>
-		/// 返回指定文件夹下所有资源文件的guid列表
+		/// 返回指定文件夹下所有.meta文件的guid列表
 		/// </summary>
 		/// <param name="folderPath">文件夹路径,如果是'\'路径,需要加@转换，如:getFolderGuidList(@"E:\unity_tags\Assets")</param>
 		/// <returns></returns>
-		public static string[] getFolderGuidList(string folderPath){
+		public static string[] getAllMetaFileGuidList(string folderPath){
 			DirectoryInfo directoryInfo=new DirectoryInfo(folderPath);
 			FileInfo[] fileInfos=directoryInfo.GetFiles("*.meta",SearchOption.AllDirectories);
 			Regex regex=new Regex(@"guid:\s*",RegexOptions.Compiled);
@@ -30,6 +30,20 @@
 				
 				Match match=regex.Match(guidLine);
 				list[i]=guidLine.Substring(match.Value.Length,32);
+			}
+			return list;
+		}
+
+		/// <summary>
+		/// 返回唯一的新的Guid列表，长度与excludeGuidList一致
+		/// </summary>
+		/// <param name="excludeGuidList">返回的Guid将不与该列表中的任意项重复</param>
+		/// <returns></returns>
+		public static string[] getUniqueNewGuids(string[] excludeGuidList){
+			int len=excludeGuidList.Length;
+			string[] list=new string[len];
+			for(int i=0;i<len;i++){
+				list[i]=getUniqueNewGuid(excludeGuidList);
 			}
 			return list;
 		}

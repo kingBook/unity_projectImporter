@@ -30,6 +30,35 @@
 		}
 
 		/// <summary>
+		/// 复制unity项目设置文件(该方法修改了文件，解决直接复制引发的警告)
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="dest"></param>
+		/// <param name="isRefreshAsset"></param>
+		/// <param name="isExistReplace"></param>
+		public static void copyProjectSettingsAsset(string source,string dest,bool isRefreshAsset=false,bool isExistReplace=true){
+			bool isCopy=false;
+			if(File.Exists(dest)){
+				if(isExistReplace){
+					File.Delete(dest);
+					isCopy=true;
+				}
+			}else{
+				isCopy=true;
+			}
+			if(isCopy){
+				File.Copy(source,dest);
+				//List<string> fileLines=getFileLines(dest,true);
+				//修改第三行
+				//fileLines[2]=fileLines[2].Replace("&1","&1616518");
+				//writeFileLines(fileLines.ToArray(),dest);
+			}
+			
+			if(isRefreshAsset)AssetDatabase.Refresh();
+		}
+
+
+		/// <summary>
 		/// 返回文件的所有行
 		/// </summary>
 		/// <param name="filePath">文件路径,如果是'\'路径,需要加@转换，如:getFileLines(@"E:\unity_tags\Assets\test.txt")</param>

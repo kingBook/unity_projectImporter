@@ -18,7 +18,7 @@
 			//当前项目的Assets文件夹的全路径,路径中使用"/"分隔,不是"\"。
 			string assetsPath=Application.dataPath;
 			//备份当前项目的所有GUID用于判断是否重复
-			string[] oldGuidList=GuidUtil.getFolderGuidList(assetsPath);
+			string[] oldGuidList=GuidUtil.getAllMetaFileGuidList(assetsPath);
 			//创建子项目目录,如果目录存在则先删除
 			string childProjectPath=assetsPath+"/"+projectName;
 			FileUtil2.createDirectory(childProjectPath,true);
@@ -365,18 +365,73 @@
 		/// <param name="folderPath">要修改的文件夹</param>
 		/// <param name="excludeGuidList">如果文件夹下各个文件的guid与该列表中项重复，则需要修改</param>
 		private void foreachAndEditGuids(string folderPath,string[] excludeGuidList){
-			List<string> duplicateList=new List<string>();
+			//重复的guid列表
+			string[] duplicateGuidList=getDuplicateGuidList(folderPath,excludeGuidList);
+			//用于替换重复的guid列表
+			string[] replaceGuidList=GuidUtil.getUniqueNewGuids(duplicateGuidList);
+			//查找并替换guid的文件类型列表
+			string[] testExtensions=new string[]{".meta",".unity",".asset",".prefab",".mat"};
+			//
 			DirectoryInfo directoryInfo=new DirectoryInfo(folderPath);
 			FileInfo[] fileInfos=directoryInfo.GetFiles("*",SearchOption.AllDirectories);
 			int len=fileInfos.Length;
 			for(int i=0;i<len;i++){
 				FileInfo fileInfo=fileInfos[i];
-				//fileInfo.FullName
-				Debug.Log(fileInfo.Extension);
+				string extension=fileInfo.Extension;
+				string filePath=fileInfo.FullName;
+				bool isTestFileType=Array.IndexOf(testExtensions,extension)>-1;
+				if(isTestFileType){
+					replaceFileDuplicateGuid(filePath,duplicateGuidList,replaceGuidList);
+				}
 			}
 		}
 
+		/// <summary>
+		/// 替换文件冲突的guid
+		/// </summary>
+		/// <param name="filePath">文件路径</param>
+		/// <param name="duplicateGuidList">重复有冲突的guid列表</param>
+		/// <param name="replaceGuidList">要替换的guid列表，各个元素索引与duplicateGuidList一致</param>
+		private void replaceFileDuplicateGuid(string filePath,string[] duplicateGuidList,string[] replaceGuidList){
+			Regex regex=new Regex(@"guid:\s*");
+			List<string> fileLines=FileUtil2.getFileLines(filePath,true,-1);
+			int len=fileLines.Count;
+			for(int i=0;i<len;i++){
+				string line=fileLines[i];
+				Match match=regex.Match(line);
+				if(match.Success){
+					int guidStartIndex=match.Index+match.Value.Length;
+					string guidString=line.Substring(guidStartIndex,32);
+					int atDuplicateListIndex=Array.IndexOf(duplicateGuidList,guidString);
+					if(atDuplicateListIndex>-1){
+						line=line.Remove(guidStartIndex,32);
+						line=line.Insert(guidStartIndex,replaceGuidList[atDuplicateListIndex]);
+						fileLines[i]=line;
+					}
+				}
+			}
+			FileUtil2.writeFileLines(fileLines.ToArray(),filePath);
+		}
 
+		/// <summary>
+		/// 返回指定文件夹所有与excludeGuidList中项重复的Guid
+		/// </summary>
+		/// <param name="folderPath">查找的文件夹路径</param>
+		/// <param name="excludeGuidList">用于判断重复的guid列表</param>
+		/// <returns></returns>
+		private string[] getDuplicateGuidList(string folderPath,string[] excludeGuidList){
+			List<string> results=new List<string>();
+			string[] folderAllMetaGuids=GuidUtil.getAllMetaFileGuidList(folderPath);
+			int i=folderAllMetaGuids.Length;
+			while(--i>=0){
+				string guidString=folderAllMetaGuids[i];
+				bool isDuplicate=Array.IndexOf(excludeGuidList,guidString)>-1;
+				if(isDuplicate){
+					results.Add(guidString);
+				}
+			}
+			return results.ToArray();
+		}
 		#endregion
 	}
 
