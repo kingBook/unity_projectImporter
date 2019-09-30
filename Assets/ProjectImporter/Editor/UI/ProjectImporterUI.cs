@@ -179,11 +179,16 @@
 		private void onAddProject(){
 			string folderPath=openSelectUnityProjectFolderPanel();
 			if(folderPath!=null){
+				string currentProjectPath=System.Environment.CurrentDirectory.Replace("\\","/");
 				bool isImport=true;
 				string projectName=folderPath.Substring(folderPath.LastIndexOf('/')+1);
 				string editorVersion=getEditorVersion(folderPath);
 				if(isAlreadyExists(folderPath)){
 					displayAlreadyExistsDialog();
+					isImport=false;
+				}else if(currentProjectPath==folderPath){
+					//当尝试导入当前项目时，跳过
+					EditorUtility.DisplayDialog("Selection error","Cannot import the project itself.","OK");
 					isImport=false;
 				}else if(isAlreadyExistsName(projectName)){
 					projectName=getRename(projectName);

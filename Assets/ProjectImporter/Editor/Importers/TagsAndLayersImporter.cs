@@ -1,6 +1,5 @@
 ﻿namespace UnityProjectImporter{
 	using UnityEditor;
-	using UnityEditor.SceneManagement;
 	using UnityEngine;
 
 	public class TagsAndLayersImporter:Importer{
@@ -16,7 +15,7 @@
 			//TagManager.asset复制过来的位置
 			string destTagFilePath=projectImporterTempPath+"/TagManager.asset";
 			//复制TagManager.asset
-			FileUtil2.copyProjectSettingsAsset(sourceTagFilePath,destTagFilePath,true);
+			FileUtil2.copyFile(sourceTagFilePath,destTagFilePath,true);
 			//加载并转换成SerializedObject
 			SerializedObject copyTagManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destTagFilePath));
 			//加载当前项目的TagManager.asset并转换成SerializedObject

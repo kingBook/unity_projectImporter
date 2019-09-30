@@ -17,7 +17,7 @@
 			//EditorBuildSettings.asset 复制过来的位置
 			string destTagFilePath=projectImporterTempPath+"/EditorBuildSettings.asset";
 			//复制 EditorBuildSettings.asset
-			FileUtil2.copyProjectSettingsAsset(sourceTagFilePath,destTagFilePath,true);
+			FileUtil2.copyFile(sourceTagFilePath,destTagFilePath,true);
 			//加载并转换成SerializedObject
 			string destTagAssetPath=projectImporterTempPath+"/EditorBuildSettings.asset";
 			SerializedObject copyDynamicsManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destTagAssetPath));

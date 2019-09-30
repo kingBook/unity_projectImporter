@@ -1,7 +1,5 @@
 ﻿namespace UnityProjectImporter{
 	using UnityEngine;
-	using System.Collections;
-	using UnityProjectImporter;
 	using UnityEditor;
 
 	public class TimeImporter:Importer{
@@ -17,7 +15,7 @@
 			//TimeManager.asset 复制过来的位置
 			string destTagFilePath=projectImporterTempPath+"/TimeManager.asset";
 			//复制 TimeManager.asset
-			FileUtil2.copyProjectSettingsAsset(sourceTagFilePath,destTagFilePath,true);
+			FileUtil2.copyFile(sourceTagFilePath,destTagFilePath,true);
 			//加载并转换成SerializedObject
 			string destTagAssetPath=projectImporterTempPath+"/TimeManager.asset";
 			SerializedObject copyDynamicsManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destTagAssetPath));

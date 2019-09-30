@@ -16,7 +16,7 @@
 			//Physics2DSettings.asset 复制过来的位置
 			string destTagFilePath=projectImporterTempPath+"/Physics2DSettings.asset";
 			//复制 Physics2DSettings.asset
-			FileUtil2.copyProjectSettingsAsset(sourceTagFilePath,destTagFilePath,true);
+			FileUtil2.copyFile(sourceTagFilePath,destTagFilePath,true);
 			//加载并转换成SerializedObject
 			string destTagAssetPath=projectImporterTempPath+"/Physics2DSettings.asset";
 			SerializedObject copyDynamicsManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destTagAssetPath));

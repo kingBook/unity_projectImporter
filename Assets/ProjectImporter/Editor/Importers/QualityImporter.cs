@@ -18,7 +18,7 @@
 			//QualitySettings.asset 复制过来的位置
 			string destTagFilePath=projectImporterTempPath+"/QualitySettings.asset";
 			//复制 QualitySettings.asset
-			FileUtil2.copyProjectSettingsAsset(sourceTagFilePath,destTagFilePath,true);
+			FileUtil2.copyFile(sourceTagFilePath,destTagFilePath,true);
 			//加载并转换成SerializedObject
 			string destTagAssetPath=projectImporterTempPath+"/QualitySettings.asset";
 			SerializedObject copyDynamicsManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destTagAssetPath));

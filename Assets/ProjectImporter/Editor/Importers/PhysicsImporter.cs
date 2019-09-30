@@ -16,7 +16,7 @@
 			//DynamicsManager.asset复制过来的位置
 			string destTagFilePath=projectImporterTempPath+"/DynamicsManager.asset";
 			//复制DynamicsManager.asset
-			FileUtil2.copyProjectSettingsAsset(sourceTagFilePath,destTagFilePath,true);
+			FileUtil2.copyFile(sourceTagFilePath,destTagFilePath,true);
 			//加载并转换成SerializedObject
 			string destTagAssetPath=projectImporterTempPath+"/DynamicsManager.asset";
 			SerializedObject copyDynamicsManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destTagAssetPath));

@@ -3,6 +3,7 @@
 	using System.IO;
 	using System.Text;
 	using UnityEditor;
+
 	/// <summary>
 	/// 文件工具类
 	/// </summary>
@@ -28,35 +29,6 @@
 			}
 			Directory.CreateDirectory(path);
 		}
-
-		/// <summary>
-		/// 复制unity项目设置文件(该方法修改了文件，解决直接复制引发的警告)
-		/// </summary>
-		/// <param name="source"></param>
-		/// <param name="dest"></param>
-		/// <param name="isRefreshAsset"></param>
-		/// <param name="isExistReplace"></param>
-		public static void copyProjectSettingsAsset(string source,string dest,bool isRefreshAsset=false,bool isExistReplace=true){
-			bool isCopy=false;
-			if(File.Exists(dest)){
-				if(isExistReplace){
-					File.Delete(dest);
-					isCopy=true;
-				}
-			}else{
-				isCopy=true;
-			}
-			if(isCopy){
-				File.Copy(source,dest);
-				//List<string> fileLines=getFileLines(dest,true);
-				//修改第三行
-				//fileLines[2]=fileLines[2].Replace("&1","&1616518");
-				//writeFileLines(fileLines.ToArray(),dest);
-			}
-			
-			if(isRefreshAsset)AssetDatabase.Refresh();
-		}
-
 
 		/// <summary>
 		/// 返回文件的所有行

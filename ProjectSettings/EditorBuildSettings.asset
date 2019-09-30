@@ -8,28 +8,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ProjectImporter/Scenes/ProjectImporter.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/unity_parkinggame/Assets/Scenes/main.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
-    path: Assets/unity_parkinggame/Assets/Scenes/title.unity
-    guid: 5598b217ca8869c488ae7c289eb6dac0
-  - enabled: 1
-    path: Assets/unity_parkinggame/Assets/Scenes/level1.unity
-    guid: 986a85edc372f4c4ea43c9cf7b7dbb5f
-  - enabled: 1
-    path: Assets/unity_parkinggame/Assets/Scenes/level2.unity
-    guid: d5a0e97f062fb484499694f79a9f1238
-  - enabled: 1
-    path: Assets/unity_parkinggame/Assets/Scenes/level3.unity
-    guid: adb68aff5efef324089abed548c756a6
-  - enabled: 1
-    path: Assets/unity_parkinggame/Assets/Scenes/level4.unity
-    guid: d96e1d7b25e653e42b33b8347df3c1f3
-  - enabled: 1
-    path: Assets/unity_parkinggame/Assets/Scenes/level5.unity
-    guid: 575cc89373e3e2f4b9e267e7ff4b673a
-  - enabled: 1
-    path: Assets/unity_parkinggame/Assets/Scenes/level6.unity
-    guid: e1888275066d68b4e809058e235ed5ab
   m_configObjects: {}
