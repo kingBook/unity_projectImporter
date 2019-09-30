@@ -1,5 +1,7 @@
 ﻿namespace UnityProjectImporter {
-	using System.IO;
+    using System.Collections.Generic;
+    using System.IO;
+	using System.Text.RegularExpressions;
 	using System.Threading.Tasks;
 	using System.Xml;
 	using UnityEditor;
@@ -36,7 +38,9 @@
 					//表头
 					EditorGUILayout.BeginHorizontal();
 					EditorGUILayout.LabelField("ProjectName",GUILayout.MinWidth(100),GUILayout.MaxWidth(150));
+					EditorGUILayout.LabelField("Version",GUILayout.Width(65));
 					EditorGUILayout.LabelField("Path",GUILayout.MinWidth(100));
+					GUILayout.Space(140);
 					EditorGUILayout.EndHorizontal();
 					//
 					if(_xmlDocument!=null){
@@ -44,9 +48,11 @@
 						for(int i=0;i<items.Count;i++){
 							XmlNode item=items[i];
 							string projectName=item.Attributes["name"].Value;
+							string editorVersion=item.Attributes["editorVersion"].Value;
 							string projectFolderPath=item.InnerText;
 							EditorGUILayout.BeginHorizontal();
 							EditorGUILayout.TextField(projectName,GUILayout.MinWidth(100),GUILayout.MaxWidth(150));
+							EditorGUILayout.LabelField(editorVersion,GUILayout.Width(65));
 							EditorGUILayout.TextField(projectFolderPath,GUILayout.MinWidth(100));
 							if(GUILayout.Button("Explorer",GUILayout.Width(60))){
 								showInExplorer(item,projectFolderPath);
@@ -175,6 +181,7 @@
 			if(folderPath!=null){
 				bool isImport=true;
 				string projectName=folderPath.Substring(folderPath.LastIndexOf('/')+1);
+				string editorVersion=getEditorVersion(folderPath);
 				if(isAlreadyExists(folderPath)){
 					displayAlreadyExistsDialog();
 					isImport=false;
@@ -187,9 +194,24 @@
 					//导入指定项目
 					ProjectImporterEditor.importProject(folderPath);
 					//记录已添加的项目到xml
-					addItemToXml(folderPath,projectName);
+					addItemToXml(folderPath,projectName,editorVersion);
 				}
 			}
+		}
+
+		/// <summary>
+		/// 返回项目编辑器版本号
+		/// </summary>
+		/// <param name="folderPath">unity项目路径</param>
+		/// <returns></returns>
+		private string getEditorVersion(string folderPath){
+			string projectVersionTxtPath=folderPath+"/ProjectSettings/ProjectVersion.txt";
+			List<string> filelines=FileUtil2.getFileLines(projectVersionTxtPath,false,1);
+			string editorVersionLine=filelines[0];//第一行是版本号
+			Regex regex=new Regex(@"m_EditorVersion:\s*",RegexOptions.Compiled);
+			Match match=regex.Match(editorVersionLine);
+			string versionString=editorVersionLine.Substring(match.Value.Length);
+			return versionString;
 		}
 
 		/// <summary>
@@ -234,15 +256,17 @@
 		/// <summary>
 		/// 添加一个项到xml
 		/// </summary>
-		/// <param name="projectFolderPath"></param>
-		/// <param name="projectName"></param>
-		private void addItemToXml(string projectFolderPath,string projectName){
+		/// <param name="projectFolderPath">项目路径</param>
+		/// <param name="projectName">项目名称</param>
+		/// <param name="editorVersion">编辑器版本号</param>
+		private void addItemToXml(string projectFolderPath,string projectName,string editorVersion){
 			if(_xmlDocument==null){
 				_xmlDocument=XmlUtil.createXmlDocument(false);
 				_xmlDocument.AppendChild(_xmlDocument.CreateElement("Root"));
 			}
 			var itemElement=_xmlDocument.CreateElement("Item");
 			itemElement.SetAttribute("name",projectName);
+			itemElement.SetAttribute("editorVersion",editorVersion);
 			itemElement.InnerText=projectFolderPath;
 			_xmlDocument.FirstChild.AppendChild(itemElement);
 			saveXml();
