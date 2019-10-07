@@ -81,6 +81,15 @@
 			var defaultTimeData=Resources.Load<TimeData>("default_timeData");
 			setTimeWithData(defaultTimeData);
 		}
+		
+		/// <summary>
+		/// 重命名项目
+		/// </summary>
+		/// <param name="oldName">旧的名称</param>
+		/// <param name="newName">新的名称</param>
+		public void renameProject(string oldName, string newName){
+			
+		}
 
 		/// <summary>
 		/// 卸载指定项目的所有场景

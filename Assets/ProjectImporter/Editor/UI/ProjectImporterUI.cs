@@ -184,6 +184,7 @@
 				string projectName=folderPath.Substring(folderPath.LastIndexOf('/')+1);
 				string editorVersion=getEditorVersion(folderPath);
 				if(isAlreadyExists(folderPath)){
+					//当尝试导入已经存在的项目时，跳过
 					displayAlreadyExistsDialog();
 					isImport=false;
 				}else if(currentProjectPath==folderPath){
