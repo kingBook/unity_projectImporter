@@ -50,8 +50,13 @@
 				EditorGUILayout.Space();
 				_scrollPosition=EditorGUILayout.BeginScrollView(_scrollPosition);
 				{
-					for(int i=0;i<50;i++)
-					GUILayout.Button("Obfuscate a sub project");
+					for(int i=0;i<50;i++){
+						EditorGUILayout.BeginHorizontal();
+						GUILayout.Label("unity_tags");
+						GUILayout.Label("Yes");//Obfuscated
+						GUILayout.Button("Obfuscate");
+						EditorGUILayout.EndHorizontal();
+					}
 				}
 				EditorGUILayout.EndScrollView();
 			}
