@@ -1,4 +1,4 @@
-﻿namespace UnityProjectImporter {
+﻿namespace UnityProjectImporter{
     using System.Collections.Generic;
     using System.IO;
 	using System.Text.RegularExpressions;
@@ -37,7 +37,7 @@
 				{
 					//表头
 					EditorGUILayout.BeginHorizontal();
-					EditorGUILayout.LabelField("ProjectName",GUILayout.MinWidth(100),GUILayout.MaxWidth(150));
+					EditorGUILayout.SelectableLabel("ProjectName",GUILayout.MinWidth(100),GUILayout.MaxWidth(150));
 					EditorGUILayout.LabelField("Version",GUILayout.Width(65));
 					EditorGUILayout.LabelField("Path",GUILayout.MinWidth(100));
 					GUILayout.Space(140);
