@@ -1,4 +1,4 @@
-﻿namespace UnityProjectImporter{
+﻿namespace UnityTools{
 	using System;
 	using System.IO;
 	using System.Threading.Tasks;

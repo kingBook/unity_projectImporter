@@ -1,6 +1,6 @@
 ﻿namespace UnityEngine{
 	using System.Collections.Generic;
-	using UnityProjectImporter;
+	using UnityTools;
 
 	public struct LayerMask2{
 		public int value;

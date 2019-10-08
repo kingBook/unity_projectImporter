@@ -1,4 +1,4 @@
-﻿namespace UIutil{
+﻿namespace UnityTools{
 	using UnityEngine;
 	using System.Collections;
 

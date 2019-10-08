@@ -1,4 +1,4 @@
-﻿namespace UnityProjectImporter{
+﻿namespace UnityTools{
 	using UnityEngine;
 	using UnityEngine.SceneManagement;
 	

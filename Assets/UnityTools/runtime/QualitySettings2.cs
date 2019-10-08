@@ -1,7 +1,7 @@
 ﻿namespace UnityEngine{
 	using System;
 	using System.ComponentModel;
-    using UnityProjectImporter;
+    using UnityTools;
 
     public class QualitySettings2{
 		/*public static int particleRaycastBudget { get; set; }

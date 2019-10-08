@@ -1,4 +1,4 @@
-﻿namespace UnityProjectImporter{
+﻿namespace UnityTools{
 	public class ClassRecord{
 		public string[] keywords;
 		public string name;

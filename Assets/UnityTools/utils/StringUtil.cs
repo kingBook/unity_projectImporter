@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace UnityProjectImporter{
+namespace UnityTools{
 	/// <summary>
 	/// 字符串低效方法优化
 	/// <br>具体描述： https://docs.unity3d.com/Manual/BestPracticeUnderstandingPerformanceInUnity5.html (Inefficient built-in string APIs部分)</br>

@@ -1,7 +1,7 @@
 ﻿namespace UnityEngine.SceneManagement {
 	using System;
 	using UnityEngine;
-    using UnityProjectImporter;
+    using UnityTools;
 
     public class SceneManager2{
 		public static Scene GetSceneByName(string name){
