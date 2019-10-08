@@ -1,7 +1,9 @@
 ﻿namespace UnityTools {
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.IO;
 	using System.Text;
+	using System.Threading.Tasks;
 	using UnityEditor;
 
 	/// <summary>
@@ -28,6 +30,15 @@
 				FileUtil.DeleteFileOrDirectory(path);
 			}
 			Directory.CreateDirectory(path);
+		}
+
+		/// <summary>
+		/// 复制一个目录替换到指定的目录，如果指定目录不存在则新建
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="dest"></param>
+		public static void replaceDirectory(string source,string dest){
+			FileUtil.ReplaceDirectory(source,dest);
 		}
 
 		/// <summary>
@@ -79,5 +90,55 @@
 			fileStream.Write(bytes,0,bytes.Length);
 			fileStream.Dispose();
 		}
+
+		/// <summary>
+		/// 打开选择文件夹对话框选择一个unity项目文件夹。
+		/// <br>取消或选择非unity项目文件夹时都返回null</br>
+		/// <br>选择非unity项目文件夹时，将弹出选择错误对话框</br>
+		/// </summary>
+		/// <returns>返回选择的unity项目文件夹路径</returns>
+		public static string openSelectUnityProjectFolderPanel(){
+			string folderPath=EditorUtility.OpenFolderPanel("Select a unity project","","");
+			if(!string.IsNullOrEmpty(folderPath)){
+				if(FileUtil2.isUnityProjectFolder(folderPath)){
+					return folderPath;
+				}else{
+					EditorUtility.DisplayDialog("Selection error","Invalid project path:\n"+folderPath,"OK");
+				}
+			}
+			return null;
+		}
+
+		/// <summary>
+		/// 判断是不是unity项目文件夹(是否有"Assets"和"ProjectSettings"文件夹)
+		/// </summary>
+		/// <param name="folderPath"></param>
+		/// <returns></returns>
+		public static bool isUnityProjectFolder(string folderPath){
+			bool hasAssetsFolder=false;
+			bool hasProjectSettingsFolder=false;
+			string[] subFolders=Directory.GetDirectories(folderPath);
+			int len=subFolders.Length;
+			for(int i=0;i<len;i++){
+				string subFolderPath=subFolders[i];
+				int parentFolderIndex=subFolderPath.IndexOf(folderPath);
+				subFolderPath=subFolderPath.Substring(parentFolderIndex+1);
+				if(subFolderPath.IndexOf("Assets")>-1)hasAssetsFolder=true;
+				if(subFolderPath.IndexOf("ProjectSettings")>-1)hasProjectSettingsFolder=true;
+				if(hasAssetsFolder&&hasProjectSettingsFolder){
+					break;
+				}
+			}
+			return hasAssetsFolder&&hasProjectSettingsFolder;
+		}
+
+		/// <summary>
+		/// 使用Windows的Explorer打开一个文件夹目录
+		/// </summary>
+		public static void showInExplorer(string folderPath){
+			folderPath=folderPath.Replace("/","\\");
+			System.Diagnostics.Process.Start("explorer.exe",folderPath);
+		}
+
 	}
 }

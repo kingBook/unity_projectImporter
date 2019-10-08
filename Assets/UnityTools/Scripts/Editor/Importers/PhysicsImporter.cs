@@ -96,7 +96,7 @@
 				}
 			}
 
-			AssetDatabase.CreateAsset(physicsData,"Assets/ProjectImporter/Resources/"+projectName+"_physicsData.asset");
+			AssetDatabase.CreateAsset(physicsData,ProjectImporterEditor.resourcePath+"/"+projectName+"_physicsData.asset");
 			//删除复制过来的"DynamicsManager.asset"
 			AssetDatabase.DeleteAsset(destTagFilePath);
 			AssetDatabase.Refresh();

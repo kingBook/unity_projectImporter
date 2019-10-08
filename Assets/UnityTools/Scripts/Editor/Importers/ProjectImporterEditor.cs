@@ -6,6 +6,8 @@
     using UnityEngine;
 
 	public class ProjectImporterEditor:Editor{
+		public static readonly string tempPath="Assets/UnityTools/temp";
+		public static readonly string resourcePath="Assets/UnityTools/Resources";
 
 		/*[MenuItem("ProjectImporter/import")]
 		public static void import(){
@@ -40,8 +42,8 @@
 			//删除指定项目的所有资源和设置,用于重复导入时清空上一次导入的资源和设置
 			deleteProject(projectName,isDeleteBuildSettingsScenes,isDeleteAssets);
 
-			//创建"ProjectImporter/temp"临时文件夹,如果文件夹存在则先删除
-			string projectImporterTempPath="Assets/ProjectImporter/temp";
+			//创建临时文件夹,如果文件夹存在则先删除
+			string projectImporterTempPath=tempPath;
 			FileUtil2.createDirectory(projectImporterTempPath,true);
 
 			//导入tags和Layers
@@ -127,13 +129,13 @@
 		/// </summary>
 		/// <param name="projectName"></param>
 		private static void deleteProjectSettings(string projectName){
-			AssetDatabase.DeleteAsset("Assets/ProjectImporter/Resources/"+projectName+"_buildSettingsData.asset");
-			AssetDatabase.DeleteAsset("Assets/ProjectImporter/Resources/"+projectName+"_layersData.asset");
-			AssetDatabase.DeleteAsset("Assets/ProjectImporter/Resources/"+projectName+"_physics2dData.asset");
-			AssetDatabase.DeleteAsset("Assets/ProjectImporter/Resources/"+projectName+"_physicsData.asset");
-			AssetDatabase.DeleteAsset("Assets/ProjectImporter/Resources/"+projectName+"_qualityData.asset");
-			AssetDatabase.DeleteAsset("Assets/ProjectImporter/Resources/"+projectName+"_sortingLayersData.asset");
-			AssetDatabase.DeleteAsset("Assets/ProjectImporter/Resources/"+projectName+"_timeData.asset");
+			AssetDatabase.DeleteAsset(resourcePath+"/"+projectName+"_buildSettingsData.asset");
+			AssetDatabase.DeleteAsset(resourcePath+"/"+projectName+"_layersData.asset");
+			AssetDatabase.DeleteAsset(resourcePath+"/"+projectName+"_physics2dData.asset");
+			AssetDatabase.DeleteAsset(resourcePath+"/"+projectName+"_physicsData.asset");
+			AssetDatabase.DeleteAsset(resourcePath+"/"+projectName+"_qualityData.asset");
+			AssetDatabase.DeleteAsset(resourcePath+"/"+projectName+"_sortingLayersData.asset");
+			AssetDatabase.DeleteAsset(resourcePath+"/"+projectName+"_timeData.asset");
 		}
 
 

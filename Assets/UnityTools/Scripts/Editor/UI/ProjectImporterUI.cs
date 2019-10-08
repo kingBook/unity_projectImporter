@@ -16,7 +16,7 @@
 			window.Show();
 		}
 		
-		private static readonly string _xmlPath=System.Environment.CurrentDirectory+"/ProjectSettings/importProjects.xml";
+		public static readonly string xmlPath=System.Environment.CurrentDirectory+"/ProjectSettings/importProjects.xml";
 		private Vector2 _scrollPosition;
 		private XmlDocument _xmlDocument;
 		private FileLoader _fileLoader;
@@ -86,8 +86,7 @@
 
 		private void showInExplorer(XmlNode item,string projectFolderPath){
 			if(Directory.Exists(projectFolderPath)){
-				projectFolderPath=projectFolderPath.Replace("/","\\");
-				System.Diagnostics.Process.Start("explorer.exe",projectFolderPath);
+				FileUtil2.showInExplorer(projectFolderPath);
 			}else{
 				displayReassignDialog(item);
 				
@@ -102,7 +101,7 @@
 		/// <param name="projectName"></param>
 		private void onReimportProject(XmlNode item,string projectFolderPath,string projectName){
 			if(Directory.Exists(projectFolderPath)){
-				if(isUnityProjectFolder(projectFolderPath)){
+				if(FileUtil2.isUnityProjectFolder(projectFolderPath)){
 					ProjectImporterEditor.deleteProject(projectName);
 					ProjectImporterEditor.importCurrentProjectSettings();
 					ProjectImporterEditor.importProject(projectFolderPath);
@@ -128,7 +127,7 @@
 		/// </summary>
 		/// <param name="item"></param>
 		private void reassignProjectFolderPath(XmlNode item){
-			string folderPath=openSelectUnityProjectFolderPanel();
+			string folderPath=FileUtil2.openSelectUnityProjectFolderPanel();
 			if(folderPath!=null){
 				if(isAlreadyExists(folderPath)){
 					displayAlreadyExistsDialog();
@@ -157,27 +156,10 @@
 			//删除项目
 			ProjectImporterEditor.deleteProject(projectName);
 		}
-
-		/// <summary>
-		/// 打开选择文件夹对话框选择一个unity项目文件夹。
-		/// <br>取消或选择非unity项目文件时都返回null</br>
-		/// </summary>
-		/// <returns></returns>
-		private string openSelectUnityProjectFolderPanel(){
-			string folderPath=EditorUtility.OpenFolderPanel("Select a unity project","","");
-			if(!string.IsNullOrEmpty(folderPath)){
-				if(isUnityProjectFolder(folderPath)){
-					return folderPath;
-				}else{
-					EditorUtility.DisplayDialog("Selection error","Invalid project path:\n"+folderPath,"OK");
-				}
-			}
-			return null;
-		}
 		
 		/// <summary>点击导入项目按钮时</summary>
 		private void onAddProject(){
-			string folderPath=openSelectUnityProjectFolderPanel();
+			string folderPath=FileUtil2.openSelectUnityProjectFolderPanel();
 			if(folderPath!=null){
 				string currentProjectPath=System.Environment.CurrentDirectory.Replace("\\","/");
 				bool isImport=true;
@@ -234,29 +216,6 @@
 				projectName=head+(int.Parse(endNumberString)+1);
 			}
 			return projectName;
-		}
-
-		/// <summary>
-		/// 判断是不是unity项目文件夹(是否有"Assets"和"ProjectSettings"文件夹)
-		/// </summary>
-		/// <param name="folderPath"></param>
-		/// <returns></returns>
-		private bool isUnityProjectFolder(string folderPath){
-			bool hasAssetsFolder=false;
-			bool hasProjectSettingsFolder=false;
-			string[] subFolders=Directory.GetDirectories(folderPath);
-			int len=subFolders.Length;
-			for(int i=0;i<len;i++){
-				string subFolderPath=subFolders[i];
-				int parentFolderIndex=subFolderPath.IndexOf(folderPath);
-				subFolderPath=subFolderPath.Substring(parentFolderIndex+1);
-				if(subFolderPath.IndexOf("Assets")>-1)hasAssetsFolder=true;
-				if(subFolderPath.IndexOf("ProjectSettings")>-1)hasProjectSettingsFolder=true;
-				if(hasAssetsFolder&&hasProjectSettingsFolder){
-					break;
-				}
-			}
-			return hasAssetsFolder&&hasProjectSettingsFolder;
 		}
 		
 		/// <summary>
@@ -320,7 +279,7 @@
 		private async void saveXml(){
 			if(_xmlDocument==null)return;
 			await Task.Run(()=>{
-				_xmlDocument.Save(_xmlPath);
+				_xmlDocument.Save(xmlPath);
 			});
 		}
 		
@@ -331,7 +290,7 @@
 			if(_fileLoader==null){
 				_fileLoader=new FileLoader();
 			}
-			_fileLoader.loadAsync(_xmlPath);
+			_fileLoader.loadAsync(xmlPath);
 			_fileLoader.onComplete+=onloadXmlComplete;
 		}
 		private void onloadXmlComplete(byte[][] bytesList){
@@ -348,10 +307,6 @@
 		private void OnDisable(){
 			_isLoadXmlComplete=false;
 			saveXml();
-		}
-		
-		/// <summary>失去焦点</summary>
-		private void OnLostFocus(){
 		}
 		
 		/// <summary>关闭窗口</summary>

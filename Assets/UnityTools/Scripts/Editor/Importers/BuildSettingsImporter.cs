@@ -49,7 +49,7 @@
 			//赋值到BuildSettings窗口场景列表
 			EditorBuildSettings.scenes=editorBuildsettingsscenes.ToArray();
 			//保存发布设置数据到本地
-			AssetDatabase.CreateAsset(buildSettingsData,"Assets/ProjectImporter/Resources/"+projectName+"_buildSettingsData.asset");
+			AssetDatabase.CreateAsset(buildSettingsData,ProjectImporterEditor.resourcePath+"/"+projectName+"_buildSettingsData.asset");
 			//删除复制过来的"EditorBuildSettings.asset"
 			AssetDatabase.DeleteAsset(destTagFilePath);
 			AssetDatabase.Refresh();

@@ -43,7 +43,7 @@
 				}
 			}
 
-			AssetDatabase.CreateAsset(qualityData,"Assets/ProjectImporter/Resources/"+projectName+"_qualityData.asset");
+			AssetDatabase.CreateAsset(qualityData,ProjectImporterEditor.resourcePath+"/"+projectName+"_qualityData.asset");
 			//删除复制过来的"QualitySettings.asset"
 			AssetDatabase.DeleteAsset(destTagFilePath);
 			AssetDatabase.Refresh();

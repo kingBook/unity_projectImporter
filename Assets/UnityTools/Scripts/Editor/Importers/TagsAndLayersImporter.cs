@@ -87,7 +87,7 @@
 
 			var layersData= ScriptableObject.CreateInstance<LayersData>();
 			layersData.list=strings;
-			string layersDataPath="Assets/ProjectImporter/Resources/"+projectName+"_layersData.asset";
+			string layersDataPath=ProjectImporterEditor.resourcePath+"/"+projectName+"_layersData.asset";
 			AssetDatabase.CreateAsset(layersData,layersDataPath);
 		}
 
@@ -130,7 +130,7 @@
 
 			SortingLayersData sortingLayersData= ScriptableObject.CreateInstance<SortingLayersData>();
 			sortingLayersData.list=uSortingLayers;
-			string sortingLayersDataPath="Assets/ProjectImporter/Resources/"+projectName+"_sortingLayersData.asset";
+			string sortingLayersDataPath=ProjectImporterEditor.resourcePath+"/"+projectName+"_sortingLayersData.asset";
 			AssetDatabase.CreateAsset(sortingLayersData,sortingLayersDataPath);
 		}
 

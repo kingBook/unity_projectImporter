@@ -35,7 +35,7 @@
 				}
 			}
 
-			AssetDatabase.CreateAsset(timeData,"Assets/ProjectImporter/Resources/"+projectName+"_timeData.asset");
+			AssetDatabase.CreateAsset(timeData,ProjectImporterEditor.resourcePath+"/"+projectName+"_timeData.asset");
 			//删除复制过来的"TimeManager.asset"
 			AssetDatabase.DeleteAsset(destTagFilePath);
 			AssetDatabase.Refresh();
