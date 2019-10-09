@@ -13,6 +13,7 @@
 		[MenuItem("Tools/ProjectImporter")]
 		public static void create(){
 			var window=GetWindow(typeof(ProjectImporterUI),false,"ProjectImporter");
+			window.minSize=new Vector2(650,350);
 			window.Show();
 		}
 		
@@ -232,6 +233,7 @@
 			var itemElement=_xmlDocument.CreateElement("Item");
 			itemElement.SetAttribute("name",projectName);
 			itemElement.SetAttribute("editorVersion",editorVersion);
+			itemElement.SetAttribute("obfuscated","No");
 			itemElement.InnerText=projectFolderPath;
 			_xmlDocument.FirstChild.AppendChild(itemElement);
 			saveXml();
@@ -315,7 +317,6 @@
 				_fileLoader.destroy();
 				_fileLoader=null;
 			}
-			
 		}
 	}
 }

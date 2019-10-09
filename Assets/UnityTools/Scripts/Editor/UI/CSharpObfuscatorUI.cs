@@ -3,6 +3,7 @@
 	using UnityEditor;
 	using System.IO;
     using System.Xml;
+    using System.Threading.Tasks;
 
     /// <summary>CSharp混淆器窗口UI</summary>
     public class CSharpObfuscatorUI:EditorWindow{
@@ -16,6 +17,7 @@
 		[MenuItem("Tools/CSharpObfuscator")]
 		public static void create(){
 			var window=GetWindow(typeof(CSharpObfuscatorUI),false,"CSharpObfuscator");
+			window.minSize=new Vector2(360,330);
 			window.Show();
 		}
 
@@ -24,6 +26,7 @@
 		}
 
 		private void OnGUI(){
+			if(!_isLoadXmlComplete)return;
 			EditorGUILayout.BeginVertical();
 			{
 				EditorGUILayout.Space();
@@ -46,16 +49,34 @@
 				}
 				EditorGUILayout.EndHorizontal();
 				EditorGUILayout.Space();
-				GUILayout.Button("Obfuscate all sub project");
-				EditorGUILayout.Space();
+				if(GUILayout.Button("Obfuscate all sub project")){
+					obfuscateAllSubProject();
+				}
+				//表头
+				EditorGUILayout.BeginHorizontal();
+				GUILayout.Label("Project Name:",GUILayout.MinWidth(100),GUILayout.MaxWidth(150));
+				GUILayout.Label("Obfuscated:",GUILayout.Width(90));
+				GUILayout.Space(90);
+				EditorGUILayout.EndHorizontal();
+				//
 				_scrollPosition=EditorGUILayout.BeginScrollView(_scrollPosition);
-				{
-					for(int i=0;i<50;i++){
+				if(_xmlDocument!=null){
+					var items=_xmlDocument.FirstChild.ChildNodes;
+					for(int i=0;i<items.Count;i++){
+						XmlNode item=items[i];
+						string projectName=item.Attributes["name"].Value;
+						//string editorVersion=item.Attributes["editorVersion"].Value;
+						string obfuscated=item.Attributes["obfuscated"].Value;
+						//string projectFolderPath=item.InnerText;
+
 						EditorGUILayout.BeginHorizontal();
-						GUILayout.Label("unity_tags");
-						GUILayout.Label("Yes");//Obfuscated
-						GUILayout.Button("Obfuscate");
+						GUILayout.Label(projectName,GUILayout.MinWidth(100),GUILayout.MaxWidth(150));
+						GUILayout.Label(obfuscated,GUILayout.Width(90));
+						if(GUILayout.Button("Obfuscate",GUILayout.Width(90))){
+							obfuscateSubProject(projectName,item);
+						}
 						EditorGUILayout.EndHorizontal();
+						GUILayout.Space(5);
 					}
 				}
 				EditorGUILayout.EndScrollView();
@@ -68,11 +89,54 @@
 		/// </summary>
 		/// <param name="projectFolderPath"></param>
 		private void obfuscateUnityProject(string projectFolderPath){
-			
 			if(_showInExplorerOnComplete){
 				FileUtil2.showInExplorer(projectFolderPath);
 			}
-			
+		}
+
+		/// <summary>
+		/// 混淆所有子项目
+		/// </summary>
+		private void obfuscateAllSubProject(){
+			if(_xmlDocument==null)return;
+			var items=_xmlDocument.FirstChild.ChildNodes;
+			for(int i=0;i<items.Count;i++){
+				XmlNode item=items[i];
+				string projectName=item.Attributes["name"].Value;
+				//string editorVersion=item.Attributes["editorVersion"].Value;
+				//string obfuscated=item.Attributes["obfuscated"].Value;
+				//string projectFolderPath=item.InnerText;
+
+				obfuscateSubProject(projectName,item);
+			}
+		}
+
+		/// <summary>
+		/// 混淆一个子项目
+		/// </summary>
+		/// <param name="projectName"></param>
+		/// <param name="item"></param>
+		private void obfuscateSubProject(string projectName,XmlNode item){
+			//onObfuscateSubProjectComplete(item);
+		}
+
+		/// <summary>
+		/// 一个子项目混淆完成
+		/// </summary>
+		/// <param name="item"></param>
+		private void onObfuscateSubProjectComplete(XmlNode item){
+			item.Attributes["obfuscated"].Value="Yes";
+			saveXml();
+		}
+
+		/// <summary>
+		/// 保存xml到本地
+		/// </summary>
+		private async void saveXml(){
+			if(_xmlDocument==null)return;
+			await Task.Run(()=>{
+				_xmlDocument.Save(ProjectImporterUI.xmlPath);
+			});
 		}
 
 		/// <summary>

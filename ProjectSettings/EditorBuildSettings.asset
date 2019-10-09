@@ -10,11 +10,20 @@ EditorBuildSettings:
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/unity_tags/Assets/Scenes/SampleScene.unity
-    guid: 72883ef1387f40efbcbd0db20e52c496
+    guid: 0ff31f99cc2b413986daa288aa280008
   - enabled: 1
     path: Assets/unity_tags/Assets/Scenes/New Scene.unity
     guid: 6388373d80e512e4a87965e72a124398
   - enabled: 1
     path: Assets/unity_tags/Assets/Scenes/New Scene 1.unity
     guid: 5e230329dc536bd4fa1fdcda14210208
+  - enabled: 1
+    path: Assets/unity_tags_confusion/Assets/Scenes/SampleScene.unity
+    guid: 5a76fff68d4945a6873413392117e438
+  - enabled: 1
+    path: Assets/unity_tags_confusion/Assets/Scenes/New Scene.unity
+    guid: 745e66a3059e4cdaa7f6abaaa948b155
+  - enabled: 1
+    path: Assets/unity_tags_confusion/Assets/Scenes/New Scene 1.unity
+    guid: 22f4a5d5540a4da08f22b4303d24108f
   m_configObjects: {}
