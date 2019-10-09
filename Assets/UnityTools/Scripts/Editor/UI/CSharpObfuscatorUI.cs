@@ -1,32 +1,29 @@
-﻿namespace UnityTools{
-	using UnityEngine;
+﻿namespace UnityTools {
+	using System.Xml;
 	using UnityEditor;
-	using System.IO;
-    using System.Xml;
-    using System.Threading.Tasks;
+	using UnityEngine;
 
-    /// <summary>CSharp混淆器窗口UI</summary>
-    public class CSharpObfuscatorUI:EditorWindow{
+	/// <summary>CSharp混淆器窗口UI</summary>
+	public class CSharpObfuscatorUI:EditorWindow{
+
 		private bool _isCopy=true;
 		private bool _showInExplorerOnComplete=true;
 		private Vector2 _scrollPosition;
-		private XmlDocument _xmlDocument;
-		private FileLoader _fileLoader;
-		private bool _isLoadXmlComplete;
 
 		[MenuItem("Tools/CSharpObfuscator")]
 		public static void create(){
 			var window=GetWindow(typeof(CSharpObfuscatorUI),false,"CSharpObfuscator");
-			window.minSize=new Vector2(360,330);
+			window.minSize=new Vector2(315,120);
 			window.Show();
 		}
 
 		private void OnEnable(){
-			loadXml();
+			if(ProjectImporterUI.xmlDocument==null){
+				ProjectImporterUI.loadXml();
+			}
 		}
 
 		private void OnGUI(){
-			if(!_isLoadXmlComplete)return;
 			EditorGUILayout.BeginVertical();
 			{
 				EditorGUILayout.Space();
@@ -49,8 +46,10 @@
 				}
 				EditorGUILayout.EndHorizontal();
 				EditorGUILayout.Space();
-				if(GUILayout.Button("Obfuscate all sub project")){
-					obfuscateAllSubProject();
+				if(ProjectImporterUI.xmlDocument!=null){
+					if(GUILayout.Button("Obfuscate all sub project")){
+						obfuscateAllSubProject();
+					}
 				}
 				//表头
 				EditorGUILayout.BeginHorizontal();
@@ -60,8 +59,9 @@
 				EditorGUILayout.EndHorizontal();
 				//
 				_scrollPosition=EditorGUILayout.BeginScrollView(_scrollPosition);
-				if(_xmlDocument!=null){
-					var items=_xmlDocument.FirstChild.ChildNodes;
+				
+				if(ProjectImporterUI.xmlDocument!=null){
+					var items=ProjectImporterUI.xmlDocument.FirstChild.ChildNodes;
 					for(int i=0;i<items.Count;i++){
 						XmlNode item=items[i];
 						string projectName=item.Attributes["name"].Value;
@@ -89,18 +89,22 @@
 		/// </summary>
 		/// <param name="projectFolderPath"></param>
 		private void obfuscateUnityProject(string projectFolderPath){
-			if(_showInExplorerOnComplete){
-				FileUtil2.showInExplorer(projectFolderPath);
-			}
+			string assetsPath=projectFolderPath+"/Assets";
+			CSharpObfuscator obfuscator=new CSharpObfuscator();
+			obfuscator.ObfuscateProject(assetsPath,()=>{
+				if(_showInExplorerOnComplete){
+					FileUtil2.showInExplorer(projectFolderPath);
+				}
+			});
 		}
 
 		/// <summary>
 		/// 混淆所有子项目
 		/// </summary>
 		private void obfuscateAllSubProject(){
-			if(_xmlDocument==null)return;
-			var items=_xmlDocument.FirstChild.ChildNodes;
-			for(int i=0;i<items.Count;i++){
+			var items=ProjectImporterUI.xmlDocument.FirstChild.ChildNodes;
+			int len=items.Count;
+			for(int i=0;i<len;i++){
 				XmlNode item=items[i];
 				string projectName=item.Attributes["name"].Value;
 				//string editorVersion=item.Attributes["editorVersion"].Value;
@@ -117,7 +121,12 @@
 		/// <param name="projectName"></param>
 		/// <param name="item"></param>
 		private void obfuscateSubProject(string projectName,XmlNode item){
-			//onObfuscateSubProjectComplete(item);
+			string assetsPath=Application.dataPath+"/"+projectName+"/Assets";
+			Debug.Log(assetsPath);
+			CSharpObfuscator obfuscator=new CSharpObfuscator();
+			obfuscator.ObfuscateProject(assetsPath,()=>{
+				onObfuscateSubProjectComplete(item);
+			});
 		}
 
 		/// <summary>
@@ -126,51 +135,14 @@
 		/// <param name="item"></param>
 		private void onObfuscateSubProjectComplete(XmlNode item){
 			item.Attributes["obfuscated"].Value="Yes";
-			saveXml();
-		}
-
-		/// <summary>
-		/// 保存xml到本地
-		/// </summary>
-		private async void saveXml(){
-			if(_xmlDocument==null)return;
-			await Task.Run(()=>{
-				_xmlDocument.Save(ProjectImporterUI.xmlPath);
-			});
-		}
-
-		/// <summary>
-		/// 加载xml
-		/// </summary>
-		private void loadXml(){
-			if(_fileLoader==null){
-				_fileLoader=new FileLoader();
-			}
-			_fileLoader.loadAsync(ProjectImporterUI.xmlPath);
-			_fileLoader.onComplete+=onloadXmlComplete;
-		}
-		private void onloadXmlComplete(byte[][] bytesList){
-			_fileLoader.onComplete-=onloadXmlComplete;
-			byte[] bytes=bytesList[0];
-			if(bytes!=null){
-				string xmlString=System.Text.Encoding.UTF8.GetString(bytes);
-				_xmlDocument=XmlUtil.createXmlDocument(xmlString,false);
-			}
-			_isLoadXmlComplete=true;
-			
+			ProjectImporterUI.saveXml();
 		}
 
 		private void OnDisable(){
-			_isLoadXmlComplete=false;
 		}
 		
 		/// <summary>关闭窗口</summary>
 		private void OnDestroy(){
-			if(_fileLoader!=null){
-				_fileLoader.destroy();
-				_fileLoader=null;
-			}
-			
 		}
 
 	}

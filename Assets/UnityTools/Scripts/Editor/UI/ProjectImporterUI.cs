@@ -9,22 +9,61 @@
 
 	/// <summary>项目导入器窗口UI</summary>
 	public class ProjectImporterUI:EditorWindow{
+
+		#region static member
+		public static readonly string xmlPath=System.Environment.CurrentDirectory+"/ProjectSettings/importProjects.xml";
 		
+		private static XmlDocument _xmlDocument;
+		private static FileLoader _fileLoader;
+		private static bool _isLoadXmlComplete;
+
 		[MenuItem("Tools/ProjectImporter")]
 		public static void create(){
 			var window=GetWindow(typeof(ProjectImporterUI),false,"ProjectImporter");
-			window.minSize=new Vector2(650,350);
+			window.minSize=new Vector2(435,120);
 			window.Show();
 		}
-		
-		public static readonly string xmlPath=System.Environment.CurrentDirectory+"/ProjectSettings/importProjects.xml";
-		private Vector2 _scrollPosition;
-		private XmlDocument _xmlDocument;
-		private FileLoader _fileLoader;
-		private bool _isLoadXmlComplete;
-		
-		private void Awake(){
+
+		/// <summary>
+		/// 保存xml到本地
+		/// </summary>
+		public static async void saveXml(){
+			if(_xmlDocument==null)return;
+			await Task.Run(()=>{
+				_xmlDocument.Save(xmlPath);
+			});
 		}
+		
+		/// <summary>
+		/// 加载xml
+		/// </summary>
+		public static void loadXml(){
+			if(_fileLoader==null){
+				_fileLoader=new FileLoader();
+			}
+			_fileLoader.loadAsync(xmlPath);
+			_fileLoader.onComplete+=onloadXmlComplete;
+		}
+
+		private static void onloadXmlComplete(byte[][] bytesList){
+			_fileLoader.onComplete-=onloadXmlComplete;
+			byte[] bytes=bytesList[0];
+			if(bytes!=null){
+				string xmlString=System.Text.Encoding.UTF8.GetString(bytes);
+				_xmlDocument=XmlUtil.createXmlDocument(xmlString,false);
+			}
+			_isLoadXmlComplete=true;
+			
+		}
+
+		public static XmlDocument xmlDocument{ get =>_xmlDocument;}
+
+		#endregion
+		
+		private Vector2 _scrollPosition;
+		
+		/*private void Awake(){
+		}*/
 		
 		private void OnEnable(){
 			loadXml();
@@ -275,37 +314,6 @@
 			return false;
 		}
 		
-		/// <summary>
-		/// 保存xml到本地
-		/// </summary>
-		private async void saveXml(){
-			if(_xmlDocument==null)return;
-			await Task.Run(()=>{
-				_xmlDocument.Save(xmlPath);
-			});
-		}
-		
-		/// <summary>
-		/// 加载xml
-		/// </summary>
-		private void loadXml(){
-			if(_fileLoader==null){
-				_fileLoader=new FileLoader();
-			}
-			_fileLoader.loadAsync(xmlPath);
-			_fileLoader.onComplete+=onloadXmlComplete;
-		}
-		private void onloadXmlComplete(byte[][] bytesList){
-			_fileLoader.onComplete-=onloadXmlComplete;
-			byte[] bytes=bytesList[0];
-			if(bytes!=null){
-				string xmlString=System.Text.Encoding.UTF8.GetString(bytes);
-				_xmlDocument=XmlUtil.createXmlDocument(xmlString,false);
-			}
-			_isLoadXmlComplete=true;
-			
-		}
-		
 		private void OnDisable(){
 			_isLoadXmlComplete=false;
 			saveXml();
@@ -313,10 +321,7 @@
 		
 		/// <summary>关闭窗口</summary>
 		private void OnDestroy(){
-			if(_fileLoader!=null){
-				_fileLoader.destroy();
-				_fileLoader=null;
-			}
+			
 		}
 	}
 }
