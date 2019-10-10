@@ -17,13 +17,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/unity_tags/Assets/Scenes/New Scene 1.unity
     guid: 5e230329dc536bd4fa1fdcda14210208
-  - enabled: 1
-    path: Assets/unity_tags_confusion/Assets/Scenes/SampleScene.unity
-    guid: c756c845c28d46ff90816f4a6a99f4b2
-  - enabled: 1
-    path: Assets/unity_tags_confusion/Assets/Scenes/New Scene.unity
-    guid: ffdf26759458447590fcda328f483034
-  - enabled: 1
-    path: Assets/unity_tags_confusion/Assets/Scenes/New Scene 1.unity
-    guid: 8e0e20b7fb3f4a59867aead039880e62
   m_configObjects: {}

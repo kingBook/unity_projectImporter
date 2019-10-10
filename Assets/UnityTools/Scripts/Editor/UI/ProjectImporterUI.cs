@@ -42,11 +42,11 @@
 				_fileLoader=new FileLoader();
 			}
 			_fileLoader.loadAsync(xmlPath);
-			_fileLoader.onComplete+=onloadXmlComplete;
+			_fileLoader.onCompleteAll+=onloadXmlComplete;
 		}
 
 		private static void onloadXmlComplete(byte[][] bytesList){
-			_fileLoader.onComplete-=onloadXmlComplete;
+			_fileLoader.onCompleteAll-=onloadXmlComplete;
 			byte[] bytes=bytesList[0];
 			if(bytes!=null){
 				string xmlString=System.Text.Encoding.UTF8.GetString(bytes);
@@ -77,7 +77,7 @@
 				{
 					//表头
 					EditorGUILayout.BeginHorizontal();
-					EditorGUILayout.SelectableLabel("ProjectName",GUILayout.MinWidth(100),GUILayout.MaxWidth(150));
+					EditorGUILayout.SelectableLabel("Project Name",GUILayout.MinWidth(100),GUILayout.MaxWidth(150));
 					EditorGUILayout.LabelField("Version",GUILayout.Width(65));
 					EditorGUILayout.LabelField("Path",GUILayout.MinWidth(100));
 					GUILayout.Space(140);

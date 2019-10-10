@@ -35,10 +35,53 @@
 		/// <summary>
 		/// 复制一个目录替换到指定的目录，如果指定目录不存在则新建
 		/// </summary>
-		/// <param name="source"></param>
-		/// <param name="dest"></param>
-		public static void replaceDirectory(string source,string dest){
-			FileUtil.ReplaceDirectory(source,dest);
+		/// <param name="source">源目录路径，尾部不包含目录分隔符</param>
+		/// <param name="dest">目标目录路径，尾部不包含目录分隔符</param>
+		/// <param name="progressVisible">是否显示进度条</param>
+		/// <param name="filters">跳过复制操作的子文件或子文件夹，如"/Library","/test.txt"，将从源目录路径的尾部开始匹配，如果匹配成功则跳过复制</param>
+		public static void replaceDirectory(string source,string dest,bool progressVisible,params string[] filters){
+			source=source.Replace("\\","/");
+			dest=dest.Replace("\\","/");
+
+			int filtersLen=filters.Length;
+			int sourceLen=source.Length;
+
+			if(progressVisible)EditorUtility.DisplayProgressBar("Copying files","Readying...",0.0f);
+			string[] files=Directory.GetFiles(source,"*",SearchOption.AllDirectories);
+			int len=files.Length;
+			for(int i=0;i<len;i++){
+				string filePath=files[i];
+				filePath=filePath.Replace("\\","/");
+				//跳过不复制的文件或文件夹
+				bool isContinue=false;
+				for(int j=0;j<filtersLen;j++){
+					bool isMatch=filePath.IndexOf(filters[j],sourceLen)>-1;
+					if(isMatch){
+						isContinue=true;
+						break;
+					}
+				}
+				if(isContinue)continue;
+				//
+				FileInfo fileInfo=new FileInfo(filePath);
+				//创建放置的文件夹
+				string directoryPath=fileInfo.Directory.FullName;
+				directoryPath=directoryPath.Replace("\\","/");
+				directoryPath=directoryPath.Replace(source,dest);
+				Directory.CreateDirectory(directoryPath);
+				//复制文件
+				string destFilePath=filePath.Replace(source,dest);
+				try{
+					File.Copy(filePath,destFilePath,true);
+				}catch(System.Exception err){
+					//尝试复制文件时发生错误，关闭进度条抛出错误
+					if(progressVisible)EditorUtility.ClearProgressBar();
+					throw err;
+				}
+				//显示进度
+				if(progressVisible)EditorUtility.DisplayProgressBar("Copying files","Copying "+fileInfo.FullName,(float)(i+1)/len);
+			}
+			if(progressVisible)EditorUtility.ClearProgressBar();
 		}
 
 		/// <summary>

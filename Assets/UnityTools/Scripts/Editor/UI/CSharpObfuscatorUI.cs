@@ -1,4 +1,5 @@
 ﻿namespace UnityTools {
+	using System.IO;
 	using System.Xml;
 	using UnityEditor;
 	using UnityEngine;
@@ -15,6 +16,11 @@
 			var window=GetWindow(typeof(CSharpObfuscatorUI),false,"CSharpObfuscator");
 			window.minSize=new Vector2(315,120);
 			window.Show();
+		}
+
+		[MenuItem("Tools/createFolder")]
+		public static void createFolder(){
+			FileUtil2.replaceDirectory(@"C:\Users\Administrator\Desktop\娃娃屋-1",@"C:\Users\Administrator\Desktop\娃娃屋-2",true);
 		}
 
 		private void OnEnable(){
@@ -35,8 +41,11 @@
 						string projectFolderPath=FileUtil2.openSelectUnityProjectFolderPanel();
 						if(!string.IsNullOrEmpty(projectFolderPath)){
 							if(_isCopy){
+								//跳过的文件或文件夹
+								string[] ignoreCopys=new string[]{"/.git","/Library"};
+								//目标文件夹名称,源文件夹名称加"_confusion"后缀
 								string duplicateFolderPath=projectFolderPath+"_confusion";
-								FileUtil2.replaceDirectory(projectFolderPath,duplicateFolderPath);
+								FileUtil2.replaceDirectory(projectFolderPath,duplicateFolderPath,true,ignoreCopys);
 								obfuscateUnityProject(duplicateFolderPath);
 							}else{
 								obfuscateUnityProject(projectFolderPath);
@@ -91,7 +100,7 @@
 		private void obfuscateUnityProject(string projectFolderPath){
 			string assetsPath=projectFolderPath+"/Assets";
 			CSharpObfuscator obfuscator=new CSharpObfuscator();
-			obfuscator.ObfuscateProject(assetsPath,()=>{
+			obfuscator.obfuscateProject(assetsPath,()=>{
 				if(_showInExplorerOnComplete){
 					FileUtil2.showInExplorer(projectFolderPath);
 				}
@@ -124,7 +133,7 @@
 			string assetsPath=Application.dataPath+"/"+projectName+"/Assets";
 			Debug.Log(assetsPath);
 			CSharpObfuscator obfuscator=new CSharpObfuscator();
-			obfuscator.ObfuscateProject(assetsPath,()=>{
+			obfuscator.obfuscateProject(assetsPath,()=>{
 				onObfuscateSubProjectComplete(item);
 			});
 		}

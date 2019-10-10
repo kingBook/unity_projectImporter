@@ -10,11 +10,19 @@
 	public class FileLoader{
 		
 		/// <summary>
-		/// 文件加载完成事件
-		/// <br>void(byte[][] bytesList)</br>
-		/// <br>bytesList：表示加载完成后各个文件的总字节(索引与加载时传递的参数对应)</br>
+		/// 一个文件加载完成事件
+		/// <br>void(byte[] bytes,int id)</br>
+		/// <br>bytes：表示加载完成的文件的总字节数组</br>
+		/// <br>id：表示完成的索引号（与加载时传递的参数对应）</br>
 		/// </summary>
-		public event Action<byte[][]> onComplete;
+		public event Action<byte[],int> onComplete;
+		
+		/// <summary>
+		/// 所有文件加载完成事件
+		/// <br>void(byte[][] bytesList)</br>
+		/// <br>bytesList：表示加载完成后各个文件的总字节数组（索引与加载时传递的参数对应）</br>
+		/// </summary>
+		public event Action<byte[][]> onCompleteAll;
 		
 		private bool _isDestroyed;
 		private FileStream _fileStream;
@@ -47,6 +55,7 @@
 					break;
 				}
 				outBytesList[i]=buffer;
+				onComplete?.Invoke(buffer,i);
 				dispose();
 			}
 
@@ -62,7 +71,7 @@
 
 		private void onLoadCompleteAll(byte[][] outBytesList){
 			_isLoading=false;
-			onComplete?.Invoke(outBytesList);
+			onCompleteAll?.Invoke(outBytesList);
 		}
 
 		private void dispose(){

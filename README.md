@@ -20,8 +20,23 @@ EditorBuildSettings
 当前项目设置修改的重新导入
 
 
+命名空间
+类
+结构
+接口
+枚举(Enum)
+委托
+	方法
+	Lambda表达式
+	属性和var属性
+	索引器
+	事件
 
 
+
+泛型
+元组和弃元
+Iterators
 
 
 
@@ -42,6 +57,7 @@ Gizmos
 Plugins
 StandardAssets
 StreamingAssets
+-------------------------
 
 ///////导入项目时将会忽略以下文件夹/////////////
 Editor
