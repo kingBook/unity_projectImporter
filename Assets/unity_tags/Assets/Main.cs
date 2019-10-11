@@ -5,6 +5,7 @@ namespace unity_tags{
 	using UnityEngine;
 	using UnityEngine.SceneManagement;
 	
+	
 	public class Main : MonoBehaviour{
 		public SpriteRenderer spriteRenderer;
 	    void Start(){
@@ -20,10 +21,37 @@ namespace unity_tags{
 			SceneManager2.GetSceneByName("sdf");
 		}
 	    
-	
-	    void Update(){
-	        
-	    }
+
+		
+
 	}
+	
 
 }
+
+namespace XXSS {
+		namespace OOAA{
+			public class HelloName{
+					
+			}
+		}
+		public struct AA{
+		
+		}
+
+		public interface ssdf{
+			void hello();
+		}
+}
+
+public interface OOA{
+	void hello2();
+}
+
+public enum TypeA
+	
+		{
+	A
+}
+
+public delegate void OnComplete(int a);

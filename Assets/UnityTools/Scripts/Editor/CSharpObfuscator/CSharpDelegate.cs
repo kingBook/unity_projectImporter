@@ -2,8 +2,8 @@
 	using UnityEngine;
 	using System.Collections;
 
-	public class CSharpDelegate{
-
+	public class CSharpDelegate:CSharpRecord{
+		
 		
 	}
 }

@@ -131,7 +131,6 @@
 		/// <param name="item"></param>
 		private void obfuscateSubProject(string projectName,XmlNode item){
 			string assetsPath=Application.dataPath+"/"+projectName+"/Assets";
-			Debug.Log(assetsPath);
 			CSharpObfuscator obfuscator=new CSharpObfuscator();
 			obfuscator.obfuscateProject(assetsPath,()=>{
 				onObfuscateSubProjectComplete(item);

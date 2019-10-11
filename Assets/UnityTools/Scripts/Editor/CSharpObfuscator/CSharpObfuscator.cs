@@ -49,10 +49,12 @@
 				//显示进度
 				string shortFilePath=filePath.Replace(projectAssetsPath,"");
 				EditorUtility.DisplayProgressBar("Read Files","Reading "+shortFilePath,(float)(i+1)/len);
-				//读取各行到数组
-				string[] fileLines=FileUtil2.getFileLines(filePath,true,-1).ToArray();
+				//读取文件到字符串
+				string fileString=FileUtil2.getFileString(filePath);
 				//创建CSharpFile
-				csFiles[i]=CSharpFile.create(fileInfo.Name,fileLines);
+				CSharpFile csFile=new CSharpFile();
+				csFile.init(fileInfo,fileString);
+				csFiles[i]=csFile;
 			}
 			EditorUtility.ClearProgressBar();
 			return csFiles;

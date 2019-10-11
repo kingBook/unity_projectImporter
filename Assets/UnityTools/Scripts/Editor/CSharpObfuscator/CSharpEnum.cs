@@ -2,7 +2,7 @@
 	using UnityEngine;
 	using System.Collections;
 
-	public class CSharpEnum{
-
+	public class CSharpEnum:CSharpRecord{
+		
 	}
 }

@@ -2,7 +2,7 @@
 	using UnityEngine;
 	using System.Collections;
 
-	public class CSharpInterface{
-	
+	public class CSharpInterface:CSharpRecord{
+		
 	}
 }

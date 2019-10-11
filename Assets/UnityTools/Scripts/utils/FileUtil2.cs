@@ -115,6 +115,18 @@
 		}
 
 		/// <summary>
+		/// 读取并返回文件的所有字符
+		/// </summary>
+		/// <param name="filePath">读取的文件路径</param>
+		/// <returns></returns>
+		public static string getFileString(string filePath){
+			StreamReader streamReader=File.OpenText(filePath);
+			string fileString=streamReader.ReadToEnd();
+			streamReader.Dispose();
+			return fileString;
+		}
+
+		/// <summary>
 		/// 将行字符串数组写入到本地(UTF-8格式)
 		/// </summary>
 		/// <param name="fileLines">行字符数组</param>

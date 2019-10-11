@@ -18,7 +18,10 @@ EditorBuildSettings
 子项目重命名
 导入项目设置的警告
 当前项目设置修改的重新导入
+选择混淆当前项目时跳过**
 
+using s = System.Text.RegularExpressions;
+s.Regex reg=new s.Regex();
 
 命名空间
 类
