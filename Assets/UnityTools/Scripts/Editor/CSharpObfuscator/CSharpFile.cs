@@ -1,39 +1,28 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
+﻿namespace UnityTools {
 	using System.IO;
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
+	using UnityEngine;
 
-    /// <summary>
-    /// cs文件
-    /// </summary>
-    public class CSharpFile:CSharpNameSpace{
+	/// <summary>
+	/// .cs文件
+	/// </summary>
+	public class CSharpFile:CSharpNameSpace{
 		
 		private FileInfo _fileInfo;
-		private string _fileString;
+		public string fileString;
 
 		public void init(FileInfo fileInfo,string fileString){
 			_fileInfo=fileInfo;
-			_fileString=fileString;
-
+			this.fileString=fileString;
+			//
 			Debug.Log(_fileInfo.Name+"===================");
-			//init(null,_fileString,_fileInfo.Name,0,_fileString.Length);
-
-
-
-
-			_parentNameSpace=null;
-			_name=_fileInfo.Name;
-			_startIndex=0;
-			_length=_fileString.Length;
-			
-			_usings=readUsings(fileString,startIndex,length);
-			_bracketBlocks=readBracketBlocks(fileString,startIndex,length);
-
-			
-			readObjectsWithBracketBlocks(this,_bracketBlocks,fileString,out _nameSpaces,out _classes,out _structs,out _interfaces,out _enums,out _delegates);
+			//.cs文件在文件内没有名称字段，使用new SectionString()占位
+			SectionString name=new SectionString();
+			//所有.cs文件内容长度
+			SectionString content=new SectionString(0,this.fileString.Length);
+			//
+			init(this,null,name,content);
 		}
+
 	
 	}
 }
