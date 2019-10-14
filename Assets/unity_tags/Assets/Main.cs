@@ -1,9 +1,12 @@
 namespace unity_tags{
 	using System.Collections;
-	using System.Collections.Generic;
-	using System.Text.RegularExpressions;
+	using System.	Collections .Generic;
+	using System.	Text.
+	RegularExpressions;
 	using UnityEngine;
-	using UnityEngine.SceneManagement;
+	using UnityEngine.
+	
+	SceneManagement;
 	
 	
 	public class Main : MonoBehaviour{

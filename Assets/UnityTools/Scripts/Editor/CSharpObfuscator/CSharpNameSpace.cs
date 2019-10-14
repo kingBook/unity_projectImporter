@@ -1,4 +1,5 @@
 ﻿namespace UnityTools {
+	using System;
 	using System.Collections.Generic;
 	using System.Text.RegularExpressions;
     using UnityEngine;
@@ -25,7 +26,31 @@
 		}
 
 		protected List<SectionString> readUsings(string fileString,SectionString content){
-			return null;
+			Debug.Log("======================");
+			//Debug.Log(content.ToString(fileString));
+			//只查找到第一个左括号出现的位置
+			int index=fileString.IndexOf('{',content.startIndex);
+			int length=index<0?content.length:index-content.startIndex;
+			//
+			List<SectionString> usings=new List<SectionString>();
+			//匹配如:"using xx;"或"using xxx.xxx.xxx;"
+			Regex regex=new Regex(@"(using\s+\w+\s*;)|(using\s(\s*\w+\s*\.\s*)+(\w+\s*);)",RegexOptions.Compiled);
+			//Regex regex=new Regex(@"using\s+\w+\s*;",RegexOptions.Compiled);
+			/*Match match=regex.Match(fileString);
+			if(match.Success){
+				Debug.Log(match.Value);
+			}*/
+			MatchCollection matchCollection=regex.Matches(fileString,content.startIndex);
+			int count=matchCollection.Count;
+			//Debug.Log(count);
+			for(int i=0;i<count;i++){
+				Match match=matchCollection[i];
+				if(match.Success){
+					string matchValue=Regex.Replace(match.Value,@"\s","",RegexOptions.Compiled);
+					Debug.Log(matchValue);
+				}
+			}
+			return usings;
 		}
 
 		/// <summary>
@@ -114,7 +139,7 @@
 			Regex regexBracket=new Regex("{|}",RegexOptions.Compiled|RegexOptions.RightToLeft);
 			Match bracketMatch=regexBracket.Match(fileString,bracketBlock.startIndex);
 			//命名空间正则表达式，从"{"的右侧开始查找
-			Regex regex=new Regex(@"namespace\s+\S+\s*{",RegexOptions.Compiled|RegexOptions.RightToLeft);
+			Regex regex=new Regex(@"namespace\s+\w+\s*{",RegexOptions.Compiled|RegexOptions.RightToLeft);
 			int startIndex=bracketBlock.startIndex+1;//"{"右边
 			Match match;
 			if(bracketMatch.Success){
@@ -141,7 +166,7 @@
 		protected CSharpNameSpace createCSharpNameSpace(CSharpNameSpace parentNameSpace,SectionString leftBracketString,SectionString bracketBlock){
 			CSharpNameSpace csNameSpace=new CSharpNameSpace();
 			//命名空间名称
-			Regex regex=new Regex(@"\S+",RegexOptions.Compiled|RegexOptions.RightToLeft);
+			Regex regex=new Regex(@"\w+",RegexOptions.Compiled|RegexOptions.RightToLeft);
 			int len=leftBracketString.length-1;//去掉"{"
 			Match match=regex.Match(_cSharpFile.fileString,leftBracketString.startIndex,len);
 			SectionString name=new SectionString(match.Index,match.Length);
@@ -151,6 +176,10 @@
 			return csNameSpace;
 		}
 
-
+		protected bool matchClassLeftBracketString(SectionString bracketBlock,string fileString,out SectionString result){
+			
+			result=new SectionString();
+			return false;
+		}
 	}
 }
