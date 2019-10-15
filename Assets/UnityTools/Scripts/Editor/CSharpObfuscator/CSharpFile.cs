@@ -23,6 +23,5 @@
 			init(this,null,name,content);
 		}
 
-	
 	}
 }

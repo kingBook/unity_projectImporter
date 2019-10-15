@@ -1,6 +1,7 @@
 ﻿namespace UnityTools {
 	using System.IO;
-	using System.Xml;
+    using System.Text.RegularExpressions;
+    using System.Xml;
 	using UnityEditor;
 	using UnityEngine;
 
@@ -18,9 +19,15 @@
 			window.Show();
 		}
 
-		[MenuItem("Tools/createFolder")]
-		public static void createFolder(){
-			FileUtil2.replaceDirectory(@"C:\Users\Administrator\Desktop\娃娃屋-1",@"C:\Users\Administrator\Desktop\娃娃屋-2",true);
+		[MenuItem("Tools/test")]
+		public static void test(){
+			string text="using  System. Foo.\nText;";
+			Regex usingLineRegex=new Regex(@"using[\s\w\.]+;",RegexOptions.Compiled);
+			Match match=usingLineRegex.Match(text);
+			if(match.Success){
+				string matchValue=Regex.Replace(match.Value,@"\s|;","",RegexOptions.Compiled);
+				Debug.Log(matchValue.Substring(5));
+			}
 		}
 
 		private void OnEnable(){

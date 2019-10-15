@@ -6,7 +6,8 @@
 
     public class CSharpNameSpace:CSharpRecord{
 		protected CSharpNameSpace _parentNameSpace=null;
-		protected List<SectionString> _usings;
+		/// <summary>命名空间括号内的using</summary>
+		protected List<IUsing> _usings;
 		protected List<CSharpNameSpace> _nameSpaces;
 		protected List<CSharpClass> _classes;
 		protected List<CSharpStruct> _structs;
@@ -25,30 +26,50 @@
 			readObjectsWithBracketBlocks(this,bracketBlocks,_cSharpFile.fileString,out _nameSpaces,out _classes,out _structs,out _interfaces,out _enums,out _delegates);
 		}
 
-		protected List<SectionString> readUsings(string fileString,SectionString content){
-			Debug.Log("======================");
-			//Debug.Log(content.ToString(fileString));
+		protected List<IUsing> readUsings(string fileString,SectionString content){
+			Debug2.Log("======================",content.startIndex,content.length);
+			Debug.Log(content.ToString(fileString));
 			//只查找到第一个左括号出现的位置
 			int index=fileString.IndexOf('{',content.startIndex);
 			int length=index<0?content.length:index-content.startIndex;
 			//
-			List<SectionString> usings=new List<SectionString>();
+			List<IUsing> usings=new List<IUsing>();
+			//匹配所有using行
+			Regex usingLineRegex=new Regex(@"using[\s\w\.]+;",RegexOptions.Compiled);
+			//匹配空白或分号
+			Regex whiteSemicolonRegex=new Regex(@"\s|;",RegexOptions.Compiled);
 			//匹配如:"using xx;"或"using xxx.xxx.xxx;"
-			Regex regex=new Regex(@"(using\s+\w+\s*;)|(using\s(\s*\w+\s*\.\s*)+(\w+\s*);)",RegexOptions.Compiled);
-			//Regex regex=new Regex(@"using\s+\w+\s*;",RegexOptions.Compiled);
-			/*Match match=regex.Match(fileString);
-			if(match.Success){
-				Debug.Log(match.Value);
-			}*/
-			MatchCollection matchCollection=regex.Matches(fileString,content.startIndex);
-			int count=matchCollection.Count;
-			//Debug.Log(count);
-			for(int i=0;i<count;i++){
-				Match match=matchCollection[i];
-				if(match.Success){
-					string matchValue=Regex.Replace(match.Value,@"\s","",RegexOptions.Compiled);
-					Debug.Log(matchValue);
+			//Regex usingRegex=new Regex(@"(using\s+\w+\s*;)|(using\s+(\s*\w+\s*\.\s*)+(\w+\s*);)",RegexOptions.Compiled);
+			//匹配如:"using static xx;"或"using static xxx.xxx.xxx;"
+			//Regex usingStaticRegex=new Regex(@"(using\s+static\s+\w+\s*;)|(using\s+static\s+(\s*\w+\s*\.\s*)+(\w+\s*);)",RegexOptions.Compiled);
+			//匹配如:"using xx=xxx;"或"using xx=xxx.xxx.xxx;"
+			Regex usingAliasRegex=new Regex(@"(\w+=\w+)|(\w+=(\w+\.)+\w+)",RegexOptions.Compiled);
+			
+
+			Match lineMatch=usingLineRegex.Match(fileString,content.startIndex,length);
+			while(lineMatch.Success){
+				SectionString usingLine=new SectionString(lineMatch.Index,lineMatch.Length);
+				string usingLineString=lineMatch.Value;
+				string oldUsingLineString=usingLineString;
+				//去除"using"、空白、";"
+				usingLineString=usingLineString.Substring(5);
+				usingLineString=whiteSemicolonRegex.Replace(usingLineString,"");
+				//是不是静态using
+				bool isStatic=usingLineString.Substring(0,6)=="static";
+
+				if(isStatic){//静态using，如:"using static xx;"或"using static xxx.xxx.xxx;"
+					//去除"static"
+					usingLineString=usingLineString.Substring(6);
+
+					SectionString text=new SectionString();
+					UsingString usingString=new UsingString(true,text);
+
+				}else if(usingAliasRegex.IsMatch(usingLineString)){//using别名，如:"using xx=xxx;"或"using xx=xxx.xxx.xxx;"
+					
+				}else{//普通using，如:"using xx;"或"using xxx.xxx.xxx;"
+					
 				}
+				lineMatch=lineMatch.NextMatch();
 			}
 			return usings;
 		}
@@ -80,13 +101,6 @@
 			enums=new List<CSharpEnum>();
 			delegates=new List<CSharpDelegate>();
 
-			//匹配如："namespace xxx{","class xxx{"，"class xxx:xxx{"等
-			//Regex leftBracketRegex=new Regex(@"\w+\s+\S+\s*{",RegexOptions.Compiled|RegexOptions.RightToLeft);
-			//匹配"class"，"namespace"等
-			//Regex typeRegex=new Regex(@"\w+",RegexOptions.Compiled);
-			//匹配类名称，命名空间名称等
-			//Regex nameRegex=new Regex(@"\S+",RegexOptions.Compiled|RegexOptions.RightToLeft);
-
 			int len=bracketBlocks.Count;
 			for(int i=0;i<len;i++){
 				SectionString bracketBlock=bracketBlocks[i];
@@ -96,34 +110,6 @@
 					CSharpNameSpace csNameSpace=createCSharpNameSpace(parentNameSpace,leftBracketString,bracketBlock);
 					namespaces.Add(csNameSpace);
 				}
-
-				/*
-				Match leftBracketMatch=leftBracketRegex.Match(fileString,bracketBlock.startIndex+1);
-				if(leftBracketMatch.Success){
-					//匹配成功，并去掉"{"
-					//string leftBracketMatchValue=leftBracketMatch.Value.Replace("{","");
-					//string type=typeRegex.Match(leftBracketMatchValue).Value;
-					//string name=nameRegex.Match(leftBracketMatchValue,leftBracketMatchValue.Length).Value;
-
-					if(type=="namespace"){
-						CSharpNameSpace csNameSpace=new CSharpNameSpace();
-						//命名空间内容从命名空间声明"{"的右边开始,"}"的左边结束(就是减去两个大括号的长度)
-						SectionString section=new SectionString(bracketBlock.startIndex+1,bracketBlock.length-2);
-						csNameSpace.init(_cSharpFile,parentNameSpace,section);
-						namespaces.Add(csNameSpace);
-					}else if(type=="class"){
-						//CSharpClass csClass=new CSharpClass();
-						//csClass.init()
-					}else if(type=="struct"){
-						
-					}else if(type=="interface"){
-						
-					}else if(type=="enum"){
-						
-					}else if(type=="delegate"){
-						
-					}
-				}*/
 			}
 		}
 
@@ -181,5 +167,30 @@
 			result=new SectionString();
 			return false;
 		}
+
+		protected bool matchStructLeftBracketString(SectionString bracketBlock,string fileString,out SectionString result){
+			
+			result=new SectionString();
+			return false;
+		}
+
+		protected bool matchInterfaceLeftBracketString(SectionString bracketBlock,string fileString,out SectionString result){
+			
+			result=new SectionString();
+			return false;
+		}
+
+		protected bool matchEnumLeftBracketString(SectionString bracketBlock,string fileString,out SectionString result){
+			
+			result=new SectionString();
+			return false;
+		}
+
+		protected bool matchDelegateLeftBracketString(SectionString bracketBlock,string fileString,out SectionString result){
+			
+			result=new SectionString();
+			return false;
+		}
+
 	}
 }
