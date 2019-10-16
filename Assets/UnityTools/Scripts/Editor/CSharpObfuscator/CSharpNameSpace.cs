@@ -27,8 +27,8 @@
 		}
 
 		protected List<IUsing> readUsings(string fileString,SectionString content){
-			Debug2.Log("======================",content.startIndex,content.length);
-			Debug.Log(content.ToString(fileString));
+			//Debug2.Log("======================",content.startIndex,content.length);
+			//Debug.Log(content.ToString(fileString));
 			//只查找到第一个左括号出现的位置
 			int index=fileString.IndexOf('{',content.startIndex);
 			int length=index<0?content.length:index-content.startIndex;
@@ -38,36 +38,29 @@
 			Regex usingLineRegex=new Regex(@"using[\s\w\.]+;",RegexOptions.Compiled);
 			//匹配空白或分号
 			Regex whiteSemicolonRegex=new Regex(@"\s|;",RegexOptions.Compiled);
-			//匹配如:"using xx;"或"using xxx.xxx.xxx;"
-			//Regex usingRegex=new Regex(@"(using\s+\w+\s*;)|(using\s+(\s*\w+\s*\.\s*)+(\w+\s*);)",RegexOptions.Compiled);
-			//匹配如:"using static xx;"或"using static xxx.xxx.xxx;"
-			//Regex usingStaticRegex=new Regex(@"(using\s+static\s+\w+\s*;)|(using\s+static\s+(\s*\w+\s*\.\s*)+(\w+\s*);)",RegexOptions.Compiled);
 			//匹配如:"using xx=xxx;"或"using xx=xxx.xxx.xxx;"
 			Regex usingAliasRegex=new Regex(@"(\w+=\w+)|(\w+=(\w+\.)+\w+)",RegexOptions.Compiled);
-			
 
 			Match lineMatch=usingLineRegex.Match(fileString,content.startIndex,length);
 			while(lineMatch.Success){
 				SectionString usingLine=new SectionString(lineMatch.Index,lineMatch.Length);
-				string usingLineString=lineMatch.Value;
-				string oldUsingLineString=usingLineString;
 				//去除"using"、空白、";"
+				string usingLineString=lineMatch.Value;
 				usingLineString=usingLineString.Substring(5);
 				usingLineString=whiteSemicolonRegex.Replace(usingLineString,"");
-				//是不是静态using
-				bool isStatic=usingLineString.Substring(0,6)=="static";
-
-				if(isStatic){//静态using，如:"using static xx;"或"using static xxx.xxx.xxx;"
-					//去除"static"
-					usingLineString=usingLineString.Substring(6);
-
-					SectionString text=new SectionString();
-					UsingString usingString=new UsingString(true,text);
-
-				}else if(usingAliasRegex.IsMatch(usingLineString)){//using别名，如:"using xx=xxx;"或"using xx=xxx.xxx.xxx;"
+				//
+				if(usingAliasRegex.IsMatch(usingLineString)){//using别名，如:"using xx=xxx;"或"using xx=xxx.xxx.xxx;"
 					
-				}else{//普通using，如:"using xx;"或"using xxx.xxx.xxx;"
-					
+				}else{
+					//是不是静态using
+					bool isStatic=usingLineString.Substring(0,6)=="static";
+					if(isStatic){//静态using，如:"using static xx;"或"using static xxx.xxx.xxx;"
+						UsingString staticUsing=readStaticUsing(fileString,usingLine);
+						Debug.Log(staticUsing.ToString(fileString,true));
+						usings.Add(staticUsing);
+					}else{//普通using，如:"using xx;"或"using xxx.xxx.xxx;"
+						
+					}
 				}
 				lineMatch=lineMatch.NextMatch();
 			}
@@ -190,6 +183,28 @@
 			
 			result=new SectionString();
 			return false;
+		}
+
+		protected UsingString readStaticUsing(string fileString,SectionString usingLine){
+			string usingLineString=usingLine.ToString(fileString);
+			//匹配"using static "。
+			Match headMatch=Regex.Match(usingLineString,@"using\s+static\s",RegexOptions.Compiled);
+			int startIndex=usingLine.startIndex+headMatch.Length;
+			//长度为:减去"using static "的长度，再减去";"的长度
+			int length=usingLine.length-headMatch.Length-1;
+			//得到有空白的字符串如："System.	Collections .Generic"。
+			string usingContent=fileString.Substring(startIndex,length);
+			string[] splitStrings=usingContent.Split('.');
+			int len=splitStrings.Length;
+			SectionString[] wordStrings=new SectionString[len];
+			for(int i=0;i<len;i++){
+				int tempLength=splitStrings[i].Length;
+				wordStrings[i]=new SectionString(startIndex,tempLength);
+				//加一个单词和"."的长度
+				startIndex+=tempLength+1;
+			}
+			UsingString usingString=new UsingString(true,wordStrings);
+			return usingString;
 		}
 
 	}

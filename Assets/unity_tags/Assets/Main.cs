@@ -8,6 +8,7 @@ namespace unity_tags{
 	using UnityEngine.
 	
 	SceneManagement;
+	using  static   UnityEngine  . Mathf  ;
 	
 	
 	public class Main : MonoBehaviour{
