@@ -161,7 +161,7 @@
 			csNameSpace.init(_cSharpFile,parentNameSpace,name,content);
 			return csNameSpace;
 		}
-
+		
 		protected bool matchClassLeftBracketString(SectionString bracketBlock,string fileString,out SectionString result){
 			
 			result=new SectionString();
@@ -173,7 +173,7 @@
 			result=new SectionString();
 			return false;
 		}
-
+		
 		protected bool matchInterfaceLeftBracketString(SectionString bracketBlock,string fileString,out SectionString result){
 			
 			result=new SectionString();
@@ -185,7 +185,7 @@
 			result=new SectionString();
 			return false;
 		}
-
+		
 		protected bool matchDelegateLeftBracketString(SectionString bracketBlock,string fileString,out SectionString result){
 			
 			result=new SectionString();

@@ -34,7 +34,7 @@
 		/// <summary>
 		/// 打开一个项目
 		/// </summary>
-		/// <param name="projectName">项目文件夹名</param>
+		/// <param name="projectFolderName">项目文件夹名</param>
 		public void openProject(string projectFolderName){
 			//加载BuildSettingsData
 			_buildSettingsData=Resources.Load<BuildSettingsData>(projectFolderName+"_buildSettingsData");
@@ -63,7 +63,7 @@
 		/// <summary>
 		/// 关闭一个项目
 		/// </summary>
-		/// <param name="projectName">项目文件夹名</param>
+		/// <param name="projectFolderName">项目文件夹名</param>
 		public void closeProject(string projectFolderName){
 			//卸载项目的所有场景
 			unloadProjectAllScenes(projectFolderName);

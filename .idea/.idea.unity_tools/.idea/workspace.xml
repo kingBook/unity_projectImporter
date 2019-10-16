@@ -1,0 +1,1474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c64b986e-f490-401f-a692-f783b3e82095" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.idea.unity_tools/.idea/dictionaries/Administrator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpNameSpace.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpNameSpace.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/Importer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/Importer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/ProjectImporter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/ProjectImporter.cs" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpNameSpace.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1864">
+              <caret line="190" column="70" lean-forward="true" selection-start-line="190" selection-start-column="70" selection-end-line="190" selection-end-column="70" />
+              <folding>
+                <marker date="1571211752764" expanded="true" signature="21:7614" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="30:134" ph="..." />
+                <marker date="1571211752764" expanded="true" signature="181:7612" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="679:1091" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="1169:3143" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="1660:2055" ph="/* 匹配如:&quot;using xx;&quot;或&quot;using xxx.xxx.xxx;&quot; ... */" />
+                <marker date="1571211752764" expanded="true" signature="2257:3121" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="2667:2905" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="2668:2744" ph="/* 静态using，如:&quot;using static xx;&quot;或&quot;using static xxx.xxx.xxx;&quot; ... */" />
+                <marker date="1571211752764" expanded="true" signature="2954:3018" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="3147:3555" ph="/// 从指定的同级括号块列表读取对象 ... " />
+                <marker date="1571211752764" expanded="true" signature="3901:4527" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="4198:4523" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="4373:4518" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="4531:4815" ph="/// 根据指定的大括号块匹配命名空间声明，并通过out参数输出。如:&quot;namespace unity_tags{&quot; ... " />
+                <marker date="1571211752764" expanded="true" signature="4935:5727" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="5358:5450" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="5590:5675" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="5731:6003" ph="/// 创建CSharpNameSpace ... " />
+                <marker date="1571211752764" expanded="true" signature="6145:6725" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="6844:6901" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="7019:7076" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="7199:7256" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="7372:7429" ph="{...}" />
+                <marker date="1571211752764" expanded="true" signature="7551:7608" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpRecord.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <marker date="1571207304391" expanded="true" signature="20:1375" ph="{...}" />
+                <marker date="1571207304391" expanded="true" signature="29:145" ph="..." />
+                <marker date="1571207304391" expanded="true" signature="151:205" ph="/// 所有读取.cs文件类的基类 ... " />
+                <marker date="1571207304391" expanded="true" signature="244:1373" ph="{...}" />
+                <marker date="1571207304391" expanded="true" signature="359:543" ph="/// 读取括号块，&quot;{...}&quot;包含括号,不读取子级括号块 ... " />
+                <marker date="1571207304391" expanded="true" signature="634:1369" ph="{...}" />
+                <marker date="1571207304391" expanded="true" signature="872:1340" ph="{...}" />
+                <marker date="1571207304391" expanded="true" signature="932:1059" ph="{...}" />
+                <marker date="1571207304391" expanded="true" signature="957:987" ph="{...}" />
+                <marker date="1571207304391" expanded="true" signature="1083:1335" ph="{...}" />
+                <marker date="1571207304391" expanded="true" signature="1130:1329" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/BuildSettingsData.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+              <folding>
+                <marker date="1570514361424" expanded="true" signature="20:251" ph="{...}" />
+                <marker date="1570514361424" expanded="true" signature="29:68" ph="..." />
+                <marker date="1570514361424" expanded="true" signature="117:166" ph="{...}" />
+                <marker date="1570514361424" expanded="true" signature="216:249" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>readQualitySettings</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/BuildSettingsData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/Physics2dData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/PhysicsImporter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/ProjectImporterEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/FileUtil2.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/StringUtil.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/QualityImporter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/AssetsImporter.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/BuildSettingsImporter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/Debug2.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/TagsAndLayersImporter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/GuidUtil.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/FileLoader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/Physics2DImporter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/XmlUtil.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/TimeImporter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpRecord.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpStruct.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpFile.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Resources/default_layersData.asset" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpNameSpace.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/QualitySettings2.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/SortingLayer2.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/SceneManager2.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpClass.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpEnum.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/ProjectImporter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpObfuscator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/LayerMask2.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpInterface.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpDelegate.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/SceneLoader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpUsing.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/TimeData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/SortingLayersData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/SectionString.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/UI/CSharpObfuscatorUI.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/QualityData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/UsingAlias.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/LayersData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/IUsing.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/UI/ProjectImporterUI.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/UsingString.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/PhysicsData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/Importer.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpFile.cs" />
+        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/AssetsImporter.cs" />
+        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/ProjectImporterEditor.cs" />
+        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpRecord.cs" />
+        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/Importer.cs" />
+        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/QualityImporter.cs" />
+        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/UI/ProjectImporterUI.cs" />
+        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/LayerMask2.cs" />
+        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/ProjectImporter.cs" />
+        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/QualitySettings2.cs" />
+        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/FileUtil2.cs" />
+        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/XmlUtil.cs" />
+        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/data/BuildSettingsData.cs" />
+        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpNameSpace.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="326" />
+    <option name="y" value="159" />
+    <option name="width" value="1163" />
+    <option name="height" value="721" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="UnityExplorer" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="SolutionExplorer">
+        <option name="show-all-files" value="false" />
+      </pane>
+      <pane id="AssemblyExplorer" />
+      <pane id="UnityExplorer">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Project" type="e068e287:UnityExplorerRootNode" />
+              <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
+            </path>
+            <path>
+              <item name="Project" type="e068e287:UnityExplorerRootNode" />
+              <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
+              <item name="UnityTools" type="1045f7f1:UnityExplorerNode" />
+            </path>
+            <path>
+              <item name="Project" type="e068e287:UnityExplorerRootNode" />
+              <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
+              <item name="UnityTools" type="1045f7f1:UnityExplorerNode" />
+              <item name="Resources" type="1045f7f1:UnityExplorerNode" />
+            </path>
+            <path>
+              <item name="Project" type="e068e287:UnityExplorerRootNode" />
+              <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
+              <item name="UnityTools" type="1045f7f1:UnityExplorerNode" />
+              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
+            </path>
+            <path>
+              <item name="Project" type="e068e287:UnityExplorerRootNode" />
+              <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
+              <item name="UnityTools" type="1045f7f1:UnityExplorerNode" />
+              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
+              <item name="data" type="1045f7f1:UnityExplorerNode" />
+            </path>
+            <path>
+              <item name="Project" type="e068e287:UnityExplorerRootNode" />
+              <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
+              <item name="UnityTools" type="1045f7f1:UnityExplorerNode" />
+              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
+              <item name="Editor" type="1045f7f1:UnityExplorerNode" />
+            </path>
+            <path>
+              <item name="Project" type="e068e287:UnityExplorerRootNode" />
+              <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
+              <item name="UnityTools" type="1045f7f1:UnityExplorerNode" />
+              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
+              <item name="Editor" type="1045f7f1:UnityExplorerNode" />
+              <item name="CSharpObfuscator" type="1045f7f1:UnityExplorerNode" />
+            </path>
+            <path>
+              <item name="Project" type="e068e287:UnityExplorerRootNode" />
+              <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
+              <item name="UnityTools" type="1045f7f1:UnityExplorerNode" />
+              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
+              <item name="Editor" type="1045f7f1:UnityExplorerNode" />
+              <item name="CSharpObfuscator" type="1045f7f1:UnityExplorerNode" />
+              <item name="data" type="1045f7f1:UnityExplorerNode" />
+            </path>
+            <path>
+              <item name="Project" type="e068e287:UnityExplorerRootNode" />
+              <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
+              <item name="UnityTools" type="1045f7f1:UnityExplorerNode" />
+              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
+              <item name="Editor" type="1045f7f1:UnityExplorerNode" />
+              <item name="Importers" type="1045f7f1:UnityExplorerNode" />
+            </path>
+            <path>
+              <item name="Project" type="e068e287:UnityExplorerRootNode" />
+              <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
+              <item name="UnityTools" type="1045f7f1:UnityExplorerNode" />
+              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
+              <item name="Editor" type="1045f7f1:UnityExplorerNode" />
+              <item name="UI" type="1045f7f1:UnityExplorerNode" />
+            </path>
+            <path>
+              <item name="Project" type="e068e287:UnityExplorerRootNode" />
+              <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
+              <item name="UnityTools" type="1045f7f1:UnityExplorerNode" />
+              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
+              <item name="runtime" type="1045f7f1:UnityExplorerNode" />
+            </path>
+            <path>
+              <item name="Project" type="e068e287:UnityExplorerRootNode" />
+              <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
+              <item name="UnityTools" type="1045f7f1:UnityExplorerNode" />
+              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
+              <item name="utils" type="1045f7f1:UnityExplorerNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <option name="show-hidden-items" value="false" />
+        <option name="show-project-names" value="true" />
+      </pane>
+      <pane id="FileSystemExplorer" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
+    <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.smartKeys_rider" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\Administrator\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c64b986e-f490-401f-a692-f783b3e82095" name="Default Changelist" comment="" />
+      <created>1571190778172</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1571190778172</updated>
+      <workItem from="1571190799901" duration="4756000" />
+      <workItem from="1571195901190" duration="202000" />
+      <workItem from="1571196242191" duration="357000" />
+      <workItem from="1571196687491" duration="159000" />
+      <workItem from="1571198016170" duration="602000" />
+      <workItem from="1571198851207" duration="1840000" />
+      <workItem from="1571202345067" duration="151000" />
+      <workItem from="1571202817303" duration="8083000" />
+      <workItem from="1571211679102" duration="83000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="16233000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="326" y="159" width="1163" height="721" extended-state="0" />
+    <layout>
+      <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info id="Image Layers" order="1" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Structure" order="3" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32903227" />
+      <window_info anchor="bottom" id="NuGet" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Performance Profiler" order="8" />
+      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="Unity" order="11" />
+      <window_info anchor="bottom" id="Database Changes" order="12" />
+      <window_info anchor="bottom" id="Unit Tests" order="13" />
+      <window_info anchor="bottom" id="Terminal" order="14" />
+      <window_info anchor="bottom" id="Event Log" order="15" side_tool="true" weight="0.32903227" />
+      <window_info anchor="right" id="Capture Analysis" order="0" />
+      <window_info anchor="right" id="Errors In Solution" order="1" />
+      <window_info anchor="right" id="Database" order="2" />
+      <window_info anchor="right" id="Unit Tests Coverage" order="3" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="4" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="5" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="6" weight="0.25" />
+      <window_info active="true" anchor="right" content_ui="combo" id="Project" order="7" visible="true" weight="0.26563916" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" suspend="NONE" type="DotNet Exception Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Resources/default_layersData.asset">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="11" lean-forward="true" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/LayersData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+          <folding>
+            <marker date="1570514361761" expanded="true" signature="20:141" ph="{...}" />
+            <marker date="1570514361761" expanded="true" signature="29:68" ph="..." />
+            <marker date="1570514361761" expanded="true" signature="111:139" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/Physics2dData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+          <folding>
+            <marker date="1570514361861" expanded="true" signature="20:1990" ph="{...}" />
+            <marker date="1570514361861" expanded="true" signature="29:106" ph="..." />
+            <marker date="1570514361861" expanded="true" signature="156:814" ph="{...}" />
+            <marker date="1570514361861" expanded="true" signature="861:1988" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/PhysicsData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="51" lean-forward="true" selection-start-line="11" selection-start-column="51" selection-end-line="11" selection-end-column="51" />
+          <folding>
+            <marker date="1570514361470" expanded="true" signature="20:1090" ph="{...}" />
+            <marker date="1570514361470" expanded="true" signature="29:68" ph="..." />
+            <marker date="1570514361470" expanded="true" signature="112:1088" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/QualityData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="768">
+          <caret line="48" column="17" selection-start-line="48" selection-start-column="17" selection-end-line="48" selection-end-column="17" />
+          <folding>
+            <marker date="1570514361706" expanded="true" signature="20:1622" ph="{...}" />
+            <marker date="1570514361706" expanded="true" signature="30:69" ph="..." />
+            <marker date="1570514361706" expanded="true" signature="124:1316" ph="{...}" />
+            <marker date="1570514361706" expanded="true" signature="1378:1435" ph="{...}" />
+            <marker date="1570514361706" expanded="true" signature="1479:1620" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/SortingLayersData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+          <folding>
+            <marker date="1570514361500" expanded="true" signature="20:232" ph="{...}" />
+            <marker date="1570514361500" expanded="true" signature="95:145" ph="{...}" />
+            <marker date="1570514361500" expanded="true" signature="195:230" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/TimeData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+          <folding>
+            <marker date="1570514361381" expanded="true" signature="20:250" ph="{...}" />
+            <marker date="1570514361381" expanded="true" signature="29:68" ph="..." />
+            <marker date="1570514361381" expanded="true" signature="109:248" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/IUsing.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+          <folding>
+            <marker date="1571188678337" expanded="true" signature="20:103" ph="{...}" />
+            <marker date="1571188678337" expanded="true" signature="29:68" ph="..." />
+            <marker date="1571188678337" expanded="true" signature="94:101" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/SectionString.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+          <folding>
+            <marker date="1571188678352" expanded="true" signature="20:402" ph="{...}" />
+            <marker date="1571188678352" expanded="true" signature="29:68" ph="..." />
+            <marker date="1571188678352" expanded="true" signature="70:110" ph="/// 一段字符串 ... " />
+            <marker date="1571188678352" expanded="true" signature="139:400" ph="{...}" />
+            <marker date="1571188678352" expanded="true" signature="237:296" ph="{...}" />
+            <marker date="1571188678352" expanded="true" signature="341:397" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/UsingAlias.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+          <folding>
+            <marker date="1571188678363" expanded="true" signature="20:923" ph="{...}" />
+            <marker date="1571188678363" expanded="true" signature="29:110" ph="..." />
+            <marker date="1571188678363" expanded="true" signature="116:206" ph="/// Using别名，如:&quot;using Project = PC.MyCompany.Project;&quot; ... " />
+            <marker date="1571188678363" expanded="true" signature="242:921" ph="{...}" />
+            <marker date="1571188678363" expanded="true" signature="246:310" ph="/// 别名名称(包含空白,但不包含using后的第一个空格) ... " />
+            <marker date="1571188678363" expanded="true" signature="342:400" ph="/// &quot;=&quot;号后&quot;.&quot;分隔的各个单词(包含空白) ... " />
+            <marker date="1571188678363" expanded="true" signature="499:918" ph="{...}" />
+            <marker date="1571188678363" expanded="true" signature="570:615" ph="{...}" />
+            <marker date="1571188678363" expanded="true" signature="691:855" ph="{...}" />
+            <marker date="1571188678363" expanded="true" signature="764:809" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/UsingString.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-122">
+          <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
+          <folding>
+            <marker date="1571188678376" expanded="true" signature="20:1183" ph="{...}" />
+            <marker date="1571188678376" expanded="true" signature="29:157" ph="..." />
+            <marker date="1571188678376" expanded="true" signature="159:251" ph="/// Using，如：“using UnityEngine;”或“using System.Collections;”。 ... " />
+            <marker date="1571188678376" expanded="true" signature="285:1181" ph="{...}" />
+            <marker date="1571188678376" expanded="true" signature="316:468" ph="/// &quot;using&quot;/&quot;static&quot;后&quot;.&quot;分隔的各个单词(包含空白,但不包含using/static后的第一个空格) ... " />
+            <marker date="1571188678376" expanded="true" signature="565:622" ph="{...}" />
+            <marker date="1571188678376" expanded="true" signature="628:795" ph="/// 转换为字符串 ... " />
+            <marker date="1571188678376" expanded="true" signature="859:1178" ph="{...}" />
+            <marker date="1571188678376" expanded="true" signature="932:1096" ph="{...}" />
+            <marker date="1571188678376" expanded="true" signature="1005:1050" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpClass.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+          <folding>
+            <marker date="1570775387652" expanded="true" signature="20:117" ph="{...}" />
+            <marker date="1570775387652" expanded="true" signature="29:68" ph="..." />
+            <marker date="1570775387652" expanded="true" signature="108:115" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpDelegate.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+          <folding>
+            <marker date="1570775384843" expanded="true" signature="20:123" ph="{...}" />
+            <marker date="1570775384843" expanded="true" signature="29:68" ph="..." />
+            <marker date="1570775384843" expanded="true" signature="111:121" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpEnum.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+          <folding>
+            <marker date="1570774842469" expanded="true" signature="20:116" ph="{...}" />
+            <marker date="1570774842469" expanded="true" signature="29:68" ph="..." />
+            <marker date="1570774842469" expanded="true" signature="107:114" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpFile.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="17" selection-start-column="17" selection-end-column="17" />
+          <folding>
+            <marker date="1571199343025" expanded="true" signature="21:600" ph="{...}" />
+            <marker date="1571199343025" expanded="true" signature="30:60" ph="..." />
+            <marker date="1571199343025" expanded="true" signature="63:103" ph="/// .cs文件 ... " />
+            <marker date="1571199343025" expanded="true" signature="144:598" ph="{...}" />
+            <marker date="1571199343025" expanded="true" signature="263:594" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpInterface.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+          <folding>
+            <marker date="1570775379834" expanded="true" signature="20:121" ph="{...}" />
+            <marker date="1570775379834" expanded="true" signature="29:68" ph="..." />
+            <marker date="1570775379834" expanded="true" signature="112:119" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpObfuscator.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8">
+          <caret line="74" column="25" selection-start-line="74" selection-start-column="25" selection-end-line="74" selection-end-column="25" />
+          <folding>
+            <marker date="1570785147821" expanded="true" signature="21:3206" ph="{...}" />
+            <marker date="1570785147821" expanded="true" signature="30:60" ph="..." />
+            <marker date="1570785147821" expanded="true" signature="64:140" ph="/// CSharp混淆器 ... " />
+            <marker date="1570785147821" expanded="true" signature="171:3204" ph="{...}" />
+            <marker date="1570785147821" expanded="true" signature="506:668" ph="/// 混淆一个unity项目 ... " />
+            <marker date="1570785147821" expanded="true" signature="750:1074" ph="{...}" />
+            <marker date="1570785147821" expanded="true" signature="1078:1251" ph="/// 读取所有.cs文件,生成CSharpFile列表并返回。 ... " />
+            <marker date="1570785147821" expanded="true" signature="1325:2140" ph="{...}" />
+            <marker date="1570785147821" expanded="true" signature="1492:2080" ph="{...}" />
+            <marker date="1570785147821" expanded="true" signature="1691:1713" ph="{...}" />
+            <marker date="1570785147821" expanded="true" signature="2144:2332" ph="/// 文件夹路径是不是忽略的文件夹 ... " />
+            <marker date="1570785147821" expanded="true" signature="2410:2944" ph="{...}" />
+            <marker date="1570785147821" expanded="true" signature="2527:2683" ph="{...}" />
+            <marker date="1570785147821" expanded="true" signature="2653:2678" ph="{...}" />
+            <marker date="1570785147821" expanded="true" signature="2687:2734" ph="/* 检测所有子级忽略的目录 ... */" />
+            <marker date="1570785147821" expanded="true" signature="2839:2923" ph="{...}" />
+            <marker date="1570785147821" expanded="true" signature="2893:2918" ph="{...}" />
+            <marker date="1570785147821" expanded="true" signature="2948:3104" ph="/// 混淆CSharpFile列表 ... " />
+            <marker date="1570785147821" expanded="true" signature="3191:3200" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpStruct.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+          <folding>
+            <marker date="1570775418779" expanded="true" signature="20:118" ph="{...}" />
+            <marker date="1570775418779" expanded="true" signature="29:68" ph="..." />
+            <marker date="1570775418779" expanded="true" signature="109:116" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/AssetsImporter.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4888">
+          <caret line="15" column="54" selection-start-line="15" selection-start-column="54" selection-end-line="15" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/BuildSettingsImporter.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-408">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+          <folding>
+            <marker date="1570525291338" expanded="true" signature="20:2497" ph="{...}" />
+            <marker date="1570525291338" expanded="true" signature="29:129" ph="..." />
+            <marker date="1570525291338" expanded="true" signature="178:2495" ph="{...}" />
+            <marker date="1570525291338" expanded="true" signature="182:400" ph="/// 导入项目的BuildSettings ... " />
+            <marker date="1570525291338" expanded="true" signature="493:2492" ph="{...}" />
+            <marker date="1570525291338" expanded="true" signature="1417:2134" ph="{...}" />
+            <marker date="1570525291338" expanded="true" signature="1472:2129" ph="{...}" />
+            <marker date="1570525291338" expanded="true" signature="1578:2123" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/Importer.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+          <folding>
+            <marker date="1571207335178" expanded="true" signature="20:249" ph="{...}" />
+            <marker date="1571207335178" expanded="true" signature="29:68" ph="..." />
+            <marker date="1571207335178" expanded="true" signature="70:110" ph="/// 导入器父类 ... " />
+            <marker date="1571207335178" expanded="true" signature="142:247" ph="{...}" />
+            <marker date="1571207335178" expanded="true" signature="235:244" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/Physics2DImporter.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1592">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding>
+            <marker date="1570525287890" expanded="true" signature="20:6926" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="29:99" ph="..." />
+            <marker date="1570525287890" expanded="true" signature="144:6924" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="148:374" ph="/// 导入项目的Physics2DSettings ... " />
+            <marker date="1570525287890" expanded="true" signature="467:6921" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="1165:6684" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="1221:1392" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="1428:1717" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="1756:1814" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="1853:1911" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="1949:2008" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="2048:2109" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="2150:2212" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="2252:2313" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="2350:2408" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="2443:2499" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="2546:2614" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="2646:2699" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="2740:2802" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="2844:2907" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="2948:3010" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="3041:4896" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="4931:4986" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="5025:5084" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="5128:5192" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="5231:5290" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="5334:5398" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="5437:5496" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="5536:5596" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="5634:5692" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="5733:5794" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="5831:5888" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="5926:5985" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="6024:6084" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="6124:6185" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="6226:6288" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="6326:6385" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="6426:6679" ph="{...}" />
+            <marker date="1570525287890" expanded="true" signature="6533:6624" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/PhysicsImporter.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-904">
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+          <folding>
+            <marker date="1570525301658" expanded="true" signature="20:4633" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="29:76" ph="..." />
+            <marker date="1570525301658" expanded="true" signature="116:4630" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="120:342" ph="/// 导入项目的PhysicsSettings ... " />
+            <marker date="1570525301658" expanded="true" signature="435:4627" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="1112:4395" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="1168:1388" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="1424:1710" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="1746:1801" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="1836:1890" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="1931:1991" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="2035:2096" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="2148:2217" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="2257:2315" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="2354:2411" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="2451:2509" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="2557:2624" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="2673:2741" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="2780:2836" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="2877:3128" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="2984:3075" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="3163:3216" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="3255:3312" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="3356:3418" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="3472:3544" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="3577:3631" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="3668:3722" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="3757:3809" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="3841:3893" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="3931:3986" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="4019:4069" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="4115:4179" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="4223:4285" ph="{...}" />
+            <marker date="1570525301658" expanded="true" signature="4328:4390" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/ProjectImporterEditor.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="118" column="40" selection-start-line="118" selection-start-column="40" selection-end-line="118" selection-end-column="40" />
+          <folding>
+            <marker date="1571207096586" expanded="true" signature="20:5181" ph="{...}" />
+            <marker date="1571207096586" expanded="true" signature="29:159" ph="..." />
+            <marker date="1571207096586" expanded="true" signature="203:5179" ph="{...}" />
+            <marker date="1571207096586" expanded="true" signature="351:562" ph="/* [MenuItem(&quot;ProjectImporter/import&quot;)] ... */" />
+            <marker date="1571207096586" expanded="true" signature="566:643" ph="/// 将当前的项目设置导入到&quot;ProjectImporter/Resources&quot;保存 ... " />
+            <marker date="1571207096586" expanded="true" signature="695:831" ph="{...}" />
+            <marker date="1571207096586" expanded="true" signature="835:1342" ph="/// 导入一个项目的Assets文件夹和ProjectSettings ... " />
+            <marker date="1571207096586" expanded="true" signature="1537:3117" ph="{...}" />
+            <marker date="1571207096586" expanded="true" signature="1563:1627" ph="{...}" />
+            <marker date="1571207096586" expanded="true" signature="2049:2221" ph="{...}" />
+            <marker date="1571207096586" expanded="true" signature="2773:2936" ph="{...}" />
+            <marker date="1571207096586" expanded="true" signature="3121:3463" ph="/// 用于重复导入指定的项目时，删除指定项目的所有资源和设置。 ... " />
+            <marker date="1571207096586" expanded="true" signature="3581:3898" ph="{...}" />
+            <marker date="1571207096586" expanded="true" signature="3617:3698" ph="{...}" />
+            <marker date="1571207096586" expanded="true" signature="3771:3845" ph="{...}" />
+            <marker date="1571207096586" expanded="true" signature="3902:4011" ph="/// 删除指定项目在BuildSettings窗口中的的场景 ... " />
+            <marker date="1571207096586" expanded="true" signature="4079:4401" ph="{...}" />
+            <marker date="1571207096586" expanded="true" signature="4220:4349" ph="{...}" />
+            <marker date="1571207096586" expanded="true" signature="4312:4344" ph="{...}" />
+            <marker date="1571207096586" expanded="true" signature="4405:4528" ph="/// 删除指定项目在&quot;Assets/ProjectImporter/Resources&quot;中的设置 ... " />
+            <marker date="1571207096586" expanded="true" signature="4592:5174" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/QualityImporter.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="112" column="35" lean-forward="true" selection-start-line="112" selection-start-column="35" selection-end-line="112" selection-end-column="35" />
+          <folding>
+            <marker date="1571207501441" expanded="true" signature="20:6885" ph="{...}" />
+            <marker date="1571207501441" expanded="true" signature="29:141" ph="..." />
+            <marker date="1571207501441" expanded="true" signature="181:6883" ph="{...}" />
+            <marker date="1571207501441" expanded="true" signature="185:407" ph="/// 导入项目的QualitySettings ... " />
+            <marker date="1571207501441" expanded="true" signature="500:2037" ph="{...}" />
+            <marker date="1571207501441" expanded="true" signature="1194:1806" ph="{...}" />
+            <marker date="1571207501441" expanded="true" signature="1282:1334" ph="{...}" />
+            <marker date="1571207501441" expanded="true" signature="1370:1673" ph="{...}" />
+            <marker date="1571207501441" expanded="true" signature="1481:1613" ph="{...}" />
+            <marker date="1571207501441" expanded="true" signature="1719:1801" ph="{...}" />
+            <marker date="1571207501441" expanded="true" signature="2041:2187" ph="/// 读取各个品质级别的设置 ... " />
+            <marker date="1571207501441" expanded="true" signature="2262:6169" ph="{...}" />
+            <marker date="1571207501441" expanded="true" signature="5961:6082" ph="{...}" />
+            <marker date="1571207501441" expanded="true" signature="6173:6310" ph="/// 读取平台默认品质级别 ... " />
+            <marker date="1571207501441" expanded="true" signature="6395:6880" ph="{...}" />
+            <marker date="1571207501441" expanded="true" signature="6513:6860" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/TagsAndLayersImporter.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1160">
+          <caret line="106" selection-start-line="106" selection-end-line="106" />
+          <folding>
+            <marker date="1570525370948" expanded="true" signature="20:7364" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="29:61" ph="..." />
+            <marker date="1570525370948" expanded="true" signature="107:7362" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="111:330" ph="/// 导入项目的TagsAndLayers  ... " />
+            <marker date="1570525370948" expanded="true" signature="423:1446" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="1099:1336" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="1125:1153" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="1188:1250" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="1276:1331" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="1450:2491" ph="importTags" />
+            <marker date="1570525370948" expanded="true" signature="1519:1765" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="1573:1761" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="1800:2233" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="2270:2467" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="2387:2446" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="2416:2441" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="2495:3545" ph="importLayers" />
+            <marker date="1570525370948" expanded="true" signature="2619:3145" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="2714:2892" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="2783:2846" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="3224:3519" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="3549:7359" ph="importSortingLayers" />
+            <marker date="1570525370948" expanded="true" signature="3579:3767" ph="/// 导入指定项目的SortingLayers到当前项目 ... " />
+            <marker date="1570525370948" expanded="true" signature="3885:4879" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="3995:4556" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="4226:4311" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="4883:5059" ph="/// 设置index指定的SortingLayer到当前项目 ... " />
+            <marker date="1570525370948" expanded="true" signature="5160:5940" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="5800:5883" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="5944:6159" ph="/// 返回一个在当前项目SortingLayers中唯一的ID ... " />
+            <marker date="1570525370948" expanded="true" signature="6244:6548" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="6273:6530" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="6279:6405" ph="/* uniqueID:取得区间[0,int.MaxValue]。 ... */" />
+            <marker date="1570525370948" expanded="true" signature="6506:6525" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="6552:6811" ph="/// 判断id在当前项目SortingLayers中是否唯一的 ... " />
+            <marker date="1570525370948" expanded="true" signature="6916:7326" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="6991:7302" ph="{...}" />
+            <marker date="1570525370948" expanded="true" signature="7257:7297" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/TimeImporter.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-216">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+          <folding>
+            <marker date="1570525379443" expanded="true" signature="20:1681" ph="{...}" />
+            <marker date="1570525379443" expanded="true" signature="29:61" ph="..." />
+            <marker date="1570525379443" expanded="true" signature="98:1679" ph="{...}" />
+            <marker date="1570525379443" expanded="true" signature="102:318" ph="/// 导入项目的TimeSettings ... " />
+            <marker date="1570525379443" expanded="true" signature="411:1676" ph="{...}" />
+            <marker date="1570525379443" expanded="true" signature="1057:1455" ph="{...}" />
+            <marker date="1570525379443" expanded="true" signature="1118:1168" ph="{...}" />
+            <marker date="1570525379443" expanded="true" signature="1211:1270" ph="{...}" />
+            <marker date="1570525379443" expanded="true" signature="1300:1346" ph="{...}" />
+            <marker date="1570525379443" expanded="true" signature="1390:1450" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/UI/ProjectImporterUI.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4104">
+          <caret line="43" column="43" lean-forward="true" selection-start-line="43" selection-start-column="43" selection-end-line="43" selection-end-column="43" />
+          <folding>
+            <marker date="1571207679634" expanded="true" signature="20:9661" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="32:209" ph="..." />
+            <marker date="1571207679634" expanded="true" signature="289:9659" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="294:1592" ph="static member" />
+            <marker date="1571207679634" expanded="true" signature="628:767" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="771:816" ph="/// 保存xml到本地 ... " />
+            <marker date="1571207679634" expanded="true" signature="853:954" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="910:948" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="960:1002" ph="/// 加载xml ... " />
+            <marker date="1571207679634" expanded="true" signature="1033:1187" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="1059:1099" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="1248:1515" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="1347:1479" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="1636:1665" ph="/* private void Awake(){ ... */" />
+            <marker date="1571207679634" expanded="true" signature="1694:1713" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="1739:3669" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="2273:3295" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="2363:3288" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="2911:2969" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="3029:3102" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="3155:3208" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="3528:3558" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="3739:3890" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="3783:3838" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="3894:4059" ph="/// 重新导入项目 ... " />
+            <marker date="1571207679634" expanded="true" signature="4150:4487" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="4194:4440" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="4253:4435" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="4491:4577" ph="/// 显示是否重新指定项目路径对话框 ... " />
+            <marker date="1571207679634" expanded="true" signature="4628:4813" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="4766:4809" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="4817:4897" ph="/// 重新指定项目文件夹 ... " />
+            <marker date="1571207679634" expanded="true" signature="4952:5192" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="5045:5188" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="5082:5124" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="5196:5244" ph="/// 显示项目已经存在对话框 ... " />
+            <marker date="1571207679634" expanded="true" signature="5288:5385" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="5391:5520" ph="/// 点击项目列表后的delete按钮时 ... " />
+            <marker date="1571207679634" expanded="true" signature="5584:5712" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="5780:6764" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="5873:6760" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="6150:6237" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="6276:6419" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="6460:6508" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="6525:6755" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="6768:6890" ph="/// 返回项目编辑器版本号 ... " />
+            <marker date="1571207679634" expanded="true" signature="6943:7379" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="7383:7494" ph="/// 返回重命名字符 ... " />
+            <marker date="1571207679634" expanded="true" signature="7541:7857" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="7657:7685" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="7863:8054" ph="/// 添加一个项到xml ... " />
+            <marker date="1571207679634" expanded="true" signature="8148:8625" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="8175:8298" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="8629:8766" ph="/// 判定一个项目是否已经存在列表中(项目名称和路径都相同) ... " />
+            <marker date="1571207679634" expanded="true" signature="8823:9068" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="8850:9047" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="8961:9042" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="9009:9036" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="9072:9200" ph="/// 判定项目名称是否已经存在列表中(只判定名称相同) ... " />
+            <marker date="1571207679634" expanded="true" signature="9255:9509" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="9282:9488" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="9393:9483" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="9450:9477" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="9539:9587" ph="{...}" />
+            <marker date="1571207679634" expanded="true" signature="9647:9656" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/UI/CSharpObfuscatorUI.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="86" selection-start-line="86" selection-end-line="86" />
+          <folding>
+            <marker date="1571127061664" expanded="true" signature="21:5051" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="30:144" ph="..." />
+            <marker date="1571127061664" expanded="true" signature="229:5048" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="412:553" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="609:929" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="796:925" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="956:1043" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="1000:1039" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="1067:3371" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="1378:1951" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="1508:1944" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="1528:1872" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="2067:2169" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="2123:2163" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="2547:3291" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="2652:3285" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="3158:3213" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="3375:3470" ph="/// 混淆一个unity项目 ... " />
+            <marker date="1571127061664" expanded="true" signature="3533:3789" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="3686:3783" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="3721:3778" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="3793:3837" ph="/// 混淆所有子项目 ... " />
+            <marker date="1571127061664" expanded="true" signature="3877:4304" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="3994:4300" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="4081:4251" ph="/* string editorVersion=item.Attributes[&quot;editorVersion&quot;].Value; ... */" />
+            <marker date="1571127061664" expanded="true" signature="4308:4427" ph="/// 混淆一个子项目 ... " />
+            <marker date="1571127061664" expanded="true" signature="4495:4720" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="4667:4714" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="4724:4804" ph="/// 一个子项目混淆完成 ... " />
+            <marker date="1571127061664" expanded="true" signature="4863:4946" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="4974:4979" ph="{...}" />
+            <marker date="1571127061664" expanded="true" signature="5039:5044" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/LayerMask2.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="61" column="32" lean-forward="true" selection-start-line="61" selection-start-column="32" selection-end-line="61" selection-end-column="32" />
+          <folding>
+            <marker date="1571207729287" expanded="true" signature="21:1720" ph="{...}" />
+            <marker date="1571207729287" expanded="true" signature="30:76" ph="..." />
+            <marker date="1571207729287" expanded="true" signature="103:1718" ph="{...}" />
+            <marker date="1571207729287" expanded="true" signature="181:816" ph="{...}" />
+            <marker date="1571207729287" expanded="true" signature="314:459" ph="{...}" />
+            <marker date="1571207729287" expanded="true" signature="361:454" ph="{...}" />
+            <marker date="1571207729287" expanded="true" signature="407:448" ph="{...}" />
+            <marker date="1571207729287" expanded="true" signature="673:794" ph="{...}" />
+            <marker date="1571207729287" expanded="true" signature="707:789" ph="{...}" />
+            <marker date="1571207729287" expanded="true" signature="742:783" ph="{...}" />
+            <marker date="1571207729287" expanded="true" signature="863:927" ph="{...}" />
+            <marker date="1571207729287" expanded="true" signature="978:1201" ph="{...}" />
+            <marker date="1571207729287" expanded="true" signature="1110:1179" ph="{...}" />
+            <marker date="1571207729287" expanded="true" signature="1140:1174" ph="{...}" />
+            <marker date="1571207729287" expanded="true" signature="1257:1284" ph="{...}" />
+            <marker date="1571207729287" expanded="true" signature="1341:1421" ph="{...}" />
+            <marker date="1571207729287" expanded="true" signature="1483:1570" ph="{...}" />
+            <marker date="1571207729287" expanded="true" signature="1632:1715" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/ProjectImporter.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-760">
+          <caret line="144" column="26" selection-start-line="144" selection-start-column="16" selection-end-line="144" selection-end-column="26" />
+          <folding>
+            <marker date="1571207909348" expanded="true" signature="20:15768" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="29:77" ph="..." />
+            <marker date="1571207909348" expanded="true" signature="123:15766" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="549:573" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="599:674" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="677:768" ph="/* private void onTimeout(){ ... */" />
+            <marker date="1571207909348" expanded="true" signature="772:868" ph="/// 打开一个项目 ... " />
+            <marker date="1571207909348" expanded="true" signature="920:2087" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="2091:2187" ph="/// 关闭一个项目 ... " />
+            <marker date="1571207909348" expanded="true" signature="2240:2915" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="2921:3045" ph="/// 重命名项目 ... " />
+            <marker date="1571207909348" expanded="true" signature="3105:3114" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="3118:3213" ph="/// 卸载指定项目的所有场景 ... " />
+            <marker date="1571207909348" expanded="true" signature="3277:3657" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="3451:3653" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="3594:3648" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="3661:3783" ph="/// 返回项目的主场景路径名称 ... " />
+            <marker date="1571207909348" expanded="true" signature="3854:4095" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="3971:4070" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="4019:4065" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="4199:5870" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="4930:4991" ph="/* physicsData.contactsGeneration; ... */" />
+            <marker date="1571207909348" expanded="true" signature="5037:5214" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="5085:5209" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="5549:5796" ph="/* physicsData.contactPairsMode; ... */" />
+            <marker date="1571207909348" expanded="true" signature="5980:9796" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="9611:9792" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="9659:9787" ph="{...}" />
+            <marker date="1571207909348" expanded="false" signature="9802:14956" ph="setQualityWithData" />
+            <marker date="1571207909348" expanded="true" signature="9831:9993" ph="/// 根据一个UnityProjectImporter.QualitySettings设置品质 ... " />
+            <marker date="1571207909348" expanded="true" signature="10063:12946" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="11030:11104" ph="/* ualitySettings.textureQuality; ... */" />
+            <marker date="1571207909348" expanded="true" signature="13060:14325" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="13157:13236" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="13278:13358" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="13404:13482" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="13606:13689" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="13727:13803" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="13930:14021" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="14063:14143" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="14182:14259" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="14469:14924" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="14632:14827" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="14766:14822" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="15007:15222" ph="{...}" />
+            <marker date="1571207909348" expanded="true" signature="15251:15275" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/XmlUtil.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="42" column="57" lean-forward="true" selection-start-line="42" selection-start-column="57" selection-end-line="42" selection-end-column="57" />
+          <folding>
+            <marker date="1571208171298" expanded="true" signature="20:2237" ph="{...}" />
+            <marker date="1571208171298" expanded="true" signature="33:111" ph="..." />
+            <marker date="1571208171298" expanded="true" signature="116:163" ph="/// xml工具类 ... " />
+            <marker date="1571208171298" expanded="true" signature="195:2235" ph="{...}" />
+            <marker date="1571208171298" expanded="true" signature="214:372" ph="/// 创建XmlDocument ... " />
+            <marker date="1571208171298" expanded="true" signature="450:724" ph="{...}" />
+            <marker date="1571208171298" expanded="true" signature="534:690" ph="{...}" />
+            <marker date="1571208171298" expanded="true" signature="734:941" ph="/// 根据字符串创建XmlDocument ... " />
+            <marker date="1571208171298" expanded="true" signature="1030:1163" ph="{...}" />
+            <marker date="1571208171298" expanded="true" signature="1173:1316" ph="/// 返回一个格式化的xml字符串 ... " />
+            <marker date="1571208171298" expanded="true" signature="1367:1471" ph="{...}" />
+            <marker date="1571208171298" expanded="true" signature="1481:1631" ph="/// 返回格式化XmlDocument字符串 ... " />
+            <marker date="1571208171298" expanded="true" signature="1687:2226" ph="{...}" />
+            <marker date="1571208171298" expanded="true" signature="1850:2086" ph="{...}" />
+            <marker date="1571208171298" expanded="true" signature="2093:2180" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/StringUtil.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-378">
+          <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
+          <folding>
+            <marker date="1570514361728" expanded="true" signature="59:1331" ph="{...}" />
+            <marker date="1570514361728" expanded="true" signature="62:245" ph="/// 字符串低效方法优化 ... " />
+            <marker date="1570514361728" expanded="true" signature="277:1329" ph="{...}" />
+            <marker date="1570514361728" expanded="true" signature="329:552" ph="{...}" />
+            <marker date="1570514361728" expanded="true" signature="434:460" ph="{...}" />
+            <marker date="1570514361728" expanded="true" signature="606:846" ph="{...}" />
+            <marker date="1570514361728" expanded="true" signature="738:762" ph="{...}" />
+            <marker date="1570514361728" expanded="true" signature="850:975" ph="/// 返回字符串尾部的数字字符，如果尾部没有数字时返回空字符串 ... " />
+            <marker date="1570514361728" expanded="true" signature="1030:1326" ph="{...}" />
+            <marker date="1570514361728" expanded="true" signature="1156:1298" ph="{...}" />
+            <marker date="1570514361728" expanded="true" signature="1219:1270" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/GuidUtil.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-272">
+          <caret line="13" column="21" lean-forward="true" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
+          <folding>
+            <marker date="1570514361798" expanded="true" signature="20:2203" ph="{...}" />
+            <marker date="1570514361798" expanded="true" signature="29:178" ph="..." />
+            <marker date="1570514361798" expanded="true" signature="181:223" ph="/// Guid工具类 ... " />
+            <marker date="1570514361798" expanded="true" signature="253:2201" ph="{...}" />
+            <marker date="1570514361798" expanded="true" signature="260:453" ph="/// 返回指定文件夹下所有.meta文件的guid列表 ... " />
+            <marker date="1570514361798" expanded="true" signature="520:1118" ph="{...}" />
+            <marker date="1570514361798" expanded="true" signature="819:1098" ph="{...}" />
+            <marker date="1570514361798" expanded="true" signature="1122:1284" ph="/// 返回唯一的新的Guid列表，长度与excludeGuidList一致 ... " />
+            <marker date="1570514361798" expanded="true" signature="1353:1522" ph="{...}" />
+            <marker date="1570514361798" expanded="true" signature="1449:1502" ph="{...}" />
+            <marker date="1570514361798" expanded="true" signature="1526:1667" ph="/// 返回一个唯一的新的Guid ... " />
+            <marker date="1570514361798" expanded="true" signature="1733:1927" ph="{...}" />
+            <marker date="1570514361798" expanded="true" signature="1778:1907" ph="{...}" />
+            <marker date="1570514361798" expanded="true" signature="1848:1879" ph="{...}" />
+            <marker date="1570514361798" expanded="true" signature="1931:2093" ph="/// 返回一个新的Guid ... " />
+            <marker date="1570514361798" expanded="true" signature="2146:2194" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/FileUtil2.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1338">
+          <caret line="88" column="22" lean-forward="true" selection-start-line="88" selection-start-column="22" selection-end-line="88" selection-end-column="22" />
+          <folding>
+            <marker date="1571208121960" expanded="true" signature="21:6308" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="30:173" ph="..." />
+            <marker date="1571208121960" expanded="true" signature="176:216" ph="/// 文件工具类 ... " />
+            <marker date="1571208121960" expanded="true" signature="241:6306" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="350:544" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="392:437" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="633:748" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="823:957" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="869:917" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="961:1283" ph="/// 复制一个目录替换到指定的目录，如果指定目录不存在则新建 ... " />
+            <marker date="1571208121960" expanded="true" signature="1393:2791" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="1751:2731" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="1903:2032" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="1982:2026" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="2407:2458" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="2485:2595" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="2795:3084" ph="/// 返回文件的所有行 ... " />
+            <marker date="1571208121960" expanded="true" signature="3183:3614" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="3337:3562" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="3386:3557" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="3414:3447" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="3495:3551" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="3618:3738" ph="/// 读取并返回文件的所有字符 ... " />
+            <marker date="1571208121960" expanded="true" signature="3792:3947" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="3951:4163" ph="/// 将行字符串数组写入到本地(UTF-8格式) ... " />
+            <marker date="1571208121960" expanded="true" signature="4235:4628" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="4408:4451" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="4632:4818" ph="/// 打开选择文件夹对话框选择一个unity项目文件夹。 ... " />
+            <marker date="1571208121960" expanded="true" signature="4877:5217" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="5003:5197" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="5055:5086" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="5221:5373" ph="/// 判断是不是unity项目文件夹(是否有&quot;Assets&quot;和&quot;ProjectSettings&quot;文件夹) ... " />
+            <marker date="1571208121960" expanded="true" signature="5434:6066" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="5623:6009" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="5985:6004" ph="{...}" />
+            <marker date="1571208121960" expanded="true" signature="6070:6134" ph="/// 使用Windows的Explorer打开一个文件夹目录 ... " />
+            <marker date="1571208121960" expanded="true" signature="6189:6302" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/FileLoader.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="34" column="86" selection-start-line="34" selection-start-column="86" selection-end-line="34" selection-end-column="86" />
+          <folding>
+            <marker date="1570688184368" expanded="true" signature="20:2084" ph="{...}" />
+            <marker date="1570688184368" expanded="true" signature="29:105" ph="..." />
+            <marker date="1570688184368" expanded="true" signature="109:149" ph="/// 文件加载器 ... " />
+            <marker date="1570688184368" expanded="true" signature="174:2082" ph="{...}" />
+            <marker date="1570688184368" expanded="true" signature="181:346" ph="/// 一个文件加载完成事件 ... " />
+            <marker date="1570688184368" expanded="true" signature="398:543" ph="/// 所有文件加载完成事件 ... " />
+            <marker date="1570688184368" expanded="true" signature="689:912" ph="/// 异步加载一个或多个本地文件 ... " />
+            <marker date="1570688184368" expanded="true" signature="969:1616" ph="{...}" />
+            <marker date="1570688184368" expanded="true" signature="1083:1535" ph="{...}" />
+            <marker date="1570688184368" expanded="true" signature="1166:1383" ph="{...}" />
+            <marker date="1570688184368" expanded="true" signature="1198:1377" ph="{...}" />
+            <marker date="1570688184368" expanded="true" signature="1406:1453" ph="{...}" />
+            <marker date="1570688184368" expanded="true" signature="1569:1612" ph="{...}" />
+            <marker date="1570688184368" expanded="true" signature="1646:1671" ph="{...}" />
+            <marker date="1570688184368" expanded="true" signature="1728:1794" ph="{...}" />
+            <marker date="1570688184368" expanded="true" signature="1820:1930" ph="{...}" />
+            <marker date="1570688184368" expanded="true" signature="1846:1926" ph="{...}" />
+            <marker date="1570688184368" expanded="true" signature="1957:2029" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/Debug2.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="45" column="20" lean-forward="true" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
+          <folding>
+            <marker date="1570860584176" expanded="true" signature="20:1764" ph="{...}" />
+            <marker date="1570860584176" expanded="true" signature="29:68" ph="..." />
+            <marker date="1570860584176" expanded="true" signature="70:408" ph="/// 自定义的Log类 ... " />
+            <marker date="1570860584176" expanded="true" signature="437:1762" ph="{...}" />
+            <marker date="1570860584176" expanded="true" signature="583:1031" ph="{...}" />
+            <marker date="1570860584176" expanded="true" signature="667:996" ph="{...}" />
+            <marker date="1570860584176" expanded="true" signature="708:802" ph="{...}" />
+            <marker date="1570860584176" expanded="true" signature="825:910" ph="{...}" />
+            <marker date="1570860584176" expanded="true" signature="1035:1346" ph="/// 打印一个数组的所有元素，如： ... " />
+            <marker date="1570860584176" expanded="true" signature="1421:1759" ph="{...}" />
+            <marker date="1570860584176" expanded="true" signature="1505:1598" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/SortingLayer2.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="14" column="59" lean-forward="true" selection-start-line="14" selection-start-column="59" selection-end-line="14" selection-end-column="59" />
+          <folding>
+            <marker date="1570514361672" expanded="true" signature="21:2194" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="73:2192" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="116:517" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="124:513" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="294:485" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="739:972" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="873:946" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="903:941" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="1030:1261" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="1164:1235" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="1192:1230" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="1304:1460" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="1395:1427" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="1500:1599" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="1644:1914" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="1770:1896" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="1835:1891" ph="{...}" />
+            <marker date="1570514361672" expanded="true" signature="1990:2186" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/SceneManager2.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="145" column="30" lean-forward="true" selection-start-line="145" selection-start-column="30" selection-end-line="145" selection-end-column="30" />
+          <folding>
+            <marker date="1570514361627" expanded="true" signature="38:4871" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="47:96" ph="..." />
+            <marker date="1570514361627" expanded="true" signature="128:4869" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="179:276" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="332:438" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="508:607" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="659:753" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="837:949" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="1023:1077" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="1132:1181" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="1268:1335" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="1435:1552" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="1619:1725" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="1811:1922" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="1992:2053" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="2154:2226" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="2315:2381" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="2484:2532" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="2640:2698" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="2803:2906" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="2980:3043" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="3112:3220" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="3284:3337" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="3436:3507" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="3603:3719" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="3810:3871" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="3875:4078" ph="/// 根据场景路径名称，返回在BuildSettings中的完整的路径名称 ... " />
+            <marker date="1570514361627" expanded="true" signature="4174:4865" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="4354:4715" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="4406:4511" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="4447:4505" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="4648:4704" ph="{...}" />
+            <marker date="1570514361627" expanded="true" signature="4742:4840" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/SceneLoader.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1130">
+          <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
+          <folding>
+            <marker date="1570514361891" expanded="true" signature="20:2711" ph="{...}" />
+            <marker date="1570514361891" expanded="true" signature="29:127" ph="..." />
+            <marker date="1570514361891" expanded="true" signature="129:169" ph="/// 场景加载器 ... " />
+            <marker date="1570514361891" expanded="true" signature="216:2709" ph="{...}" />
+            <marker date="1570514361891" expanded="true" signature="474:595" ph="{...}" />
+            <marker date="1570514361891" expanded="true" signature="625:674" ph="{...}" />
+            <marker date="1570514361891" expanded="true" signature="678:770" ph="/// Additive模式同步加载场景 ... " />
+            <marker date="1570514361891" expanded="true" signature="807:855" ph="{...}" />
+            <marker date="1570514361891" expanded="true" signature="858:974" ph="/// 同步加载场景 ... " />
+            <marker date="1570514361891" expanded="true" signature="1030:1078" ph="{...}" />
+            <marker date="1570514361891" expanded="true" signature="1082:1181" ph="/// Additive模式异步加载场景，将显示进度条 ... " />
+            <marker date="1570514361891" expanded="true" signature="1223:1276" ph="{...}" />
+            <marker date="1570514361891" expanded="true" signature="1279:1402" ph="/// 异步加载场景，将显示进度条 ... " />
+            <marker date="1570514361891" expanded="true" signature="1463:1576" ph="{...}" />
+            <marker date="1570514361891" expanded="true" signature="1643:2166" ph="{...}" />
+            <marker date="1570514361891" expanded="true" signature="1836:2162" ph="{...}" />
+            <marker date="1570514361891" expanded="true" signature="1905:2024" ph="{...}" />
+            <marker date="1570514361891" expanded="true" signature="2229:2338" ph="{...}" />
+            <marker date="1570514361891" expanded="true" signature="2402:2509" ph="{...}" />
+            <marker date="1570514361891" expanded="true" signature="2427:2473" ph="{...}" />
+            <marker date="1570514361891" expanded="true" signature="2540:2589" ph="{...}" />
+            <marker date="1570514361891" expanded="true" signature="2617:2705" ph="{...}" />
+            <marker date="1570514361891" expanded="true" signature="2647:2701" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/QualitySettings2.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1541">
+          <caret line="118" column="9" lean-forward="true" selection-start-line="118" selection-start-column="9" selection-end-line="118" selection-end-column="9" />
+          <folding>
+            <marker date="1571207976652" expanded="true" signature="21:3835" ph="{...}" />
+            <marker date="1571207976652" expanded="true" signature="30:89" ph="..." />
+            <marker date="1571207976652" expanded="true" signature="124:3833" ph="{...}" />
+            <marker date="1571207976652" expanded="true" signature="128:2556" ph="/* public static int particleRaycastBudget { get; set; } ... */" />
+            <marker date="1571207976652" expanded="false" signature="2562:2757" ph="custom" />
+            <marker date="1571207976652" expanded="true" signature="2715:2744" ph="{...}" />
+            <marker date="1571207976652" expanded="true" signature="2833:2875" ph="{...}" />
+            <marker date="1571207976652" expanded="true" signature="2983:3043" ph="{...}" />
+            <marker date="1571207976652" expanded="true" signature="3084:3114" ph="{...}" />
+            <marker date="1571207976652" expanded="true" signature="3190:3232" ph="{...}" />
+            <marker date="1571207976652" expanded="true" signature="3340:3400" ph="{...}" />
+            <marker date="1571207976652" expanded="true" signature="3483:3550" ph="{...}" />
+            <marker date="1571207976652" expanded="true" signature="3601:3830" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <marker date="1571207304391" expanded="true" signature="20:1375" ph="{...}" />
+            <marker date="1571207304391" expanded="true" signature="29:145" ph="..." />
+            <marker date="1571207304391" expanded="true" signature="151:205" ph="/// 所有读取.cs文件类的基类 ... " />
+            <marker date="1571207304391" expanded="true" signature="244:1373" ph="{...}" />
+            <marker date="1571207304391" expanded="true" signature="359:543" ph="/// 读取括号块，&quot;{...}&quot;包含括号,不读取子级括号块 ... " />
+            <marker date="1571207304391" expanded="true" signature="634:1369" ph="{...}" />
+            <marker date="1571207304391" expanded="true" signature="872:1340" ph="{...}" />
+            <marker date="1571207304391" expanded="true" signature="932:1059" ph="{...}" />
+            <marker date="1571207304391" expanded="true" signature="957:987" ph="{...}" />
+            <marker date="1571207304391" expanded="true" signature="1083:1335" ph="{...}" />
+            <marker date="1571207304391" expanded="true" signature="1130:1329" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/BuildSettingsData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+          <folding>
+            <marker date="1570514361424" expanded="true" signature="20:251" ph="{...}" />
+            <marker date="1570514361424" expanded="true" signature="29:68" ph="..." />
+            <marker date="1570514361424" expanded="true" signature="117:166" ph="{...}" />
+            <marker date="1570514361424" expanded="true" signature="216:249" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpUsing.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding>
+            <marker date="1571118369275" expanded="true" signature="6:62" ph="..." />
+            <marker date="1571118369275" expanded="true" signature="63:101" ph="/// using ... " />
+            <marker date="1571118369275" expanded="true" signature="126:131" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpNameSpace.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1864">
+          <caret line="190" column="70" lean-forward="true" selection-start-line="190" selection-start-column="70" selection-end-line="190" selection-end-column="70" />
+          <folding>
+            <marker date="1571211752764" expanded="true" signature="21:7614" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="30:134" ph="..." />
+            <marker date="1571211752764" expanded="true" signature="181:7612" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="679:1091" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="1169:3143" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="1660:2055" ph="/* 匹配如:&quot;using xx;&quot;或&quot;using xxx.xxx.xxx;&quot; ... */" />
+            <marker date="1571211752764" expanded="true" signature="2257:3121" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="2667:2905" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="2668:2744" ph="/* 静态using，如:&quot;using static xx;&quot;或&quot;using static xxx.xxx.xxx;&quot; ... */" />
+            <marker date="1571211752764" expanded="true" signature="2954:3018" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="3147:3555" ph="/// 从指定的同级括号块列表读取对象 ... " />
+            <marker date="1571211752764" expanded="true" signature="3901:4527" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="4198:4523" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="4373:4518" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="4531:4815" ph="/// 根据指定的大括号块匹配命名空间声明，并通过out参数输出。如:&quot;namespace unity_tags{&quot; ... " />
+            <marker date="1571211752764" expanded="true" signature="4935:5727" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="5358:5450" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="5590:5675" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="5731:6003" ph="/// 创建CSharpNameSpace ... " />
+            <marker date="1571211752764" expanded="true" signature="6145:6725" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="6844:6901" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="7019:7076" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="7199:7256" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="7372:7429" ph="{...}" />
+            <marker date="1571211752764" expanded="true" signature="7551:7608" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
