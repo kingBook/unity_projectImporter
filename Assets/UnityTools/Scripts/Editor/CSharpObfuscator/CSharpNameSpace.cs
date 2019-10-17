@@ -1,5 +1,4 @@
 ﻿namespace UnityTools {
-	using System;
 	using System.Collections.Generic;
 	using System.Text.RegularExpressions;
     using UnityEngine;
@@ -26,6 +25,13 @@
 			readObjectsWithBracketBlocks(this,bracketBlocks,_cSharpFile.fileString,out _nameSpaces,out _classes,out _structs,out _interfaces,out _enums,out _delegates);
 		}
 
+		#region ReadUsings
+		/// <summary>
+		/// 读取指定内容块的所有Using(不读取内嵌套大括号的using)
+		/// </summary>
+		/// <param name="fileString">.cs文件字符串</param>
+		/// <param name="content">内容块</param>
+		/// <returns></returns>
 		protected List<IUsing> readUsings(string fileString,SectionString content){
 			//Debug2.Log("======================",content.startIndex,content.length);
 			//Debug.Log(content.ToString(fileString));
@@ -35,7 +41,7 @@
 			//
 			List<IUsing> usings=new List<IUsing>();
 			//匹配所有using行
-			Regex usingLineRegex=new Regex(@"using[\s\w\.]+;",RegexOptions.Compiled);
+			Regex usingLineRegex=new Regex(@"using[\s\w\.=]+;",RegexOptions.Compiled);
 			//匹配空白或分号
 			Regex whiteSemicolonRegex=new Regex(@"\s|;",RegexOptions.Compiled);
 			//匹配如:"using xx=xxx;"或"using xx=xxx.xxx.xxx;"
@@ -50,23 +56,113 @@
 				usingLineString=whiteSemicolonRegex.Replace(usingLineString,"");
 				//
 				if(usingAliasRegex.IsMatch(usingLineString)){//using别名，如:"using xx=xxx;"或"using xx=xxx.xxx.xxx;"
-					
+					UsingAlias usingAlias=readUsingAlias(fileString,usingLine);
+					Debug.Log(usingAlias.ToString(fileString,true));
+					usings.Add(usingAlias);
 				}else{
 					//是不是静态using
 					bool isStatic=usingLineString.Substring(0,6)=="static";
 					if(isStatic){//静态using，如:"using static xx;"或"using static xxx.xxx.xxx;"
-						UsingString staticUsing=readStaticUsing(fileString,usingLine);
-						Debug.Log(staticUsing.ToString(fileString,true));
-						usings.Add(staticUsing);
+						UsingString usingString=readStaticUsing(fileString,usingLine);
+						usings.Add(usingString);
 					}else{//普通using，如:"using xx;"或"using xxx.xxx.xxx;"
-						
+						UsingString usingString=readUsing(fileString,usingLine);
+						usings.Add(usingString);
 					}
 				}
 				lineMatch=lineMatch.NextMatch();
 			}
 			return usings;
 		}
-
+		
+		/// <summary>
+		/// 读取普通的Using
+		/// </summary>
+		/// <param name="fileString">.cs文件字符串</param>
+		/// <param name="usingLine">using行内容块，如："using System.IO;"</param>
+		/// <returns></returns>
+		private UsingString readUsing(string fileString,SectionString usingLine){
+			string usingLineString=usingLine.ToString(fileString);
+			//匹配"using "。
+			Match headMatch=Regex.Match(usingLineString,@"using\s",RegexOptions.Compiled);
+			
+			int startIndex=usingLine.startIndex+headMatch.Length;
+			//长度为:减去"using "的长度，再减去";"的长度
+			int length=usingLine.length-headMatch.Length-1;
+			SectionString[] wordStrings=readUsingWordString(fileString,new SectionString(startIndex,length));
+			UsingString usingString=new UsingString(false,wordStrings);
+			
+			return usingString;
+		}
+		
+		/// <summary>
+		/// 读取静态Using
+		/// </summary>
+		/// <param name="fileString">.cs文件字符串</param>
+		/// <param name="usingLine">using行内容块，如："using static UnityEngine.Mathf;"</param>
+		/// <returns></returns>
+		private UsingString readStaticUsing(string fileString,SectionString usingLine){
+			string usingLineString=usingLine.ToString(fileString);
+			//匹配"using static "。
+			Match headMatch=Regex.Match(usingLineString,@"using\s+static\s",RegexOptions.Compiled);
+			
+			int startIndex=usingLine.startIndex+headMatch.Length;
+			//长度为:减去"using static "的长度，再减去";"的长度
+			int length=usingLine.length-headMatch.Length-1;
+			SectionString[] wordStrings=readUsingWordString(fileString,new SectionString(startIndex,length));
+			UsingString usingString=new UsingString(true,wordStrings);
+			
+			return usingString;
+		}
+		
+		/// <summary>
+		/// 读取Using别名
+		/// </summary>
+		/// <param name="fileString">.cs文件字符串</param>
+		/// <param name="usingLine">using行内容块，如："using static UnityEngine.Mathf;"</param>
+		/// <returns></returns>
+		private UsingAlias readUsingAlias(string fileString,SectionString usingLine){
+			string usingLineString=usingLine.ToString(fileString);
+			//匹配"using xxx="
+			Match headMatch=Regex.Match(usingLineString,@"using\s+\w+=",RegexOptions.Compiled);
+			
+			//开始索引:加上"using "的长度
+			int startIndex=usingLine.startIndex+6;
+			//name长度为:"using xxx="的长度-"using "长度-"="长度
+			int length=headMatch.Length-6-1;
+			SectionString name=new SectionString(startIndex,length);
+			
+			startIndex=usingLine.startIndex+headMatch.Length;
+			//长度为:减去"using xxx= "的长度，再减去";"的长度
+			length=usingLine.length-headMatch.Length-1;
+			SectionString[] wordStrings=readUsingWordString(fileString,new SectionString(startIndex,length));
+			
+			UsingAlias usingAlias=new UsingAlias(name,wordStrings);
+			return usingAlias;
+		}
+		
+		/// <summary>
+		/// 读取using中以"."分隔的各个单词(包含空白),如:"System.Text.RegularExpressions"，将得到"System","Text","RegularExpressions"
+		/// </summary>
+		/// <param name="fileString">.cs文件字符串</param>
+		/// <param name="sectionString">去掉"using"和"static"和";"后的字符串，如："System.Text.RegularExpressions"</param>
+		/// <returns></returns>
+		private SectionString[] readUsingWordString(string fileString,SectionString sectionString){
+			string usingContent=sectionString.ToString(fileString);
+			string[] splitStrings=usingContent.Split('.');
+			int len=splitStrings.Length;
+			int startIndex=sectionString.startIndex;
+			SectionString[] wordStrings=new SectionString[len];
+			for(int i=0;i<len;i++){
+				int tempLength=splitStrings[i].Length;
+				wordStrings[i]=new SectionString(startIndex,tempLength);
+				//加一个单词和"."的长度
+				startIndex+=tempLength+1;
+			}
+			return wordStrings;
+		}
+		#endregion
+		
 		/// <summary>
 		/// 从指定的同级括号块列表读取对象
 		/// </summary>
@@ -102,6 +198,8 @@
 				if(matchNameSpaceLeftBracketString(bracketBlock,fileString,out leftBracketString)){
 					CSharpNameSpace csNameSpace=createCSharpNameSpace(parentNameSpace,leftBracketString,bracketBlock);
 					namespaces.Add(csNameSpace);
+				}else if(matchClassLeftBracketString(bracketBlock,fileString,out leftBracketString)){
+					
 				}
 			}
 		}
@@ -119,7 +217,7 @@
 			Match bracketMatch=regexBracket.Match(fileString,bracketBlock.startIndex);
 			//命名空间正则表达式，从"{"的右侧开始查找
 			Regex regex=new Regex(@"namespace\s+\w+\s*{",RegexOptions.Compiled|RegexOptions.RightToLeft);
-			int startIndex=bracketBlock.startIndex+1;//"{"右边
+			int startIndex=bracketBlock.startIndex+1;//"{"的右边
 			Match match;
 			if(bracketMatch.Success){
 				match=regex.Match(fileString,bracketMatch.Index+1,startIndex-bracketMatch.Index);
@@ -155,12 +253,35 @@
 			return csNameSpace;
 		}
 		
+		/// <summary>
+		/// 根据指定的大括号块匹配类声明，并通过out参数输出。如:"class xxx{"、"public class xxx{"、"public static class{"等。
+		/// </summary>
+		/// <param name="bracketBlock">类包含的括号块，包含大括号</param>
+		/// <param name="fileString">.cs文件字符串</param>
+		/// <param name="result">输出结果，如:"class xxx{"、"public class xxx{"、"public static class{"等。</param>
+		/// <returns></returns>
 		protected bool matchClassLeftBracketString(SectionString bracketBlock,string fileString,out SectionString result){
-			
+			//计算"{"向左查找的最远位置(就是上一个"{|}"出现的位置)
+			Regex regexBracket=new Regex("{|}",RegexOptions.Compiled|RegexOptions.RightToLeft);
+			Match bracketMatch=regexBracket.Match(fileString,bracketBlock.startIndex);
+			//命名空间正则表达式，从"{"的右侧开始查找
+			Regex regex=new Regex(@"(public|internal)?(static|abstract|sealed)?\s+class\s+\w+\s*((:\s*\w+\s*)|())?{",RegexOptions.Compiled|RegexOptions.RightToLeft);
+			int startIndex=bracketBlock.startIndex+1;//"{"的右边
+			Match match;
+			if(bracketMatch.Success){
+				match=regex.Match(fileString,bracketMatch.Index+1,startIndex-bracketMatch.Index);
+			}else{
+				match=regex.Match(fileString,startIndex);
+			}
+			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
+			if(match.Success){
+				result=new SectionString(match.Index,match.Value.Length);
+				return true;
+			}
 			result=new SectionString();
 			return false;
 		}
-
+		
 		protected bool matchStructLeftBracketString(SectionString bracketBlock,string fileString,out SectionString result){
 			
 			result=new SectionString();
@@ -184,28 +305,8 @@
 			result=new SectionString();
 			return false;
 		}
-
-		protected UsingString readStaticUsing(string fileString,SectionString usingLine){
-			string usingLineString=usingLine.ToString(fileString);
-			//匹配"using static "。
-			Match headMatch=Regex.Match(usingLineString,@"using\s+static\s",RegexOptions.Compiled);
-			int startIndex=usingLine.startIndex+headMatch.Length;
-			//长度为:减去"using static "的长度，再减去";"的长度
-			int length=usingLine.length-headMatch.Length-1;
-			//得到有空白的字符串如："System.	Collections .Generic"。
-			string usingContent=fileString.Substring(startIndex,length);
-			string[] splitStrings=usingContent.Split('.');
-			int len=splitStrings.Length;
-			SectionString[] wordStrings=new SectionString[len];
-			for(int i=0;i<len;i++){
-				int tempLength=splitStrings[i].Length;
-				wordStrings[i]=new SectionString(startIndex,tempLength);
-				//加一个单词和"."的长度
-				startIndex+=tempLength+1;
-			}
-			UsingString usingString=new UsingString(true,wordStrings);
-			return usingString;
-		}
+		
+		
 
 	}
 }

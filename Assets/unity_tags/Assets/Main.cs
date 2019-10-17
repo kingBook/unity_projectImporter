@@ -9,7 +9,7 @@ namespace unity_tags{
 	
 	SceneManagement;
 	using  static   UnityEngine  . Mathf  ;
-	
+	using Mathx=UnityEngine.Mathf;
 	
 	public class Main : MonoBehaviour{
 		public SpriteRenderer spriteRenderer;
@@ -17,15 +17,14 @@ namespace unity_tags{
 			SortingLayer2 [] list0=SortingLayer2.layers;
 			SortingLayer2[ ] list1=SortingLayer2.layers;
 			var list2 =SortingLayer2.layers;
-	
 			SortingLayer2 layer=list1[1];
-			
 		}
-	
+		
 		private void capSortingLayerText(Match m){
 			SceneManager2.GetSceneByName("sdf");
 		}
-	    
+		
+		
 
 		
 
@@ -52,6 +51,7 @@ namespace XXSS {
 		public interface ssdf{
 			void hello();
 		}
+		
 }
 
 public interface OOA{

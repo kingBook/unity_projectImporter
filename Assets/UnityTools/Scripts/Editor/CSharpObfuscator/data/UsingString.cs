@@ -25,20 +25,20 @@
 		/// 转换为字符串
 		/// </summary>
 		/// <param name="fileString">.cs文件字符串</param>
-		/// <param name="inclusiveWhite">是否包含空白</param>
+		/// <param name="inclusiveWhitespace">是否包含空白</param>
 		/// <returns></returns>
-		public string ToString(string fileString,bool inclusiveWhite){
+		public string ToString(string fileString,bool inclusiveWhitespace){
 			string text="";
 			int len=wordStrings.Length;
 			for(int i=0;i<len;i++){
 				string str=wordStrings[i].ToString(fileString);
-				if(!inclusiveWhite){
+				if(!inclusiveWhitespace){
 					str=Regex.Replace(str,@"\s","");
 				}
 				text+=str;
 				if(i<len-1)text+=",";
 			}
-			return string.Format("isStatic:{0} wordStrings:{1}",isStatic.ToString(),text);
+			return$"isStatic:{isStatic.ToString()} wordStrings:{text}";
 		}
 	}
 }
