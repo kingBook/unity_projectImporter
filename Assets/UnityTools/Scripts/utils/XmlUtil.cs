@@ -25,7 +25,7 @@
         /// <summary>
         /// 根据字符串创建XmlDocument
         /// </summary>
-        /// <param name="xmlDocumentString"></param>
+        /// <param name="xml"></param>
         /// <param name="isAddXmlDeclaration"></param>
         /// <returns></returns>
         public static XmlDocument createXmlDocument(string xml,bool isAddXmlDeclaration){
