@@ -2,25 +2,41 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c64b986e-f490-401f-a692-f783b3e82095" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_tools/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.unity_tools/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_tools/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.unity_tools/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scenes/test.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scenes/test.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpClass.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpClass.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpDelegate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpDelegate.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpEnum.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpEnum.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpFile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpFile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpInterface.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpInterface.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpNameSpace.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpNameSpace.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_projectImporter/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_projectImporter/.idea/contentModel.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_projectImporter/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_projectImporter/.idea/indexLayout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_projectImporter/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_projectImporter/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_projectImporter/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_projectImporter/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_projectImporter/riderModule.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_tools/.idea/dictionaries/Administrator.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_tools/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_tools/.idea/indexLayout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_tools/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_tools/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_tools/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.unity_tools/riderModule.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpObfuscator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpObfuscator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpRecord.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpRecord.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpStruct.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpStruct.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpUsing.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpUsing.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/SectionString.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/SectionString.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/UsingAlias.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/UsingAlias.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/UsingString.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/UsingString.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/unity_tags/Assets/Main.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/unity_tags/Assets/Main.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpRecord.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpRecord.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/IUsing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/IUsing.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/IUsing.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/IUsing.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/SectionString.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/SectionString.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/SectionString.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/SectionString.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/UsingAlias.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/UsingAlias.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/UsingAlias.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/UsingAlias.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/UsingString.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/UsingString.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/UsingString.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/UsingString.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/UI.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/UI/CSharpObfuscatorUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpObfuscatorUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/UI/CSharpObfuscatorUI.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpObfuscatorUI.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/UI/ProjectImporterUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/ProjectImporterUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/UI/ProjectImporterUI.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/ProjectImporterUI.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unity_projectImporter.sln.DotSettings.user" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unity_tools.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/unity_tools.sln.DotSettings.user" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,101 +63,72 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpObfuscator.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2569">
-              <caret line="135" column="12" lean-forward="true" selection-start-line="135" selection-start-column="12" selection-end-line="135" selection-end-column="12" />
+            <state relative-caret-position="356">
+              <caret line="336" column="20" selection-start-line="336" selection-start-column="20" selection-end-line="336" selection-end-column="20" />
               <folding>
-                <marker date="1571391851420" expanded="true" signature="21:16492" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="30:149" ph="..." />
-                <marker date="1571391851420" expanded="true" signature="153:229" ph="/// CSharp混淆器 ... " />
-                <marker date="1571391851420" expanded="true" signature="260:16490" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="595:757" ph="/// 混淆一个unity项目 ... " />
-                <marker date="1571391851420" expanded="true" signature="839:1163" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="1167:1340" ph="/// 读取所有.cs文件,生成CSharpFile列表并返回。 ... " />
-                <marker date="1571391851420" expanded="true" signature="1414:2212" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="1581:2152" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="1780:1802" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="2216:2404" ph="/// 文件夹路径是不是忽略的文件夹 ... " />
-                <marker date="1571391851420" expanded="true" signature="2482:3066" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="2599:2780" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="2750:2775" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="2784:2831" ph="/* 检测所有子级忽略的目录 ... */" />
-                <marker date="1571391851420" expanded="true" signature="2936:3045" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="3015:3040" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="3070:3226" ph="/// 混淆CSharpFile列表 ... " />
-                <marker date="1571391851420" expanded="true" signature="3313:3322" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="3400:4308" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="4314:4498" ph="/// 读取括号块，&quot;{...}&quot;包含括号,不读取子级括号块 ... " />
-                <marker date="1571391851420" expanded="true" signature="4589:5324" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="4827:5295" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="4887:5014" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="4912:4942" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="5038:5290" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="5085:5284" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="5330:5612" ph="/// 读取以&quot;.&quot;分隔的各个单词(包含空白),如:&quot;System.Text.RegularExpressions&quot;，将得到&quot;System&quot;,&quot;Text&quot;,&quot;RegularExpressions&quot; ... " />
-                <marker date="1571391851420" expanded="true" signature="5695:6130" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="5956:6109" ph="{...}" />
-                <marker date="1571391851420" expanded="false" signature="6136:10676" ph="ReadUsings" />
-                <marker date="1571391851420" expanded="true" signature="6157:6340" ph="/// 读取指定内容块的所有Using(不读取内嵌套大括号的using) ... " />
-                <marker date="1571391851420" expanded="true" signature="6413:8126" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="6418:6558" ph="/* Debug2.Log(&quot;======================&quot;,content.startIndex,content.length); ... */" />
-                <marker date="1571391851420" expanded="true" signature="7152:8094" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="7476:7628" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="7730:7896" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="8132:8322" ph="/// 读取普通的Using ... " />
-                <marker date="1571391851420" expanded="true" signature="8397:8885" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="8891:9095" ph="/// 读取静态Using ... " />
-                <marker date="1571391851420" expanded="true" signature="9176:9686" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="9692:9896" ph="/// 读取Using别名 ... " />
-                <marker date="1571391851420" expanded="true" signature="9975:10663" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="10682:11090" ph="/// 从指定的同级括号块列表读取对象 ... " />
-                <marker date="1571391851420" expanded="true" signature="11440:12193" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="11737:12189" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="11927:12077" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="12171:12184" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="12199:12483" ph="/// 根据指定的大括号块匹配命名空间声明，并通过out参数输出。如:&quot;namespace unity_tags{&quot; ... " />
-                <marker date="1571391851420" expanded="true" signature="12603:13423" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="13054:13146" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="13286:13371" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="13427:13755" ph="/// 创建CSharpNameSpace ... " />
-                <marker date="1571391851420" expanded="true" signature="13913:14464" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="14470:14770" ph="/// 根据指定的大括号块匹配类声明，并通过out参数输出结果。 ... " />
-                <marker date="1571391851420" expanded="true" signature="14886:15774" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="15351:15443" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="15503:15616" ph="/* Debug.Log(getNameWordsString(fileString,false)); ... */" />
-                <marker date="1571391851420" expanded="true" signature="15637:15722" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="15894:15951" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="16074:16131" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="16247:16304" ph="{...}" />
-                <marker date="1571391851420" expanded="true" signature="16426:16483" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpFile.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="12" column="37" lean-forward="true" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="37" />
-              <folding>
-                <marker date="1571392272577" expanded="true" signature="21:544" ph="{...}" />
-                <marker date="1571392272577" expanded="true" signature="30:95" ph="..." />
-                <marker date="1571392272577" expanded="true" signature="98:138" ph="/// .cs文件 ... " />
-                <marker date="1571392272577" expanded="true" signature="164:542" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpNameSpace.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="17" column="34" lean-forward="true" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
-              <folding>
-                <marker date="1571392310978" expanded="true" signature="21:624" ph="{...}" />
-                <marker date="1571392310978" expanded="true" signature="30:119" ph="..." />
-                <marker date="1571392310978" expanded="true" signature="153:622" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="21:16551" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="30:149" ph="..." />
+                <marker date="1571401049832" expanded="true" signature="153:229" ph="/// CSharp混淆器 ... " />
+                <marker date="1571401049832" expanded="true" signature="260:16549" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="595:757" ph="/// 混淆一个unity项目 ... " />
+                <marker date="1571401049832" expanded="true" signature="832:1156" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="1160:1333" ph="/// 读取所有.cs文件,生成CSharpFile列表并返回。 ... " />
+                <marker date="1571401049832" expanded="true" signature="1407:2205" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="1574:2145" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="1773:1795" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="2209:2397" ph="/// 文件夹路径是不是忽略的文件夹 ... " />
+                <marker date="1571401049832" expanded="true" signature="2475:3059" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="2592:2773" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="2743:2768" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="2777:2824" ph="/* 检测所有子级忽略的目录 ... */" />
+                <marker date="1571401049832" expanded="true" signature="2929:3038" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="3008:3033" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="3063:3219" ph="/// 混淆CSharpFile列表 ... " />
+                <marker date="1571401049832" expanded="true" signature="3299:3308" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="3386:4294" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="4300:4484" ph="/// 读取括号块，&quot;{...}&quot;包含括号,不读取子级括号块 ... " />
+                <marker date="1571401049832" expanded="true" signature="4575:5310" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="4813:5281" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="4873:5000" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="4898:4928" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="5024:5276" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="5071:5270" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="5316:5598" ph="/// 读取以&quot;.&quot;分隔的各个单词(包含空白),如:&quot;System.Text.RegularExpressions&quot;，将得到&quot;System&quot;,&quot;Text&quot;,&quot;RegularExpressions&quot; ... " />
+                <marker date="1571401049832" expanded="true" signature="5681:6116" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="5942:6095" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="6122:10662" ph="ReadUsings" />
+                <marker date="1571401049832" expanded="true" signature="6143:6326" ph="/// 读取指定内容块的所有Using(不读取内嵌套大括号的using) ... " />
+                <marker date="1571401049832" expanded="true" signature="6399:8112" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="6404:6544" ph="/* Debug2.Log(&quot;======================&quot;,content.startIndex,content.length); ... */" />
+                <marker date="1571401049832" expanded="true" signature="7138:8080" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="7462:7614" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="7716:7882" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="8118:8308" ph="/// 读取普通的Using ... " />
+                <marker date="1571401049832" expanded="true" signature="8383:8871" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="8877:9081" ph="/// 读取静态Using ... " />
+                <marker date="1571401049832" expanded="true" signature="9162:9672" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="9678:9882" ph="/// 读取Using别名 ... " />
+                <marker date="1571401049832" expanded="true" signature="9961:10649" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="10666:11148" ph="/// 从指定的同级括号块列表读取对象 ... " />
+                <marker date="1571401049832" expanded="true" signature="11498:12251" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="11795:12247" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="11985:12135" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="12229:12242" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="12257:12541" ph="/// 根据指定的大括号块匹配命名空间声明，并通过out参数输出。如:&quot;namespace unity_tags{&quot; ... " />
+                <marker date="1571401049832" expanded="true" signature="12662:13482" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="13113:13205" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="13345:13430" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="13486:13814" ph="/// 创建CSharpNameSpace ... " />
+                <marker date="1571401049832" expanded="true" signature="13972:14523" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="14529:14829" ph="/// 根据指定的大括号块匹配类声明，并通过out参数输出结果。 ... " />
+                <marker date="1571401049832" expanded="true" signature="14945:15833" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="15410:15502" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="15562:15675" ph="/* Debug.Log(getNameWordsString(fileString,false)); ... */" />
+                <marker date="1571401049832" expanded="true" signature="15696:15781" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="15953:16010" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="16133:16190" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="16306:16363" ph="{...}" />
+                <marker date="1571401049832" expanded="true" signature="16485:16542" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -168,53 +155,52 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpObfuscatorUI.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/LayersData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/UsingAlias.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/IUsing.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/PhysicsData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/ProjectImporterUI.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/UsingString.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/BuildSettingsData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/Physics2dData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/Importer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/PhysicsImporter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/FileUtil2.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/ProjectImporterEditor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/StringUtil.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/ProjectImporterEditor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/QualityImporter.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/AssetsImporter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/Debug2.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/BuildSettingsImporter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/AssetsImporter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/GuidUtil.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/TagsAndLayersImporter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/BuildSettingsImporter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/FileLoader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/TagsAndLayersImporter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Resources/default_layersData.asset" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/Physics2DImporter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/XmlUtil.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/TimeImporter.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpRecord.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpStruct.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../unity_parkinggame/Assets/Scripts/Test.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Resources/default_layersData.asset" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpFile.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpNameSpace.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/QualitySettings2.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/SortingLayer2.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/SceneManager2.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpClass.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/ProjectImporter.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpEnum.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/LayerMask2.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpObfuscator.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpInterface.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/SceneLoader.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpDelegate.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/unity_tags/Assets/Main.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpClass.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/LayerMask2.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpEnum.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpObfuscator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/runtime/SceneLoader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpInterface.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scenes/Test.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpDelegate.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/TimeData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/SortingLayersData.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/SectionString.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/UI/CSharpObfuscatorUI.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/SectionString.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/QualityData.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/UsingAlias.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/LayersData.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/IUsing.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/UI/ProjectImporterUI.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/UsingString.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/data/PhysicsData.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/Importer.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -241,10 +227,11 @@
         <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpDelegate.cs" />
         <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpEnum.cs" />
         <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpInterface.cs" />
-        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpObfuscator.cs" />
         <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpStruct.cs" />
         <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpFile.cs" />
         <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpNameSpace.cs" />
+        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/ProjectImporterUI.cs" />
+        <option value="$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpObfuscator.cs" />
       </list>
     </option>
   </component>
@@ -254,11 +241,11 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="213" />
-    <option name="y" value="44" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="738" />
+    <option name="y" value="240" />
     <option name="width" value="1287" />
-    <option name="height" value="800" />
+    <option name="height" value="797" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -266,11 +253,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="SolutionExplorer">
-        <option name="show-all-files" value="false" />
-      </pane>
-      <pane id="AssemblyExplorer" />
-      <pane id="FileSystemExplorer" />
       <pane id="UnityExplorer">
         <subPane>
           <expand>
@@ -302,24 +284,7 @@
               <item name="UnityTools" type="1045f7f1:UnityExplorerNode" />
               <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
               <item name="Editor" type="1045f7f1:UnityExplorerNode" />
-              <item name="CSharpObfuscator" type="1045f7f1:UnityExplorerNode" />
-            </path>
-            <path>
-              <item name="Project" type="e068e287:UnityExplorerRootNode" />
-              <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
-              <item name="UnityTools" type="1045f7f1:UnityExplorerNode" />
-              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
-              <item name="Editor" type="1045f7f1:UnityExplorerNode" />
-              <item name="CSharpObfuscator" type="1045f7f1:UnityExplorerNode" />
-              <item name="data" type="1045f7f1:UnityExplorerNode" />
-            </path>
-            <path>
-              <item name="Project" type="e068e287:UnityExplorerRootNode" />
-              <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
-              <item name="UnityTools" type="1045f7f1:UnityExplorerNode" />
-              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
-              <item name="Editor" type="1045f7f1:UnityExplorerNode" />
-              <item name="UI" type="1045f7f1:UnityExplorerNode" />
+              <item name="Importers" type="1045f7f1:UnityExplorerNode" />
             </path>
           </expand>
           <select />
@@ -327,6 +292,11 @@
         <option name="show-hidden-items" value="false" />
         <option name="show-project-names" value="true" />
       </pane>
+      <pane id="SolutionExplorer">
+        <option name="show-all-files" value="false" />
+      </pane>
+      <pane id="FileSystemExplorer" />
+      <pane id="AssemblyExplorer" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -390,11 +360,12 @@
       <workItem from="1571309487794" duration="5600000" />
       <workItem from="1571360860729" duration="31000" />
       <workItem from="1571360999169" duration="21071000" />
+      <workItem from="1571394899834" duration="4078000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59052000" />
+    <option name="totallyTimeSpent" value="63130000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -406,7 +377,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="886" extended-state="6" />
+    <frame x="738" y="240" width="1287" height="797" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
@@ -430,13 +401,13 @@
       <window_info anchor="bottom" id="Terminal" order="14" weight="0.32909605" />
       <window_info anchor="bottom" id="Event Log" order="15" side_tool="true" weight="0.32903227" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
-      <window_info anchor="right" id="Errors In Solution" order="1" weight="0.32921448" />
-      <window_info anchor="right" id="Database" order="2" weight="0.32923833" />
-      <window_info anchor="right" id="Unit Tests Coverage" order="3" weight="0.32923833" />
+      <window_info anchor="right" id="Errors In Solution" order="1" weight="0.32889125" />
+      <window_info anchor="right" id="Database" order="2" weight="0.32889125" />
+      <window_info anchor="right" id="Unit Tests Coverage" order="3" weight="0.32889125" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="4" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="5" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="6" weight="0.25" />
-      <window_info active="true" anchor="right" content_ui="combo" id="Project" order="7" visible="true" weight="0.15809768" />
+      <window_info anchor="right" content_ui="combo" id="Project" order="7" weight="0.198859" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -459,80 +430,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="23" column="11" lean-forward="true" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/UI/ProjectImporterUI.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4104">
-          <caret line="43" column="43" lean-forward="true" selection-start-line="43" selection-start-column="43" selection-end-line="43" selection-end-column="43" />
-          <folding>
-            <marker date="1571207679634" expanded="true" signature="20:9661" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="32:209" ph="..." />
-            <marker date="1571207679634" expanded="true" signature="289:9659" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="294:1592" ph="static member" />
-            <marker date="1571207679634" expanded="true" signature="628:767" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="771:816" ph="/// 保存xml到本地 ... " />
-            <marker date="1571207679634" expanded="true" signature="853:954" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="910:948" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="960:1002" ph="/// 加载xml ... " />
-            <marker date="1571207679634" expanded="true" signature="1033:1187" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="1059:1099" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="1248:1515" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="1347:1479" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="1636:1665" ph="/* private void Awake(){ ... */" />
-            <marker date="1571207679634" expanded="true" signature="1694:1713" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="1739:3669" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="2273:3295" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="2363:3288" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="2911:2969" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="3029:3102" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="3155:3208" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="3528:3558" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="3739:3890" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="3783:3838" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="3894:4059" ph="/// 重新导入项目 ... " />
-            <marker date="1571207679634" expanded="true" signature="4150:4487" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="4194:4440" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="4253:4435" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="4491:4577" ph="/// 显示是否重新指定项目路径对话框 ... " />
-            <marker date="1571207679634" expanded="true" signature="4628:4813" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="4766:4809" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="4817:4897" ph="/// 重新指定项目文件夹 ... " />
-            <marker date="1571207679634" expanded="true" signature="4952:5192" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="5045:5188" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="5082:5124" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="5196:5244" ph="/// 显示项目已经存在对话框 ... " />
-            <marker date="1571207679634" expanded="true" signature="5288:5385" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="5391:5520" ph="/// 点击项目列表后的delete按钮时 ... " />
-            <marker date="1571207679634" expanded="true" signature="5584:5712" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="5780:6764" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="5873:6760" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="6150:6237" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="6276:6419" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="6460:6508" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="6525:6755" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="6768:6890" ph="/// 返回项目编辑器版本号 ... " />
-            <marker date="1571207679634" expanded="true" signature="6943:7379" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="7383:7494" ph="/// 返回重命名字符 ... " />
-            <marker date="1571207679634" expanded="true" signature="7541:7857" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="7657:7685" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="7863:8054" ph="/// 添加一个项到xml ... " />
-            <marker date="1571207679634" expanded="true" signature="8148:8625" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="8175:8298" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="8629:8766" ph="/// 判定一个项目是否已经存在列表中(项目名称和路径都相同) ... " />
-            <marker date="1571207679634" expanded="true" signature="8823:9068" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="8850:9047" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="8961:9042" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="9009:9036" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="9072:9200" ph="/// 判定项目名称是否已经存在列表中(只判定名称相同) ... " />
-            <marker date="1571207679634" expanded="true" signature="9255:9509" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="9282:9488" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="9393:9483" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="9450:9477" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="9539:9587" ph="{...}" />
-            <marker date="1571207679634" expanded="true" signature="9647:9656" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1206,21 +1103,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scenes/Test.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
-          <folding>
-            <marker date="1571068232063" expanded="true" signature="6:134" ph="..." />
-            <marker date="1571068232063" expanded="true" signature="169:624" ph="{...}" />
-            <marker date="1571068232063" expanded="true" signature="241:503" ph="{...}" />
-            <marker date="1571068232063" expanded="true" signature="429:496" ph="{...}" />
-            <marker date="1571068232063" expanded="true" signature="561:582" ph="{...}" />
-            <marker date="1571068232063" expanded="true" signature="613:620" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/utils/FileLoader.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
@@ -1368,7 +1250,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/UI/CSharpObfuscatorUI.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpObfuscatorUI.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="274">
           <caret line="108" column="49" lean-forward="true" selection-start-line="108" selection-start-column="49" selection-end-line="108" selection-end-column="49" />
@@ -1421,29 +1303,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpRecord.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-74">
-          <caret line="19" column="55" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="55" />
-          <folding>
-            <marker date="1571382499967" expanded="true" signature="20:2156" ph="{...}" />
-            <marker date="1571382499967" expanded="true" signature="29:145" ph="..." />
-            <marker date="1571382499967" expanded="true" signature="151:205" ph="/// 所有读取.cs文件类的基类 ... " />
-            <marker date="1571382499967" expanded="true" signature="244:2154" ph="{...}" />
-            <marker date="1571382499967" expanded="true" signature="326:510" ph="/// 读取括号块，&quot;{...}&quot;包含括号,不读取子级括号块 ... " />
-            <marker date="1571382499967" expanded="true" signature="601:1336" ph="{...}" />
-            <marker date="1571382499967" expanded="true" signature="839:1307" ph="{...}" />
-            <marker date="1571382499967" expanded="true" signature="899:1026" ph="{...}" />
-            <marker date="1571382499967" expanded="true" signature="924:954" ph="{...}" />
-            <marker date="1571382499967" expanded="true" signature="1050:1302" ph="{...}" />
-            <marker date="1571382499967" expanded="true" signature="1097:1296" ph="{...}" />
-            <marker date="1571382499967" expanded="true" signature="1342:1624" ph="/// 读取以&quot;.&quot;分隔的各个单词(包含空白),如:&quot;System.Text.RegularExpressions&quot;，将得到&quot;System&quot;,&quot;Text&quot;,&quot;RegularExpressions&quot; ... " />
-            <marker date="1571382499967" expanded="true" signature="1709:2144" ph="{...}" />
-            <marker date="1571382499967" expanded="true" signature="1970:2123" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpStruct.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="64">
@@ -1460,18 +1319,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
           <caret line="6" column="12" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/IUsing.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
-          <folding>
-            <marker date="1571188678337" expanded="true" signature="20:103" ph="{...}" />
-            <marker date="1571188678337" expanded="true" signature="29:68" ph="..." />
-            <marker date="1571188678337" expanded="true" signature="94:101" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1511,7 +1358,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/UsingString.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/UsingString.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="359">
           <caret line="27" column="42" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
@@ -1530,7 +1377,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/UsingAlias.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/UsingAlias.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
@@ -1550,117 +1397,225 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/data/SectionString.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scenes/Test.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="24" column="94" lean-forward="true" selection-start-line="24" selection-start-column="94" selection-end-line="24" selection-end-column="94" />
+        <state relative-caret-position="416">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
           <folding>
-            <marker date="1571382893066" expanded="true" signature="20:1154" ph="{...}" />
-            <marker date="1571382893066" expanded="true" signature="29:107" ph="..." />
-            <marker date="1571382893066" expanded="true" signature="109:149" ph="/// 一段字符串 ... " />
-            <marker date="1571382893066" expanded="true" signature="178:1152" ph="{...}" />
-            <marker date="1571382893066" expanded="true" signature="231:515" ph="/// 返回一个SectionString[]数组的字符串 ... " />
-            <marker date="1571382893066" expanded="true" signature="634:933" ph="{...}" />
-            <marker date="1571382893066" expanded="true" signature="711:907" ph="{...}" />
-            <marker date="1571382893066" expanded="true" signature="986:1045" ph="{...}" />
-            <marker date="1571382893066" expanded="true" signature="1090:1146" ph="{...}" />
+            <marker date="1571068232063" expanded="true" signature="169:624" ph="{...}" />
+            <marker date="1571068232063" expanded="true" signature="241:503" ph="{...}" />
+            <marker date="1571068232063" expanded="true" signature="429:496" ph="{...}" />
+            <marker date="1571068232063" expanded="true" signature="561:582" ph="{...}" />
+            <marker date="1571068232063" expanded="true" signature="613:620" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpFile.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="12" column="37" lean-forward="true" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="37" />
+        <state relative-caret-position="208">
+          <caret line="13" column="37" selection-start-line="13" selection-start-column="37" selection-end-line="13" selection-end-column="37" />
           <folding>
-            <marker date="1571392272577" expanded="true" signature="21:544" ph="{...}" />
-            <marker date="1571392272577" expanded="true" signature="30:95" ph="..." />
-            <marker date="1571392272577" expanded="true" signature="98:138" ph="/// .cs文件 ... " />
-            <marker date="1571392272577" expanded="true" signature="164:542" ph="{...}" />
+            <marker date="1571394642458" expanded="true" signature="21:544" ph="{...}" />
+            <marker date="1571394642458" expanded="true" signature="30:95" ph="..." />
+            <marker date="1571394642458" expanded="true" signature="98:138" ph="/// .cs文件 ... " />
+            <marker date="1571394642458" expanded="true" signature="164:542" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="19" column="55" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/IUsing.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+          <folding>
+            <marker date="1571136756136" expanded="true" signature="20:103" ph="{...}" />
+            <marker date="1571136756136" expanded="true" signature="29:68" ph="..." />
+            <marker date="1571136756136" expanded="true" signature="94:101" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/SectionString.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="24" column="94" selection-start-line="24" selection-start-column="94" selection-end-line="24" selection-end-column="94" />
+          <folding>
+            <marker date="1571394642474" expanded="true" signature="20:1154" ph="{...}" />
+            <marker date="1571394642474" expanded="true" signature="29:107" ph="..." />
+            <marker date="1571394642474" expanded="true" signature="109:149" ph="/// 一段字符串 ... " />
+            <marker date="1571394642474" expanded="true" signature="178:1152" ph="{...}" />
+            <marker date="1571394642474" expanded="true" signature="231:515" ph="/// 返回一个SectionString[]数组的字符串 ... " />
+            <marker date="1571394642474" expanded="true" signature="634:933" ph="{...}" />
+            <marker date="1571394642474" expanded="true" signature="711:907" ph="{...}" />
+            <marker date="1571394642474" expanded="true" signature="986:1045" ph="{...}" />
+            <marker date="1571394642474" expanded="true" signature="1090:1146" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpNameSpace.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="17" column="34" lean-forward="true" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+        <state relative-caret-position="352">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
           <folding>
-            <marker date="1571392310978" expanded="true" signature="21:624" ph="{...}" />
-            <marker date="1571392310978" expanded="true" signature="30:119" ph="..." />
-            <marker date="1571392310978" expanded="true" signature="153:622" ph="{...}" />
+            <marker date="1571396784898" expanded="true" signature="21:624" ph="{...}" />
+            <marker date="1571396784898" expanded="true" signature="30:119" ph="..." />
+            <marker date="1571396784898" expanded="true" signature="153:622" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/Importers/ProjectImporterUI.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="91" column="88" lean-forward="true" selection-start-line="91" selection-start-column="88" selection-end-line="91" selection-end-column="88" />
+          <folding>
+            <marker date="1571400278447" expanded="true" signature="20:9681" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="32:209" ph="..." />
+            <marker date="1571400278447" expanded="true" signature="212:264" ph="///项目导入器窗口UI ... " />
+            <marker date="1571400278447" expanded="true" signature="309:9679" ph="{...}" />
+            <marker date="1571400278447" expanded="false" signature="314:1612" ph="static member" />
+            <marker date="1571400278447" expanded="true" signature="648:787" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="791:836" ph="/// 保存xml到本地 ... " />
+            <marker date="1571400278447" expanded="true" signature="873:974" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="930:968" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="980:1022" ph="/// 加载xml ... " />
+            <marker date="1571400278447" expanded="true" signature="1053:1207" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="1079:1119" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="1268:1535" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="1367:1499" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="1656:1685" ph="/* private void Awake(){ ... */" />
+            <marker date="1571400278447" expanded="true" signature="1714:1733" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="1759:3689" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="2293:3315" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="2383:3308" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="2931:2989" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="3049:3122" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="3175:3228" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="3548:3578" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="3759:3910" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="3803:3858" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="3914:4079" ph="/// 重新导入项目 ... " />
+            <marker date="1571400278447" expanded="true" signature="4170:4507" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="4214:4460" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="4273:4455" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="4511:4597" ph="/// 显示是否重新指定项目路径对话框 ... " />
+            <marker date="1571400278447" expanded="true" signature="4648:4833" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="4786:4829" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="4837:4917" ph="/// 重新指定项目文件夹 ... " />
+            <marker date="1571400278447" expanded="true" signature="4972:5212" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="5065:5208" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="5102:5144" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="5216:5264" ph="/// 显示项目已经存在对话框 ... " />
+            <marker date="1571400278447" expanded="true" signature="5308:5405" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="5411:5540" ph="/// 点击项目列表后的delete按钮时 ... " />
+            <marker date="1571400278447" expanded="true" signature="5604:5732" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="5800:6784" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="5893:6780" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="6170:6257" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="6296:6439" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="6480:6528" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="6545:6775" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="6788:6910" ph="/// 返回项目编辑器版本号 ... " />
+            <marker date="1571400278447" expanded="true" signature="6963:7399" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="7403:7514" ph="/// 返回重命名字符 ... " />
+            <marker date="1571400278447" expanded="true" signature="7561:7877" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="7677:7705" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="7883:8074" ph="/// 添加一个项到xml ... " />
+            <marker date="1571400278447" expanded="true" signature="8168:8645" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="8195:8318" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="8649:8786" ph="/// 判定一个项目是否已经存在列表中(项目名称和路径都相同) ... " />
+            <marker date="1571400278447" expanded="true" signature="8843:9088" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="8870:9067" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="8981:9062" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="9029:9056" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="9092:9220" ph="/// 判定项目名称是否已经存在列表中(只判定名称相同) ... " />
+            <marker date="1571400278447" expanded="true" signature="9275:9529" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="9302:9508" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="9413:9503" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="9470:9497" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="9559:9607" ph="{...}" />
+            <marker date="1571400278447" expanded="true" signature="9667:9676" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/UnityTools/Scripts/Editor/CSharpObfuscator/CSharpObfuscator.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2569">
-          <caret line="135" column="12" lean-forward="true" selection-start-line="135" selection-start-column="12" selection-end-line="135" selection-end-column="12" />
+        <state relative-caret-position="356">
+          <caret line="336" column="20" selection-start-line="336" selection-start-column="20" selection-end-line="336" selection-end-column="20" />
           <folding>
-            <marker date="1571391851420" expanded="true" signature="21:16492" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="30:149" ph="..." />
-            <marker date="1571391851420" expanded="true" signature="153:229" ph="/// CSharp混淆器 ... " />
-            <marker date="1571391851420" expanded="true" signature="260:16490" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="595:757" ph="/// 混淆一个unity项目 ... " />
-            <marker date="1571391851420" expanded="true" signature="839:1163" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="1167:1340" ph="/// 读取所有.cs文件,生成CSharpFile列表并返回。 ... " />
-            <marker date="1571391851420" expanded="true" signature="1414:2212" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="1581:2152" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="1780:1802" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="2216:2404" ph="/// 文件夹路径是不是忽略的文件夹 ... " />
-            <marker date="1571391851420" expanded="true" signature="2482:3066" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="2599:2780" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="2750:2775" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="2784:2831" ph="/* 检测所有子级忽略的目录 ... */" />
-            <marker date="1571391851420" expanded="true" signature="2936:3045" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="3015:3040" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="3070:3226" ph="/// 混淆CSharpFile列表 ... " />
-            <marker date="1571391851420" expanded="true" signature="3313:3322" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="3400:4308" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="4314:4498" ph="/// 读取括号块，&quot;{...}&quot;包含括号,不读取子级括号块 ... " />
-            <marker date="1571391851420" expanded="true" signature="4589:5324" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="4827:5295" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="4887:5014" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="4912:4942" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="5038:5290" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="5085:5284" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="5330:5612" ph="/// 读取以&quot;.&quot;分隔的各个单词(包含空白),如:&quot;System.Text.RegularExpressions&quot;，将得到&quot;System&quot;,&quot;Text&quot;,&quot;RegularExpressions&quot; ... " />
-            <marker date="1571391851420" expanded="true" signature="5695:6130" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="5956:6109" ph="{...}" />
-            <marker date="1571391851420" expanded="false" signature="6136:10676" ph="ReadUsings" />
-            <marker date="1571391851420" expanded="true" signature="6157:6340" ph="/// 读取指定内容块的所有Using(不读取内嵌套大括号的using) ... " />
-            <marker date="1571391851420" expanded="true" signature="6413:8126" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="6418:6558" ph="/* Debug2.Log(&quot;======================&quot;,content.startIndex,content.length); ... */" />
-            <marker date="1571391851420" expanded="true" signature="7152:8094" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="7476:7628" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="7730:7896" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="8132:8322" ph="/// 读取普通的Using ... " />
-            <marker date="1571391851420" expanded="true" signature="8397:8885" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="8891:9095" ph="/// 读取静态Using ... " />
-            <marker date="1571391851420" expanded="true" signature="9176:9686" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="9692:9896" ph="/// 读取Using别名 ... " />
-            <marker date="1571391851420" expanded="true" signature="9975:10663" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="10682:11090" ph="/// 从指定的同级括号块列表读取对象 ... " />
-            <marker date="1571391851420" expanded="true" signature="11440:12193" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="11737:12189" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="11927:12077" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="12171:12184" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="12199:12483" ph="/// 根据指定的大括号块匹配命名空间声明，并通过out参数输出。如:&quot;namespace unity_tags{&quot; ... " />
-            <marker date="1571391851420" expanded="true" signature="12603:13423" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="13054:13146" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="13286:13371" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="13427:13755" ph="/// 创建CSharpNameSpace ... " />
-            <marker date="1571391851420" expanded="true" signature="13913:14464" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="14470:14770" ph="/// 根据指定的大括号块匹配类声明，并通过out参数输出结果。 ... " />
-            <marker date="1571391851420" expanded="true" signature="14886:15774" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="15351:15443" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="15503:15616" ph="/* Debug.Log(getNameWordsString(fileString,false)); ... */" />
-            <marker date="1571391851420" expanded="true" signature="15637:15722" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="15894:15951" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="16074:16131" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="16247:16304" ph="{...}" />
-            <marker date="1571391851420" expanded="true" signature="16426:16483" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="21:16551" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="30:149" ph="..." />
+            <marker date="1571401049832" expanded="true" signature="153:229" ph="/// CSharp混淆器 ... " />
+            <marker date="1571401049832" expanded="true" signature="260:16549" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="595:757" ph="/// 混淆一个unity项目 ... " />
+            <marker date="1571401049832" expanded="true" signature="832:1156" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="1160:1333" ph="/// 读取所有.cs文件,生成CSharpFile列表并返回。 ... " />
+            <marker date="1571401049832" expanded="true" signature="1407:2205" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="1574:2145" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="1773:1795" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="2209:2397" ph="/// 文件夹路径是不是忽略的文件夹 ... " />
+            <marker date="1571401049832" expanded="true" signature="2475:3059" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="2592:2773" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="2743:2768" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="2777:2824" ph="/* 检测所有子级忽略的目录 ... */" />
+            <marker date="1571401049832" expanded="true" signature="2929:3038" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="3008:3033" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="3063:3219" ph="/// 混淆CSharpFile列表 ... " />
+            <marker date="1571401049832" expanded="true" signature="3299:3308" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="3386:4294" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="4300:4484" ph="/// 读取括号块，&quot;{...}&quot;包含括号,不读取子级括号块 ... " />
+            <marker date="1571401049832" expanded="true" signature="4575:5310" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="4813:5281" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="4873:5000" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="4898:4928" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="5024:5276" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="5071:5270" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="5316:5598" ph="/// 读取以&quot;.&quot;分隔的各个单词(包含空白),如:&quot;System.Text.RegularExpressions&quot;，将得到&quot;System&quot;,&quot;Text&quot;,&quot;RegularExpressions&quot; ... " />
+            <marker date="1571401049832" expanded="true" signature="5681:6116" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="5942:6095" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="6122:10662" ph="ReadUsings" />
+            <marker date="1571401049832" expanded="true" signature="6143:6326" ph="/// 读取指定内容块的所有Using(不读取内嵌套大括号的using) ... " />
+            <marker date="1571401049832" expanded="true" signature="6399:8112" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="6404:6544" ph="/* Debug2.Log(&quot;======================&quot;,content.startIndex,content.length); ... */" />
+            <marker date="1571401049832" expanded="true" signature="7138:8080" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="7462:7614" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="7716:7882" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="8118:8308" ph="/// 读取普通的Using ... " />
+            <marker date="1571401049832" expanded="true" signature="8383:8871" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="8877:9081" ph="/// 读取静态Using ... " />
+            <marker date="1571401049832" expanded="true" signature="9162:9672" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="9678:9882" ph="/// 读取Using别名 ... " />
+            <marker date="1571401049832" expanded="true" signature="9961:10649" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="10666:11148" ph="/// 从指定的同级括号块列表读取对象 ... " />
+            <marker date="1571401049832" expanded="true" signature="11498:12251" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="11795:12247" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="11985:12135" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="12229:12242" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="12257:12541" ph="/// 根据指定的大括号块匹配命名空间声明，并通过out参数输出。如:&quot;namespace unity_tags{&quot; ... " />
+            <marker date="1571401049832" expanded="true" signature="12662:13482" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="13113:13205" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="13345:13430" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="13486:13814" ph="/// 创建CSharpNameSpace ... " />
+            <marker date="1571401049832" expanded="true" signature="13972:14523" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="14529:14829" ph="/// 根据指定的大括号块匹配类声明，并通过out参数输出结果。 ... " />
+            <marker date="1571401049832" expanded="true" signature="14945:15833" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="15410:15502" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="15562:15675" ph="/* Debug.Log(getNameWordsString(fileString,false)); ... */" />
+            <marker date="1571401049832" expanded="true" signature="15696:15781" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="15953:16010" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="16133:16190" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="16306:16363" ph="{...}" />
+            <marker date="1571401049832" expanded="true" signature="16485:16542" ph="{...}" />
           </folding>
         </state>
       </provider>

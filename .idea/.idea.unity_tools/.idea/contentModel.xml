@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\Administrator\.Rider2018.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Administrator\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_unity_tools.707005716.00" t="ExcludeRecursive" />
-    <e p="D:\kingBook\projects\unity_tools" t="IncludeRecursive">
+    <e p="C:\Users\Administrator\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_unity_tools.1676586739.00" t="ExcludeRecursive" />
+    <e p="E:\kingBook\projects\unity_tools" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
@@ -38,14 +38,12 @@
                 <e p="CSharpInterface.cs" t="Include" />
                 <e p="CSharpNameSpace.cs" t="Include" />
                 <e p="CSharpObfuscator.cs" t="Include" />
-                <e p="CSharpRecord.cs" t="Include" />
+                <e p="CSharpObfuscatorUI.cs" t="Include" />
                 <e p="CSharpStruct.cs" t="Include" />
-                <e p="data" t="Include">
-                  <e p="IUsing.cs" t="Include" />
-                  <e p="SectionString.cs" t="Include" />
-                  <e p="UsingAlias.cs" t="Include" />
-                  <e p="UsingString.cs" t="Include" />
-                </e>
+                <e p="IUsing.cs" t="Include" />
+                <e p="SectionString.cs" t="Include" />
+                <e p="UsingAlias.cs" t="Include" />
+                <e p="UsingString.cs" t="Include" />
               </e>
               <e p="Importers" t="Include">
                 <e p="AssetsImporter.cs" t="Include" />
@@ -54,13 +52,10 @@
                 <e p="Physics2DImporter.cs" t="Include" />
                 <e p="PhysicsImporter.cs" t="Include" />
                 <e p="ProjectImporterEditor.cs" t="Include" />
+                <e p="ProjectImporterUI.cs" t="Include" />
                 <e p="QualityImporter.cs" t="Include" />
                 <e p="TagsAndLayersImporter.cs" t="Include" />
                 <e p="TimeImporter.cs" t="Include" />
-              </e>
-              <e p="UI" t="Include">
-                <e p="CSharpObfuscatorUI.cs" t="Include" />
-                <e p="ProjectImporterUI.cs" t="Include" />
               </e>
             </e>
             <e p="libs" t="Include">

@@ -6,11 +6,11 @@
     public class CSharpNameSpace{
 	    public static readonly CSharpNameSpace None=new CSharpNameSpace();
 	    
-	    public SectionString content;
 	    public CSharpNameSpace parent;
 	    public SectionString[] nameWords;
 		/// <summary>命名空间括号内的using</summary>
 		public IUsing[] usings;
+		public SectionString content;
 		public CSharpNameSpace[] nameSpaces;
 		public CSharpClass[] classes;
 		public CSharpStruct[] structs;
