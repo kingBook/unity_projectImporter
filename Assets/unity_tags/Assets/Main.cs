@@ -25,9 +25,6 @@ namespace unity_tags{
 			
 		}
 		
-		
-
-		
 
 	}
 
@@ -40,13 +37,23 @@ namespace unity_tags{
 
 namespace XXSS {
 		using System.Data;
-		namespace OOAA.Koo{
+		namespace OOAA .    Koo   {
 			public class HelloName{
 					
 			}
+			
+			public class HelloB{}
+			public class HelloC{}
+			
+			public class HelloD<T>:HelloName where T: class, new()  {
+				
+			}
+			public class HelloE:HelloD < HelloE>{
+				
+			}
 		}
 		public struct AA{
-		
+			
 		}
 
 		public interface ssdf{

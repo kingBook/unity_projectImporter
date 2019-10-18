@@ -25,14 +25,14 @@
 		/// 转换为字符串
 		/// </summary>
 		/// <param name="fileString">.cs文件字符串</param>
-		/// <param name="inclusiveWhitespace">是否包含空白</param>
+		/// <param name="includeWhitespace">是否包含空白</param>
 		/// <returns></returns>
-		public string ToString(string fileString,bool inclusiveWhitespace){
+		public string ToString(string fileString,bool includeWhitespace){
 			string text="";
 			int len=wordStrings.Length;
 			for(int i=0;i<len;i++){
 				string str=wordStrings[i].ToString(fileString);
-				if(!inclusiveWhitespace){
+				if(!includeWhitespace){
 					str=Regex.Replace(str,@"\s","");
 				}
 				text+=str;

@@ -21,9 +21,9 @@
 			this.wordStrings=wordStrings;
 		}
 
-		public string ToString(string fileString,bool inclusiveWhitespace){
+		public string ToString(string fileString,bool includeWhitespace){
 			string name=this.name.ToString(fileString);
-			if(!inclusiveWhitespace){
+			if(!includeWhitespace){
 				name=Regex.Replace(name,@"\s","");
 			}
 			
@@ -31,7 +31,7 @@
 			int len=wordStrings.Length;
 			for(int i=0;i<len;i++){
 				string str=wordStrings[i].ToString(fileString);
-				if(!inclusiveWhitespace){
+				if(!includeWhitespace){
 					str=Regex.Replace(str,@"\s","");
 				}
 				text+=str;

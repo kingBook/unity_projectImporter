@@ -9,7 +9,6 @@
     /// </summary>
     public abstract class CSharpRecord{
 		protected CSharpFile _cSharpFile=null;
-		protected SectionString _name;
 		protected SectionString _content;
 
 		/// <summary>
@@ -47,6 +46,29 @@
 			}
 			return bracketBlocks;
 		}
+		
+		/// <summary>
+		/// 读取以"."分隔的各个单词(包含空白),如:"System.Text.RegularExpressions"，将得到"System","Text","RegularExpressions"
+		/// </summary>
+		/// <param name="fileString">.cs文件字符串</param>
+		/// <param name="sectionString">如："System.Text.RegularExpressions"</param>
+		/// <returns></returns>
+		protected SectionString[] readWords(string fileString,SectionString sectionString){
+			string usingContent=sectionString.ToString(fileString);
+			string[] splitStrings=usingContent.Split('.');
+			int len=splitStrings.Length;
+			int startIndex=sectionString.startIndex;
+			SectionString[] words=new SectionString[len];
+			for(int i=0;i<len;i++){
+				int tempLength=splitStrings[i].Length;
+				words[i]=new SectionString(startIndex,tempLength);
+				//加一个单词和"."的长度
+				startIndex+=tempLength+1;
+			}
+			return words;
+		}
+		
+		
 
 	}
 }

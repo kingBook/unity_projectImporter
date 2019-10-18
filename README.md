@@ -42,7 +42,8 @@ s.Regex reg=new s.Regex();
 泛型
 元组和弃元
 Iterators
-
+public abstract class BaseApp<T>:BaseMonoBehaviour where T:class,new(){
+public sealed class App:BaseApp<App>{
 
 
 
