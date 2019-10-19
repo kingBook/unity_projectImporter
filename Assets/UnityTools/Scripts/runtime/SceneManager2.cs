@@ -132,7 +132,7 @@
 			for(int i=0;i<len;i++){
 				string path=scenes[i].path;
 				if(isPathName){
-					if(path.LastIndexOf(sceneName)>-1){
+					if(path.LastIndexOf(sceneName,StringComparison.Ordinal)>-1){
 						//匹配路径名称
 						sceneName=path;
 						break;
@@ -140,7 +140,7 @@
 				}else{
 					//非路径名称时，只查找倒数'/'位置到最后
 					string tempPath=path.Substring(path.LastIndexOf('/'));
-					if(tempPath.LastIndexOf(sceneName)>-1){
+					if(tempPath.LastIndexOf(sceneName,StringComparison.Ordinal)>-1){
 						//匹配名称
 						sceneName=path;
 						break;

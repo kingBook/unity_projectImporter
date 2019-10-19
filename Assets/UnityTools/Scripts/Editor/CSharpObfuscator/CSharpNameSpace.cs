@@ -18,5 +18,9 @@
 		public CSharpEnum[] enums;
 		public CSharpDelegate[] delegates;
 		
+		public string getNameWordsString(string fileString,bool includeWhitespace=false){
+			return this==None?"None":SectionString.getWordsString(fileString,nameWords,".",includeWhitespace);
+		}
+		
 	}
 }

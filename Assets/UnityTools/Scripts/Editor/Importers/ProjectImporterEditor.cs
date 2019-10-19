@@ -116,7 +116,7 @@
 			scenes.AddRange(EditorBuildSettings.scenes);
 			int i=scenes.Count;
 			while(--i>=0){
-				bool isProjectScene=scenes[i].path.IndexOf(projectName+'/')>-1;
+				bool isProjectScene=scenes[i].path.IndexOf(projectName+'/', StringComparison.Ordinal)>-1;
 				if(isProjectScene){
 					scenes.RemoveAt(i);
 				}

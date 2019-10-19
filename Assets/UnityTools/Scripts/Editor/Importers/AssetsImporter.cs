@@ -269,7 +269,7 @@
 				if(namespaceRegex.IsMatch(line)){
 					isNameSpaceNull=false;
 					//将已存在的命名空间log出来
-					string tempPath=filePath.Substring(filePath.IndexOf("Assets")+7);//去掉Asset之前的字符路径
+					string tempPath=filePath.Substring(filePath.IndexOf("Assets",StringComparison.Ordinal)+7);//去掉Asset之前的字符路径
 					Debug.Log("已存在 "+namespaceRegex.Match(line)+"将不再添加命名空间，请确保此命名空间不会在项目中产生冲突。"+tempPath);
 					break;
 				}
@@ -315,7 +315,7 @@
 			int sceneCount=EditorSceneManager.sceneCount;
 			for(int i=0;i<sceneCount;i++){
 				var scene=EditorSceneManager.GetSceneAt(i);
-				if(tempFilePath.IndexOf(scene.path)>-1){
+				if(tempFilePath.IndexOf(scene.path, StringComparison.Ordinal)>-1){
 					Debug.LogError("请关闭"+scene.path+"再重新导入");
 					break;
 				}

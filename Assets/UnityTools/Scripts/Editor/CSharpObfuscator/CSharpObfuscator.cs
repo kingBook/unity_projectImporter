@@ -1,4 +1,6 @@
-﻿namespace UnityTools {
+﻿using UnityEngine;
+
+namespace UnityTools {
 	using System.IO;
 	using UnityEditor;
 	using System;
@@ -106,6 +108,7 @@
 		/// <param name="fileString">.cs文件字符串</param>
 		/// <returns></returns>
 		private CSharpFile createCSharpFile(FileInfo fileInfo,string fileString){
+			Debug.Log(fileInfo.Name+"================================");
 			SectionString content=new SectionString(0,fileString.Length);
 			CSharpFile file=new CSharpFile();
 			file.fileInfo=fileInfo;
@@ -148,6 +151,7 @@
 			int length=leftBracketString.length-10-1;//减去"namespace "和"{"的长度
 			SectionString[] nameWords=readWords(cSharpFile.fileString,new SectionString(startIndex,length));
 			csNameSpace.nameWords=nameWords;
+			//Debug.Log(csNameSpace.getNameWordsString(cSharpFile.fileString));
 			
 			//命名空间内容，从命名空间声明"{"的右边开始,"}"的左边结束(就是减去两个大括号的长度)
 			SectionString content=new SectionString(bracketBlock.startIndex+1,bracketBlock.length-2);
@@ -161,7 +165,7 @@
 			List<CSharpInterface> interfaces;
 			List<CSharpEnum> enums;
 			List<CSharpDelegate> delegates;
-			readObjectsWithBracketBlocks(cSharpFile,CSharpNameSpace.None,bracketBlocks,out namespaces,out classes,out structs,out interfaces,out enums,out delegates);
+			readObjectsWithBracketBlocks(cSharpFile,csNameSpace,bracketBlocks,out namespaces,out classes,out structs,out interfaces,out enums,out delegates);
 			
 			csNameSpace.nameSpaces=namespaces.ToArray();
 			csNameSpace.classes=classes.ToArray();
@@ -170,6 +174,20 @@
 			csNameSpace.enums=enums.ToArray();
 			csNameSpace.delegates=delegates.ToArray();
 			return csNameSpace;
+		}
+		
+		/// <summary>
+		/// 创建CSharpClass
+		/// </summary>
+		/// <param name="cSharpFile">CSharpFile</param>
+		/// <param name="parentNameSpace">类所在的命名空间</param>
+		/// <param name="leftBracketString">左括号类声明，如："public class Main{"。</param>
+		/// <param name="bracketBlock">类包含的括号块，包含大括号</param>
+		/// <returns></returns>
+		private CSharpClass createClass(CSharpFile cSharpFile,CSharpNameSpace parentNameSpace,SectionString leftBracketString,SectionString bracketBlock){
+			CSharpClass csClass=new CSharpClass();
+			
+			return csClass;
 		}
 		
 		/// <summary>
@@ -237,8 +255,6 @@
 		/// <param name="content">内容块</param>
 		/// <returns></returns>
 		protected IUsing[] readUsings(CSharpFile cSharpFile,SectionString content){
-			//Debug2.Log("======================",content.startIndex,content.length);
-			//Debug.Log(content.ToString(fileString));
 			//只查找到第一个左括号出现的位置
 			int index=cSharpFile.fileString.IndexOf('{',content.startIndex);
 			int length=index<0?content.length:index-content.startIndex;
@@ -381,7 +397,9 @@
 					CSharpNameSpace csNameSpace=createNameSpace(cSharpFile,parentNameSpace,leftBracketString,bracketBlock);
 					namespaces.Add(csNameSpace);
 				}else if(matchClassLeftBracketString(cSharpFile,bracketBlock,out leftBracketString)){
-					
+					//Debug2.Log(parentNameSpace.getNameWordsString(cSharpFile.fileString),leftBracketString.ToString(cSharpFile.fileString));
+					CSharpClass csClass=createClass(cSharpFile,parentNameSpace,leftBracketString,bracketBlock);
+					classes.Add(csClass);
 				}
 			}
 		}
@@ -437,7 +455,6 @@
 			}else{
 				match=regex.Match(cSharpFile.fileString,startIndex);
 			}
-			//Debug.Log(getNameWordsString(fileString,false));
 			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
 			if(match.Success){
 				result=new SectionString(match.Index,match.Value.Length);
