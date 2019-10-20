@@ -123,7 +123,7 @@ namespace UnityTools {
 			List<CSharpInterface> interfaces;
 			List<CSharpEnum> enums;
 			List<CSharpDelegate> delegates;
-			readObjectsWithBracketBlocks(file,CSharpNameSpace.None,bracketBlocks,out namespaces,out classes,out structs,out interfaces,out enums,out delegates);
+			readNameSpaceSubObjects(file,CSharpNameSpace.None,bracketBlocks,out namespaces,out classes,out structs,out interfaces,out enums,out delegates);
 			
 			file.nameSpaces=namespaces.ToArray();
 			file.classes=classes.ToArray();
@@ -165,7 +165,7 @@ namespace UnityTools {
 			List<CSharpInterface> interfaces;
 			List<CSharpEnum> enums;
 			List<CSharpDelegate> delegates;
-			readObjectsWithBracketBlocks(cSharpFile,csNameSpace,bracketBlocks,out namespaces,out classes,out structs,out interfaces,out enums,out delegates);
+			readNameSpaceSubObjects(cSharpFile,csNameSpace,bracketBlocks,out namespaces,out classes,out structs,out interfaces,out enums,out delegates);
 			
 			csNameSpace.nameSpaces=namespaces.ToArray();
 			csNameSpace.classes=classes.ToArray();
@@ -196,7 +196,7 @@ namespace UnityTools {
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="content">读取内容的位置和长度</param>
 		/// <returns></returns>
-		protected List<SectionString> readBracketBlocks(CSharpFile cSharpFile,SectionString content){
+		private List<SectionString> readBracketBlocks(CSharpFile cSharpFile,SectionString content){
 			List<SectionString> bracketBlocks=new List<SectionString>();
 			
 			int startIndex=content.startIndex;
@@ -254,7 +254,7 @@ namespace UnityTools {
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="content">内容块</param>
 		/// <returns></returns>
-		protected IUsing[] readUsings(CSharpFile cSharpFile,SectionString content){
+		private IUsing[] readUsings(CSharpFile cSharpFile,SectionString content){
 			//只查找到第一个左括号出现的位置
 			int index=cSharpFile.fileString.IndexOf('{',content.startIndex);
 			int length=index<0?content.length:index-content.startIndex;
@@ -362,18 +362,18 @@ namespace UnityTools {
 		#endregion
 
 		/// <summary>
-		/// 从指定的同级括号块列表读取对象
+		/// 读取命名空间的子对象
 		/// </summary>
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="parentNameSpace">父级命名空间</param>
-		/// <param name="bracketBlocks">包含"{}"的括号内容块列表</param>
+		/// <param name="bracketBlocks">命名空间内的大括号内容块列表（包含"{}"）</param>
 		/// <param name="namespaces">输出的命名空间列表</param>
 		/// <param name="classes">输出的类列表</param>
 		/// <param name="structs">输出的结构体列表</param>
 		/// <param name="interfaces">输出的接口列表</param>
 		/// <param name="enums">输出的枚举列表</param>
 		/// <param name="delegates">输出的委托列表</param>
-		protected void readObjectsWithBracketBlocks(CSharpFile cSharpFile,CSharpNameSpace parentNameSpace,List<SectionString> bracketBlocks,
+		private void readNameSpaceSubObjects(CSharpFile cSharpFile,CSharpNameSpace parentNameSpace,List<SectionString> bracketBlocks,
 		out List<CSharpNameSpace> namespaces,
 		out List<CSharpClass> classes,
 		out List<CSharpStruct> structs,
@@ -387,7 +387,7 @@ namespace UnityTools {
 			interfaces=new List<CSharpInterface>();
 			enums=new List<CSharpEnum>();
 			delegates=new List<CSharpDelegate>();
-
+			
 			int len=bracketBlocks.Count;
 			for(int i=0;i<len;i++){
 				SectionString bracketBlock=bracketBlocks[i];
@@ -400,6 +400,12 @@ namespace UnityTools {
 					//Debug2.Log(parentNameSpace.getNameWordsString(cSharpFile.fileString),leftBracketString.ToString(cSharpFile.fileString));
 					CSharpClass csClass=createClass(cSharpFile,parentNameSpace,leftBracketString,bracketBlock);
 					classes.Add(csClass);
+				}else if(matchStructLeftBracketString(cSharpFile,bracketBlock,out leftBracketString)){
+					
+				}else if(matchEnumLeftBracketString(cSharpFile,bracketBlock,out leftBracketString)){
+					
+				}else if(matchDelegateLeftBracketString(cSharpFile,bracketBlock,out leftBracketString)){
+					
 				}
 			}
 		}
@@ -411,7 +417,7 @@ namespace UnityTools {
 		/// <param name="bracketBlock">大括号块，包含大括号</param>
 		/// <param name="result">输出结果，如:"namespace unity_tags{"。</param>
 		/// <returns></returns>
-		protected bool matchNameSpaceLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
+		private bool matchNameSpaceLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
 			//计算"{"向左查找的最远位置(就是上一个"{|}"出现的位置)
 			Regex regexBracket=new Regex("{|}",RegexOptions.Compiled|RegexOptions.RightToLeft);
 			Match bracketMatch=regexBracket.Match(cSharpFile.fileString,bracketBlock.startIndex);
@@ -432,22 +438,20 @@ namespace UnityTools {
 			result=new SectionString();
 			return false;
 		}
-
 		
-
 		/// <summary>
 		/// 根据指定的大括号块匹配类声明，并通过out参数输出结果。
 		/// </summary>
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="bracketBlock">类包含的括号块，包含大括号</param>
-		/// <param name="result">输出结果，如:"class xxx{"、"public class xxx{"、"public static class{"等。</param>
+		/// <param name="result">输出结果，如:"class xxx{"、"public class xxx{"、"public static class xxx{"等。</param>
 		/// <returns>是否匹配成功</returns>
-		protected bool matchClassLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
+		private bool matchClassLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
 			//计算"{"向左查找的最远位置(就是上一个"{|}"出现的位置)
 			Regex regexBracket=new Regex("{|}",RegexOptions.Compiled|RegexOptions.RightToLeft);
 			Match bracketMatch=regexBracket.Match(cSharpFile.fileString,bracketBlock.startIndex);
 			//命名空间正则表达式，从"{"的右侧开始查找
-			Regex regex=new Regex(@"((public|internal|static|abstract|sealed)\s+)*class\s+\w+.*{",RegexOptions.Compiled|RegexOptions.RightToLeft);
+			Regex regex=new Regex(@"((public|internal|protected|private|static|abstract|sealed)\s+)*class\s+\w+.*{",RegexOptions.Compiled|RegexOptions.RightToLeft);
 			int startIndex=bracketBlock.startIndex+1;//"{"的右边
 			Match match;
 			if(bracketMatch.Success){
@@ -464,26 +468,118 @@ namespace UnityTools {
 			return false;
 		}
 		
-		protected bool matchStructLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
-			
+		/// <summary>
+		/// 根据指定的大括号块匹配结构体声明，并通过out参数输出结果。
+		/// </summary>
+		/// <param name="cSharpFile">CSharpFile</param>
+		/// <param name="bracketBlock">结构体包含的括号块，包含大括号</param>
+		/// <param name="result">输出结果，如:"public struct xxx{"、"internal struct xxx{"、"struct xxx{"等。</param>
+		/// <returns>是否匹配成功</returns>
+		private bool matchStructLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
+			//计算"{"向左查找的最远位置(就是上一个"{|}"出现的位置)
+			Regex regexBracket=new Regex("{|}",RegexOptions.Compiled|RegexOptions.RightToLeft);
+			Match bracketMatch=regexBracket.Match(cSharpFile.fileString,bracketBlock.startIndex);
+			//结构体正则表达式，从"{"的右侧开始查找
+			Regex regex=new Regex(@"(public|internal|protected|private)?\s+struct\s+\w+.*{",RegexOptions.Compiled|RegexOptions.RightToLeft);
+			int startIndex=bracketBlock.startIndex+1;//"{"的右边
+			Match match;
+			if(bracketMatch.Success){
+				match=regex.Match(cSharpFile.fileString,bracketMatch.Index+1,startIndex-bracketMatch.Index);
+			}else{
+				match=regex.Match(cSharpFile.fileString,startIndex);
+			}
+			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
+			if(match.Success){
+				result=new SectionString(match.Index,match.Value.Length);
+				return true;
+			}
 			result=new SectionString();
 			return false;
 		}
 		
-		protected bool matchInterfaceLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
-			
-			result=new SectionString();
-			return false;
-		}
-
-		protected bool matchEnumLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
-			
+		/// <summary>
+		/// 根据指定的大括号块匹配接口声明，并通过out参数输出结果。
+		/// </summary>
+		/// <param name="cSharpFile">CSharpFile</param>
+		/// <param name="bracketBlock">接口包含的括号块，包含大括号</param>
+		/// <param name="result">输出结果，如:"public interface xxx{"、"internal interface xxx{"、"interface xxx{"等。</param>
+		/// <returns>是否匹配成功</returns>
+		private bool matchInterfaceLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
+			//计算"{"向左查找的最远位置(就是上一个"{|}"出现的位置)
+			Regex regexBracket=new Regex("{|}",RegexOptions.Compiled|RegexOptions.RightToLeft);
+			Match bracketMatch=regexBracket.Match(cSharpFile.fileString,bracketBlock.startIndex);
+			//接口正则表达式，从"{"的右侧开始查找
+			Regex regex=new Regex(@"(public|internal|protected|private)?\s+interface\s+\w+.*{",RegexOptions.Compiled|RegexOptions.RightToLeft);
+			int startIndex=bracketBlock.startIndex+1;//"{"的右边
+			Match match;
+			if(bracketMatch.Success){
+				match=regex.Match(cSharpFile.fileString,bracketMatch.Index+1,startIndex-bracketMatch.Index);
+			}else{
+				match=regex.Match(cSharpFile.fileString,startIndex);
+			}
+			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
+			if(match.Success){
+				result=new SectionString(match.Index,match.Value.Length);
+				return true;
+			}
 			result=new SectionString();
 			return false;
 		}
 		
-		protected bool matchDelegateLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
-			
+		/// <summary>
+		/// 根据指定的大括号块匹配枚举声明，并通过out参数输出结果。
+		/// </summary>
+		/// <param name="cSharpFile">CSharpFile</param>
+		/// <param name="bracketBlock">枚举包含的括号块，包含大括号</param>
+		/// <param name="result">输出结果，如:"public enum xxx{"、"internal enum xxx{"、"enum xxx{","private enum xxx{","protected enum xxx{"等。</param>
+		/// <returns>是否匹配成功</returns>
+		private bool matchEnumLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
+			//计算"{"向左查找的最远位置(就是上一个"{|}"出现的位置)
+			Regex regexBracket=new Regex("{|}",RegexOptions.Compiled|RegexOptions.RightToLeft);
+			Match bracketMatch=regexBracket.Match(cSharpFile.fileString,bracketBlock.startIndex);
+			//接口正则表达式，从"{"的右侧开始查找
+			Regex regex=new Regex(@"(public|internal|protected|private)?\s+enum\s+\w+.*{",RegexOptions.Compiled|RegexOptions.RightToLeft);
+			int startIndex=bracketBlock.startIndex+1;//"{"的右边
+			Match match;
+			if(bracketMatch.Success){
+				match=regex.Match(cSharpFile.fileString,bracketMatch.Index+1,startIndex-bracketMatch.Index);
+			}else{
+				match=regex.Match(cSharpFile.fileString,startIndex);
+			}
+			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
+			if(match.Success){
+				result=new SectionString(match.Index,match.Value.Length);
+				return true;
+			}
+			result=new SectionString();
+			return false;
+		}
+		
+		/// <summary>
+		/// 根据指定的大括号块匹配委托声明，并通过out参数输出结果。
+		/// </summary>
+		/// <param name="cSharpFile">CSharpFile</param>
+		/// <param name="bracketBlock">委托包含的括号块，包含大括号</param>
+		/// <param name="result">输出结果，如:"public delegate xxx{"、"internal delegate xxx{"、"delegate xxx{"等。</param>
+		/// <returns>是否匹配成功</returns>
+		private bool matchDelegateLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
+			//计算"{"向左查找的最远位置(就是上一个"{|}"出现的位置)
+			Regex regexBracket=new Regex("{|}",RegexOptions.Compiled|RegexOptions.RightToLeft);
+			Match bracketMatch=regexBracket.Match(cSharpFile.fileString,bracketBlock.startIndex);
+			//接口正则表达式，从"{"的右侧开始查找
+			Regex regex=new Regex(@"(public|internal|protected|private)?\s+enum\s+\w+.*{",RegexOptions.Compiled|RegexOptions.RightToLeft);
+			int startIndex=bracketBlock.startIndex+1;//"{"的右边
+			Match match;
+			if(bracketMatch.Success){
+				match=regex.Match(cSharpFile.fileString,bracketMatch.Index+1,startIndex-bracketMatch.Index);
+			}else{
+				match=regex.Match(cSharpFile.fileString,startIndex);
+			}
+			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
+			if(match.Success){
+				result=new SectionString(match.Index,match.Value.Length);
+				return true;
+			}
 			result=new SectionString();
 			return false;
 		}

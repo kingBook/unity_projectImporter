@@ -11,6 +11,8 @@ namespace unity_tags{
 	using  static   UnityEngine  . Mathf  ;
 	using Mathx=UnityEngine.Mathf;
 	
+	public delegate int Callee(int a);
+	
 	public class Main : MonoBehaviour{
 		public SpriteRenderer spriteRenderer;
 	    void Start(){
@@ -39,7 +41,18 @@ namespace XXSS {
 		using System.Data;
 		namespace OOAA .    Koo   {
 			public class HelloName{
-					
+					private enum TypeCC{
+						
+					}
+					private struct MyStruct{
+						
+					}
+					protected class Test{
+						
+					}
+					private interface IInterface{
+						
+					}
 			}
 			
 			public class HelloB{}
