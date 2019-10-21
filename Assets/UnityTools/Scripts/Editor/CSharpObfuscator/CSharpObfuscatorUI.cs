@@ -22,11 +22,18 @@
 		[MenuItem("Tools/test")]
 		public static void test(){
 			string text="using  System. Foo.\nText;";
-			Regex usingLineRegex=new Regex(@"using[\s\w\.]+;",RegexOptions.Compiled);
+			Regex usingLineRegex=new Regex(@"using[\s(?<name>\w)\.]+;",RegexOptions.Compiled);
 			Match match=usingLineRegex.Match(text);
 			if(match.Success){
 				string matchValue=Regex.Replace(match.Value,@"\s|;","",RegexOptions.Compiled);
 				Debug.Log(matchValue.Substring(5));
+				for(int i=0;i<match.Groups.Count;i++){
+					var group=match.Groups[i];
+					Debug.Log("group:"+group.Name);
+					for(int j=0;j<group.Captures.Count;j++){
+						Debug.Log("Capture:"+group.Captures[j].Value);
+					}
+				}
 			}
 		}
 
