@@ -109,14 +109,13 @@ namespace UnityTools {
 		/// <returns></returns>
 		private CSharpFile createCSharpFile(FileInfo fileInfo,string fileString){
 			Debug.Log(fileInfo.Name+"================================");
-			SectionString content=new SectionString(0,fileString.Length);
 			CSharpFile file=new CSharpFile();
 			file.fileInfo=fileInfo;
 			file.fileString=fileString;
-			file.content=content;
-			file.usings=readUsings(file,content);
+			file.content=new SectionString(file,0,fileString.Length);
+			file.usings=readUsings(file,file.content);
 			
-			List<SectionString> bracketBlocks=readBracketBlocks(file,content);
+			List<SectionString> bracketBlocks=readBracketBlocks(file,file.content);
 			List<CSharpNameSpace> namespaces;
 			List<CSharpClass> classes;
 			List<CSharpStruct> structs;
@@ -149,12 +148,12 @@ namespace UnityTools {
 			//命名空间名称
 			int startIndex=leftBracketString.startIndex+10;//从"namespace "右侧开始
 			int length=leftBracketString.length-10-1;//减去"namespace "和"{"的长度
-			SectionString[] nameWords=readWords(cSharpFile.fileString,new SectionString(startIndex,length));
+			SectionString[] nameWords=readWords(cSharpFile,new SectionString(cSharpFile,startIndex,length));
 			csNameSpace.nameWords=nameWords;
 			//Debug.Log(csNameSpace.getNameWordsString(cSharpFile.fileString));
 			
 			//命名空间内容，从命名空间声明"{"的右边开始,"}"的左边结束(就是减去两个大括号的长度)
-			SectionString content=new SectionString(bracketBlock.startIndex+1,bracketBlock.length-2);
+			SectionString content=new SectionString(cSharpFile,bracketBlock.startIndex+1,bracketBlock.length-2);
 			csNameSpace.usings=readUsings(cSharpFile,content);
 			csNameSpace.content=content;
 			
@@ -218,7 +217,7 @@ namespace UnityTools {
 					bracketCount--;
 					if(bracketCount==0){
 						int bracketBlockLength=i-bracketBlockStartIndex+1;
-						SectionString bracketBlock=new SectionString(bracketBlockStartIndex,bracketBlockLength);
+						SectionString bracketBlock=new SectionString(cSharpFile,bracketBlockStartIndex,bracketBlockLength);
 						bracketBlocks.Add(bracketBlock);
 					}
 				}
@@ -229,18 +228,18 @@ namespace UnityTools {
 		/// <summary>
 		/// 读取以"."分隔的各个单词(包含空白),如:"System.Text.RegularExpressions"，将得到"System","Text","RegularExpressions"
 		/// </summary>
-		/// <param name="fileString">.cs文件字符串</param>
+		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="sectionString">如："System.Text.RegularExpressions"</param>
 		/// <returns></returns>
-		private SectionString[] readWords(string fileString,SectionString sectionString){
-			string usingContent=sectionString.ToString(fileString);
+		private SectionString[] readWords(CSharpFile cSharpFile,SectionString sectionString){
+			string usingContent=sectionString.ToString();
 			string[] splitStrings=usingContent.Split('.');
 			int len=splitStrings.Length;
 			int startIndex=sectionString.startIndex;
 			SectionString[] words=new SectionString[len];
 			for(int i=0;i<len;i++){
 				int tempLength=splitStrings[i].Length;
-				words[i]=new SectionString(startIndex,tempLength);
+				words[i]=new SectionString(cSharpFile,startIndex,tempLength);
 				//加一个单词和"."的长度
 				startIndex+=tempLength+1;
 			}
@@ -269,7 +268,7 @@ namespace UnityTools {
 
 			Match lineMatch=usingLineRegex.Match(cSharpFile.fileString,content.startIndex,length);
 			while(lineMatch.Success){
-				SectionString usingLine=new SectionString(lineMatch.Index,lineMatch.Length);
+				SectionString usingLine=new SectionString(cSharpFile,lineMatch.Index,lineMatch.Length);
 				//去除"using"、空白、";"
 				string usingLineString=lineMatch.Value;
 				usingLineString=usingLineString.Substring(5);
@@ -285,7 +284,7 @@ namespace UnityTools {
 						UsingString usingString=readStaticUsing(cSharpFile,usingLine);
 						usings.Add(usingString);
 					}else{//普通using，如:"using xx;"或"using xxx.xxx.xxx;"
-						UsingString usingString=readUsing(cSharpFile.fileString,usingLine);
+						UsingString usingString=readUsing(cSharpFile,usingLine);
 						usings.Add(usingString);
 					}
 				}
@@ -297,18 +296,18 @@ namespace UnityTools {
 		/// <summary>
 		/// 读取普通的Using
 		/// </summary>
-		/// <param name="fileString">.cs文件字符串</param>
+		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="usingLine">using行内容块，如："using System.IO;"</param>
 		/// <returns></returns>
-		private UsingString readUsing(string fileString,SectionString usingLine){
-			string usingLineString=usingLine.ToString(fileString);
+		private UsingString readUsing(CSharpFile cSharpFile,SectionString usingLine){
+			string usingLineString=usingLine.ToString();
 			//匹配"using "。
 			Match headMatch=Regex.Match(usingLineString,@"using\s",RegexOptions.Compiled);
 			
 			int startIndex=usingLine.startIndex+headMatch.Length;
 			//长度为:减去"using "的长度，再减去";"的长度
 			int length=usingLine.length-headMatch.Length-1;
-			SectionString[] wordStrings=readWords(fileString,new SectionString(startIndex,length));
+			SectionString[] wordStrings=readWords(cSharpFile,new SectionString(cSharpFile,startIndex,length));
 			UsingString usingString=new UsingString(false,wordStrings);
 			
 			return usingString;
@@ -321,14 +320,14 @@ namespace UnityTools {
 		/// <param name="usingLine">using行内容块，如："using static UnityEngine.Mathf;"</param>
 		/// <returns></returns>
 		private UsingString readStaticUsing(CSharpFile cSharpFile,SectionString usingLine){
-			string usingLineString=usingLine.ToString(cSharpFile.fileString);
+			string usingLineString=usingLine.ToString();
 			//匹配"using static "。
 			Match headMatch=Regex.Match(usingLineString,@"using\s+static\s",RegexOptions.Compiled);
 			
 			int startIndex=usingLine.startIndex+headMatch.Length;
 			//长度为:减去"using static "的长度，再减去";"的长度
 			int length=usingLine.length-headMatch.Length-1;
-			SectionString[] wordStrings=readWords(cSharpFile.fileString,new SectionString(startIndex,length));
+			SectionString[] wordStrings=readWords(cSharpFile,new SectionString(cSharpFile,startIndex,length));
 			UsingString usingString=new UsingString(true,wordStrings);
 			
 			return usingString;
@@ -341,7 +340,7 @@ namespace UnityTools {
 		/// <param name="usingLine">using行内容块，如："using static UnityEngine.Mathf;"</param>
 		/// <returns></returns>
 		private UsingAlias readUsingAlias(CSharpFile cSharpFile,SectionString usingLine){
-			string usingLineString=usingLine.ToString(cSharpFile.fileString);
+			string usingLineString=usingLine.ToString();
 			//匹配"using xxx="
 			Match headMatch=Regex.Match(usingLineString,@"using\s+\w+=",RegexOptions.Compiled);
 			
@@ -349,12 +348,12 @@ namespace UnityTools {
 			int startIndex=usingLine.startIndex+6;
 			//name长度为:"using xxx="的长度-"using "长度-"="长度
 			int length=headMatch.Length-6-1;
-			SectionString name=new SectionString(startIndex,length);
+			SectionString name=new SectionString(cSharpFile,startIndex,length);
 			
 			startIndex=usingLine.startIndex+headMatch.Length;
 			//长度为:减去"using xxx= "的长度，再减去";"的长度
 			length=usingLine.length-headMatch.Length-1;
-			SectionString[] words=readWords(cSharpFile.fileString,new SectionString(startIndex,length));
+			SectionString[] words=readWords(cSharpFile,new SectionString(cSharpFile,startIndex,length));
 			
 			UsingAlias usingAlias=new UsingAlias(name,words);
 			return usingAlias;
@@ -432,7 +431,7 @@ namespace UnityTools {
 			}
 			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
 			if(match.Success){
-				result=new SectionString(match.Index,match.Value.Length);
+				result=new SectionString(cSharpFile,match.Index,match.Value.Length);
 				return true;
 			}
 			result=new SectionString();
@@ -461,7 +460,7 @@ namespace UnityTools {
 			}
 			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
 			if(match.Success){
-				result=new SectionString(match.Index,match.Value.Length);
+				result=new SectionString(cSharpFile,match.Index,match.Value.Length);
 				return true;
 			}
 			result=new SectionString();
@@ -490,7 +489,7 @@ namespace UnityTools {
 			}
 			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
 			if(match.Success){
-				result=new SectionString(match.Index,match.Value.Length);
+				result=new SectionString(cSharpFile,match.Index,match.Value.Length);
 				return true;
 			}
 			result=new SectionString();
@@ -519,7 +518,7 @@ namespace UnityTools {
 			}
 			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
 			if(match.Success){
-				result=new SectionString(match.Index,match.Value.Length);
+				result=new SectionString(cSharpFile,match.Index,match.Value.Length);
 				return true;
 			}
 			result=new SectionString();
@@ -548,7 +547,7 @@ namespace UnityTools {
 			}
 			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
 			if(match.Success){
-				result=new SectionString(match.Index,match.Value.Length);
+				result=new SectionString(cSharpFile,match.Index,match.Value.Length);
 				return true;
 			}
 			result=new SectionString();
@@ -577,7 +576,7 @@ namespace UnityTools {
 			}
 			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
 			if(match.Success){
-				result=new SectionString(match.Index,match.Value.Length);
+				result=new SectionString(cSharpFile,match.Index,match.Value.Length);
 				return true;
 			}
 			result=new SectionString();

@@ -22,7 +22,7 @@
 		}
 
 		public string ToString(string fileString,bool includeWhitespace){
-			string name=this.name.ToString(fileString);
+			string name=this.name.ToString();
 			if(!includeWhitespace){
 				name=Regex.Replace(name,@"\s","");
 			}
@@ -30,14 +30,14 @@
 			string text="";
 			int len=wordStrings.Length;
 			for(int i=0;i<len;i++){
-				string str=wordStrings[i].ToString(fileString);
+				string str=wordStrings[i].ToString();
 				if(!includeWhitespace){
 					str=Regex.Replace(str,@"\s","");
 				}
 				text+=str;
 				if(i<len-1)text+=",";
 			}
-			return$"name:{name} wordStrings:{text}";
+			return $"name:{name} wordStrings:{text}";
 		}
 	}
 }

@@ -31,7 +31,7 @@
 			string text="";
 			int len=wordStrings.Length;
 			for(int i=0;i<len;i++){
-				string str=wordStrings[i].ToString(fileString);
+				string str=wordStrings[i].ToString();
 				if(!includeWhitespace){
 					str=Regex.Replace(str,@"\s","");
 				}

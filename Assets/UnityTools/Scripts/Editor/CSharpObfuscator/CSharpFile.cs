@@ -6,7 +6,9 @@
 	/// <summary>
 	/// .cs文件
 	/// </summary>
-	public struct CSharpFile{
+	public class CSharpFile{
+
+		private List<SectionString> _sectionStrings=new List<SectionString>();
 		
 		public FileInfo fileInfo;
 		public string fileString;
@@ -19,6 +21,13 @@
 		public CSharpInterface[] interfaces;
 		public CSharpEnum[] enums;
 		public CSharpDelegate[] delegates;
+
+		public void addSectionString(SectionString sectionString){
+			if(_sectionStrings.IndexOf(sectionString)>-1)return;
+			_sectionStrings.Add(sectionString);
+		}
+
+		public List<SectionString> sectionStrings{ get => _sectionStrings; }
 
 	}
 }
