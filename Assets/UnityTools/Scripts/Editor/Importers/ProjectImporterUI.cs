@@ -58,7 +58,6 @@
 		}
 
 		public static XmlDocument xmlDocument{ get =>_xmlDocument;}
-
 		#endregion
 		
 		private Vector2 _scrollPosition;
@@ -123,6 +122,27 @@
 				GUILayout.Space(10);
 			}
 			EditorGUILayout.EndVertical();
+
+			checkDragAndDropOnGUI();
+		}
+
+		private void checkDragAndDropOnGUI(){
+			if(mouseOverWindow==this){//鼠标位于当前窗口
+				if(Event.current.type==EventType.DragUpdated){//拖入窗口未松开鼠标
+					DragAndDrop.visualMode=DragAndDropVisualMode.Generic;//改变鼠标外观
+				}else if(Event.current.type==EventType.DragExited){//拖入窗口并松开鼠标
+					if(DragAndDrop.paths!=null){
+						int len=DragAndDrop.paths.Length;
+						for(int i=0;i<len;i++){
+							string path=DragAndDrop.paths[i];
+							Debug.Log(Directory.Exists(path));
+							if(Directory.Exists(path)&&FileUtil2.isUnityProjectFolder(path)){
+								addProjectWithUnitProjectPath(path);
+							}
+						}
+					}
+				}
+			}
 		}
 
 		private void showInExplorer(XmlNode item,string projectFolderPath){
@@ -201,16 +221,24 @@
 		/// <summary>点击导入项目按钮时</summary>
 		private void onAddProject(){
 			string folderPath=FileUtil2.openSelectUnityProjectFolderPanel();
-			if(folderPath!=null){
+			addProjectWithUnitProjectPath(folderPath);
+		}
+
+		/// <summary>
+		/// 从指定的unity项目路径添加项目
+		/// </summary>
+		/// <param name="unityProjectPath">文件夹路径</param>
+		private void addProjectWithUnitProjectPath(string unityProjectPath){
+			if(unityProjectPath!=null){
 				string currentProjectPath=System.Environment.CurrentDirectory.Replace("\\","/");
 				bool isImport=true;
-				string projectName=folderPath.Substring(folderPath.LastIndexOf('/')+1);
-				string editorVersion=getEditorVersion(folderPath);
-				if(isAlreadyExists(folderPath)){
+				string projectName=unityProjectPath.Substring(unityProjectPath.LastIndexOf('/')+1);
+				string editorVersion=getEditorVersion(unityProjectPath);
+				if(isAlreadyExists(unityProjectPath)){
 					//当尝试导入已经存在的项目时，跳过
 					displayAlreadyExistsDialog();
 					isImport=false;
-				}else if(currentProjectPath==folderPath){
+				}else if(currentProjectPath==unityProjectPath){
 					//当尝试导入当前项目时，跳过
 					EditorUtility.DisplayDialog("Selection error","Cannot import the project itself.","OK");
 					isImport=false;
@@ -221,9 +249,9 @@
 					//导入当前项目的项目设置
 					ProjectImporterEditor.importCurrentProjectSettings();
 					//导入指定项目
-					ProjectImporterEditor.importProject(folderPath);
+					ProjectImporterEditor.importProject(unityProjectPath);
 					//记录已添加的项目到xml
-					addItemToXml(folderPath,projectName,editorVersion);
+					addItemToXml(unityProjectPath,projectName,editorVersion);
 				}
 			}
 		}
