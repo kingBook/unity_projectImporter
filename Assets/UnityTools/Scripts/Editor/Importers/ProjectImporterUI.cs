@@ -131,11 +131,11 @@
 				if(Event.current.type==EventType.DragUpdated){//拖入窗口未松开鼠标
 					DragAndDrop.visualMode=DragAndDropVisualMode.Generic;//改变鼠标外观
 				}else if(Event.current.type==EventType.DragExited){//拖入窗口并松开鼠标
+					Focus();//获取焦点，使unity置顶(在其他窗口的前面)
 					if(DragAndDrop.paths!=null){
 						int len=DragAndDrop.paths.Length;
 						for(int i=0;i<len;i++){
 							string path=DragAndDrop.paths[i];
-							Debug.Log(Directory.Exists(path));
 							if(Directory.Exists(path)&&FileUtil2.isUnityProjectFolder(path)){
 								addProjectWithUnitProjectPath(path);
 							}
