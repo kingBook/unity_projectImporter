@@ -22,14 +22,14 @@
 		[MenuItem("Tools/test")]
 		public static void test(){
 			string text="using  System. Foo.\nText;";
-			Regex usingLineRegex=new Regex(@"using[\s(?<name>\w)\.]+;",RegexOptions.Compiled);
+			Regex usingLineRegex=new Regex(@"using\s+(?<one>\w+)\s*\.\s*(?<two>\w+)",RegexOptions.Compiled);
 			Match match=usingLineRegex.Match(text);
 			if(match.Success){
-				string matchValue=Regex.Replace(match.Value,@"\s|;","",RegexOptions.Compiled);
-				Debug.Log(matchValue.Substring(5));
+				Debug2.Log(match.Groups["one"],match.Groups["two"]);
+				Debug.Log("matchValue:"+match.Value);
 				for(int i=0;i<match.Groups.Count;i++){
 					var group=match.Groups[i];
-					Debug.Log("group:"+group.Name);
+					Debug.Log("group:"+group.Value);
 					for(int j=0;j<group.Captures.Count;j++){
 						Debug.Log("Capture:"+group.Captures[j].Value);
 					}
@@ -55,14 +55,9 @@
 						string projectFolderPath=FileUtil2.openSelectUnityProjectFolderPanel();
 						if(!string.IsNullOrEmpty(projectFolderPath)){
 							if(_isCopy){
-								//跳过的文件或文件夹
-								string[] ignoreCopys=new string[]{"/.git","/Library"};
-								//目标文件夹名称,源文件夹名称加"_confusion"后缀
-								string duplicateFolderPath=projectFolderPath+"_confusion";
-								FileUtil2.replaceDirectory(projectFolderPath,duplicateFolderPath,true,ignoreCopys);
-								obfuscateUnityProject(duplicateFolderPath);
+								copyAndObfuscateUnityProject(projectFolderPath,true);
 							}else{
-								obfuscateUnityProject(projectFolderPath);
+								obfuscateUnityProject(projectFolderPath,true);
 							}
 						}
 					}
@@ -105,18 +100,60 @@
 				EditorGUILayout.EndScrollView();
 			}
 			EditorGUILayout.EndVertical();
+
+			checkDragAndDropOnGUI();
+		}
+
+		private void checkDragAndDropOnGUI(){
+			if(mouseOverWindow==this){//鼠标位于当前窗口
+				if(Event.current.type==EventType.DragUpdated){//拖入窗口未松开鼠标
+					DragAndDrop.visualMode=DragAndDropVisualMode.Generic;//改变鼠标外观
+				}else if(Event.current.type==EventType.DragExited){//拖入窗口并松开鼠标
+					Focus();//获取焦点，使unity置顶(在其他窗口的前面)
+					if(DragAndDrop.paths!=null){
+						int len=DragAndDrop.paths.Length;
+						for(int i=0;i<len;i++){
+							string path=DragAndDrop.paths[i];
+							if(Directory.Exists(path)&&FileUtil2.isUnityProjectFolder(path)){
+								if(_isCopy){
+									copyAndObfuscateUnityProject(path,true);
+								}else{
+									obfuscateUnityProject(path,true);
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 
 		/// <summary>
-		/// 混淆一个unity项目
+		/// 复制并混淆一个unity项目
 		/// </summary>
-		/// <param name="projectFolderPath"></param>
-		private void obfuscateUnityProject(string projectFolderPath){
-			string assetsPath=projectFolderPath+"/Assets";
+		/// <param name="unityProjectPath">unit项目文件夹路径</param>
+		/// <param name="isCallComplete">是否执行混淆完成回调</param>
+		private void copyAndObfuscateUnityProject(string unityProjectPath, bool isCallComplete){
+			//跳过的文件或文件夹
+			string[] ignoreCopys=new string[]{"/.git","/Library"};
+			//目标文件夹名称,源文件夹名称加"_confusion"后缀
+			string duplicateFolderPath=unityProjectPath+"_confusion";
+			FileUtil2.replaceDirectory(unityProjectPath,duplicateFolderPath,true,ignoreCopys);
+			obfuscateUnityProject(duplicateFolderPath,isCallComplete);
+		}
+
+		/// <summary>
+		/// <para>混淆一个unity项目</para>
+		/// </summary>
+		/// <param name="unityProjectPath">unity项目文件夹路径</param>
+		/// <param name="isCallComplete">是否执行混淆完成回调</param>
+		private void obfuscateUnityProject(string unityProjectPath,bool isCallComplete){
+			string assetsPath=unityProjectPath+"/Assets";
 			CSharpObfuscator obfuscator=new CSharpObfuscator();
 			obfuscator.obfuscateProject(assetsPath,()=>{
-				if(_showInExplorerOnComplete){
-					FileUtil2.showInExplorer(projectFolderPath);
+				if(isCallComplete){
+					if(_showInExplorerOnComplete){
+						FileUtil2.showInExplorer(unityProjectPath);
+					}
 				}
 			});
 		}
