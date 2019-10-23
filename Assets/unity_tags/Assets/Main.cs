@@ -12,7 +12,9 @@ namespace unity_tags{
 	using Mathx=UnityEngine.Mathf;
 	
 	public delegate int Callee(int a);
-	
+	/// <summary>
+    /// Main类
+    /// </summary>
 	public class Main : MonoBehaviour{
 		public SpriteRenderer spriteRenderer;
 	    void Start(){
@@ -20,12 +22,17 @@ namespace unity_tags{
 			SortingLayer2[ ] list1=SortingLayer2.layers;
 			var list2 =SortingLayer2.layers;
 			SortingLayer2 layer=list1[1];
+            
+            string text="a//bcdefghi/*jk*/lmn";
+            
+            int a=1/* 123*/;//456
+            /*int b=a+5;*/
 		}
 		
-		private void capSortingLayerText(Match m){
+		/*private void capSortingLayerText(Match m){
 			SceneManager2.GetSceneByName("sdf");
 			
-		}
+		}*/
 		
 
 	}

@@ -16,14 +16,14 @@ public class Test : MonoBehaviour
 		if(match.Success){
 			Debug.Log(match.Value);//output: System.Collections.你好123.
 		}
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        
     }
-
+    ///
 	public void onClickHandler(){
 		
 	}

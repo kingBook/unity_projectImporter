@@ -56,6 +56,8 @@ namespace UnityTools {
 				EditorUtility.DisplayProgressBar("Read Files","Reading "+shortFilePath,(float)(i+1)/len);
 				//读取文件到字符串
 				string fileString=FileUtil2.getFileString(filePath);
+                //清除注释内容
+                clearFileStringComments(ref fileString);
 				//创建CSharpFile
 				CSharpFile csFile=createCSharpFile(fileInfo,fileString);
 				csFiles[i]=csFile;
@@ -63,6 +65,21 @@ namespace UnityTools {
 			EditorUtility.ClearProgressBar();
 			return csFiles;
 		}
+        
+        #region clearFileStringComments
+        /// <summary>
+        /// 清除.cs文件字符串中的所有注释内容
+        /// </summary>
+        /// <param name="fileString">.cs文件字符串</param>
+        private void clearFileStringComments(ref string fileString){
+			//Regex.Replace(fileString, @"(//[^\n]+?)|(/*.+?*/)", "", RegexOptions.Singleline);
+			// 单行注释//(.*)
+			// 多行(? <!/)/\*([^*/]|\*(?!/)|/(? <!\*))*((?=\*/))(\*/)
+			// 字符串((? <!\\)"([^"\\]|(\\.))*")
+			// 需要顺序地识别他们。
+			Regex blockCommentRegex=new Regex(@"/*.*/");
+        }
+        #endregion
 
 		/// <summary>
 		/// 文件夹路径是不是忽略的文件夹
@@ -105,14 +122,14 @@ namespace UnityTools {
 		/// 创建cCSharpFile
 		/// </summary>
 		/// <param name="fileInfo">.cs文件信息</param>
-		/// <param name="fileString">.cs文件字符串</param>
+		/// <param name="noneCommentsFileString">无注释的.cs文件字符串</param>
 		/// <returns></returns>
-		private CSharpFile createCSharpFile(FileInfo fileInfo,string fileString){
+		private CSharpFile createCSharpFile(FileInfo fileInfo,string noneCommentsFileString){
 			Debug.Log(fileInfo.Name+"================================");
 			CSharpFile file=new CSharpFile();
 			file.fileInfo=fileInfo;
-			file.fileString=fileString;
-			file.content=new SectionString(file,0,fileString.Length);
+			file.fileString=noneCommentsFileString;
+			file.content=new SectionString(file,0,noneCommentsFileString.Length);
 			file.usings=readUsings(file,file.content);
 			
 			List<SectionString> bracketBlocks=readBracketBlocks(file,file.content);
