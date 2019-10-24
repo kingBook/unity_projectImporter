@@ -78,8 +78,11 @@ namespace UnityTools {
 			// 字符串((? <!\\)"([^"\\]|(\\.))*")
 			// 需要顺序地识别他们。
 			//Regex blockCommentsRegex=new Regex(@"/\*\.\*/");
-			const string lineCommentspattern=@"//(.*)";
-			Regex lineCommentsRegex=new Regex(lineCommentspattern,RegexOptions.Compiled);
+			Regex lineCommentsRegex=new Regex(@"(^"")(.|\s)*(?<text>//.*)\n?[^""]",RegexOptions.Compiled);
+			var matchs=lineCommentsRegex.Matches(fileString);
+			for(int i=0;i<matchs.Count;i++){
+				Debug.Log(matchs[i].Groups["text"].Value);
+			}
         }
         #endregion
 
