@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace UnityTools {
 	using System.IO;
@@ -72,12 +72,14 @@ namespace UnityTools {
         /// </summary>
         /// <param name="fileString">.cs文件字符串</param>
         private void clearFileStringComments(ref string fileString){
-			//Regex.Replace(fileString, @"(//[^\n]+?)|(/*.+?*/)", "", RegexOptions.Singleline);
+	        //Regex.Replace(fileString, @"(//[^\n]+?)|(/*.+?*/)", "", RegexOptions.Singleline);
 			// 单行注释//(.*)
 			// 多行(? <!/)/\*([^*/]|\*(?!/)|/(? <!\*))*((?=\*/))(\*/)
 			// 字符串((? <!\\)"([^"\\]|(\\.))*")
 			// 需要顺序地识别他们。
-			Regex blockCommentRegex=new Regex(@"/*.*/");
+			//Regex blockCommentsRegex=new Regex(@"/\*\.\*/");
+			const string lineCommentspattern=@"//(.*)";
+			Regex lineCommentsRegex=new Regex(lineCommentspattern,RegexOptions.Compiled);
         }
         #endregion
 
