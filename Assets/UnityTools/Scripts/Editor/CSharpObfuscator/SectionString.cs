@@ -3,10 +3,10 @@
 	using System.Collections;
 	using System.Text.RegularExpressions;
 	/// <summary>
-	/// 一段字符串
+	/// 记录一段字符串在.cs文件字符中的起始索引和长度的结构体
 	/// </summary>
 	public struct SectionString{
-		private CSharpFile _cSharpFile;
+		private readonly string _fileString;
 		public int startIndex;
 		public int length;
 		
@@ -29,16 +29,34 @@
 			return nameString;
 		}
 		
+		/// <summary>
+		/// 创建一个SectionString结构体，并添加到cSharpFile.sectionStrings列表中。
+		/// </summary>
+		/// <param name="cSharpFile">CSharpFile</param>
+		/// <param name="startIndex">起始索引</param>
+		/// <param name="length">长度</param>
 		public SectionString(CSharpFile cSharpFile,int startIndex,int length){
-			_cSharpFile=cSharpFile;
+			_fileString=cSharpFile.fileString;
 			this.startIndex=startIndex;
 			this.length=length;
-
-			_cSharpFile.addSectionString(this);
+			
+			cSharpFile.addSectionString(this);
+		}
+		
+		/// <summary>
+		/// 创建一个SectionString结构体。
+		/// </summary>
+		/// <param name="fileString">.cs文件字符串</param>
+		/// <param name="startIndex">起始索引</param>
+		/// <param name="length">长度</param>
+		public SectionString(string fileString,int startIndex,int length){
+			_fileString=fileString;
+			this.startIndex=startIndex;
+			this.length=length;
 		}
 
 		public override string ToString(){
-			return _cSharpFile.fileString.Substring(startIndex,length);
+			return _fileString.Substring(startIndex,length);
 		}
 		
 	}

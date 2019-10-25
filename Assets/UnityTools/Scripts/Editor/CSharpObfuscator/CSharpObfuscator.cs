@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UnityTools {
 	using System.IO;
@@ -51,13 +51,14 @@ namespace UnityTools {
 				if(isIgnoreFolderFile(projectAssetsPath,fileInfo.Directory.FullName)){
 					continue;
 				}
+				Debug.Log("read "+fileInfo.Name+"==============================");
 				//显示进度
 				string shortFilePath=filePath.Replace(projectAssetsPath,"");
 				EditorUtility.DisplayProgressBar("Read Files","Reading "+shortFilePath,(float)(i+1)/len);
 				//读取文件到字符串
 				string fileString=FileUtil2.getFileString(filePath);
-                //清除注释内容
-                clearFileStringComments(ref fileString);
+				//清除注释内容
+				clearFileStringComments(ref fileString);
 				//创建CSharpFile
 				CSharpFile csFile=createCSharpFile(fileInfo,fileString);
 				csFiles[i]=csFile;
@@ -65,26 +66,63 @@ namespace UnityTools {
 			EditorUtility.ClearProgressBar();
 			return csFiles;
 		}
-        
-        #region clearFileStringComments
-        /// <summary>
-        /// 清除.cs文件字符串中的所有注释内容
-        /// </summary>
-        /// <param name="fileString">.cs文件字符串</param>
-        private void clearFileStringComments(ref string fileString){
-	        //Regex.Replace(fileString, @"(//[^\n]+?)|(/*.+?*/)", "", RegexOptions.Singleline);
-			// 单行注释//(.*)
-			// 多行(? <!/)/\*([^*/]|\*(?!/)|/(? <!\*))*((?=\*/))(\*/)
-			// 字符串((? <!\\)"([^"\\]|(\\.))*")
-			// 需要顺序地识别他们。
-			//Regex blockCommentsRegex=new Regex(@"/\*\.\*/");
-			Regex lineCommentsRegex=new Regex(@"(^"")(.|\s)*(?<text>//.*)\n?[^""]",RegexOptions.Compiled);
-			var matchs=lineCommentsRegex.Matches(fileString);
-			for(int i=0;i<matchs.Count;i++){
-				Debug.Log(matchs[i].Groups["text"].Value);
+		
+		#region clearFileStringComments
+		/// <summary>
+		/// 清除.cs文件字符串中的所有注释内容
+		/// </summary>
+		/// <param name="fileString">.cs文件字符串</param>
+		private void clearFileStringComments(ref string fileString){
+			SectionString[] texts=readFileStringTexts(fileString);
+			SectionString[] blockComments=readFileStringBlockComments(fileString);
+			SectionString[] lineComments=readFileStringLineComments(fileString);
+		}
+		
+		/// <summary>
+		/// 读取.cs文件中的字符串
+		/// </summary>
+		/// <param name="fileString"></param>
+		/// <returns></returns>
+		private SectionString[] readFileStringTexts(string fileString){
+			//匹配双引号字符串，在@符号后的双引号转义使用两个"。
+			Regex regex=new Regex(@"""([^""])*""",RegexOptions.Compiled);
+			//Regex regex=new Regex(@"""(.*|\s*|([^""]*))""",RegexOptions.Compiled);
+			//Regex regex=new Regex(@"""(.*|\s*)""",RegexOptions.Compiled);
+			//匹配并列字符串，如："a"+"b"+"c"、"a","b","c"
+			//Regex parallelRegex=new Regex(@"""(.*?|\s*?)""",RegexOptions.Compiled);
+			MatchCollection matches=regex.Matches(fileString);
+			int count=matches.Count;
+			SectionString[] sectionStrings=new SectionString[count];
+			for(int i=0;i<count;i++){
+				Match match=matches[i];
+				string matchValue=match.Value;
+
+				sectionStrings[i]=new SectionString(fileString,match.Index,match.Length);
+				Debug.Log(sectionStrings[i]);
 			}
-        }
-        #endregion
+			return sectionStrings;
+		}
+		
+		/// <summary>
+		/// 读取.cs文件中的块注释
+		/// </summary>
+		/// <param name="fileString"></param>
+		/// <returns></returns>
+		private SectionString[] readFileStringBlockComments(string fileString){
+			Regex regex=new Regex(@"",RegexOptions.Compiled);
+			return null;
+		}
+		
+		/// <summary>
+		/// 读取.cs文件中的行注释
+		/// </summary>
+		/// <param name="fileString"></param>
+		/// <returns></returns>
+		private  SectionString[] readFileStringLineComments(string fileString){
+			return null;
+
+		}
+		#endregion
 
 		/// <summary>
 		/// 文件夹路径是不是忽略的文件夹
@@ -130,7 +168,6 @@ namespace UnityTools {
 		/// <param name="noneCommentsFileString">无注释的.cs文件字符串</param>
 		/// <returns></returns>
 		private CSharpFile createCSharpFile(FileInfo fileInfo,string noneCommentsFileString){
-			Debug.Log(fileInfo.Name+"================================");
 			CSharpFile file=new CSharpFile();
 			file.fileInfo=fileInfo;
 			file.fileString=noneCommentsFileString;

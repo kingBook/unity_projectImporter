@@ -22,11 +22,18 @@ namespace unity_tags{
 			SortingLayer2[ ] list1=SortingLayer2.layers;
 			var list2 =SortingLayer2.layers;
 			SortingLayer2 layer=list1[1];
-            
-            string text="a//bcdefghi/*jk*/lmn";
+            //"."
+            string text="a\"//b\ncdefghi/*jk*\"/" +
+			"lmn";
             
             int a=1/* 123*/;//456
-            /*int b=a+5;*/
+            string bb="/*int b=a+5;*/";
+			joinString("ye  s","	yo u");
+			//string cc="ye  s","	yo u";
+		}
+
+		private string joinString(string a,string b){
+			return a+b;
 		}
 		
 		/*private void capSortingLayerText(Match m){
