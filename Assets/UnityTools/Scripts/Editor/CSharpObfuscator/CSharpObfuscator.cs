@@ -12,7 +12,7 @@ namespace UnityTools {
 	/// <br>一个混淆器只用于一个unity项目</br>
 	/// </summary>
 	public class CSharpObfuscator{
-	
+		
 		/// <summary>只能在Assets文件夹下的一级子目录的特殊文件夹</summary>
 		private readonly string[] _ignoreRootFolderNames=new string[]{"EditorDefaultResources","Gizmos","Plugins","StandardAssets","StreamingAssets"};
 		/// <summary>可以在Assets文件夹下的任意子目录的特殊文件夹</summary>
