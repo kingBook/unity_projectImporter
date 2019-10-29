@@ -21,20 +21,8 @@
 
 		[MenuItem("Tools/test")]
 		public static void test(){
-			string text="using  System. Foo.\nText;";
-			Regex usingLineRegex=new Regex(@"using\s+(?<one>\w+)\s*\.\s*(?<two>\w+)",RegexOptions.Compiled);
-			Match match=usingLineRegex.Match(text);
-			if(match.Success){
-				Debug2.Log(match.Groups["one"],match.Groups["two"]);
-				Debug.Log("matchValue:"+match.Value);
-				for(int i=0;i<match.Groups.Count;i++){
-					var group=match.Groups[i];
-					Debug.Log("group:"+group.Value);
-					for(int j=0;j<group.Captures.Count;j++){
-						Debug.Log("Capture:"+group.Captures[j].Value);
-					}
-				}
-			}
+			Regex regex=new Regex(@"[0-9]");
+			
 		}
 
 		private void OnEnable(){

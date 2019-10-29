@@ -74,33 +74,55 @@ namespace UnityTools {
 		/// <param name="fileString">.cs文件字符串</param>
 		private void clearFileStringComments(ref string fileString){
 			SectionString[] texts=readFileStringTexts(fileString);
+			/*for(int i=0;i<texts.Length;i++){
+				Debug.Log(texts[i]);
+			}*/
 			SectionString[] blockComments=readFileStringBlockComments(fileString);
 			SectionString[] lineComments=readFileStringLineComments(fileString);
 		}
 		
 		/// <summary>
-		/// 读取.cs文件中的字符串
+		/// 读取.cs文件中的字符串,如："abc"、@"abc"等
 		/// </summary>
 		/// <param name="fileString"></param>
 		/// <returns></returns>
 		private SectionString[] readFileStringTexts(string fileString){
 			//匹配双引号字符串，在@符号后的双引号转义使用两个"。
-			Regex regex=new Regex(@"""([^""])*""",RegexOptions.Compiled);
-			//Regex regex=new Regex(@"""(.*|\s*|([^""]*))""",RegexOptions.Compiled);
-			//Regex regex=new Regex(@"""(.*|\s*)""",RegexOptions.Compiled);
-			//匹配并列字符串，如："a"+"b"+"c"、"a","b","c"
-			//Regex parallelRegex=new Regex(@"""(.*?|\s*?)""",RegexOptions.Compiled);
-			MatchCollection matches=regex.Matches(fileString);
+			Regex stringRegex=new Regex(@""".*""",RegexOptions.Compiled);
+			//匹配连续多个的字符串，如：text("yes","no");中的"yes","no"或"a\"b\"c"
+			Regex continueStringRegex=new Regex(@"""(.*"")+.+""",RegexOptions.Compiled);
+			//匹配嵌套双引号的合法字符串，如："a\"b\"c"
+			Regex nestedStringRegex=new Regex(@"""(.*\\"")+.+""",RegexOptions.Compiled);
+			MatchCollection matches=stringRegex.Matches(fileString);
 			int count=matches.Count;
-			SectionString[] sectionStrings=new SectionString[count];
+			List<SectionString> sectionStrings=new List<SectionString>();
 			for(int i=0;i<count;i++){
 				Match match=matches[i];
 				string matchValue=match.Value;
-
-				sectionStrings[i]=new SectionString(fileString,match.Index,match.Length);
-				Debug.Log(sectionStrings[i]);
+				SectionString sectionString=new SectionString(fileString,match.Index,match.Length);
+				Debug.Log(sectionString);
+				
+				bool isContinueString=continueStringRegex.IsMatch(matchValue);
+				if(isContinueString){
+					bool isNestedString=nestedStringRegex.IsMatch(matchValue);
+					if(isNestedString){
+						sectionStrings.Add(sectionString);
+					}else{
+						//匹配一个长字符串中连续或间续的多个短字符串，如："yes"，"no"中的"yes"和"no"
+						Regex subStringRegex=new Regex(@""".*?""",RegexOptions.Compiled);
+						MatchCollection subMatches=subStringRegex.Matches(matchValue);
+						int subMatchsCount=subMatches.Count;
+						for(int j=0;j<subMatchsCount;j++){
+							Match subMatch=subMatches[j];
+							SectionString subSectionString=new SectionString(fileString,match.Index+subMatch.Index,subMatch.Length);
+							sectionStrings.Add(subSectionString);
+						}
+					}
+				}else{
+					sectionStrings.Add(sectionString);
+				}
 			}
-			return sectionStrings;
+			return sectionStrings.ToArray();
 		}
 		
 		/// <summary>
