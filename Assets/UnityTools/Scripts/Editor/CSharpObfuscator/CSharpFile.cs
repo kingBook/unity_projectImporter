@@ -12,7 +12,6 @@
 		
 		public FileInfo fileInfo;
 		public string fileString;
-		public SectionString content;
 		/// <summary>.cs文件内所有命名空间声明外的using</summary>
 		public IUsing[] usings;
 		public CSharpNameSpace[] nameSpaces;

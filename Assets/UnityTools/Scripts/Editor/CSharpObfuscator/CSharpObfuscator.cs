@@ -88,17 +88,17 @@ namespace UnityTools {
 		/// <summary>
 		/// 读取.cs文件中的字符串,如："abc"、@"abc"等
 		/// </summary>
-		/// <param name="fileString">.cs文件字符串</param>
+		/// <param name="cSharpFile">CSharpFile</param>
 		/// <returns></returns>
-		private SectionString[] readStringsWithFile(string fileString){
+		private SectionString[] readStringsWithFile(CSharpFile cSharpFile){
 			//匹配@"xxx"、"xxx"、test("xxx",@"xxx")括号里的"xxx",@"xxx"等字符串（在@符号后的双引号转义使用两个")。
 			Regex stringRegex=new Regex(@"(@"".*"")|("".*"")",RegexOptions.Compiled);
-			MatchCollection matches=stringRegex.Matches(fileString);
+			MatchCollection matches=stringRegex.Matches(cSharpFile.fileString);
 			int count=matches.Count;
 			List<SectionString> sectionStrings=new List<SectionString>();
 			for(int i=0;i<count;i++){
 				Match match=matches[i];
-				SectionString[] generalStrings=getStringsWithMatch(fileString,match,true);
+				SectionString[] generalStrings=getStringsWithMatch(cSharpFile,match,true);
 				sectionStrings.AddRange(generalStrings);
 			}
 			return sectionStrings.ToArray();
@@ -107,11 +107,11 @@ namespace UnityTools {
 		/// <summary>
 		/// 从指定的Match中返回字符串内容
 		/// </summary>
-		/// <param name="fileString">.cs文件字符串</param>
+		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="match">包含字符串的Match</param>
 		/// <param name="isIncludeAtMark">@模式的字符串，返回时是否包含"@"标记</param>
 		/// <returns></returns>
-		private SectionString[] getStringsWithMatch(string fileString,Match match,bool isIncludeAtMark){
+		private SectionString[] getStringsWithMatch(CSharpFile cSharpFile,Match match,bool isIncludeAtMark){
 			List<SectionString> sectionStrings=new List<SectionString>();
 			string matchValue=match.Value;
 			int len=matchValue.Length;
@@ -172,7 +172,7 @@ namespace UnityTools {
 							strStartIndex-=1;
 							strLength+=1;
 						}
-						SectionString sectionString=new SectionString(fileString,strStartIndex,strLength);
+						SectionString sectionString=new SectionString(cSharpFile,strStartIndex,strLength);
 						sectionStrings.Add(sectionString);
 						isAtPattern=false;
 						isLastOver=true;
@@ -185,9 +185,9 @@ namespace UnityTools {
 		/// <summary>
 		/// 读取.cs文件中的块注释
 		/// </summary>
-		/// <param name="fileString">.cs文件字符串</param>
+		/// <param name="cSharpFile">CSharpFile</param>
 		/// <returns></returns>
-		private SectionString[] readFileStringBlockComments(string fileString){
+		private SectionString[] readFileStringBlockComments(CSharpFile cSharpFile){
 			Regex regex=new Regex(@"",RegexOptions.Compiled);
 			return null;
 		}
@@ -195,9 +195,9 @@ namespace UnityTools {
 		/// <summary>
 		/// 读取.cs文件中的行注释
 		/// </summary>
-		/// <param name="fileString"></param>
+		/// <param name="cSharpFile">CSharpFile</param>
 		/// <returns></returns>
-		private  SectionString[] readFileStringLineComments(string fileString){
+		private  SectionString[] readFileStringLineComments(CSharpFile cSharpFile){
 			return null;
 
 		}
@@ -250,7 +250,6 @@ namespace UnityTools {
 			CSharpFile file=new CSharpFile();
 			file.fileInfo=fileInfo;
 			file.fileString=fileString;
-			file.content=new SectionString(file,0,fileString.Length);
 			return file;
 		}
 
@@ -259,9 +258,10 @@ namespace UnityTools {
 		/// </summary>
 		/// <param name="cSharpFile">CSharpFile</param>
 		private void readCSharpFileContent(CSharpFile cSharpFile){
-			cSharpFile.usings=readUsings(cSharpFile,cSharpFile.content);
+			SectionString content=new SectionString(cSharpFile,0,cSharpFile.fileString.Length);
+			cSharpFile.usings=readUsings(cSharpFile,content);
 			
-			List<SectionString> bracketBlocks=readBracketBlocks(cSharpFile,cSharpFile.content);
+			List<SectionString> bracketBlocks=readBracketBlocks(cSharpFile,content);
 			List<CSharpNameSpace> namespaces;
 			List<CSharpClass> classes;
 			List<CSharpStruct> structs;
