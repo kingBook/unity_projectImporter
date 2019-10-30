@@ -21,7 +21,7 @@
 
 		[MenuItem("Tools/test")]
 		public static void test(){
-			Regex regex=new Regex(@"[0-9]");
+			
 			
 		}
 

@@ -41,7 +41,7 @@ namespace UnityTools {
 		/// <returns></returns>
 		private CSharpFile[] readFiles(string projectAssetsPath,string[] files){
 			int len=files.Length;
-			CSharpFile[] csFiles=new CSharpFile[len];
+			CSharpFile[] cSharpFiles=new CSharpFile[len];
 			EditorUtility.DisplayProgressBar("Read Files","Readying...",0.0f);
 			for(int i=0;i<len;i++){
 				string filePath=files[i];
@@ -57,69 +57,126 @@ namespace UnityTools {
 				EditorUtility.DisplayProgressBar("Read Files","Reading "+shortFilePath,(float)(i+1)/len);
 				//读取文件到字符串
 				string fileString=FileUtil2.getFileString(filePath);
-				//清除注释内容
-				clearFileStringComments(ref fileString);
 				//创建CSharpFile
-				CSharpFile csFile=createCSharpFile(fileInfo,fileString);
-				csFiles[i]=csFile;
+				CSharpFile cSharpFile=createCSharpFile(fileInfo,fileString);
+				//清除CSharpFile里的注释内容
+				clearFileStringComments(cSharpFile);
+				//读取CSharpFile里的内容
+				readCSharpFileContent(cSharpFile);
+				cSharpFiles[i]=cSharpFile;
 			}
 			EditorUtility.ClearProgressBar();
-			return csFiles;
+			return cSharpFiles;
 		}
 		
 		#region clearFileStringComments
 		/// <summary>
 		/// 清除.cs文件字符串中的所有注释内容
 		/// </summary>
-		/// <param name="fileString">.cs文件字符串</param>
-		private void clearFileStringComments(ref string fileString){
-			SectionString[] texts=readFileStringTexts(fileString);
-			/*for(int i=0;i<texts.Length;i++){
+		/// <param name="cSharpFile">CSharpFile</param>
+		private void clearFileStringComments(CSharpFile cSharpFile){
+			SectionString[] texts=readStringsWithFile(cSharpFile);
+			for(int i=0;i<texts.Length;i++){
 				Debug.Log(texts[i]);
-			}*/
-			SectionString[] blockComments=readFileStringBlockComments(fileString);
-			SectionString[] lineComments=readFileStringLineComments(fileString);
+			}
+			SectionString[] lineComments=readFileStringLineComments(cSharpFile);
+			SectionString[] blockComments=readFileStringBlockComments(cSharpFile);
+			//cSharpFile.fileString=
+			//cSharpFile.content=
 		}
 		
 		/// <summary>
 		/// 读取.cs文件中的字符串,如："abc"、@"abc"等
 		/// </summary>
-		/// <param name="fileString"></param>
+		/// <param name="fileString">.cs文件字符串</param>
 		/// <returns></returns>
-		private SectionString[] readFileStringTexts(string fileString){
-			//匹配双引号字符串，在@符号后的双引号转义使用两个"。
-			Regex stringRegex=new Regex(@""".*""",RegexOptions.Compiled);
-			//匹配连续多个的字符串，如：text("yes","no");中的"yes","no"或"a\"b\"c"
-			Regex continueStringRegex=new Regex(@"""(.*"")+.+""",RegexOptions.Compiled);
-			//匹配嵌套双引号的合法字符串，如："a\"b\"c"
-			Regex nestedStringRegex=new Regex(@"""(.*\\"")+.+""",RegexOptions.Compiled);
+		private SectionString[] readStringsWithFile(string fileString){
+			//匹配@"xxx"、"xxx"、test("xxx",@"xxx")括号里的"xxx",@"xxx"等字符串（在@符号后的双引号转义使用两个")。
+			Regex stringRegex=new Regex(@"(@"".*"")|("".*"")",RegexOptions.Compiled);
 			MatchCollection matches=stringRegex.Matches(fileString);
 			int count=matches.Count;
 			List<SectionString> sectionStrings=new List<SectionString>();
 			for(int i=0;i<count;i++){
 				Match match=matches[i];
-				string matchValue=match.Value;
-				SectionString sectionString=new SectionString(fileString,match.Index,match.Length);
-				Debug.Log(sectionString);
-				
-				bool isContinueString=continueStringRegex.IsMatch(matchValue);
-				if(isContinueString){
-					bool isNestedString=nestedStringRegex.IsMatch(matchValue);
-					if(isNestedString){
-						sectionStrings.Add(sectionString);
+				SectionString[] generalStrings=getStringsWithMatch(fileString,match,true);
+				sectionStrings.AddRange(generalStrings);
+			}
+			return sectionStrings.ToArray();
+		}
+
+		/// <summary>
+		/// 从指定的Match中返回字符串内容
+		/// </summary>
+		/// <param name="fileString">.cs文件字符串</param>
+		/// <param name="match">包含字符串的Match</param>
+		/// <param name="isIncludeAtMark">@模式的字符串，返回时是否包含"@"标记</param>
+		/// <returns></returns>
+		private SectionString[] getStringsWithMatch(string fileString,Match match,bool isIncludeAtMark){
+			List<SectionString> sectionStrings=new List<SectionString>();
+			string matchValue=match.Value;
+			int len=matchValue.Length;
+			//引号(")计数
+			int doubleQuotationMarkCount=0;
+			//一段字符串的开始索引,从引号(")开始
+			int startIndex=0;
+			//是不是@模式字符串，每次字符串开头引号(")都重新赋值
+			bool isAtPattern=false;
+			//表示上一段字符串查找是否已结束
+			bool isLastOver=true;
+			for(int i=0;i<len;i++){
+				//当前char是不是字符串引号(")，@字符串时排除("")，常规字符串时排除(\")
+				bool isQuotationMark=false;
+				if(matchValue[i]=='"'){
+					if(isLastOver){
+						//上一段字符串查找已结束，设置是不是@模式字符串
+						isAtPattern=i>0 && matchValue[i-1]=='@';
+					}
+					if(isAtPattern){
+						if(isLastOver && matchValue[i-1]=='@'){
+							//如果上一段字符患上查找结束，上一个字符是"@"的一定是字符串引号(")
+							isQuotationMark=true;
+						}else if(i+1<len-1){//非最后一个字符
+							if(matchValue[i+1]=='"'){
+								//在@符号后的双引号转义使用两个"，所以当前和下一个都是引号(")则不是字符串引号(")，
+								//i+=1，跳过检查下一个索引
+								i+=1;
+							}else{
+								//下一个不是引号(")时，当前则是字符串引号(")
+								isQuotationMark=true;
+							}
+						}else{
+							//最后一个字符，一定是字符串引号(")
+							isQuotationMark=true;
+						}
 					}else{
-						//匹配一个长字符串中连续或间续的多个短字符串，如："yes"，"no"中的"yes"和"no"
-						Regex subStringRegex=new Regex(@""".*?""",RegexOptions.Compiled);
-						MatchCollection subMatches=subStringRegex.Matches(matchValue);
-						int subMatchsCount=subMatches.Count;
-						for(int j=0;j<subMatchsCount;j++){
-							Match subMatch=subMatches[j];
-							SectionString subSectionString=new SectionString(fileString,match.Index+subMatch.Index,subMatch.Length);
-							sectionStrings.Add(subSectionString);
+						if(i>0){
+							//常规字符串(非@模式字符串)，上一个不是转义符(\)则是字符串引号(")
+							if(matchValue[i-1]!='\\')isQuotationMark=true;
+						}else{
+							isQuotationMark=true;
 						}
 					}
-				}else{
-					sectionStrings.Add(sectionString);
+				}
+				//如果是字符串引号(")，则计算并截切
+				if(isQuotationMark){
+					doubleQuotationMarkCount++;
+					if((doubleQuotationMarkCount&1)==1){
+						isLastOver=false;
+						//第一个字符串引号(")，设置开始索引
+						startIndex=i;
+					}else{
+						//第二个字符串引号(")，截取字符串
+						int strStartIndex=match.Index+startIndex;
+						int strLength=i-startIndex+1;
+						if(isAtPattern&&isIncludeAtMark){
+							strStartIndex-=1;
+							strLength+=1;
+						}
+						SectionString sectionString=new SectionString(fileString,strStartIndex,strLength);
+						sectionStrings.Add(sectionString);
+						isAtPattern=false;
+						isLastOver=true;
+					}
 				}
 			}
 			return sectionStrings.ToArray();
@@ -128,7 +185,7 @@ namespace UnityTools {
 		/// <summary>
 		/// 读取.cs文件中的块注释
 		/// </summary>
-		/// <param name="fileString"></param>
+		/// <param name="fileString">.cs文件字符串</param>
 		/// <returns></returns>
 		private SectionString[] readFileStringBlockComments(string fileString){
 			Regex regex=new Regex(@"",RegexOptions.Compiled);
@@ -187,31 +244,38 @@ namespace UnityTools {
 		/// 创建cCSharpFile
 		/// </summary>
 		/// <param name="fileInfo">.cs文件信息</param>
-		/// <param name="noneCommentsFileString">无注释的.cs文件字符串</param>
+		/// <param name="fileString">.cs文件字符串</param>
 		/// <returns></returns>
-		private CSharpFile createCSharpFile(FileInfo fileInfo,string noneCommentsFileString){
+		private CSharpFile createCSharpFile(FileInfo fileInfo,string fileString){
 			CSharpFile file=new CSharpFile();
 			file.fileInfo=fileInfo;
-			file.fileString=noneCommentsFileString;
-			file.content=new SectionString(file,0,noneCommentsFileString.Length);
-			file.usings=readUsings(file,file.content);
+			file.fileString=fileString;
+			file.content=new SectionString(file,0,fileString.Length);
+			return file;
+		}
+
+		/// <summary>
+		/// 读取指定CSharpFile里的内容
+		/// </summary>
+		/// <param name="cSharpFile">CSharpFile</param>
+		private void readCSharpFileContent(CSharpFile cSharpFile){
+			cSharpFile.usings=readUsings(cSharpFile,cSharpFile.content);
 			
-			List<SectionString> bracketBlocks=readBracketBlocks(file,file.content);
+			List<SectionString> bracketBlocks=readBracketBlocks(cSharpFile,cSharpFile.content);
 			List<CSharpNameSpace> namespaces;
 			List<CSharpClass> classes;
 			List<CSharpStruct> structs;
 			List<CSharpInterface> interfaces;
 			List<CSharpEnum> enums;
 			List<CSharpDelegate> delegates;
-			readNameSpaceSubObjects(file,CSharpNameSpace.None,bracketBlocks,out namespaces,out classes,out structs,out interfaces,out enums,out delegates);
+			readNameSpaceSubObjects(cSharpFile,CSharpNameSpace.None,bracketBlocks,out namespaces,out classes,out structs,out interfaces,out enums,out delegates);
 			
-			file.nameSpaces=namespaces.ToArray();
-			file.classes=classes.ToArray();
-			file.structs=structs.ToArray();
-			file.interfaces=interfaces.ToArray();
-			file.enums=enums.ToArray();
-			file.delegates=delegates.ToArray();
-			return file;
+			cSharpFile.nameSpaces=namespaces.ToArray();
+			cSharpFile.classes=classes.ToArray();
+			cSharpFile.structs=structs.ToArray();
+			cSharpFile.interfaces=interfaces.ToArray();
+			cSharpFile.enums=enums.ToArray();
+			cSharpFile.delegates=delegates.ToArray();
 		}
 		
 		/// <summary>

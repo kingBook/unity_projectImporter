@@ -29,10 +29,14 @@ namespace unity_tags{
             int a=1/* 123*/;//456
             string bb="/*int b=a+5;*/";
 			joinString("ye\"  s","	yo u");
-			//string cc="ye  s","	yo u";
+			joinString(@"y""e  s","	yo u");
+			joinString(@"a""b  c",@"	def");
+			joinString(@"aaa",@"b@""b""b","ccc");
+
+			Regex regex=new Regex(@"/w+[(@"")]""\s*""");
 		}
 
-		private string joinString(string a,string b){
+		private string joinString(string a,string b,string c=null){
 			return a+b;
 		}
 		

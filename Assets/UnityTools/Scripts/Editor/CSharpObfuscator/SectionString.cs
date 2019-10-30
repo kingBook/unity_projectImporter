@@ -49,11 +49,11 @@
 		/// <param name="fileString">.cs文件字符串</param>
 		/// <param name="startIndex">起始索引</param>
 		/// <param name="length">长度</param>
-		public SectionString(string fileString,int startIndex,int length){
+		/*public SectionString(string fileString,int startIndex,int length){
 			_fileString=fileString;
 			this.startIndex=startIndex;
 			this.length=length;
-		}
+		}*/
 
 		public override string ToString(){
 			return _fileString.Substring(startIndex,length);
