@@ -8,7 +8,7 @@
 	/// </summary>
 	public class CSharpFile{
 
-		private List<SectionString> _sectionStrings=new List<SectionString>();
+		private List<SegmentString> _segmentStrings=new List<SegmentString>();
 		
 		public FileInfo fileInfo;
 		public string fileString;
@@ -21,12 +21,12 @@
 		public CSharpEnum[] enums;
 		public CSharpDelegate[] delegates;
 
-		public void addSectionString(SectionString sectionString){
-			if(_sectionStrings.IndexOf(sectionString)>-1)return;
-			_sectionStrings.Add(sectionString);
+		public void addSegmentString(SegmentString segmentString){
+			if(_segmentStrings.IndexOf(segmentString)>-1)return;
+			_segmentStrings.Add(segmentString);
 		}
 
-		public List<SectionString> sectionStrings{ get => _sectionStrings; }
+		public List<SegmentString> segmentStrings{ get => _segmentStrings; }
 
 	}
 }

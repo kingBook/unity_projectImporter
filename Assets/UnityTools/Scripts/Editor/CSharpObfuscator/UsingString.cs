@@ -14,9 +14,9 @@
 		/// "using"/"static"后"."分隔的各个单词(包含空白,但不包含using/static后的第一个空格)
 		/// <br>如："using  System.Text.RegularExpressions;"</br>
 		/// </summary>
-		public SectionString[] wordStrings;
+		public SegmentString[] wordStrings;
 		
-		public UsingString(bool isStatic,SectionString[] wordStrings){
+		public UsingString(bool isStatic,SegmentString[] wordStrings){
 			this.isStatic=isStatic;
 			this.wordStrings=wordStrings;
 		}
@@ -38,7 +38,7 @@
 				text+=str;
 				if(i<len-1)text+=",";
 			}
-			return$"isStatic:{isStatic.ToString()} wordStrings:{text}";
+			return $"isStatic:{isStatic.ToString()} wordStrings:{text}";
 		}
 	}
 }

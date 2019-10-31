@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-
-namespace UnityTools {
+﻿namespace UnityTools {
+	using UnityEngine;
 	using System.IO;
 	using UnityEditor;
 	using System;
@@ -75,14 +74,39 @@ namespace UnityTools {
 		/// </summary>
 		/// <param name="cSharpFile">CSharpFile</param>
 		private void clearFileStringComments(CSharpFile cSharpFile){
-			SectionString[] texts=readStringsWithFile(cSharpFile);
-			for(int i=0;i<texts.Length;i++){
-				Debug.Log(texts[i]);
+			List<SegmentString> strings=readStringsWithinFile(cSharpFile);
+			List<SegmentString> lineComments=readLineCommentsWithinFile(cSharpFile);
+			//移除字符串内的行注释
+			removeLineCommentsWithinStrings(lineComments,strings);
+			//移除行注释内的字符串
+			removeStringsWithinLineComments(strings,lineComments);
+			//**到此处，strings中的所有字符串应该都是正确的
+			List<SegmentString> blockComments=readBlockCommentsWithinFile(cSharpFile,strings);
+			//
+			string fileString=cSharpFile.fileString;
+			//
+			List<SegmentString> comments=new List<SegmentString>();
+			comments.AddRange(lineComments);
+			comments.AddRange(blockComments);
+			//按startIndex小到大排序
+			comments.Sort((SegmentString a,SegmentString b)=>{
+				return a.startIndex-b.startIndex;
+			});
+
+			int i=comments.Count;
+			while(--i>=0){
+				SegmentString segmentString=comments[i];
+				fileString=fileString.Remove(segmentString.startIndex,segmentString.length);
 			}
-			SectionString[] lineComments=readFileStringLineComments(cSharpFile);
-			SectionString[] blockComments=readFileStringBlockComments(cSharpFile);
-			//cSharpFile.fileString=
-			//cSharpFile.content=
+			cSharpFile.fileString=fileString;
+			//保存清除注释后的.cs文件到本地
+			/*if(comments.Count>0){ 
+				FileUtil2.writeFileString(fileString,cSharpFile.fileInfo.FullName);
+			}*/
+		}
+
+		private int compareByStartIndex(SegmentString a,SegmentString b){
+			return a.startIndex-b.startIndex;
 		}
 		
 		/// <summary>
@@ -90,18 +114,18 @@ namespace UnityTools {
 		/// </summary>
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <returns></returns>
-		private SectionString[] readStringsWithFile(CSharpFile cSharpFile){
+		private List<SegmentString> readStringsWithinFile(CSharpFile cSharpFile){
 			//匹配@"xxx"、"xxx"、test("xxx",@"xxx")括号里的"xxx",@"xxx"等字符串（在@符号后的双引号转义使用两个")。
 			Regex stringRegex=new Regex(@"(@"".*"")|("".*"")",RegexOptions.Compiled);
 			MatchCollection matches=stringRegex.Matches(cSharpFile.fileString);
 			int count=matches.Count;
-			List<SectionString> sectionStrings=new List<SectionString>();
+			List<SegmentString> segmentStrings=new List<SegmentString>();
 			for(int i=0;i<count;i++){
 				Match match=matches[i];
-				SectionString[] generalStrings=getStringsWithMatch(cSharpFile,match,true);
-				sectionStrings.AddRange(generalStrings);
+				SegmentString[] generalStrings=getStringsWithMatch(cSharpFile,match,true);
+				segmentStrings.AddRange(generalStrings);
 			}
-			return sectionStrings.ToArray();
+			return segmentStrings;
 		}
 
 		/// <summary>
@@ -111,8 +135,8 @@ namespace UnityTools {
 		/// <param name="match">包含字符串的Match</param>
 		/// <param name="isIncludeAtMark">@模式的字符串，返回时是否包含"@"标记</param>
 		/// <returns></returns>
-		private SectionString[] getStringsWithMatch(CSharpFile cSharpFile,Match match,bool isIncludeAtMark){
-			List<SectionString> sectionStrings=new List<SectionString>();
+		private SegmentString[] getStringsWithMatch(CSharpFile cSharpFile,Match match,bool isIncludeAtMark){
+			List<SegmentString> segmentStrings=new List<SegmentString>();
 			string matchValue=match.Value;
 			int len=matchValue.Length;
 			//引号(")计数
@@ -172,24 +196,14 @@ namespace UnityTools {
 							strStartIndex-=1;
 							strLength+=1;
 						}
-						SectionString sectionString=new SectionString(cSharpFile,strStartIndex,strLength);
-						sectionStrings.Add(sectionString);
+						SegmentString segmentString=new SegmentString(cSharpFile,strStartIndex,strLength);
+						segmentStrings.Add(segmentString);
 						isAtPattern=false;
 						isLastOver=true;
 					}
 				}
 			}
-			return sectionStrings.ToArray();
-		}
-		
-		/// <summary>
-		/// 读取.cs文件中的块注释
-		/// </summary>
-		/// <param name="cSharpFile">CSharpFile</param>
-		/// <returns></returns>
-		private SectionString[] readFileStringBlockComments(CSharpFile cSharpFile){
-			Regex regex=new Regex(@"",RegexOptions.Compiled);
-			return null;
+			return segmentStrings.ToArray();
 		}
 		
 		/// <summary>
@@ -197,9 +211,122 @@ namespace UnityTools {
 		/// </summary>
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <returns></returns>
-		private  SectionString[] readFileStringLineComments(CSharpFile cSharpFile){
-			return null;
+		private List<SegmentString> readLineCommentsWithinFile(CSharpFile cSharpFile){
+			List<SegmentString> segmentStrings=new List<SegmentString>();
+			//匹配行注释
+			Regex regex=new Regex(@"//.*",RegexOptions.Compiled);
+			MatchCollection matches=regex.Matches(cSharpFile.fileString);
+			int count=matches.Count;
+			for(int i=0;i<count;i++){
+				Match match=matches[i];
+				SegmentString segmentString=new SegmentString(cSharpFile,match.Index,match.Length);
+				segmentStrings.Add(segmentString);
+			}
+			return segmentStrings;
 
+		}
+
+		/// <summary>
+		/// 读取.cs文件中的块注释
+		/// </summary>
+		/// <param name="cSharpFile">CSharpFile</param>
+		/// <param name="strings">.cs文件中的字符串列表</param>
+		/// <returns></returns>
+		private List<SegmentString> readBlockCommentsWithinFile(CSharpFile cSharpFile,List<SegmentString> strings){
+			List<SegmentString> segmentStrings=new List<SegmentString>();
+			int len=cSharpFile.fileString.Length;
+			bool isBlockCommentBegan=false;
+			string searchString="/*";
+			int blockCommentStartIndex=0;
+			int searchStartIndex=0;
+			while(true){
+				if(searchStartIndex>=len)break;
+				int index=cSharpFile.fileString.IndexOf(searchString,searchStartIndex,StringComparison.Ordinal);
+				if(index<0)break;
+				searchStartIndex=index+2;
+				if(isBlockCommentBegan){
+					searchString="/*";
+					isBlockCommentBegan=false;
+					SegmentString segmentString=new SegmentString(cSharpFile,blockCommentStartIndex,index-blockCommentStartIndex+2);
+					segmentStrings.Add(segmentString);
+				}else if(!indexWithinSegmentStrings(index,2,strings)){
+					blockCommentStartIndex=index;
+					searchString="*/";
+					isBlockCommentBegan=true;
+				}
+			}
+			return segmentStrings;
+		}
+
+		/// <summary>
+		/// 移除字符串内的行注释
+		/// </summary>
+		/// <param name="lineComments">行注释列表</param>
+		/// <param name="strings">字符串列表</param>
+		private void removeLineCommentsWithinStrings(List<SegmentString> lineComments,List<SegmentString> strings){
+			int i=lineComments.Count;
+			while(--i>=0){
+				SegmentString lineComment=lineComments[i];
+				if(indexWithinSegmentStrings(lineComment.startIndex,strings)){
+					lineComments.RemoveAt(i);
+				}
+			}
+		}
+
+		/// <summary>
+		/// 移除行注释内的字符串
+		/// </summary>
+		/// <param name="strings">字符串列表</param>
+		/// <param name="lineComments">行注释列表</param>
+		private void removeStringsWithinLineComments(List<SegmentString> strings,List<SegmentString> lineComments){
+			int i=strings.Count;
+			while(--i>=0){
+				SegmentString segmentString=strings[i];
+				if(indexWithinSegmentStrings(segmentString.startIndex,lineComments)){
+					strings.RemoveAt(i);
+				}
+			}
+		}
+
+		/// <summary>
+		/// 指定的索引是否在片段字符串列表中的任意一项内
+		/// </summary>
+		/// <param name="index">查找的索引</param>
+		/// <param name="segmentStrings">片段字符串列表</param>
+		/// <returns></returns>
+		private bool indexWithinSegmentStrings(int index,List<SegmentString> segmentStrings){
+			int count=segmentStrings.Count;
+			for(int i=0;i<count;i++){
+				SegmentString segmentString=segmentStrings[i];
+				int startIndex=segmentString.startIndex;
+				int endIndex=startIndex+segmentString.length-1;
+				if(index>=startIndex && index<=endIndex){
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// 指定的索引和长度范围是否在片段字符串列表中的任意一项内
+		/// </summary>
+		/// <param name="index">查找的索引</param>
+		/// <param name="length">长度</param>
+		/// <param name="segmentStrings">片段字符串列表</param>
+		/// <returns></returns>
+		private bool indexWithinSegmentStrings(int index,int length,List<SegmentString> segmentStrings){
+			int checkEndIndex=index+length-1;
+
+			int count=segmentStrings.Count;
+			for(int i=0;i<count;i++){
+				SegmentString segmentString=segmentStrings[i];
+				int startIndex=segmentString.startIndex;
+				int endIndex=startIndex+segmentString.length-1;
+				if(index>=startIndex && checkEndIndex<=endIndex){
+					return true;
+				}
+			}
+			return false;
 		}
 		#endregion
 
@@ -258,10 +385,10 @@ namespace UnityTools {
 		/// </summary>
 		/// <param name="cSharpFile">CSharpFile</param>
 		private void readCSharpFileContent(CSharpFile cSharpFile){
-			SectionString content=new SectionString(cSharpFile,0,cSharpFile.fileString.Length);
+			SegmentString content=new SegmentString(cSharpFile,0,cSharpFile.fileString.Length);
 			cSharpFile.usings=readUsings(cSharpFile,content);
 			
-			List<SectionString> bracketBlocks=readBracketBlocks(cSharpFile,content);
+			List<SegmentString> bracketBlocks=readBracketBlocks(cSharpFile,content);
 			List<CSharpNameSpace> namespaces;
 			List<CSharpClass> classes;
 			List<CSharpStruct> structs;
@@ -286,23 +413,23 @@ namespace UnityTools {
 		/// <param name="leftBracketString">左括号命名空间声明，如："namespace unity_tags{"。</param>
 		/// <param name="bracketBlock">命名空间包含的括号块，包含大括号</param>
 		/// <returns></returns>
-		private CSharpNameSpace createNameSpace(CSharpFile cSharpFile,CSharpNameSpace parentNameSpace,SectionString leftBracketString,SectionString bracketBlock){
+		private CSharpNameSpace createNameSpace(CSharpFile cSharpFile,CSharpNameSpace parentNameSpace,SegmentString leftBracketString,SegmentString bracketBlock){
 			CSharpNameSpace csNameSpace=new CSharpNameSpace();
 			csNameSpace.parent=parentNameSpace;
 			
 			//命名空间名称
 			int startIndex=leftBracketString.startIndex+10;//从"namespace "右侧开始
 			int length=leftBracketString.length-10-1;//减去"namespace "和"{"的长度
-			SectionString[] nameWords=readWords(cSharpFile,new SectionString(cSharpFile,startIndex,length));
+			SegmentString[] nameWords=readWords(cSharpFile,new SegmentString(cSharpFile,startIndex,length));
 			csNameSpace.nameWords=nameWords;
 			//Debug.Log(csNameSpace.getNameWordsString(cSharpFile.fileString));
 			
 			//命名空间内容，从命名空间声明"{"的右边开始,"}"的左边结束(就是减去两个大括号的长度)
-			SectionString content=new SectionString(cSharpFile,bracketBlock.startIndex+1,bracketBlock.length-2);
+			SegmentString content=new SegmentString(cSharpFile,bracketBlock.startIndex+1,bracketBlock.length-2);
 			csNameSpace.usings=readUsings(cSharpFile,content);
 			csNameSpace.content=content;
 			
-			List<SectionString> bracketBlocks=readBracketBlocks(cSharpFile,content);
+			List<SegmentString> bracketBlocks=readBracketBlocks(cSharpFile,content);
 			List<CSharpNameSpace> namespaces;
 			List<CSharpClass> classes;
 			List<CSharpStruct> structs;
@@ -328,7 +455,7 @@ namespace UnityTools {
 		/// <param name="leftBracketString">左括号类声明，如："public class Main{"。</param>
 		/// <param name="bracketBlock">类包含的括号块，包含大括号</param>
 		/// <returns></returns>
-		private CSharpClass createClass(CSharpFile cSharpFile,CSharpNameSpace parentNameSpace,SectionString leftBracketString,SectionString bracketBlock){
+		private CSharpClass createClass(CSharpFile cSharpFile,CSharpNameSpace parentNameSpace,SegmentString leftBracketString,SegmentString bracketBlock){
 			CSharpClass csClass=new CSharpClass();
 			
 			return csClass;
@@ -340,8 +467,8 @@ namespace UnityTools {
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="content">读取内容的位置和长度</param>
 		/// <returns></returns>
-		private List<SectionString> readBracketBlocks(CSharpFile cSharpFile,SectionString content){
-			List<SectionString> bracketBlocks=new List<SectionString>();
+		private List<SegmentString> readBracketBlocks(CSharpFile cSharpFile,SegmentString content){
+			List<SegmentString> bracketBlocks=new List<SegmentString>();
 			
 			int startIndex=content.startIndex;
 			int end=startIndex+content.length;
@@ -362,7 +489,7 @@ namespace UnityTools {
 					bracketCount--;
 					if(bracketCount==0){
 						int bracketBlockLength=i-bracketBlockStartIndex+1;
-						SectionString bracketBlock=new SectionString(cSharpFile,bracketBlockStartIndex,bracketBlockLength);
+						SegmentString bracketBlock=new SegmentString(cSharpFile,bracketBlockStartIndex,bracketBlockLength);
 						bracketBlocks.Add(bracketBlock);
 					}
 				}
@@ -374,17 +501,17 @@ namespace UnityTools {
 		/// 读取以"."分隔的各个单词(包含空白),如:"System.Text.RegularExpressions"，将得到"System","Text","RegularExpressions"
 		/// </summary>
 		/// <param name="cSharpFile">CSharpFile</param>
-		/// <param name="sectionString">如："System.Text.RegularExpressions"</param>
+		/// <param name="segmentString">如："System.Text.RegularExpressions"</param>
 		/// <returns></returns>
-		private SectionString[] readWords(CSharpFile cSharpFile,SectionString sectionString){
-			string usingContent=sectionString.ToString();
+		private SegmentString[] readWords(CSharpFile cSharpFile,SegmentString segmentString){
+			string usingContent=segmentString.ToString();
 			string[] splitStrings=usingContent.Split('.');
 			int len=splitStrings.Length;
-			int startIndex=sectionString.startIndex;
-			SectionString[] words=new SectionString[len];
+			int startIndex=segmentString.startIndex;
+			SegmentString[] words=new SegmentString[len];
 			for(int i=0;i<len;i++){
 				int tempLength=splitStrings[i].Length;
-				words[i]=new SectionString(cSharpFile,startIndex,tempLength);
+				words[i]=new SegmentString(cSharpFile,startIndex,tempLength);
 				//加一个单词和"."的长度
 				startIndex+=tempLength+1;
 			}
@@ -398,7 +525,7 @@ namespace UnityTools {
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="content">内容块</param>
 		/// <returns></returns>
-		private IUsing[] readUsings(CSharpFile cSharpFile,SectionString content){
+		private IUsing[] readUsings(CSharpFile cSharpFile,SegmentString content){
 			//只查找到第一个左括号出现的位置
 			int index=cSharpFile.fileString.IndexOf('{',content.startIndex);
 			int length=index<0?content.length:index-content.startIndex;
@@ -413,7 +540,7 @@ namespace UnityTools {
 
 			Match lineMatch=usingLineRegex.Match(cSharpFile.fileString,content.startIndex,length);
 			while(lineMatch.Success){
-				SectionString usingLine=new SectionString(cSharpFile,lineMatch.Index,lineMatch.Length);
+				SegmentString usingLine=new SegmentString(cSharpFile,lineMatch.Index,lineMatch.Length);
 				//去除"using"、空白、";"
 				string usingLineString=lineMatch.Value;
 				usingLineString=usingLineString.Substring(5);
@@ -444,7 +571,7 @@ namespace UnityTools {
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="usingLine">using行内容块，如："using System.IO;"</param>
 		/// <returns></returns>
-		private UsingString readUsing(CSharpFile cSharpFile,SectionString usingLine){
+		private UsingString readUsing(CSharpFile cSharpFile,SegmentString usingLine){
 			string usingLineString=usingLine.ToString();
 			//匹配"using "。
 			Match headMatch=Regex.Match(usingLineString,@"using\s",RegexOptions.Compiled);
@@ -452,7 +579,7 @@ namespace UnityTools {
 			int startIndex=usingLine.startIndex+headMatch.Length;
 			//长度为:减去"using "的长度，再减去";"的长度
 			int length=usingLine.length-headMatch.Length-1;
-			SectionString[] wordStrings=readWords(cSharpFile,new SectionString(cSharpFile,startIndex,length));
+			SegmentString[] wordStrings=readWords(cSharpFile,new SegmentString(cSharpFile,startIndex,length));
 			UsingString usingString=new UsingString(false,wordStrings);
 			
 			return usingString;
@@ -464,7 +591,7 @@ namespace UnityTools {
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="usingLine">using行内容块，如："using static UnityEngine.Mathf;"</param>
 		/// <returns></returns>
-		private UsingString readStaticUsing(CSharpFile cSharpFile,SectionString usingLine){
+		private UsingString readStaticUsing(CSharpFile cSharpFile,SegmentString usingLine){
 			string usingLineString=usingLine.ToString();
 			//匹配"using static "。
 			Match headMatch=Regex.Match(usingLineString,@"using\s+static\s",RegexOptions.Compiled);
@@ -472,7 +599,7 @@ namespace UnityTools {
 			int startIndex=usingLine.startIndex+headMatch.Length;
 			//长度为:减去"using static "的长度，再减去";"的长度
 			int length=usingLine.length-headMatch.Length-1;
-			SectionString[] wordStrings=readWords(cSharpFile,new SectionString(cSharpFile,startIndex,length));
+			SegmentString[] wordStrings=readWords(cSharpFile,new SegmentString(cSharpFile,startIndex,length));
 			UsingString usingString=new UsingString(true,wordStrings);
 			
 			return usingString;
@@ -484,7 +611,7 @@ namespace UnityTools {
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="usingLine">using行内容块，如："using static UnityEngine.Mathf;"</param>
 		/// <returns></returns>
-		private UsingAlias readUsingAlias(CSharpFile cSharpFile,SectionString usingLine){
+		private UsingAlias readUsingAlias(CSharpFile cSharpFile,SegmentString usingLine){
 			string usingLineString=usingLine.ToString();
 			//匹配"using xxx="
 			Match headMatch=Regex.Match(usingLineString,@"using\s+\w+=",RegexOptions.Compiled);
@@ -493,12 +620,12 @@ namespace UnityTools {
 			int startIndex=usingLine.startIndex+6;
 			//name长度为:"using xxx="的长度-"using "长度-"="长度
 			int length=headMatch.Length-6-1;
-			SectionString name=new SectionString(cSharpFile,startIndex,length);
+			SegmentString name=new SegmentString(cSharpFile,startIndex,length);
 			
 			startIndex=usingLine.startIndex+headMatch.Length;
 			//长度为:减去"using xxx= "的长度，再减去";"的长度
 			length=usingLine.length-headMatch.Length-1;
-			SectionString[] words=readWords(cSharpFile,new SectionString(cSharpFile,startIndex,length));
+			SegmentString[] words=readWords(cSharpFile,new SegmentString(cSharpFile,startIndex,length));
 			
 			UsingAlias usingAlias=new UsingAlias(name,words);
 			return usingAlias;
@@ -517,7 +644,7 @@ namespace UnityTools {
 		/// <param name="interfaces">输出的接口列表</param>
 		/// <param name="enums">输出的枚举列表</param>
 		/// <param name="delegates">输出的委托列表</param>
-		private void readNameSpaceSubObjects(CSharpFile cSharpFile,CSharpNameSpace parentNameSpace,List<SectionString> bracketBlocks,
+		private void readNameSpaceSubObjects(CSharpFile cSharpFile,CSharpNameSpace parentNameSpace,List<SegmentString> bracketBlocks,
 		out List<CSharpNameSpace> namespaces,
 		out List<CSharpClass> classes,
 		out List<CSharpStruct> structs,
@@ -534,9 +661,9 @@ namespace UnityTools {
 			
 			int len=bracketBlocks.Count;
 			for(int i=0;i<len;i++){
-				SectionString bracketBlock=bracketBlocks[i];
+				SegmentString bracketBlock=bracketBlocks[i];
 				
-				SectionString leftBracketString;
+				SegmentString leftBracketString;
 				if(matchNameSpaceLeftBracketString(cSharpFile,bracketBlock,out leftBracketString)){
 					CSharpNameSpace csNameSpace=createNameSpace(cSharpFile,parentNameSpace,leftBracketString,bracketBlock);
 					namespaces.Add(csNameSpace);
@@ -561,7 +688,7 @@ namespace UnityTools {
 		/// <param name="bracketBlock">大括号块，包含大括号</param>
 		/// <param name="result">输出结果，如:"namespace unity_tags{"。</param>
 		/// <returns></returns>
-		private bool matchNameSpaceLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
+		private bool matchNameSpaceLeftBracketString(CSharpFile cSharpFile,SegmentString bracketBlock,out SegmentString result){
 			//计算"{"向左查找的最远位置(就是上一个"{|}"出现的位置)
 			Regex regexBracket=new Regex("{|}",RegexOptions.Compiled|RegexOptions.RightToLeft);
 			Match bracketMatch=regexBracket.Match(cSharpFile.fileString,bracketBlock.startIndex);
@@ -576,10 +703,10 @@ namespace UnityTools {
 			}
 			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
 			if(match.Success){
-				result=new SectionString(cSharpFile,match.Index,match.Value.Length);
+				result=new SegmentString(cSharpFile,match.Index,match.Value.Length);
 				return true;
 			}
-			result=new SectionString();
+			result=new SegmentString();
 			return false;
 		}
 		
@@ -590,7 +717,7 @@ namespace UnityTools {
 		/// <param name="bracketBlock">类包含的括号块，包含大括号</param>
 		/// <param name="result">输出结果，如:"class xxx{"、"public class xxx{"、"public static class xxx{"等。</param>
 		/// <returns>是否匹配成功</returns>
-		private bool matchClassLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
+		private bool matchClassLeftBracketString(CSharpFile cSharpFile,SegmentString bracketBlock,out SegmentString result){
 			//计算"{"向左查找的最远位置(就是上一个"{|}"出现的位置)
 			Regex regexBracket=new Regex("{|}",RegexOptions.Compiled|RegexOptions.RightToLeft);
 			Match bracketMatch=regexBracket.Match(cSharpFile.fileString,bracketBlock.startIndex);
@@ -605,10 +732,10 @@ namespace UnityTools {
 			}
 			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
 			if(match.Success){
-				result=new SectionString(cSharpFile,match.Index,match.Value.Length);
+				result=new SegmentString(cSharpFile,match.Index,match.Value.Length);
 				return true;
 			}
-			result=new SectionString();
+			result=new SegmentString();
 			return false;
 		}
 		
@@ -619,7 +746,7 @@ namespace UnityTools {
 		/// <param name="bracketBlock">结构体包含的括号块，包含大括号</param>
 		/// <param name="result">输出结果，如:"public struct xxx{"、"internal struct xxx{"、"struct xxx{"等。</param>
 		/// <returns>是否匹配成功</returns>
-		private bool matchStructLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
+		private bool matchStructLeftBracketString(CSharpFile cSharpFile,SegmentString bracketBlock,out SegmentString result){
 			//计算"{"向左查找的最远位置(就是上一个"{|}"出现的位置)
 			Regex regexBracket=new Regex("{|}",RegexOptions.Compiled|RegexOptions.RightToLeft);
 			Match bracketMatch=regexBracket.Match(cSharpFile.fileString,bracketBlock.startIndex);
@@ -634,10 +761,10 @@ namespace UnityTools {
 			}
 			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
 			if(match.Success){
-				result=new SectionString(cSharpFile,match.Index,match.Value.Length);
+				result=new SegmentString(cSharpFile,match.Index,match.Value.Length);
 				return true;
 			}
-			result=new SectionString();
+			result=new SegmentString();
 			return false;
 		}
 		
@@ -648,7 +775,7 @@ namespace UnityTools {
 		/// <param name="bracketBlock">接口包含的括号块，包含大括号</param>
 		/// <param name="result">输出结果，如:"public interface xxx{"、"internal interface xxx{"、"interface xxx{"等。</param>
 		/// <returns>是否匹配成功</returns>
-		private bool matchInterfaceLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
+		private bool matchInterfaceLeftBracketString(CSharpFile cSharpFile,SegmentString bracketBlock,out SegmentString result){
 			//计算"{"向左查找的最远位置(就是上一个"{|}"出现的位置)
 			Regex regexBracket=new Regex("{|}",RegexOptions.Compiled|RegexOptions.RightToLeft);
 			Match bracketMatch=regexBracket.Match(cSharpFile.fileString,bracketBlock.startIndex);
@@ -663,10 +790,10 @@ namespace UnityTools {
 			}
 			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
 			if(match.Success){
-				result=new SectionString(cSharpFile,match.Index,match.Value.Length);
+				result=new SegmentString(cSharpFile,match.Index,match.Value.Length);
 				return true;
 			}
-			result=new SectionString();
+			result=new SegmentString();
 			return false;
 		}
 		
@@ -677,7 +804,7 @@ namespace UnityTools {
 		/// <param name="bracketBlock">枚举包含的括号块，包含大括号</param>
 		/// <param name="result">输出结果，如:"public enum xxx{"、"internal enum xxx{"、"enum xxx{","private enum xxx{","protected enum xxx{"等。</param>
 		/// <returns>是否匹配成功</returns>
-		private bool matchEnumLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
+		private bool matchEnumLeftBracketString(CSharpFile cSharpFile,SegmentString bracketBlock,out SegmentString result){
 			//计算"{"向左查找的最远位置(就是上一个"{|}"出现的位置)
 			Regex regexBracket=new Regex("{|}",RegexOptions.Compiled|RegexOptions.RightToLeft);
 			Match bracketMatch=regexBracket.Match(cSharpFile.fileString,bracketBlock.startIndex);
@@ -692,10 +819,10 @@ namespace UnityTools {
 			}
 			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
 			if(match.Success){
-				result=new SectionString(cSharpFile,match.Index,match.Value.Length);
+				result=new SegmentString(cSharpFile,match.Index,match.Value.Length);
 				return true;
 			}
-			result=new SectionString();
+			result=new SegmentString();
 			return false;
 		}
 		
@@ -706,7 +833,7 @@ namespace UnityTools {
 		/// <param name="bracketBlock">委托包含的括号块，包含大括号</param>
 		/// <param name="result">输出结果，如:"public delegate xxx{"、"internal delegate xxx{"、"delegate xxx{"等。</param>
 		/// <returns>是否匹配成功</returns>
-		private bool matchDelegateLeftBracketString(CSharpFile cSharpFile,SectionString bracketBlock,out SectionString result){
+		private bool matchDelegateLeftBracketString(CSharpFile cSharpFile,SegmentString bracketBlock,out SegmentString result){
 			//计算"{"向左查找的最远位置(就是上一个"{|}"出现的位置)
 			Regex regexBracket=new Regex("{|}",RegexOptions.Compiled|RegexOptions.RightToLeft);
 			Match bracketMatch=regexBracket.Match(cSharpFile.fileString,bracketBlock.startIndex);
@@ -721,10 +848,10 @@ namespace UnityTools {
 			}
 			//必须(match.Index+match.Value.Length==startIndex)才是当前"{"的匹配项
 			if(match.Success){
-				result=new SectionString(cSharpFile,match.Index,match.Value.Length);
+				result=new SegmentString(cSharpFile,match.Index,match.Value.Length);
 				return true;
 			}
-			result=new SectionString();
+			result=new SegmentString();
 			return false;
 		}
 		

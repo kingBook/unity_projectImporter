@@ -23,7 +23,7 @@
 		
 		private void Start(){
 			//test
-			openProject("unity_uiDemo");
+			openProject("unity_parkinggame");
 			//Invoke("onTimeout",3);
 		}
 		/*private void onTimeout(){

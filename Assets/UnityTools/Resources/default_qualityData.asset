@@ -47,8 +47,7 @@ MonoBehaviour:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    excludedTargetPlatforms:
-    - WebGL
+    excludedTargetPlatforms: []
   - name: Low
     pixelLightCount: 0
     shadows: 0

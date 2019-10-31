@@ -10,13 +10,13 @@
 		/// <summary>
 		/// 别名名称(包含空白,但不包含using后的第一个空格)
 		/// </summary>
-		public SectionString name;
+		public SegmentString name;
 		/// <summary>
 		/// "="号后"."分隔的各个单词(包含空白)
 		/// </summary>
-		public SectionString[] wordStrings;
+		public SegmentString[] wordStrings;
 		
-		public UsingAlias(SectionString name,SectionString[] wordStrings){
+		public UsingAlias(SegmentString name,SegmentString[] wordStrings){
 			this.name=name;
 			this.wordStrings=wordStrings;
 		}

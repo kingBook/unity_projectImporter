@@ -23,17 +23,17 @@ namespace unity_tags{
 			var list2 =SortingLayer2.layers;
 			SortingLayer2 layer=list1[1];
             //"."
-            string text="a\"//b\ncdefghi/*jk*\"/" +
+            string text="a\"//b\ncdefghi*/*jk*\"/" +
 			"lmn";
             
             int a=1/* 123*/;//456
             string bb="/*int b=a+5;*/";
-			joinString("ye\"  s","	yo u");
-			joinString(@"y""e  s","	yo u");
+			/*joinString("ye\"  s","	yo u");
+			joinString(@"y""e  s","	yo u");*/
 			joinString(@"a""b  c",@"	def");
 			joinString(@"aaa",@"b@""b""b","ccc");
-
-			Regex regex=new Regex(@"/w+[(@"")]""\s*""");
+			/*
+			Regex regex=new Regex(@"/w+[(@"")]""\s*""");*/
 		}
 
 		private string joinString(string a,string b,string c=null){
@@ -47,14 +47,19 @@ namespace unity_tags{
 		
 
 	}
-
+	/**KPFSDF*/
 	namespace KPFSDF{
 		using System.Dynamic;
 	}
 	
 
 }
-
+/**
+ * XXSS
+ * a
+ * bd
+ * d
+ * */
 namespace XXSS {
 		using System.Data;
 		namespace OOAA .    Koo   {

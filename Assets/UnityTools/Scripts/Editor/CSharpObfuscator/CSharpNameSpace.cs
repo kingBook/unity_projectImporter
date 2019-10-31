@@ -7,10 +7,10 @@
 	    public static readonly CSharpNameSpace None=new CSharpNameSpace();
 	    
 	    public CSharpNameSpace parent;
-	    public SectionString[] nameWords;
+	    public SegmentString[] nameWords;
 		/// <summary>命名空间括号内的using</summary>
 		public IUsing[] usings;
-		public SectionString content;
+		public SegmentString content;
 		public CSharpNameSpace[] nameSpaces;
 		public CSharpClass[] classes;
 		public CSharpStruct[] structs;
@@ -19,7 +19,7 @@
 		public CSharpDelegate[] delegates;
 		
 		public string getNameWordsString(string fileString,bool includeWhitespace=false){
-			return this==None?"None":SectionString.getWordsString(nameWords,".",includeWhitespace);
+			return this==None?"None":SegmentString.getWordsString(nameWords,".",includeWhitespace);
 		}
 		
 	}

@@ -132,18 +132,28 @@
 		/// <param name="fileLines">行字符数组</param>
 		/// <param name="filePath">写入文件的路径,如果是'\'路径,需要加@转换，如:getFileLines(@"E:\unity_tags\Assets\test.txt")</param>
 		public static void writeFileLines(string[] fileLines,string filePath){
-			File.Delete(filePath);
-			var fileStream=File.Create(filePath);
-
 			StringBuilder strBuilder=new StringBuilder();
 			int len=fileLines.Length;
 			for(int i=0;i<len;i++){
 				strBuilder.Append(fileLines[i]);
 			}
+			writeFileString(strBuilder.ToString(),filePath);
+		}
+
+		/// <summary>
+		/// 将行字符串写入到本地(UTF-8格式)
+		/// </summary>
+		/// <param name="text">需要写入本地的字符串</param>
+		/// <param name="filePath">写入文件的路径,如果是'\'路径,需要加@转换，如:getFileLines(@"E:\unity_tags\Assets\test.txt")</param>
+		public static void writeFileString(string text, string filePath){
+			File.Delete(filePath);
+			FileStream fileStream=File.Create(filePath);
+
 			UTF8Encoding utf8Bom=new UTF8Encoding(true);
-			byte[] bytes=utf8Bom.GetBytes(strBuilder.ToString());
+			byte[] bytes=utf8Bom.GetBytes(text);
 			fileStream.Write(bytes,0,bytes.Length);
 			fileStream.Dispose();
+
 		}
 
 		/// <summary>
