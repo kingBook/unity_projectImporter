@@ -24,8 +24,16 @@ importproject.xml非正常保存，空内容时，导致出错
 识别导入项目是长屏/宽屏，在open时调整屏幕的旋转方向
 -------------混淆器--------------
 $符号字符串{}内的变量名
+public delegate TOutput Converter<TInput, TOutput>(TInput from);
+
+class Base { }
+class Test<T, U>
+    where U : struct
+    where T : Base, new()
+{ }
 
 
+public class SampleClass<T, U, V> where T : V { }
 
 
 

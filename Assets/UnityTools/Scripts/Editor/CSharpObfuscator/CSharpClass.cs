@@ -11,6 +11,11 @@
 		/// </summary>
 		public SegmentString[] nameWords;
 
+		/// <summary>
+		/// xx.xx.xx,ClassA,IName,IName<xx>
+		/// </summary>
+		public SegmentString[] extends;
+
 		//public CSharpProperty[] properties;
 		//public CsharpEvent[] events;
 		//public CSharpDelegate[] delegates;
