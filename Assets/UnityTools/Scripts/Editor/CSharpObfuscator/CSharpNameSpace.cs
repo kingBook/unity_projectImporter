@@ -4,10 +4,10 @@
     using UnityEngine;
 
     public class CSharpNameSpace{
-	    public static readonly CSharpNameSpace None=new CSharpNameSpace();
+		public static readonly CSharpNameSpace None=new CSharpNameSpace();
 	    
-	    public CSharpNameSpace parent;
-	    public SegmentString[] nameWords;
+		public CSharpNameSpace parent;
+		public SegmentString[] nameWords;
 		/// <summary>命名空间括号内的using</summary>
 		public IUsing[] usings;
 		public SegmentString content;

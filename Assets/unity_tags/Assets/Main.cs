@@ -48,7 +48,10 @@ namespace unity_tags{
 
 	}
 	/**KPFSDF*/
-	namespace KPFSDF{
+	namespace 
+	KPFSDF
+	
+	{
 		using System.Dynamic;
 	}
 	
@@ -62,7 +65,10 @@ namespace unity_tags{
  * */
 namespace XXSS {
 		using System.Data;
-		namespace OOAA .    Koo   {
+		namespace OOAA 
+		.    
+		Koo  
+		{
 			public class HelloName{
 					private enum TypeCC{
 						
@@ -81,12 +87,17 @@ namespace XXSS {
 			public class HelloB{}
 			public class HelloC{}
 			
-			public class HelloD<T>:HelloName where T: class, new()  {
+			public class HelloD<T>
+			:HelloName where T:class,new(){
 				
 			}
-			public class HelloE:HelloD < HelloE>{
+			public class HelloE:HelloD 
+			<  HelloE >{
 				
 			}
+
+			public class 中文父类{ }
+			public class 中文子类:中文父类{}
 		}
 		public struct AA{
 			
