@@ -805,7 +805,7 @@
 		/// <param name="bracketBlock">接口包含的括号块，包含大括号</param>
 		/// <param name="result">输出匹配的Match，Match的值如:"public interface xxx{"、"internal interface xxx{"、"interface xxx{"等。</param>
 		/// <returns>是否匹配成功</returns>
-		private bool matchInterfaceLeftBracketString(CSharpFile cSharpFile,SegmentString bracketBlock,out Match result){
+		private bool matchInterfaceDeclare(CSharpFile cSharpFile,SegmentString bracketBlock,out Match result){
 			//计算"{"向左查找的最远位置(就是上一个"{|}"出现的位置)
 			Regex regexBracket=new Regex("{|}",RegexOptions.Compiled|RegexOptions.RightToLeft);
 			Match bracketMatch=regexBracket.Match(cSharpFile.fileString,bracketBlock.startIndex);
