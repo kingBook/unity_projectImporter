@@ -2,7 +2,8 @@
 	using UnityEngine;
 	using System.Collections;
 
-	public interface IUsing:IString{
-		
+	public interface IString {
+		string ToString(string fileString);
 	}
+
 }

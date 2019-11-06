@@ -196,7 +196,7 @@
 							strStartIndex-=1;
 							strLength+=1;
 						}
-						SegmentString segmentString=new SegmentString(cSharpFile,strStartIndex,strLength);
+						SegmentString segmentString=new SegmentString(strStartIndex,strLength);
 						segmentStrings.Add(segmentString);
 						isAtPattern=false;
 						isLastOver=true;
@@ -219,7 +219,7 @@
 			int count=matches.Count;
 			for(int i=0;i<count;i++){
 				Match match=matches[i];
-				SegmentString segmentString=new SegmentString(cSharpFile,match.Index,match.Length);
+				SegmentString segmentString=new SegmentString(match.Index,match.Length);
 				segmentStrings.Add(segmentString);
 			}
 			return segmentStrings;
@@ -247,7 +247,7 @@
 				if(isBlockCommentBegan){
 					searchString="/*";
 					isBlockCommentBegan=false;
-					SegmentString segmentString=new SegmentString(cSharpFile,blockCommentStartIndex,index-blockCommentStartIndex+2);
+					SegmentString segmentString=new SegmentString(blockCommentStartIndex,index-blockCommentStartIndex+2);
 					segmentStrings.Add(segmentString);
 				}else if(!indexWithinSegmentStrings(index,2,strings)){
 					blockCommentStartIndex=index;
@@ -385,7 +385,7 @@
 		/// </summary>
 		/// <param name="cSharpFile">CSharpFile</param>
 		private void readCSharpFileContent(CSharpFile cSharpFile){
-			SegmentString content=new SegmentString(cSharpFile,0,cSharpFile.fileString.Length);
+			SegmentString content=new SegmentString(0,cSharpFile.fileString.Length);
 			cSharpFile.usings=readUsings(cSharpFile,content);
 			
 			List<SegmentString> bracketBlocks=readBracketBlocks(cSharpFile,content);
@@ -419,12 +419,11 @@
 			
 			//命名空间名称
 			Group nameWordsGroup=leftBracketMatch.Groups["nameWords"];
-			SegmentString[] nameWords=readWords(cSharpFile,new SegmentString(cSharpFile,nameWordsGroup.Index,nameWordsGroup.Length));
-			csNameSpace.nameWords=nameWords;
+			csNameSpace.name=readNameWordString(cSharpFile,new SegmentString(nameWordsGroup.Index,nameWordsGroup.Length));
 			//Debug.Log(csNameSpace.getNameWordsString(cSharpFile.fileString));
 			
 			//命名空间内容，从命名空间声明"{"的右边开始,"}"的左边结束(就是减去两个大括号的长度)
-			SegmentString content=new SegmentString(cSharpFile,bracketBlock.startIndex+1,bracketBlock.length-2);
+			SegmentString content=new SegmentString(bracketBlock.startIndex+1,bracketBlock.length-2);
 			csNameSpace.usings=readUsings(cSharpFile,content);
 			csNameSpace.content=content;
 			
@@ -450,46 +449,69 @@
 		/// 创建CSharpClass
 		/// </summary>
 		/// <param name="cSharpFile">CSharpFile</param>
-		/// <param name="parentNameSpace">类所在的命名空间</param>
+		/// <param name="nameSpace">类所在的命名空间</param>
 		/// <param name="leftBracketMatch">匹配左括号类声明的Match，Match的值如："public class Main{"等。</param>
 		/// <param name="bracketBlock">类包含的括号块，包含大括号</param>
 		/// <returns></returns>
-		private CSharpClass createClass(CSharpFile cSharpFile,CSharpNameSpace parentNameSpace,Match leftBracketMatch,SegmentString bracketBlock){
+		private CSharpClass createClass(CSharpFile cSharpFile,CSharpNameSpace nameSpace,Match leftBracketMatch,SegmentString bracketBlock){
 			CSharpClass csClass=new CSharpClass();
-			csClass.nameWords=readClassNameWords(cSharpFile,leftBracketMatch);
-			/*for(int i = 0;i<csClass.nameWords.Length;i++) {
-				Debug.Log(csClass.nameWords[i]);
-			}*/
+			csClass.nameSpace=nameSpace;
+			int startIndex;
+			csClass.name=readClassName(cSharpFile,leftBracketMatch,out startIndex);
+			csClass.extends=readClassExtends(cSharpFile,leftBracketMatch,startIndex);
 			
 			return csClass;
 		}
 
 		/// <summary>
-		/// 返回类声明中的所有类名字段
+		/// 返回类声明中的类名，如："App"、"BaseApp<T>"、"BaseApp<T,U>"等
 		/// </summary>
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="leftBracketMatch">匹配左括号类声明的Match，Match的值如："public class Main{"等。</param>
+		/// <param name="startIndex">返回leftBracketMatch.Value已读到的索引</param>
 		/// <returns></returns>
-		private SegmentString[] readClassNameWords(CSharpFile cSharpFile,Match leftBracketMatch){
-			/////////////////类名称
-			List<SegmentString> nameWords=new List<SegmentString>();
-			Group nameWordsGroup=leftBracketMatch.Groups["nameWords"];
-			//添加"class"后的第一个类名称
-			nameWords.Add(new SegmentString(cSharpFile,nameWordsGroup.Index,nameWordsGroup.Length));
-			//匹配类名称后的尖括号类名称如"<xxx>"
-			Regex nameRegex=new Regex(@"<\s*(?<nameWords>"+nameWordsGroup.Value+@")\s*>",RegexOptions.Compiled);
-			//类名称的右边开始
-			int searchStartIndex=nameWordsGroup.Index+nameWordsGroup.Length;
-			//类声明"{"的左边结束
-			int searchLength=(leftBracketMatch.Index+leftBracketMatch.Length-1)-nameWordsGroup.Index;
-			Match nameMatch=nameRegex.Match(cSharpFile.fileString,searchStartIndex,searchLength);
-			while(nameMatch.Success){
-				//添加尖括号<>内的类名称，不包括尖括号<>
-				nameWordsGroup=nameMatch.Groups["nameWords"];
-				nameWords.Add(new SegmentString(cSharpFile,nameWordsGroup.Index,nameWordsGroup.Length));
-				nameMatch=nameMatch.NextMatch();
+		private IString readClassName(CSharpFile cSharpFile,Match leftBracketMatch,out int startIndex){
+			IString result=null;
+			//匹配如："class HelloD<T>"、"class HelloF<T,U,K>"
+			Regex classNameGenericRegex=new Regex(@"class\s+(?<nameGeneric>(?<name>\b\w+\b)\s*<\s*(?<tName>\b\w+\b)(,(?<tName>\b\w+\b))*\s*>)",RegexOptions.Compiled);
+			Match classNameGenericMatch=classNameGenericRegex.Match(leftBracketMatch.Value);
+			if(classNameGenericMatch.Success){
+				//如："HelloF<T,U,K>"
+				Group nameGenericGroup=classNameGenericMatch.Groups["nameGeneric"];
+				//如:"HelloF"
+				Group nameGroup=classNameGenericMatch.Groups["name"];
+				SegmentString name=new SegmentString(leftBracketMatch.Index+nameGroup.Index,nameGroup.Length);
+				//如："T,U,K"
+				CaptureCollection tNameCaptures=classNameGenericMatch.Groups["tName"].Captures;
+				List<IString> tNames=new List<IString>();
+				int count=tNameCaptures.Count;
+				for(int i=0;i<count;i++){
+					Capture tNameCapture=tNameCaptures[i];
+					SegmentString tName=new SegmentString(leftBracketMatch.Index+tNameCapture.Index,tNameCapture.Length);
+					tNames.Add(tName);
+				}
+				result=new NameGenericString(name,tNames.ToArray());
+				startIndex=classNameGenericMatch.Index+classNameGenericMatch.Length;
+			}else{
+				//匹配如："class Main"
+				Regex classNameRegex=new Regex(@"class\s+(?<name>\b\w+\b)",RegexOptions.Compiled);
+				Match classNameMatch=classNameRegex.Match(leftBracketMatch.Value);
+				//如:"HelloF"
+				Group nameGroup=classNameMatch.Groups["name"];
+				result=new SegmentString(leftBracketMatch.Index+nameGroup.Index,nameGroup.Length);
+				startIndex=classNameMatch.Index+classNameMatch.Length;
+		}
+			return result;
+		}
+
+		private IString[] readClassExtends(CSharpFile cSharpFile,Match leftBracketMatch,int startIndex){
+			Regex regex=new Regex(@":\s*(\b\w+\b\s*(<>)*)",RegexOptions.Compiled);
+			Match match=regex.Match(leftBracketMatch.Value,startIndex);
+			if(match.Success){
+				
 			}
-			return nameWords.ToArray();
+
+			return null;
 		}
 		
 		/// <summary>
@@ -520,7 +542,7 @@
 					bracketCount--;
 					if(bracketCount==0){
 						int bracketBlockLength=i-bracketBlockStartIndex+1;
-						SegmentString bracketBlock=new SegmentString(cSharpFile,bracketBlockStartIndex,bracketBlockLength);
+						SegmentString bracketBlock=new SegmentString(bracketBlockStartIndex,bracketBlockLength);
 						bracketBlocks.Add(bracketBlock);
 					}
 				}
@@ -532,21 +554,21 @@
 		/// 读取以"."分隔的各个单词(包含空白),如:"System.Text.RegularExpressions"，将得到"System","Text","RegularExpressions"
 		/// </summary>
 		/// <param name="cSharpFile">CSharpFile</param>
-		/// <param name="segmentString">如："System.Text.RegularExpressions"</param>
+		/// <param name="content">如："System.Text.RegularExpressions"</param>
 		/// <returns></returns>
-		private SegmentString[] readWords(CSharpFile cSharpFile,SegmentString segmentString){
-			string usingContent=segmentString.ToString();
-			string[] splitStrings=usingContent.Split('.');
+		private NamePathString readNameWordString(CSharpFile cSharpFile,SegmentString content){
+			string contentText=content.ToString(cSharpFile.fileString);
+			string[] splitStrings=contentText.Split('.');
 			int len=splitStrings.Length;
-			int startIndex=segmentString.startIndex;
+			int startIndex=content.startIndex;
 			SegmentString[] words=new SegmentString[len];
 			for(int i=0;i<len;i++){
 				int tempLength=splitStrings[i].Length;
-				words[i]=new SegmentString(cSharpFile,startIndex,tempLength);
+				words[i]=new SegmentString(startIndex,tempLength);
 				//加一个单词和"."的长度
 				startIndex+=tempLength+1;
 			}
-			return words;
+			return new NamePathString(words);
 		}
 		
 		#region ReadUsings
@@ -571,23 +593,23 @@
 
 			Match lineMatch=usingLineRegex.Match(cSharpFile.fileString,content.startIndex,length);
 			while(lineMatch.Success){
-				SegmentString usingLine=new SegmentString(cSharpFile,lineMatch.Index,lineMatch.Length);
+				SegmentString usingLine=new SegmentString(lineMatch.Index,lineMatch.Length);
 				//去除"using"、空白、";"
 				string usingLineString=lineMatch.Value;
 				usingLineString=usingLineString.Substring(5);
 				usingLineString=whiteSemicolonRegex.Replace(usingLineString,"");
 				//
 				if(usingAliasRegex.IsMatch(usingLineString)){//using别名，如:"using xx=xxx;"或"using xx=xxx.xxx.xxx;"
-					UsingAlias usingAlias=readUsingAlias(cSharpFile,usingLine);
+					CSharpUsingAlias usingAlias=readUsingAlias(cSharpFile,usingLine);
 					usings.Add(usingAlias);
 				}else{
 					//是不是静态using
 					bool isStatic=usingLineString.Substring(0,6)=="static";
 					if(isStatic){//静态using，如:"using static xx;"或"using static xxx.xxx.xxx;"
-						UsingString usingString=readStaticUsing(cSharpFile,usingLine);
+						CSharpUsing usingString=readStaticUsing(cSharpFile,usingLine);
 						usings.Add(usingString);
 					}else{//普通using，如:"using xx;"或"using xxx.xxx.xxx;"
-						UsingString usingString=readUsing(cSharpFile,usingLine);
+						CSharpUsing usingString=readUsing(cSharpFile,usingLine);
 						usings.Add(usingString);
 					}
 				}
@@ -602,7 +624,7 @@
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="usingLine">using行内容块，如："using System.IO;"</param>
 		/// <returns></returns>
-		private UsingString readUsing(CSharpFile cSharpFile,SegmentString usingLine){
+		private CSharpUsing readUsing(CSharpFile cSharpFile,SegmentString usingLine){
 			string usingLineString=usingLine.ToString();
 			//匹配"using "。
 			Match headMatch=Regex.Match(usingLineString,@"using\s",RegexOptions.Compiled);
@@ -610,8 +632,8 @@
 			int startIndex=usingLine.startIndex+headMatch.Length;
 			//长度为:减去"using "的长度，再减去";"的长度
 			int length=usingLine.length-headMatch.Length-1;
-			SegmentString[] wordStrings=readWords(cSharpFile,new SegmentString(cSharpFile,startIndex,length));
-			UsingString usingString=new UsingString(false,wordStrings);
+			NamePathString words=readNameWordString(cSharpFile,new SegmentString(startIndex,length));
+			CSharpUsing usingString=new CSharpUsing(false,words);
 			
 			return usingString;
 		}
@@ -622,7 +644,7 @@
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="usingLine">using行内容块，如："using static UnityEngine.Mathf;"</param>
 		/// <returns></returns>
-		private UsingString readStaticUsing(CSharpFile cSharpFile,SegmentString usingLine){
+		private CSharpUsing readStaticUsing(CSharpFile cSharpFile,SegmentString usingLine){
 			string usingLineString=usingLine.ToString();
 			//匹配"using static "。
 			Match headMatch=Regex.Match(usingLineString,@"using\s+static\s",RegexOptions.Compiled);
@@ -630,8 +652,8 @@
 			int startIndex=usingLine.startIndex+headMatch.Length;
 			//长度为:减去"using static "的长度，再减去";"的长度
 			int length=usingLine.length-headMatch.Length-1;
-			SegmentString[] wordStrings=readWords(cSharpFile,new SegmentString(cSharpFile,startIndex,length));
-			UsingString usingString=new UsingString(true,wordStrings);
+			NamePathString words=readNameWordString(cSharpFile,new SegmentString(startIndex,length));
+			CSharpUsing usingString=new CSharpUsing(true,words);
 			
 			return usingString;
 		}
@@ -642,7 +664,7 @@
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="usingLine">using行内容块，如："using static UnityEngine.Mathf;"</param>
 		/// <returns></returns>
-		private UsingAlias readUsingAlias(CSharpFile cSharpFile,SegmentString usingLine){
+		private CSharpUsingAlias readUsingAlias(CSharpFile cSharpFile,SegmentString usingLine){
 			string usingLineString=usingLine.ToString();
 			//匹配"using xxx="
 			Match headMatch=Regex.Match(usingLineString,@"using\s+\w+=",RegexOptions.Compiled);
@@ -651,14 +673,13 @@
 			int startIndex=usingLine.startIndex+6;
 			//name长度为:"using xxx="的长度-"using "长度-"="长度
 			int length=headMatch.Length-6-1;
-			SegmentString name=new SegmentString(cSharpFile,startIndex,length);
+			SegmentString name=new SegmentString(startIndex,length);
 			
 			startIndex=usingLine.startIndex+headMatch.Length;
 			//长度为:减去"using xxx= "的长度，再减去";"的长度
 			length=usingLine.length-headMatch.Length-1;
-			SegmentString[] words=readWords(cSharpFile,new SegmentString(cSharpFile,startIndex,length));
-			
-			UsingAlias usingAlias=new UsingAlias(name,words);
+			NamePathString words=readNameWordString(cSharpFile,new SegmentString(startIndex,length));
+			CSharpUsingAlias usingAlias=new CSharpUsingAlias(name,words);
 			return usingAlias;
 		}
 		#endregion
@@ -667,7 +688,7 @@
 		/// 读取命名空间的子对象
 		/// </summary>
 		/// <param name="cSharpFile">CSharpFile</param>
-		/// <param name="parentNameSpace">父级命名空间</param>
+		/// <param name="nameSpace">父级命名空间</param>
 		/// <param name="bracketBlocks">命名空间内的大括号内容块列表（包含"{}"）</param>
 		/// <param name="namespaces">输出的命名空间列表</param>
 		/// <param name="classes">输出的类列表</param>
@@ -675,7 +696,7 @@
 		/// <param name="interfaces">输出的接口列表</param>
 		/// <param name="enums">输出的枚举列表</param>
 		/// <param name="delegates">输出的委托列表</param>
-		private void readNameSpaceSubObjects(CSharpFile cSharpFile,CSharpNameSpace parentNameSpace,List<SegmentString> bracketBlocks,
+		private void readNameSpaceSubObjects(CSharpFile cSharpFile,CSharpNameSpace nameSpace,List<SegmentString> bracketBlocks,
 		out List<CSharpNameSpace> namespaces,
 		out List<CSharpClass> classes,
 		out List<CSharpStruct> structs,
@@ -696,10 +717,10 @@
 				
 				Match leftBracketMatch;
 				if(matchNameSpaceDeclare(cSharpFile,bracketBlock,out leftBracketMatch)){
-					CSharpNameSpace csNameSpace=createNameSpace(cSharpFile,parentNameSpace,leftBracketMatch,bracketBlock);
+					CSharpNameSpace csNameSpace=createNameSpace(cSharpFile,nameSpace,leftBracketMatch,bracketBlock);
 					namespaces.Add(csNameSpace);
 				}else if(matchClassDeclare(cSharpFile,bracketBlock,out leftBracketMatch)){
-					CSharpClass csClass=createClass(cSharpFile,parentNameSpace,leftBracketMatch,bracketBlock);
+					CSharpClass csClass=createClass(cSharpFile,nameSpace,leftBracketMatch,bracketBlock);
 					classes.Add(csClass);
 				}else if(matchStructDeclare(cSharpFile,bracketBlock,out leftBracketMatch)){
 					

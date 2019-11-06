@@ -91,8 +91,10 @@ namespace XXSS {
 			:HelloName where T:class,new(){
 				
 			}
-			public class HelloE:HelloD 
-			<  HelloE >{
+			public class HelloE:HelloD <HelloF<object,object,object>>{
+				
+			}
+			public class HelloF<T,U,K>:HelloE{
 				
 			}
 

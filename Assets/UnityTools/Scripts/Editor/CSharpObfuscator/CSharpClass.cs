@@ -5,16 +5,26 @@
 	public struct CSharpClass{
 
 		/// <summary>
-		/// <para>类名称字段，不是单独的一个名称如："class App:BaseApp&lt;App&gt;{"中的"App"就存在多个，</para>
-		/// <para>将记录"class"到"{"之间的所有类名称字段，nameWords[0]表示当前类的名称。</para>
-		/// <para>（已跳过尖括号&lt;&gt;里的空格，每个字段长度都相等，都是同一个名称）</para>
+		/// 类所在的命名空间
 		/// </summary>
-		public SegmentString[] nameWords;
+		public CSharpNameSpace nameSpace;
+		
+		/// <summary>
+		/// <para>单个名称或名称加尖括号</para>
+		/// <para><see cref="SegmentString"/>/<see cref="NameGenericString"/></para>
+		/// <para>如："App"、"App&lt;BaseApp&gt;"</para>
+		/// </summary>
+		public IString name;
 
 		/// <summary>
-		/// xx.xx.xx,ClassA,IName,IName<xx>
+		/// 如："xx.xx.xx","ClassA","IName","IName&lt;xx&gt;","HelloD &lt;xxx.xx.HelloF&lt;object,object,object&gt;&gt;"
 		/// </summary>
-		public SegmentString[] extends;
+		public IString[] extends;
+
+		/// <summary>
+		/// 泛型约束列表
+		/// </summary>
+		public CSharpGenericConstraint[] genericConstraints;
 
 		//public CSharpProperty[] properties;
 		//public CsharpEvent[] events;
