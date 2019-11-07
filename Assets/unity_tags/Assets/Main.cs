@@ -64,7 +64,8 @@ namespace unity_tags{
  * d
  * */
 namespace XXSS {
-		using System.Data;
+    using System.Collections.Generic;
+    using System.Data;
 		namespace OOAA 
 		.    
 		Koo  
@@ -83,6 +84,9 @@ namespace XXSS {
 						
 					}
 			}
+
+			public interface IName<T>{ }
+			public interface IGood<T>{ }
 			
 			public class HelloB{}
 			public class HelloC{}
@@ -91,7 +95,7 @@ namespace XXSS {
 			:HelloName where T:class,new(){
 				
 			}
-			public class HelloE:HelloD <HelloF<object,object,object>>{
+			public class HelloE:HelloD<HelloF<IName<IGood<int>>,HelloE,HelloE>>,IName<int>,IGood<uint>{
 				
 			}
 			public class HelloF<T,U,K>:HelloE{
