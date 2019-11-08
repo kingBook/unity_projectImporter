@@ -5,7 +5,7 @@
 	/// <summary>
 	/// 记录一段字符串在.cs文件字符中的起始索引和长度的结构体
 	/// </summary>
-	public struct SegmentString:IString{
+	public struct Segment:IString{
 		
 		public int startIndex;
 		public int length;
@@ -15,7 +15,7 @@
 		/// </summary>
 		/// <param name="startIndex">起始索引</param>
 		/// <param name="length">长度</param>
-		public SegmentString(int startIndex,int length){
+		public Segment(int startIndex,int length){
 			this.startIndex=startIndex;
 			this.length=length;
 		}

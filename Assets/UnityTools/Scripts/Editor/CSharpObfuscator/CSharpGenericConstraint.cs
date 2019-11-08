@@ -10,14 +10,14 @@ public struct CSharpGenericConstraint:IString{
 	/// <summary>
 	/// 如：“where T : class”中的“T”。
 	/// </summary>
-	public SegmentString tName;
+	public Segment tName;
 
 	/// <summary>
 	/// "where T :"之后以“,”分隔的各个字符串
 	/// </summary>
 	public IString[] words;
 
-	public CSharpGenericConstraint(SegmentString tName,IString[] words){
+	public CSharpGenericConstraint(Segment tName,IString[] words){
 		this.tName=tName;
 		this.words=words;
 	}

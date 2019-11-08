@@ -14,9 +14,9 @@
 		/// <para>"using"/"static"后"."分隔的各个单词(包含空白,但不包含using/static后的第一个空格)</para>
 		/// <para>如："System.Text.RegularExpressions"</para>
 		/// </summary>
-		public NamePathString words;
+		public DotPath words;
 		
-		public CSharpUsing(bool isStatic,NamePathString words){
+		public CSharpUsing(bool isStatic,DotPath words){
 			this.isStatic=isStatic;
 			this.words=words;
 		}

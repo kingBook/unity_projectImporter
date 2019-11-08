@@ -11,14 +11,14 @@
 		
 		/// <summary>
 		/// <para>单个名称或名称加尖括号</para>
-		/// <para><see cref="SegmentString"/>/<see cref="NameGenericString"/></para>
+		/// <para><see cref="Segment"/>/<see cref="WordAngleBrackets"/></para>
 		/// <para>如："App"、"App&lt;BaseApp&gt;"</para>
 		/// </summary>
 		public IString name;
 
 		/// <summary>
 		/// <para>继承的类</para>
-		/// <para><see cref="SegmentString"/>/<see cref="NameGenericString"/></para>
+		/// <para><see cref="Segment"/>/<see cref="WordAngleBrackets"/></para>
 		/// <para>如："xx.xx.xx","ClassA","IName","IName&lt;xx&gt;","HelloD &lt;xxx.xx.HelloF&lt;object,object,object&gt;&gt;"</para>
 		/// </summary>
 		public IString baseClass;

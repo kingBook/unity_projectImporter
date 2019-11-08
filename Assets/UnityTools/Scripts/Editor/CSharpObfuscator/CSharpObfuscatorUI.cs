@@ -21,9 +21,11 @@
 
 		[MenuItem("Tools/test")]
 		public static void test(){
-			
-			
+			string text="gg.bb.aa.dd";
 		}
+
+
+
 
 		private void OnEnable(){
 			if(ProjectImporterUI.xmlDocument==null){

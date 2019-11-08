@@ -8,9 +8,9 @@
 		public static readonly CSharpNameSpace None=new CSharpNameSpace();
 	    
 		public CSharpNameSpace parent;
-		public NamePathString name;
+		public DotPath name;
 
-		public SegmentString content;
+		public Segment content;
 		/// <summary>命名空间括号内的using</summary>
 		public IUsing[] usings;
 		public CSharpNameSpace[] nameSpaces;

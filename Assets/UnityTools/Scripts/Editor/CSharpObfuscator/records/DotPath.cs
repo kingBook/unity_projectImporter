@@ -6,14 +6,14 @@
     /// <summary>
     /// 表示带"."的全路径名称,如:"System.Collections.Generic.List"
     /// </summary>
-    public struct NamePathString:IString{
+    public struct DotPath:IString{
 
 		/// <summary>
 		/// 带"."的全路径名称长度>1
 		/// </summary>
-		public SegmentString[] words;
+		public Segment[] words;
 
-		public NamePathString(SegmentString[] words){
+		public DotPath(Segment[] words){
 			this.words=words;
 		}
 

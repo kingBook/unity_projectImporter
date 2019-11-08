@@ -1,23 +1,24 @@
 ﻿namespace UnityTools{
 	using UnityEngine;
 	using System.Collections;
+	using UnityEngine.UIElements;
+
 	/// <summary>
-	/// 泛型名称如："BaseApp<App,Bpp>"
+	/// 尖括号，如："&lt;...&gt;"
 	/// </summary>
-	public class NameGenericString:IString{
+	public struct AngleBrackets:IString{
 		
-		/// <summary>
-		/// <see cref="SegmentString"/>/<see cref="NamePathString"/>/<see cref="NameGenericString"/>
-		/// </summary>
-		public IString name;
+		public int startIndex;
+		public int length;
 		/// <summary>
 		/// <para>尖括号里的一个或多个名称(","号分隔的各个名称)</para>
-		/// <para>元素的类型可以为：<see cref="SegmentString"/>/<see cref="NamePathString"/>/<see cref="NameGenericString"/></para>
+		/// <para>元素的类型可以为：<see cref="DotPathAngleBrackets"/>|<see cref="WordAngleBrackets"/>|<see cref="DotPath"/>|<see cref="Segment"/></para>
 		/// </summary>
 		public IString[] tNames;
 
-		public NameGenericString(IString name,IString[] tNames){
-			this.name=name;
+		public AngleBrackets(int startIndex,int length,IString[] tNames){
+			this.startIndex=startIndex;
+			this.length=length;
 			this.tNames=tNames;
 		}
 
@@ -29,9 +30,7 @@
 				strTNames+=tNames[i].ToString(fileString);
 				if(i<len-1)strTNames+=splitChar;
 			}
-			return $"{name.ToString(fileString)}<{strTNames}>";
+			return $"<{strTNames}>";
 		}
-
 	}
-
 }

@@ -6,7 +6,7 @@
 	/// <summary>
 	/// .cs文件
 	/// </summary>
-	public struct CSharpFile{
+	public class CSharpFile{
 		
 		public FileInfo fileInfo;
 		public string fileString;

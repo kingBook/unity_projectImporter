@@ -3,7 +3,7 @@
 	using System.Collections;
 
 	public struct CSharpStruct{
-		public SegmentString name;
+		public Segment name;
 		//public CSharpProperty[] properties;
 		//public CsharpEvent[] events;
 		//public CSharpDelegate[] delegates;

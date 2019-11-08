@@ -10,13 +10,13 @@
 		/// <summary>
 		/// 别名名称(包含空白,但不包含using后的第一个空格)
 		/// </summary>
-		public SegmentString name;
+		public Segment name;
 		/// <summary>
 		/// "="号后"."分隔的各个单词(包含空白)
 		/// </summary>
-		public NamePathString words;
+		public DotPath words;
 		
-		public CSharpUsingAlias(SegmentString name,NamePathString words){
+		public CSharpUsingAlias(Segment name,DotPath words){
 			this.name=name;
 			this.words=words;
 		}
