@@ -458,7 +458,7 @@
 			csClass.nameSpace=nameSpace;
 			int index;
 			csClass.name=readClassName(cSharpFile,leftBracketMatch,out index);
-			//csClass.baseClass=readClassBase(cSharpFile,leftBracketMatch,index,out index);
+			csClass.baseClass=readClassBase(cSharpFile,leftBracketMatch,index,out index);
 			//csClass.implementInterfaces=readClassImplementInterfaces(cSharpFile,leftBracketMatch,index);
 			
 			return csClass;
@@ -469,20 +469,20 @@
 		/// </summary>
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="leftBracketMatch">匹配左括号类声明的Match，Match的值如："public class Main{"等。</param>
-		/// <param name="index">返回leftBracketMatch.Value已读到的索引</param>
+		/// <param name="index">返回leftBracketMatch已读到的索引</param>
 		/// <returns></returns>
 		private IString readClassName(CSharpFile cSharpFile,Match leftBracketMatch,out int index){
 			IString result=null;
 			index=leftBracketMatch.Index;
-
+			//匹配"class xxx<...>"
 			Regex classWordAngleBracketsRegex=new Regex(@"class\s+"+Regexes.wordAngleBracketsRegex,RegexOptions.Compiled);
 			Match classWordAngleBracketsMatch=classWordAngleBracketsRegex.Match(cSharpFile.fileString,leftBracketMatch.Index,leftBracketMatch.Length);
 			if(classWordAngleBracketsMatch.Success){
 				Group wordAngleBracketsGroup=classWordAngleBracketsMatch.Groups["wordAngleBrackets"];
 				index=wordAngleBracketsGroup.Index+wordAngleBracketsGroup.Length;
 				result=readWordAngleBrackets(cSharpFile,new Segment(wordAngleBracketsGroup.Index,wordAngleBracketsGroup.Length));
-				//Debug.Log(result.ToString(cSharpFile.fileString));
 			}else{
+				//匹配"class xxx"
 				Regex classWordRegex=new Regex(@"class\s+"+Regexes.wordRegex,RegexOptions.Compiled);
 				Match classWordMatch=classWordRegex.Match(cSharpFile.fileString,leftBracketMatch.Index,leftBracketMatch.Length);
 				if(classWordMatch.Success){
@@ -497,11 +497,48 @@
 		}
 
 		private IString readClassBase(CSharpFile cSharpFile,Match leftBracketMatch,int startIndex,out int index){
-			//匹配如：":App"、":BaseApp<App>"等
-			Regex regex=new Regex(@":\s*((?<nameGeneric>\b\w+\b\s*<(.|\n)*>)|(?<name>\b\w+\b))",RegexOptions.Compiled);
-
+			IString result=null;
 			index=startIndex;
-			return new Segment();
+			int searchLength=leftBracketMatch.Length-(startIndex-leftBracketMatch.Index);
+			//匹配":xxx.xxx.xxx<...>"
+			Regex colonDotPathAngleBracketsRegex=new Regex(@":\s*"+Regexes.dotPathAngleBracketsRegex,RegexOptions.Compiled);
+			Match colonDotPathAngleBracketsMatch=colonDotPathAngleBracketsRegex.Match(cSharpFile.fileString,startIndex,searchLength);
+			if(colonDotPathAngleBracketsMatch.Success){
+				Group dotPathAngleBracketsGroup=colonDotPathAngleBracketsMatch.Groups["dotPathAngleBrackets"];
+				index=dotPathAngleBracketsGroup.Index+dotPathAngleBracketsGroup.Length;
+				result=readDotPathAngleBrackets(cSharpFile,new Segment(dotPathAngleBracketsGroup.Index,dotPathAngleBracketsGroup.Length));
+			}else{
+				//匹配":xxx<...>"
+				Regex colonWordAngleBracketsRegex=new Regex(@":\s*"+Regexes.wordAngleBracketsRegex,RegexOptions.Compiled);
+				Match colonWordAngleBracketsMatch=colonWordAngleBracketsRegex.Match(cSharpFile.fileString,startIndex,searchLength);
+				if(colonWordAngleBracketsMatch.Success){
+					Group wordAngleBracketsGroup=colonWordAngleBracketsMatch.Groups["wordAngleBrackets"];
+					Debug.Log(wordAngleBracketsGroup.Value);
+					index=wordAngleBracketsGroup.Index+wordAngleBracketsGroup.Length;
+					result=readWordAngleBrackets(cSharpFile,new Segment(wordAngleBracketsGroup.Index,wordAngleBracketsGroup.Length));
+				}else{
+					//匹配":xxx.xxx.xxx..."
+					Regex colonDotPathRegex=new Regex(@":\s*"+Regexes.dotPathRegex,RegexOptions.Compiled);
+					Match colonDoPathMatch=colonDotPathRegex.Match(cSharpFile.fileString,startIndex,searchLength);
+					if(colonDoPathMatch.Success){
+						Group dotPathGroup=colonDoPathMatch.Groups["dotPath"];
+						index=dotPathGroup.Index+dotPathGroup.Length;
+						result=readDotPath(cSharpFile,new Segment(dotPathGroup.Index,dotPathGroup.Length));
+					}else{
+						//匹配":xxx"
+						Regex colonWordRegex=new Regex(@":\s*"+Regexes.wordRegex,RegexOptions.Compiled);
+						Match colonWordMatch=colonWordRegex.Match(cSharpFile.fileString,startIndex,searchLength);
+						if(colonWordMatch.Success){
+							Group wordGroup=colonWordMatch.Groups["word"];
+							index=wordGroup.Index+wordGroup.Length;
+							result=new Segment(wordGroup.Index,wordGroup.Length);
+						}
+					}
+				}
+			}
+			
+			if(result!=null)Debug.Log(result.ToString(cSharpFile.fileString));
+			return result;
 		}
 
 		private IString[] readClassImplementInterfaces(CSharpFile cSharpFile,Match leftBracketMatch,int startIndex){
@@ -870,22 +907,20 @@
 			IString[] tNames=new IString[len];
 			for(int i=0;i<len;i++){
 				Capture capture=captures[i];
-				//Debug.Log(capture.Value);
-				Match dotPathAngleBracketsMatch=Regexes.dotPathAngleBracketsRegex.Match(capture.Value);
+				Match dotPathAngleBracketsMatch=Regexes.dotPathAngleBracketsRegex.Match(cSharpFile.fileString,capture.Index,capture.Length);
 				if(dotPathAngleBracketsMatch.Success){
 					tNames[i]=readDotPathAngleBrackets(cSharpFile,dotPathAngleBracketsMatch);
 				}else{
-					Match wordAngleBracketsMatch=Regexes.wordAngleBracketsRegex.Match(capture.Value);
+					Match wordAngleBracketsMatch=Regexes.wordAngleBracketsRegex.Match(cSharpFile.fileString,capture.Index,capture.Length);
 					if(wordAngleBracketsMatch.Success){
 						tNames[i]=readWordAngleBrackets(cSharpFile,wordAngleBracketsMatch);
 					}else{
-						Match dotPathMatch=Regexes.dotPathRegex.Match(capture.Value);
+						Match dotPathMatch=Regexes.dotPathRegex.Match(cSharpFile.fileString,capture.Index,capture.Length);
 						if(dotPathMatch.Success){
 							tNames[i]=readDotPath(cSharpFile,dotPathMatch);
 						}else{
-							Match wordMatch=Regexes.wordRegex.Match(capture.Value);
+							Match wordMatch=Regexes.wordRegex.Match(cSharpFile.fileString,capture.Index,capture.Length);
 							if(wordMatch.Success){
-								Debug.Log("wordMatch:"+wordMatch.Value);
 								tNames[i]=new Segment(wordMatch.Index,wordMatch.Length);
 							}else{
 								Debug.LogError("错误：readAngleBrackets(),尖括号内没有找到可匹配的项");
