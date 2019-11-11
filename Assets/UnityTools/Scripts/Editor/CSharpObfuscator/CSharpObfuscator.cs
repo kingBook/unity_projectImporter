@@ -5,7 +5,8 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Text.RegularExpressions;
-	
+	using UnityEngine.UIElements;
+
 	/// <summary>
 	/// CSharp混淆器
 	/// <br>一个混淆器只用于一个unity项目</br>
@@ -388,14 +389,14 @@
 			Segment content=new Segment(0,cSharpFile.fileString.Length);
 			cSharpFile.usings=readUsings(cSharpFile,content);
 			
-			List<Segment> bracketBlocks=readBracketBlocks(cSharpFile,content);
+			Segment[] bracesBlocks=readBracesBlocks(cSharpFile,content);
 			List<CSharpNameSpace> namespaces;
 			List<CSharpClass> classes;
 			List<CSharpStruct> structs;
 			List<CSharpInterface> interfaces;
 			List<CSharpEnum> enums;
 			List<CSharpDelegate> delegates;
-			readNameSpaceSubObjects(cSharpFile,CSharpNameSpace.None,bracketBlocks,out namespaces,out classes,out structs,out interfaces,out enums,out delegates);
+			readNameSpaceSubObjects(cSharpFile,CSharpNameSpace.None,bracesBlocks,out namespaces,out classes,out structs,out interfaces,out enums,out delegates);
 			
 			cSharpFile.nameSpaces=namespaces.ToArray();
 			cSharpFile.classes=classes.ToArray();
@@ -427,14 +428,14 @@
 			csNameSpace.usings=readUsings(cSharpFile,content);
 			csNameSpace.content=content;
 			
-			List<Segment> bracketBlocks=readBracketBlocks(cSharpFile,content);
+			Segment[] bracesBlocks=readBracesBlocks(cSharpFile,content);
 			List<CSharpNameSpace> namespaces;
 			List<CSharpClass> classes;
 			List<CSharpStruct> structs;
 			List<CSharpInterface> interfaces;
 			List<CSharpEnum> enums;
 			List<CSharpDelegate> delegates;
-			readNameSpaceSubObjects(cSharpFile,csNameSpace,bracketBlocks,out namespaces,out classes,out structs,out interfaces,out enums,out delegates);
+			readNameSpaceSubObjects(cSharpFile,csNameSpace,bracesBlocks,out namespaces,out classes,out structs,out interfaces,out enums,out delegates);
 			
 			csNameSpace.nameSpaces=namespaces.ToArray();
 			csNameSpace.classes=classes.ToArray();
@@ -513,7 +514,6 @@
 				Match colonWordAngleBracketsMatch=colonWordAngleBracketsRegex.Match(cSharpFile.fileString,startIndex,searchLength);
 				if(colonWordAngleBracketsMatch.Success){
 					Group wordAngleBracketsGroup=colonWordAngleBracketsMatch.Groups["wordAngleBrackets"];
-					Debug.Log(wordAngleBracketsGroup.Value);
 					index=wordAngleBracketsGroup.Index+wordAngleBracketsGroup.Length;
 					result=readWordAngleBrackets(cSharpFile,new Segment(wordAngleBracketsGroup.Index,wordAngleBracketsGroup.Length));
 				}else{
@@ -536,8 +536,6 @@
 					}
 				}
 			}
-			
-			if(result!=null)Debug.Log(result.ToString(cSharpFile.fileString));
 			return result;
 		}
 
@@ -669,14 +667,14 @@
 		/// </summary>
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="nameSpace">父级命名空间</param>
-		/// <param name="bracketBlocks">命名空间内的大括号内容块列表（包含"{}"）</param>
+		/// <param name="bracesBlocks">命名空间内的大括号内容块列表（包含"{}"）</param>
 		/// <param name="namespaces">输出的命名空间列表</param>
 		/// <param name="classes">输出的类列表</param>
 		/// <param name="structs">输出的结构体列表</param>
 		/// <param name="interfaces">输出的接口列表</param>
 		/// <param name="enums">输出的枚举列表</param>
 		/// <param name="delegates">输出的委托列表</param>
-		private void readNameSpaceSubObjects(CSharpFile cSharpFile,CSharpNameSpace nameSpace,List<Segment> bracketBlocks,
+		private void readNameSpaceSubObjects(CSharpFile cSharpFile,CSharpNameSpace nameSpace,Segment[] bracesBlocks,
 		out List<CSharpNameSpace> namespaces,
 		out List<CSharpClass> classes,
 		out List<CSharpStruct> structs,
@@ -691,22 +689,22 @@
 			enums=new List<CSharpEnum>();
 			delegates=new List<CSharpDelegate>();
 			
-			int len=bracketBlocks.Count;
+			int len=bracesBlocks.Length;
 			for(int i=0;i<len;i++){
-				Segment bracketBlock=bracketBlocks[i];
+				Segment bracesBlock=bracesBlocks[i];
 				
 				Match leftBracketMatch;
-				if(matchNameSpaceDeclare(cSharpFile,bracketBlock,out leftBracketMatch)){
-					CSharpNameSpace csNameSpace=createNameSpace(cSharpFile,nameSpace,leftBracketMatch,bracketBlock);
+				if(matchNameSpaceDeclare(cSharpFile,bracesBlock,out leftBracketMatch)){
+					CSharpNameSpace csNameSpace=createNameSpace(cSharpFile,nameSpace,leftBracketMatch,bracesBlock);
 					namespaces.Add(csNameSpace);
-				}else if(matchClassDeclare(cSharpFile,bracketBlock,out leftBracketMatch)){
-					CSharpClass csClass=createClass(cSharpFile,nameSpace,leftBracketMatch,bracketBlock);
+				}else if(matchClassDeclare(cSharpFile,bracesBlock,out leftBracketMatch)){
+					CSharpClass csClass=createClass(cSharpFile,nameSpace,leftBracketMatch,bracesBlock);
 					classes.Add(csClass);
-				}else if(matchStructDeclare(cSharpFile,bracketBlock,out leftBracketMatch)){
+				}else if(matchStructDeclare(cSharpFile,bracesBlock,out leftBracketMatch)){
 					
-				}else if(matchEnumDeclare(cSharpFile,bracketBlock,out leftBracketMatch)){
+				}else if(matchEnumDeclare(cSharpFile,bracesBlock,out leftBracketMatch)){
 					
-				}else if(matchDelegateDeclare(cSharpFile,bracketBlock,out leftBracketMatch)){
+				}else if(matchDelegateDeclare(cSharpFile,bracesBlock,out leftBracketMatch)){
 					
 				}
 			}
@@ -991,39 +989,20 @@
 		}
 
 		/// <summary>
-		/// 读取括号块，"{...}"包含括号,不读取子级括号块
+		/// 读取大括号块(包含大括号,不读取子级大括号块)，"{...}"
 		/// </summary>
 		/// <param name="cSharpFile">CSharpFile</param>
 		/// <param name="content">读取内容的位置和长度</param>
 		/// <returns></returns>
-		private List<Segment> readBracketBlocks(CSharpFile cSharpFile,Segment content){
+		private Segment[] readBracesBlocks(CSharpFile cSharpFile,Segment content){
 			List<Segment> bracketBlocks=new List<Segment>();
-			
-			int startIndex=content.startIndex;
-			int end=startIndex+content.length;
-
-			int bracketCount=0;
-			int bracketBlockStartIndex=0;
-
-			for(int i=startIndex;i<end;i++){
-				char charString=cSharpFile.fileString[i];
-				if(charString=='{'){
-					if(bracketCount>0){
-						bracketCount++;
-					}else{
-						bracketBlockStartIndex=i;
-						bracketCount=1;
-					}
-				}else if(charString=='}'){
-					bracketCount--;
-					if(bracketCount==0){
-						int bracketBlockLength=i-bracketBlockStartIndex+1;
-						Segment bracketBlock=new Segment(bracketBlockStartIndex,bracketBlockLength);
-						bracketBlocks.Add(bracketBlock);
-					}
-				}
+			Match match=Regexes.bracesRegex.Match(cSharpFile.fileString,content.startIndex,content.length);
+			while(match.Success){
+				Segment bracesBlock=new Segment(match.Index,match.Length);
+				bracketBlocks.Add(bracesBlock);
+				match=match.NextMatch();
 			}
-			return bracketBlocks;
+			return bracketBlocks.ToArray();
 		}
 		#endregion
 

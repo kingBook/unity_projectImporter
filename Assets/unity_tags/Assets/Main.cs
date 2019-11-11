@@ -88,8 +88,8 @@ namespace XXSS {
 			public interface IName<T>{ }
 			public interface IGood<T>{ }
 			
-			public class HelloB{}
-			public class HelloC{}
+			public class HelloB{string b="HelloB";}
+			public class HelloC{string c="HelloC";}
 			
 			public class HelloD<T>
 			:HelloName where T:class,new(){

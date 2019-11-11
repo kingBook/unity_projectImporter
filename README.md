@@ -1,3 +1,7 @@
+https://stackoverflow.com/questions/7898310/using-regex-to-balance-match-parenthesis
+
+\((?:[^()]|(?<open> \( )|(?<-open> \) ))+(?(open)(?!))\)
+", RegexOptions.IgnorePatternWhitespace);
 将其它unity项目导入到当前项目
 
 实现的项目设置(Project Settings)：
