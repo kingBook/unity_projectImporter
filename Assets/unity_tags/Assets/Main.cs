@@ -87,18 +87,20 @@ namespace XXSS {
 
 			public interface IName<T>{ }
 			public interface IGood<T>{ }
+			public interface IHei{ }
+			public interface IDot{ }
 			
 			public class HelloB{string b="HelloB";}
 			public class HelloC{string c="HelloC";}
 			
 			public class HelloD<T>
-			:HelloName where T:class,new(){
+			:HelloName,IHei,XXSS.OOAA.Koo.IDot where T:class,new(){
 				
 			}
-			public class HelloE:HelloD<HelloF<IName<IGood<int>>,HelloE,HelloE>>,IName<int>,IGood<uint>{
+			public class HelloE:IName<int>,XXSS.OOAA.Koo.IDot{
 				
 			}
-			public class HelloF<T,U,K>:HelloE{
+			public class HelloF<T,U,K>:HelloE where T:class,new() where U:IName<int> where K:IHei,IDot{
 				
 			}
 

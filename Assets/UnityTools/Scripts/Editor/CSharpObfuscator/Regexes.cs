@@ -14,6 +14,11 @@
 		public static readonly Regex wordRegex=new Regex(@"(?<word>\b\w+\b)",RegexOptions.Compiled);
 
 		/// <summary>
+		/// 匹配"new()"
+		/// </summary>
+		public static readonly Regex newParenthesesRegex=new Regex(@"(?<newParentheses>new\s*\(\s*\))",RegexOptions.Compiled);
+
+		/// <summary>
 		/// 匹配"."路径的表达式(<see cref="DotPath"/>)
 		/// <para><c>Groups["dotPath"] //表示整个路径</c></para>
 		/// </summary>
@@ -50,16 +55,35 @@
 		public static readonly Regex dotPathAngleBracketsRegex=new Regex(@"(?<dotPathAngleBrackets>"+dotPathRegex+@"\s*"+angleBracketsRegex+")",RegexOptions.Compiled);
 
 		/// <summary>
-		/// 匹配"点路径+尖括号"|"名称+尖括号"|"点路径"|"名称"
+		/// 匹配"点路径+尖括号"|"名称+尖括号"|"点路径"|"单词"
 		/// </summary>
-		public static readonly Regex dotPathAngleBrackets_nameAngleBrackets_dotPath_wordRegex=new Regex(@"("+dotPathAngleBracketsRegex+@")|("+wordAngleBracketsRegex+@")|("+dotPathRegex+@")|("+wordRegex+@")",RegexOptions.Compiled);
+		public static readonly Regex dotPathAngleBrackets_wordAngleBrackets_dotPath_wordRegex=new Regex(@"("+dotPathAngleBracketsRegex+@"|"+wordAngleBracketsRegex+@"|"+dotPathRegex+@"|"+wordRegex+@")",RegexOptions.Compiled);
+
+		/// <summary>
+		/// 匹配"点路径+尖括号"|"名称+尖括号"|"点路径"|"new()"|"单词"
+		/// </summary>
+		public static readonly Regex dotPathAngleBrackets_wordAngleBrackets_dotPath_newParentheses_wordRegex=new Regex(@"("+dotPathAngleBracketsRegex+@"|"+wordAngleBracketsRegex+@"|"+dotPathRegex+@"|"+newParenthesesRegex+@"|"+wordRegex+@")",RegexOptions.Compiled);
 
 		/// <summary>
 		/// 分隔尖括号里的内容表达式(以","作分隔符,尖括号可能出现的内容有:"点路径+尖括号"，"名称+尖括号"，"点路径"，"名称")
 		///	<para><c>Groups["splitContent"].Captures //表示以","分隔的各个内容块</c></para>
 		/// </summary>
-		public static readonly Regex splitAngleBracketsRegex=new Regex(@"(?<splitContent>"+dotPathAngleBrackets_nameAngleBrackets_dotPath_wordRegex+@")(\s*,\s*(?<splitContent>"+dotPathAngleBrackets_nameAngleBrackets_dotPath_wordRegex+@"))*",RegexOptions.Compiled);
+		public static readonly Regex splitAngleBracketsRegex=new Regex(@"(?<splitAngleBracketsContent>"+dotPathAngleBrackets_wordAngleBrackets_dotPath_wordRegex+@")(\s*,\s*(?<splitAngleBracketsContent>"+dotPathAngleBrackets_wordAngleBrackets_dotPath_wordRegex+@"))*",RegexOptions.Compiled);
 
+		/// <summary>
+		/// 匹配字符串
+		/// </summary>
+		public static readonly Regex stringTextRegex=new Regex(@"(?<stringText>(@"".*"")|("".*""))",RegexOptions.Compiled);
+
+		/// <summary>
+		/// 匹配行注释
+		/// </summary>
+		public static readonly Regex lineCommentsRegex=new Regex(@"(?<lineComments>//.*)",RegexOptions.Compiled);
+
+		/// <summary>
+		/// 匹配一个泛型约束的表达式
+		/// </summary>
+		public static readonly Regex genericConstraintRegex=new Regex(@"where\s+(?<genericConstraintName>\w+)\s*:\s*(?<genericConstraintSplitContent>"+dotPathAngleBrackets_wordAngleBrackets_dotPath_newParentheses_wordRegex+@")(\s*,\s*(?<genericConstraintSplitContent>"+dotPathAngleBrackets_wordAngleBrackets_dotPath_newParentheses_wordRegex+"))*",RegexOptions.Compiled);
 
 	}
 }

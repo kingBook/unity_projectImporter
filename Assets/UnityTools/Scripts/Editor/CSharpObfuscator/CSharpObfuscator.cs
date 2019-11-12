@@ -117,8 +117,7 @@
 		/// <returns></returns>
 		private List<Segment> readStringsWithinFile(CSharpFile cSharpFile){
 			//匹配@"xxx"、"xxx"、test("xxx",@"xxx")括号里的"xxx",@"xxx"等字符串（在@符号后的双引号转义使用两个")。
-			Regex stringRegex=new Regex(@"(@"".*"")|("".*"")",RegexOptions.Compiled);
-			MatchCollection matches=stringRegex.Matches(cSharpFile.fileString);
+			MatchCollection matches=Regexes.stringTextRegex.Matches(cSharpFile.fileString);
 			int count=matches.Count;
 			List<Segment> segmentStrings=new List<Segment>();
 			for(int i=0;i<count;i++){
@@ -215,8 +214,7 @@
 		private List<Segment> readLineCommentsWithinFile(CSharpFile cSharpFile){
 			List<Segment> segmentStrings=new List<Segment>();
 			//匹配行注释
-			Regex regex=new Regex(@"//.*",RegexOptions.Compiled);
-			MatchCollection matches=regex.Matches(cSharpFile.fileString);
+			MatchCollection matches=Regexes.lineCommentsRegex.Matches(cSharpFile.fileString);
 			int count=matches.Count;
 			for(int i=0;i<count;i++){
 				Match match=matches[i];
@@ -460,8 +458,8 @@
 			int index;
 			csClass.name=readClassName(cSharpFile,leftBracketMatch,out index);
 			csClass.baseClass=readClassBase(cSharpFile,leftBracketMatch,index,out index);
-			//csClass.implementInterfaces=readClassImplementInterfaces(cSharpFile,leftBracketMatch,index);
-			
+			csClass.implementInterfaces=readClassImplementInterfaces(cSharpFile,leftBracketMatch,index,out index);
+			csClass.genericConstraints=readClassGenericConstraints(cSharpFile,leftBracketMatch,index);
 			return csClass;
 		}
 
@@ -501,6 +499,11 @@
 			IString result=null;
 			index=startIndex;
 			int searchLength=leftBracketMatch.Length-(startIndex-leftBracketMatch.Index);
+			//如果有"where"关键，只搜索到"where"之前
+			int whereIndex=cSharpFile.fileString.IndexOf("where",startIndex,searchLength,StringComparison.Ordinal);
+			if(whereIndex>-1){
+				searchLength=whereIndex-startIndex;
+			}
 			//匹配":xxx.xxx.xxx<...>"
 			Regex colonDotPathAngleBracketsRegex=new Regex(@":\s*"+Regexes.dotPathAngleBracketsRegex,RegexOptions.Compiled);
 			Match colonDotPathAngleBracketsMatch=colonDotPathAngleBracketsRegex.Match(cSharpFile.fileString,startIndex,searchLength);
@@ -532,6 +535,7 @@
 							Group wordGroup=colonWordMatch.Groups["word"];
 							index=wordGroup.Index+wordGroup.Length;
 							result=new Segment(wordGroup.Index,wordGroup.Length);
+							
 						}
 					}
 				}
@@ -539,13 +543,111 @@
 			return result;
 		}
 
-		private IString[] readClassImplementInterfaces(CSharpFile cSharpFile,Match leftBracketMatch,int startIndex){
-			//匹配如：":BaseApp"、":BaseApp<T>"、":BaseApp<T,U,K>"、":BaseApp<T>,IName,IList<T>"、":HelloD<HelloF<IName<IGood<int>>,HelloE,HelloE>>,IName<int>,IGood<uint>"等
-			Regex regex=new Regex(@":\s*((?<nameGeneric>\b\w+\b\s*<(.|\n)*>)|(?<name>\b\w+\b))\s*(,\s*((?<nameGeneric>\b\w+\b\s*<(.|\n)*>)|(?<name>\b\w+\b)))*",RegexOptions.Compiled);
-			Match match=regex.Match(leftBracketMatch.Value,startIndex);
-			if(match.Success){
-				//Debug.Log(match.Value);
+		private IString[] readClassImplementInterfaces(CSharpFile cSharpFile,Match leftBracketMatch,int startIndex,out int index){
+		
+			List<IString> strings=new List<IString>();
+			index=startIndex;
+			int searchLength=leftBracketMatch.Length-(startIndex-leftBracketMatch.Index);
+			//如果有"where"关键，只搜索到"where"之前
+			int whereIndex=cSharpFile.fileString.IndexOf("where",startIndex,searchLength,StringComparison.Ordinal);
+			if(whereIndex>-1){
+				searchLength=whereIndex-startIndex;
 			}
+			//匹配",xxx.xxx.xxx<...>"|",xxx<...>"|",xxx.xxx.xxx"|",xxx"
+			Regex regex=new Regex(@"\s*,\s*"+Regexes.dotPathAngleBrackets_wordAngleBrackets_dotPath_wordRegex,RegexOptions.Compiled);
+			Match match=regex.Match(cSharpFile.fileString,startIndex,searchLength);
+			while(match.Success){
+				//"xxx.xxx.xxx<...>"
+				Group group=match.Groups["dotPathAngleBrackets"];
+				if(group.Success){
+					DotPathAngleBrackets dotPathAngleBrackets=readDotPathAngleBrackets(cSharpFile,new Segment(group.Index,group.Length));
+					strings.Add(dotPathAngleBrackets);
+				}else{
+					//"xxx<...>"
+					group=match.Groups["wordAngleBrackets"];
+					if(group.Success){
+						WordAngleBrackets wordAngleBrackets=readWordAngleBrackets(cSharpFile,new Segment(group.Index,group.Length));
+						strings.Add(wordAngleBrackets);
+					}else{
+						//"xxx.xxx.xxx"
+						group=match.Groups["dotPath"];
+						if(group.Success){
+							DotPath dotPath=readDotPath(cSharpFile,new Segment(group.Index,group.Length));
+							strings.Add(dotPath);
+						}else{
+							//"xxx"
+							group=match.Groups["word"];
+							if(group.Success){
+								Segment word=new Segment(group.Index,group.Length);
+								strings.Add(word);
+							}
+						}
+					}
+				}
+				index=group.Index+group.Length;
+				match=match.NextMatch();
+			}
+			return strings.ToArray();
+		}
+
+		private CSharpGenericConstraint[] readClassGenericConstraints(CSharpFile cSharpFile,Match leftBracketMatch,int startIndex){
+			int searchLength=leftBracketMatch.Length-(startIndex-leftBracketMatch.Index);
+			Debug.Log("content:"+cSharpFile.fileString.Substring(startIndex,searchLength));
+			Match match=Regexes.genericConstraintRegex.Match(cSharpFile.fileString,startIndex,searchLength);
+			while(match.Success){
+				Debug.Log("match.Value:"+match.Value);
+
+				Group tNameGroup=match.Groups["genericConstraintName"];
+				Segment tName=new Segment(tNameGroup.Index,tNameGroup.Length);
+				CaptureCollection wordCpatures=match.Groups["genericConstraintSplitContent"].Captures;
+				int len=wordCpatures.Count;
+				List<IString> words=new List<IString>();
+				for(int i=0;i<len;i++){
+					Capture wordCapture=wordCpatures[i];
+					//匹配":xxx.xxx.xxx<...>"
+					Match dotPathAngleBracketsMatch=Regexes.dotPathAngleBracketsRegex.Match(cSharpFile.fileString,wordCapture.Index,wordCapture.Length);
+					if(dotPathAngleBracketsMatch.Success){
+						Group dotPathAngleBracketsGroup=dotPathAngleBracketsMatch.Groups["dotPathAngleBrackets"];
+						DotPathAngleBrackets dotPathAngleBrackets=readDotPathAngleBrackets(cSharpFile,new Segment(dotPathAngleBracketsGroup.Index,dotPathAngleBracketsGroup.Length));
+						words.Add(dotPathAngleBrackets);
+					}else{
+						//匹配":xxx<...>"
+						Match wordAngleBracketsMatch=Regexes.wordAngleBracketsRegex.Match(cSharpFile.fileString,wordCapture.Index,wordCapture.Length);
+						if(wordAngleBracketsMatch.Success){
+							Group wordAngleBracketsGroup=wordAngleBracketsMatch.Groups["wordAngleBrackets"];
+							WordAngleBrackets wordAngleBrackets=readWordAngleBrackets(cSharpFile,new Segment(wordAngleBracketsGroup.Index,wordAngleBracketsGroup.Length));
+							words.Add(wordAngleBrackets);
+						}else{
+							//匹配":xxx.xxx.xxx..."
+							Match doPathMatch=Regexes.dotPathRegex.Match(cSharpFile.fileString,wordCapture.Index,wordCapture.Length);
+							if(doPathMatch.Success){
+								Group dotPathGroup=doPathMatch.Groups["dotPath"];
+								DotPath dotPath=readDotPath(cSharpFile,new Segment(dotPathGroup.Index,dotPathGroup.Length));
+								words.Add(dotPath);
+							}else{
+								Match newParenthesesMatch=Regexes.newParenthesesRegex.Match(cSharpFile.fileString,wordCapture.Index,wordCapture.Length);
+								if(newParenthesesMatch.Success){ 
+									Group newParenthesesGroup=newParenthesesMatch.Groups["newParentheses"];
+									Segment newParentheses=new Segment(newParenthesesGroup.Index,newParenthesesGroup.Length);
+									words.Add(newParentheses);
+								}else{
+									//匹配":xxx"
+									Match wordMatch=Regexes.wordRegex.Match(cSharpFile.fileString,wordCapture.Index,wordCapture.Length);
+									if(wordMatch.Success){
+										Group wordGroup=wordMatch.Groups["word"];
+										Segment word=new Segment(wordGroup.Index,wordGroup.Length);
+										words.Add(word);
+									}
+								}
+							}
+						}
+					}
+
+				}
+				CSharpGenericConstraint genericConstraint=new CSharpGenericConstraint(tName,words.ToArray());
+				match=match.NextMatch();
+			}
+
 			return null;
 		}
 		
@@ -899,8 +1001,8 @@
 			return readAngleBrackets(cSharpFile,match);
 		}
 		private AngleBrackets readAngleBrackets(CSharpFile cSharpFile,Match match){
-			Group splitContentGroup=match.Groups["splitContent"];
-			CaptureCollection captures=splitContentGroup.Captures;
+			Group splitAngleBracketsContentGroup=match.Groups["splitAngleBracketsContent"];
+			CaptureCollection captures=splitAngleBracketsContentGroup.Captures;
 			int len=captures.Count;
 			IString[] tNames=new IString[len];
 			for(int i=0;i<len;i++){
