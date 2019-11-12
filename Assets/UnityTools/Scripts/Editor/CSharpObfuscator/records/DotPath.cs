@@ -23,15 +23,15 @@
 
 		public string ToString(string fileString,bool includeWhitespace){
 			const char splitChar='.';
-			string nameString="";
+			string text="";
 			int len=words.Length;
 			for(int i=0;i<len;i++){
 				string word=words[i].ToString(fileString);
 				if(!includeWhitespace)word=Regex.Replace(word,@"\s","",RegexOptions.Compiled);
-				nameString+=word;
-				if(i<len-1)nameString+=splitChar;
+				text+=word;
+				if(i<len-1)text+=splitChar;
 			}
-			return nameString;
+			return text;
 		}
 
 	}

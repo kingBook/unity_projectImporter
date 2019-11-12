@@ -23,7 +23,17 @@ public struct CSharpGenericConstraint:IString{
 	}
 
 	public string ToString(string fileString){
-		return null;
+		string tNameText=tName.ToString(fileString);
+		
+		const char splitChar=',';
+		string wordsText="";
+		int len=words.Length;
+		for(int i=0;i<len;i++){
+			string word=words[i].ToString(fileString);
+			wordsText+=word;
+			if(i<len-1)wordsText+=splitChar;
+		}
+		return $"where {tNameText}:{wordsText}";
 	}
 
 }

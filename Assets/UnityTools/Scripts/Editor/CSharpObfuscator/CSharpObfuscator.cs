@@ -492,6 +492,7 @@
 					Debug.LogError("错误：readClassName()没找到匹配项");
 				}
 			}
+			if(result!=null)Debug.Log(result.ToString(cSharpFile.fileString));
 			return result;
 		}
 
@@ -535,7 +536,6 @@
 							Group wordGroup=colonWordMatch.Groups["word"];
 							index=wordGroup.Index+wordGroup.Length;
 							result=new Segment(wordGroup.Index,wordGroup.Length);
-							
 						}
 					}
 				}
@@ -544,7 +544,6 @@
 		}
 
 		private IString[] readClassImplementInterfaces(CSharpFile cSharpFile,Match leftBracketMatch,int startIndex,out int index){
-		
 			List<IString> strings=new List<IString>();
 			index=startIndex;
 			int searchLength=leftBracketMatch.Length-(startIndex-leftBracketMatch.Index);
@@ -591,12 +590,10 @@
 		}
 
 		private CSharpGenericConstraint[] readClassGenericConstraints(CSharpFile cSharpFile,Match leftBracketMatch,int startIndex){
+			List<CSharpGenericConstraint> genericConstraints=new List<CSharpGenericConstraint>();
 			int searchLength=leftBracketMatch.Length-(startIndex-leftBracketMatch.Index);
-			Debug.Log("content:"+cSharpFile.fileString.Substring(startIndex,searchLength));
 			Match match=Regexes.genericConstraintRegex.Match(cSharpFile.fileString,startIndex,searchLength);
 			while(match.Success){
-				Debug.Log("match.Value:"+match.Value);
-
 				Group tNameGroup=match.Groups["genericConstraintName"];
 				Segment tName=new Segment(tNameGroup.Index,tNameGroup.Length);
 				CaptureCollection wordCpatures=match.Groups["genericConstraintSplitContent"].Captures;
@@ -642,13 +639,12 @@
 							}
 						}
 					}
-
 				}
 				CSharpGenericConstraint genericConstraint=new CSharpGenericConstraint(tName,words.ToArray());
+				genericConstraints.Add(genericConstraint);
 				match=match.NextMatch();
 			}
-
-			return null;
+			return genericConstraints.ToArray();
 		}
 		
 		#region ReadUsings
@@ -807,6 +803,8 @@
 				}else if(matchEnumDeclare(cSharpFile,bracesBlock,out leftBracketMatch)){
 					
 				}else if(matchDelegateDeclare(cSharpFile,bracesBlock,out leftBracketMatch)){
+					
+				}else if(matchInterfaceDeclare(cSharpFile,bracesBlock,out leftBracketMatch)){
 					
 				}
 			}
