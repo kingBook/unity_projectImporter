@@ -1,7 +1,19 @@
 https://stackoverflow.com/questions/7898310/using-regex-to-balance-match-parenthesis
 
+
+You are trying to import an asset which contains a global game manager. This is not allowed.
+UnityEditor.AssetDatabase:Refresh()
+
+
 \((?:[^()]|(?<open> \( )|(?<-open> \) ))+(?(open)(?!))\)
 ", RegexOptions.IgnorePatternWhitespace);
+
+
+
+
+
+
+
 将其它unity项目导入到当前项目
 
 实现的项目设置(Project Settings)：

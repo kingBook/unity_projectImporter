@@ -5,7 +5,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using UnityEditor;
-
+	
 	/// <summary>
 	/// 文件工具类
 	/// </summary>
@@ -16,13 +16,17 @@
 			}else{
 				FileUtil.CopyFileOrDirectory(source,dest);
 			}
-			if(isRefreshAsset)AssetDatabase.Refresh();
+			if(isRefreshAsset){
+				AssetDatabase.Refresh();
+			}
 		}
 
 		public static void copyDirectory(string source,string dest,bool isRefreshAsset=false){
 			//如果文件夹存在会自动删除
 			FileUtil.CopyFileOrDirectory(source,dest);
-			if(isRefreshAsset)AssetDatabase.Refresh();
+			if(isRefreshAsset){
+				AssetDatabase.Refresh();
+			}
 		}
 
 		public static void createDirectory(string path,bool isExistDelete=true){

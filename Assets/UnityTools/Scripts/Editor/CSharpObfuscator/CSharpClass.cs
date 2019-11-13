@@ -1,33 +1,35 @@
 ﻿namespace UnityTools{
 	using UnityEngine;
 	using System.Collections;
-
+	/// <summary>
+	/// 类
+	/// </summary>
 	public struct CSharpClass{
 
 		/// <summary>
-		/// 类所在的命名空间
+		/// 所在的命名空间
 		/// </summary>
 		public CSharpNameSpace nameSpace;
 		
 		/// <summary>
-		/// <para>单个名称或名称加尖括号</para>
+		/// <para>单词+尖括号/单词</para>
 		/// <para><see cref="Segment"/>/<see cref="WordAngleBrackets"/></para>
-		/// <para>如："App"、"App&lt;BaseApp&gt;"</para>
+		/// <para>如："xxx&lt;...&gt;","xxx"</para>
 		/// </summary>
 		public IString name;
 
 		/// <summary>
-		/// <para>继承的类</para>
+		/// <para>继承的类/实现的接口，表示":"号后的第一个</para>
 		/// <para><see cref="Segment"/>/<see cref="WordAngleBrackets"/></para>
-		/// <para>如："xx.xx.xx","ClassA","IName","IName&lt;xx&gt;","HelloD &lt;xxx.xx.HelloF&lt;object,object,object&gt;&gt;"</para>
+		/// <para>如："xxx.xxx.xxx&lt;...&gt;","xxx&lt;...&gt;","xxx.xxx.xxx","xxx"</para>
 		/// </summary>
-		public IString baseClass;
+		public IString extends;
 
 		/// <summary>
 		/// 实现的接口
-		/// 如："xx.xx.xx","ClassA","IName","IName&lt;xx&gt;","HelloD &lt;xxx.xx.HelloF&lt;object,object,object&gt;&gt;"
+		/// 如："xxx.xxx.xxx&lt;...&gt;","xxx&lt;...&gt;","xxx.xxx.xxx","xxx"
 		/// </summary>
-		public IString[] implementInterfaces;
+		public IString[] implements;
 
 		/// <summary>
 		/// 泛型约束列表

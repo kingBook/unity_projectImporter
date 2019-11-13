@@ -12,11 +12,14 @@ namespace unity_tags{
 	using Mathx=UnityEngine.Mathf;
 	
 	public delegate int Callee(int a);
+
 	/// <summary>
     /// Main类
     /// </summary>
 	public class Main : MonoBehaviour{
 		public SpriteRenderer spriteRenderer;
+
+		
 	    void Start(){
 			SortingLayer2 [] list0=SortingLayer2.layers;
 			SortingLayer2[ ] list1=SortingLayer2.layers;
@@ -35,7 +38,7 @@ namespace unity_tags{
 			/*
 			Regex regex=new Regex(@"/w+[(@"")]""\s*""");*/
 		}
-
+		
 		private string joinString(string a,string b,string c=null){
 			return a+b;
 		}
@@ -66,7 +69,9 @@ namespace unity_tags{
 namespace XXSS {
     using System.Collections.Generic;
     using System.Data;
-		namespace OOAA 
+	using XXSS.OOAA.Koo;
+
+	namespace OOAA 
 		.    
 		Koo  
 		{
@@ -85,20 +90,36 @@ namespace XXSS {
 					}
 			}
 
-			public interface IName<T>{ }
-			public interface IGood<T>{ }
-			public interface IHei{ }
-			public interface IDot{ }
+			public interface IName<T>{
+                void name();
+            }
+			public interface IGood<T> where T:class,new(){
+                void good();
+            }
+			public interface IHei{
+				void hei();
+			}
+			public interface IDot:IHei,IName<int>{ }
 			
 			public class HelloB{string b="HelloB";}
 			public class HelloC{string c="HelloC";}
 			
 			public class HelloD<T>
 			:HelloName,IHei,XXSS.OOAA.Koo.IDot where T:class,new(){
-				
+				public void hei(){ }
+				public void name(){}
+				public void good(){}
 			}
 			public class HelloE:IName<int>,XXSS.OOAA.Koo.IDot{
-				
+				public void hei(){ }
+				public void name(){}
+
+				protected readonly struct HelloEStruct{}
+
+				protected interface HelloEInterface{}
+
+				private enum HelloEEnumA{A,B,C,D}
+				private enum HelloEEnumB:int{A,B,C,D}
 			}
 			public class HelloF<T,U,K>:HelloE where T:class,new() where U:IName<int> where K:IHei,IDot{
 				
@@ -111,6 +132,10 @@ namespace XXSS {
 			
 		}
 
+		public struct BB:IHei{
+			public void hei(){ }
+		}
+
 		public interface ssdf{
 			void hello();
 		}
@@ -121,7 +146,7 @@ public interface OOA{
 	void hello2();
 }
 
-public enum TypeA
+public enum TypeA : int
 	
 		{
 	A

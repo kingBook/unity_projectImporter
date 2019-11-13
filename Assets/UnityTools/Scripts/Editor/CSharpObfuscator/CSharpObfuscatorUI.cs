@@ -150,13 +150,20 @@
 		private void obfuscateUnityProject(string unityProjectPath,bool isCallComplete){
 			string assetsPath=unityProjectPath+"/Assets";
 			CSharpObfuscator obfuscator=new CSharpObfuscator();
-			obfuscator.obfuscateProject(assetsPath,()=>{
-				if(isCallComplete){
-					if(_showInExplorerOnComplete){
-						FileUtil2.showInExplorer(unityProjectPath);
+			try{
+				obfuscator.obfuscateProject(assetsPath,()=>{
+					if(isCallComplete){
+						if(_showInExplorerOnComplete){
+							FileUtil2.showInExplorer(unityProjectPath);
+						}
 					}
-				}
-			});
+				});
+			}catch(System.Exception err){
+				//出错时隐藏进度条
+				EditorUtility.ClearProgressBar();
+				throw err;
+			}
+			
 		}
 
 		/// <summary>

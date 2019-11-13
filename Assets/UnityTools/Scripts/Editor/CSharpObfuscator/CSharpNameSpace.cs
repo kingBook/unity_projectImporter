@@ -2,7 +2,9 @@
 	using System.Collections.Generic;
 	using System.Text.RegularExpressions;
     using UnityEngine;
-
+	/// <summary>
+	/// 命名空间
+	/// </summary>
     public class CSharpNameSpace{
 		
 		public static readonly CSharpNameSpace None=new CSharpNameSpace();
