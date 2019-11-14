@@ -1039,13 +1039,14 @@
 
 		#region Functions
 		/// <summary>
-		/// 读取尖括号里的内容(不包含尖括号&lt;&gt;),如:"T,U,K"、"IName&lt;int&gt;,IGood,IFoo&lt;int,string&gt;"
+		/// 读取尖括号里的内容(不包含尖括号&lt;&gt;),如:"T,U,K"、"in T,in U"、"IName&lt;int&gt;,IGood,IFoo&lt;int,string&gt;"
 		/// </summary>
 		/// <param name="cSharpFile"></param>
 		/// <param name="content"></param>
 		/// <returns></returns>
 		private AngleBrackets readAngleBrackets(CSharpFile cSharpFile,Segment content){
-			//一个尖括号里可能出现<点路径尖括号，名称尖括号，点路径，名称>
+			//一个尖括号里可能出现<点路径尖括号，名称尖括号，点路径，单词+空格+单词，单词>
+			//匹配一个尖括号里","分隔的各个项
 			Match match=Regexes.splitAngleBracketsRegex.Match(cSharpFile.fileString,content.startIndex,content.length);
 			return readAngleBrackets(cSharpFile,match);
 		}
@@ -1056,23 +1057,36 @@
 			IString[] tNames=new IString[len];
 			for(int i=0;i<len;i++){
 				Capture capture=captures[i];
+				//"xxx.xxx.xxx<...>"
 				Match dotPathAngleBracketsMatch=Regexes.dotPathAngleBracketsRegex.Match(cSharpFile.fileString,capture.Index,capture.Length);
 				if(dotPathAngleBracketsMatch.Success){
 					tNames[i]=readDotPathAngleBrackets(cSharpFile,dotPathAngleBracketsMatch);
 				}else{
+					//"xxx<...>"
 					Match wordAngleBracketsMatch=Regexes.wordAngleBracketsRegex.Match(cSharpFile.fileString,capture.Index,capture.Length);
 					if(wordAngleBracketsMatch.Success){
 						tNames[i]=readWordAngleBrackets(cSharpFile,wordAngleBracketsMatch);
 					}else{
+						//"xxx.xxx.xxx"
 						Match dotPathMatch=Regexes.dotPathRegex.Match(cSharpFile.fileString,capture.Index,capture.Length);
 						if(dotPathMatch.Success){
 							tNames[i]=readDotPath(cSharpFile,dotPathMatch);
 						}else{
-							Match wordMatch=Regexes.wordRegex.Match(cSharpFile.fileString,capture.Index,capture.Length);
-							if(wordMatch.Success){
-								tNames[i]=new Segment(wordMatch.Index,wordMatch.Length);
+							//"xxx xxx"
+							Match word_wordMatch=Regexes.wordSpaceword.Match(cSharpFile.fileString,capture.Index,capture.Length);
+							if(word_wordMatch.Success){
+								CaptureCollection wordCaptures=word_wordMatch.Groups["word"].Captures;
+								Segment word1=new Segment(wordCaptures[0].Index,wordCaptures[0].Length);
+								Segment word2=new Segment(wordCaptures[1].Index,wordCaptures[1].Length);
+								tNames[i]=new WordSpaceWord(word1,word2);
 							}else{
-								Debug.LogError("错误：readAngleBrackets(),尖括号内没有找到可匹配的项");
+								//"xxx"
+								Match wordMatch=Regexes.wordRegex.Match(cSharpFile.fileString,capture.Index,capture.Length);
+								if(wordMatch.Success){
+									tNames[i]=new Segment(wordMatch.Index,wordMatch.Length);
+								}else{
+									Debug.LogError("错误：没有找到可匹配的项");
+								}
 							}
 						}
 					}

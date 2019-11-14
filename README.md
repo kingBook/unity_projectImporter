@@ -55,6 +55,46 @@ public class SampleClass<T, U, V> where T : V { }
 
 using s = System.Text.RegularExpressions;
 s.Regex reg=new s.Regex();
+//委托
+public delegate int Func<T> () where T:class;
+public delegate TResult Func<out TResult>();
+public delegate TResult Func<in T1, out TResult>(T1 arg);
+public delegate TResult Func<in T1, in T2, out TResult>(T1 arg1, T2 arg2);
+
+public delegate bool Predicate<in T>(T obj);
+
+//属性
+public string FirstName;
+public string FirstName { get; set; }
+public string FirstName { get; set; } = string.Empty;
+public string FirstName { get; private set; }
+public ICollection<DataPoint> points { get; } = new List<DataPoint>();
+
+public class Person
+{
+    public string FirstName
+    {
+        get { return firstName; }
+        set { firstName = value; }
+    }
+    private string firstName;
+    // remaining implementation removed from listing
+}
+
+public class Person
+{
+    public string FirstName
+    {
+        get => firstName;
+        set => firstName = value;
+    }
+    private string firstName;
+    // remaining implementation removed from listing
+}
+
+//lamded
+public Person(string firstName) => this.FirstName = firstName;
+public string FullName => $"{FirstName} {LastName}";
 
 命名空间
 类
@@ -70,7 +110,7 @@ s.Regex reg=new s.Regex();
 
 
 
-泛型
+泛型(接口、委托的泛型可以带“in”和"out"在尖括号)
 元组和弃元
 Iterators
 public abstract class BaseApp<T>:BaseMonoBehaviour where T:class,new(){

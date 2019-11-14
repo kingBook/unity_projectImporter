@@ -14,6 +14,11 @@
 		public static readonly Regex wordRegex=new Regex(@"(?<word>\b\w+\b)",RegexOptions.Compiled);
 
 		/// <summary>
+		/// 匹配单词+空格+单词
+		/// </summary>
+		public static readonly Regex wordSpaceword=new Regex(wordRegex+@"\s+"+wordRegex,RegexOptions.Compiled);
+
+		/// <summary>
 		/// 匹配"new()"
 		/// </summary>
 		public static readonly Regex newParenthesesRegex=new Regex(@"(?<newParentheses>new\s*\(\s*\))",RegexOptions.Compiled);
@@ -58,6 +63,11 @@
 		/// 匹配"点路径+尖括号"|"名称+尖括号"|"点路径"|"单词"
 		/// </summary>
 		public static readonly Regex dotPathAngleBrackets_wordAngleBrackets_dotPath_wordRegex=new Regex(@"("+dotPathAngleBracketsRegex+@"|"+wordAngleBracketsRegex+@"|"+dotPathRegex+@"|"+wordRegex+@")",RegexOptions.Compiled);
+		
+		/// <summary>
+		/// 匹配"点路径+尖括号"|"名称+尖括号"|"点路径"|"单词+空格+单词"|"单词"
+		/// </summary>
+		public static readonly Regex dotPathAngleBrackets_wordAngleBrackets_dotPath_wordSpaceWord_wordRegex=new Regex(@"("+dotPathAngleBracketsRegex+@"|"+wordAngleBracketsRegex+@"|"+dotPathRegex+@"|"+wordSpaceword+@"|"+wordRegex+@")",RegexOptions.Compiled);
 
 		/// <summary>
 		/// 匹配"点路径+尖括号"|"名称+尖括号"|"点路径"|"new()"|"单词"
@@ -65,10 +75,10 @@
 		public static readonly Regex dotPathAngleBrackets_wordAngleBrackets_dotPath_newParentheses_wordRegex=new Regex(@"("+dotPathAngleBracketsRegex+@"|"+wordAngleBracketsRegex+@"|"+dotPathRegex+@"|"+newParenthesesRegex+@"|"+wordRegex+@")",RegexOptions.Compiled);
 
 		/// <summary>
-		/// 分隔尖括号里的内容表达式(以","作分隔符,尖括号可能出现的内容有:"点路径+尖括号"，"名称+尖括号"，"点路径"，"名称")
+		/// 分隔尖括号里的内容表达式(以","作分隔符,尖括号可能出现的内容有:"点路径+尖括号"，"名称+尖括号"，"点路径"，"单词+空格+单词"，"单词")
 		///	<para><c>Groups["splitContent"].Captures //表示以","分隔的各个内容块</c></para>
 		/// </summary>
-		public static readonly Regex splitAngleBracketsRegex=new Regex(@"(?<splitAngleBracketsContent>"+dotPathAngleBrackets_wordAngleBrackets_dotPath_wordRegex+@")(\s*,\s*(?<splitAngleBracketsContent>"+dotPathAngleBrackets_wordAngleBrackets_dotPath_wordRegex+@"))*",RegexOptions.Compiled);
+		public static readonly Regex splitAngleBracketsRegex=new Regex(@"(?<splitAngleBracketsContent>"+dotPathAngleBrackets_wordAngleBrackets_dotPath_wordSpaceWord_wordRegex+@")(\s*,\s*(?<splitAngleBracketsContent>"+dotPathAngleBrackets_wordAngleBrackets_dotPath_wordSpaceWord_wordRegex+@"))*",RegexOptions.Compiled);
 
 		/// <summary>
 		/// 匹配字符串

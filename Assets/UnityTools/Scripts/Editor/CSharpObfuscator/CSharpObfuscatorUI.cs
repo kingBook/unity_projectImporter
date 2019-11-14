@@ -21,20 +21,8 @@
 
 		[MenuItem("Tools/test")]
 		public static void test(){
-			string text="public class HelloE:HelloD<HelloF<IName<IGood<int>>,HelloE,HelloE>>,IName<int>,IGood<uint>{";
-			var regex=new Regex(@"\<(?:[^<>]|(?<open>\<)|(?<-open>\>))*(?(open)(?!))\>",RegexOptions.Compiled);
-			var matches=regex.Matches(text);
-			for(int i=0;i<matches.Count;i++){
-				Debug.Log(matches[i].Value);
-				//分别输出:
-				//<HelloF<IName<IGood<int>>,HelloE,HelloE>>
-				//<int>
-				//<uint>
-
-			}
 
 		}
-
 
 
 

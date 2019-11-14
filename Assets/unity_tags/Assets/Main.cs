@@ -14,23 +14,23 @@ namespace unity_tags{
 	public delegate int Callee(int a);
 
 	/// <summary>
-    /// Main类
-    /// </summary>
+	/// Main类
+	/// </summary>
 	public class Main : MonoBehaviour{
 		public SpriteRenderer spriteRenderer;
 
 		
-	    void Start(){
+		void Start(){
 			SortingLayer2 [] list0=SortingLayer2.layers;
 			SortingLayer2[ ] list1=SortingLayer2.layers;
 			var list2 =SortingLayer2.layers;
 			SortingLayer2 layer=list1[1];
-            //"."
-            string text="a\"//b\ncdefghi*/*jk*\"/" +
+			//"."
+			string text="a\"//b\ncdefghi*/*jk*\"/" +
 			"lmn";
-            
-            int a=1/* 123*/;//456
-            string bb="/*int b=a+5;*/";
+			
+			int a=1/* 123*/;//456
+			string bb="/*int b=a+5;*/";
 			/*joinString("ye\"  s","	yo u");
 			joinString(@"y""e  s","	yo u");*/
 			joinString(@"a""b  c",@"	def");
@@ -67,14 +67,15 @@ namespace unity_tags{
  * d
  * */
 namespace XXSS {
-    using System.Collections.Generic;
-    using System.Data;
+	using System.Collections.Generic;
+	using System.Data;
 	using XXSS.OOAA.Koo;
 
 	namespace OOAA 
 		.    
 		Koo  
 		{
+			///
 			public class HelloName{
 					private enum TypeCC{
 						
@@ -83,22 +84,24 @@ namespace XXSS {
 						
 					}
 					protected class Test{
-						
+					   
 					}
 					private interface IInterface{
 						
 					}
 			}
 
-			public interface IName<T>{
-                void name();
-            }
+			public interface IName<in T>{
+				void name();
+			}
 			public interface IGood<T> where T:class,new(){
-                void good();
-            }
+				void good();
+			}
 			public interface IHei{
 				void hei();
 			}
+			public interface IHao<in T>{ }
+			public interface IHu<in T,in U>:IHao<IHei>{ }
 			public interface IDot:IHei,IName<int>{ }
 			
 			public class HelloB{string b="HelloB";}
