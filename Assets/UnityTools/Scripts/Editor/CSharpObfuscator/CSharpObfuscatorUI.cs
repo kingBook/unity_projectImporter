@@ -21,9 +21,8 @@
 
 		[MenuItem("Tools/test")]
 		public static void test(){
-
+			
 		}
-
 
 
 		private void OnEnable(){
