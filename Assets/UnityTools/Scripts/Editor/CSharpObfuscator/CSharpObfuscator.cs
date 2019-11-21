@@ -6,6 +6,7 @@
 	using System.Collections.Generic;
 	using System.Text.RegularExpressions;
 	using UnityEngine.UIElements;
+	using System.Linq.Expressions;
 
 	/// <summary>
 	/// CSharp混淆器
@@ -1018,7 +1019,7 @@
 			Regex regexBracket=new Regex("{|}",RegexOptions.Compiled|RegexOptions.RightToLeft);
 			Match bracketMatch=regexBracket.Match(cSharpFile.fileString,bracketBlock.startIndex);
 			//接口正则表达式，从"{"的右侧开始查找
-			Regex regex=new Regex(@"(public|internal|protected|private)?\s+enum\s+\w+.*{",RegexOptions.Compiled|RegexOptions.RightToLeft);
+			Regex regex=new Regex(@"((public|internal|protected|private)\s+)*delegate\s+\b\w+\b(.|\n)*{",RegexOptions.Compiled|RegexOptions.RightToLeft);
 			int startIndex=bracketBlock.startIndex+1;//"{"的右边
 			Match match;
 			if(bracketMatch.Success){
