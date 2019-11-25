@@ -21,7 +21,8 @@
 
 		[MenuItem("Tools/test")]
 		public static void test(){
-
+			var obj=AssetDatabase.LoadAssetAtPath<Object>("ProjectSettings/Physics2DSettingsB.asset");
+			Debug.Log(obj);//ouput Null
 		}
 
 

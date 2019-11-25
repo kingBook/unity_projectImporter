@@ -11,6 +11,7 @@ TagManager:
   - A
   - Fire
   - ab
+  - B
   layers:
   - Default
   - TransparentFX

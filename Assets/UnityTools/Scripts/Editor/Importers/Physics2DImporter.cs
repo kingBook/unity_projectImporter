@@ -1,4 +1,5 @@
-﻿namespace UnityTools{
+﻿using System.Text;
+namespace UnityTools{
 	using UnityEngine;
 	using UnityEditor;
     using System.Collections.Generic;
@@ -11,8 +12,9 @@
 		/// <param name="projectImporterTempPath">临时文件夹</param>
 		/// <param name="projectName">需要导入项目名称</param>
 		public override void import(string path,string projectImporterTempPath,string projectName){
+			
 			//Physics2DSettings.asset 原来的位置
-			string sourceTagFilePath=path+"/ProjectSettings/Physics2DSettings.asset";
+			string sourceTagFilePath=path+@"/ProjectSettings/Physics2DSettings.asset";
 			//Physics2DSettings.asset 复制过来的位置
 			string destTagFilePath=projectImporterTempPath+"/Physics2DSettings.asset";
 			//复制 Physics2DSettings.asset
@@ -20,7 +22,7 @@
 			//加载并转换成SerializedObject
 			string destTagAssetPath=projectImporterTempPath+"/Physics2DSettings.asset";
 			SerializedObject copyDynamicsManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destTagAssetPath));
-
+			
 			Physics2dData physics2dData=ScriptableObject.CreateInstance<Physics2dData>();
 
 			var it=copyDynamicsManager.GetIterator();
