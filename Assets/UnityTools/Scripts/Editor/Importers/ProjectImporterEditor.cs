@@ -6,21 +6,22 @@
     using UnityEngine;
 	
 	public class ProjectImporterEditor:Editor{
+		public static readonly string currentProjectPath=Environment.CurrentDirectory.Replace('\\','/');
+		public static readonly string currentProjectTempPath=currentProjectPath+"/Temp";
 		public static readonly string tempPath="Assets/UnityTools/temp";
 		public static readonly string resourcePath="Assets/UnityTools/Resources";
 
-		/*[MenuItem("ProjectImporter/import")]
+		[MenuItem("ProjectImporter/import")]
 		public static void import(){
 			importCurrentProjectSettings();
-			importProject("D:/kingBook/projects/unity_parkinggame");
+			//importProject("D:/kingBook/projects/unity_parkinggame");
 			//deleteProject("unity_parkinggame");
-		}*/
+		}
 
 		/// <summary>
 		/// 将当前的项目设置导入到"ProjectImporter/Resources"保存
 		/// </summary>
 		public static void importCurrentProjectSettings(){
-			string currentProjectPath=Environment.CurrentDirectory;
 			importProject(currentProjectPath,false,false,"default",false,false);
 		}
 
@@ -48,9 +49,9 @@
 
 			//导入tags和Layers
 			var tagsAndLayersImporter=new TagsAndLayersImporter();
-			tagsAndLayersImporter.import(path,projectImporterTempPath,projectName);
+			tagsAndLayersImporter.import(path,currentProjectTempPath,projectName);
 
-			if(isImportAssets){
+			/*if(isImportAssets){
 				//导入Assets文件夹,并修改.cs文件解决冲突,必须在导入tags和Layers之后执行
 				var assetsImporter=new AssetsImporter();
 				assetsImporter.import(path,projectImporterTempPath,projectName);
@@ -75,7 +76,7 @@
 				//导入BuildSettings
 				var buildSettingsImporter=new BuildSettingsImporter();
 				buildSettingsImporter.import(path,projectImporterTempPath,projectName);
-			}
+			}*/
 
 			//所有事情完成，删除"ProjectImporter/temp"临时文件夹
 			AssetDatabase.DeleteAsset(projectImporterTempPath);

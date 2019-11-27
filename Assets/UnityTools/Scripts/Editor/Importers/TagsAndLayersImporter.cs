@@ -1,23 +1,50 @@
 ﻿namespace UnityTools{
-	using UnityEditor;
+    using System.IO;
+    using System.Text;
+    using UnityEditor;
 	using UnityEngine;
+    using YamlDotNet.RepresentationModel;
 
-	public class TagsAndLayersImporter:Importer{
+    public class TagsAndLayersImporter:Importer{
 		/// <summary>
 		/// 导入项目的TagsAndLayers 
 		/// </summary>
 		/// <param name="path">需要导入TagsAndLayers的项目路径</param>
-		/// <param name="projectImporterTempPath">临时文件夹</param>
+		/// <param name="currentProjectTempPath">临时文件夹</param>
 		/// <param name="projectName">需要导入项目名称</param>
-		public override void import(string path,string projectImporterTempPath,string projectName){
+		public override void import(string path,string currentProjectTempPath,string projectName){
+			//string assetPath=path+"/ProjectSettings/TagManager.asset";
+
 			//TagManager.asset原来的位置
-			string sourceTagFilePath=path+"/ProjectSettings/TagManager.asset";
+			string sourcePath=path+"/ProjectSettings/TagManager.asset";
 			//TagManager.asset复制过来的位置
-			string destTagFilePath=projectImporterTempPath+"/TagManager.asset";
+			string destPath=currentProjectTempPath+"/TagManager.asset";
 			//复制TagManager.asset
-			FileUtil2.copyFile(sourceTagFilePath,destTagFilePath,true);
+			FileUtil2.copyFile(sourcePath,destPath,true);
+
+			StreamReader streamReader=new StreamReader(destPath, Encoding.UTF8);
+			YamlStream yaml=new YamlStream();
+			yaml.Load(streamReader);
+			//必须Dispose，否则导致无法删除复制过来的.asset
+			streamReader.Dispose();
+
+			YamlNode rootNode=yaml.Documents[0].RootNode;
+			YamlNode firstNode=rootNode["TagManager"];
+			YamlSequenceNode tags=(YamlSequenceNode)firstNode["tags"];
+			YamlSequenceNode layers=(YamlSequenceNode)firstNode["layers"];
+			YamlSequenceNode m_SortingLayers=(YamlSequenceNode)firstNode["m_SortingLayers"];
+			
+			importTags(tags);
+			importSortingLayers(m_SortingLayers,myTagManager,projectName);
+			/*
+			//TagManager.asset原来的位置
+			string sourcePath=path+"/ProjectSettings/TagManager.asset";
+			//TagManager.asset复制过来的位置
+			string destPath=tempPath+"/TagManager.asset";
+			//复制TagManager.asset
+			FileUtil2.copyFile(sourcePath,destPath,true);
 			//加载并转换成SerializedObject
-			SerializedObject copyTagManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destTagFilePath));
+			SerializedObject copyTagManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destPath));
 			//加载当前项目的TagManager.asset并转换成SerializedObject
 			SerializedObject myTagManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
 			
@@ -32,17 +59,17 @@
 				}
 			}
 			//删除复制过来的"TagManager.asset"
-			AssetDatabase.DeleteAsset(destTagFilePath);
-			AssetDatabase.Refresh();
+			AssetDatabase.DeleteAsset(destPath);
+			AssetDatabase.Refresh();*/
+			
+			FileUtil.DeleteFileOrDirectory(destPath);
 		}
 
 		#region importTags
-		private void importTags(SerializedProperty tags){
-			int len=tags.arraySize;
-			for(int i=0;i<len;i++){
-				SerializedProperty tagElement=tags.GetArrayElementAtIndex(i);
-				UnityEditorInternal.InternalEditorUtility.AddTag(tagElement.stringValue);
-				//addTag(tagElement.stringValue);
+		private void importTags(YamlSequenceNode tags){
+			foreach(YamlScalarNode tag in tags){
+				UnityEditorInternal.InternalEditorUtility.AddTag(tag.Value);
+				//addTag(tag.Value);
 			}
 		}
 
