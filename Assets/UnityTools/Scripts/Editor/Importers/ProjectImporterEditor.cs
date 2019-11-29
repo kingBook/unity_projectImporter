@@ -8,7 +8,7 @@
 	public class ProjectImporterEditor:Editor{
 		public static readonly string currentProjectPath=Environment.CurrentDirectory.Replace('\\','/');
 		public static readonly string currentProjectTempPath=currentProjectPath+"/Temp";
-		public static readonly string tempPath="Assets/UnityTools/temp";
+		public static readonly string projectImporterTempPath="Assets/UnityTools/temp";
 		public static readonly string resourcePath="Assets/UnityTools/Resources";
 
 		[MenuItem("ProjectImporter/import")]
@@ -44,7 +44,6 @@
 			deleteProject(projectName,isDeleteBuildSettingsScenes,isDeleteAssets);
 
 			//创建临时文件夹,如果文件夹存在则先删除
-			string projectImporterTempPath=tempPath;
 			FileUtil2.createDirectory(projectImporterTempPath,true);
 
 			//导入tags和Layers
