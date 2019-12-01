@@ -81,7 +81,7 @@
 			AssetDatabase.DeleteAsset(projectImporterTempPath);
 
 			//保存场景，才能更新ProjectSettings里的.asset
-			EditorSceneManager.SaveOpenScenes();
+			//EditorSceneManager.SaveOpenScenes();//使用yaml不能保存，否则导致当前设置覆盖保存的yaml
 		}
 
 		/// <summary>

@@ -30,8 +30,8 @@ TagManager:
   - layer_14
   - layer_15
   - layer_16
-  - 
-  - 
+  - layer_17
+  - layer_18
   - 
   - 
   - 
@@ -49,7 +49,7 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: sortLayer_1
+  - name: sortLayer_01
     uniqueID: 969535544
     locked: 0
   - name: sortLayer_2
@@ -66,4 +66,13 @@ TagManager:
     locked: 0
   - name: sortLayer_6
     uniqueID: 1030135117
+    locked: 0
+  - name: sortLayer_7
+    uniqueID: 3687730176
+    locked: 0
+  - name: sortLayer_8
+    uniqueID: 2455734016
+    locked: 0
+  - name: sortLayer_9
+    uniqueID: 3510514688
     locked: 0

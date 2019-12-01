@@ -1,4 +1,5 @@
 ﻿namespace UnityTools{
+    using System.Collections.Generic;
     using System.IO;
     using System.Text;
     using UnityEditor;
@@ -39,51 +40,23 @@
 			streamReader.Dispose();
 			streamReader.Close();
 			
-			YamlNode myRootNode=yaml.Documents[0].RootNode;
+			YamlNode myRootNode=myYaml.Documents[0].RootNode;
 			YamlNode myFirstNode=myRootNode["TagManager"];
-			YamlSequenceNode myTags=(YamlSequenceNode)myFirstNode["tags"];
+			//YamlSequenceNode myTags=(YamlSequenceNode)myFirstNode["tags"];
 			YamlSequenceNode myLayers=(YamlSequenceNode)myFirstNode["layers"];
 			YamlSequenceNode mySortingLayers=(YamlSequenceNode)myFirstNode["m_SortingLayers"];
 			
 			importTags(tags);
 			importSortingLayers(sortingLayers,mySortingLayers,projectName);
-			//importLayers(it,myTagManager,projectName);
-			
+			importLayers(layers,myLayers,projectName);
+
 			//保存修改到当前项目的TagManager.asset
 			StreamWriter streamWriter=new StreamWriter(myFilePath);
 			for (int i=0;i<3;i++)streamWriter.WriteLine(myHeadLines[i]);
-			yaml.Save(streamWriter,false);
+			myYaml.Save(streamWriter,false);
 			streamWriter.Dispose();
 			streamWriter.Close();
-			
-			
-			
-			
-			/*
-			//TagManager.asset原来的位置
-			string sourcePath=path+"/ProjectSettings/TagManager.asset";
-			//TagManager.asset复制过来的位置
-			string destPath=tempPath+"/TagManager.asset";
-			//复制TagManager.asset
-			FileUtil2.copyFile(sourcePath,destPath,true);
-			//加载并转换成SerializedObject
-			SerializedObject copyTagManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destPath));
-			//加载当前项目的TagManager.asset并转换成SerializedObject
-			SerializedObject myTagManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
-			
-			var it=copyTagManager.GetIterator();
-			while (it.NextVisible(true)){
-				if (it.name=="tags"){
-					importTags(it);
-				}else if(it.name=="m_SortingLayers"){
-					importSortingLayers(it,myTagManager,projectName);
-				}else if(it.name=="layers"){
-					importLayers(it,myTagManager,projectName);
-				}
-			}
-			//删除复制过来的"TagManager.asset"
-			AssetDatabase.DeleteAsset(destPath);
-			AssetDatabase.Refresh();*/
+			//AssetDatabase.Refresh();
 			
 		}
 
@@ -121,35 +94,32 @@
 		#endregion importTags
 
 		#region importLayers
-		private void importLayers(SerializedProperty layers,SerializedObject myTagManager,string projectName){
-			int len=layers.arraySize;
-
-			string[] strings=new string[len];
-
-			for(int i=0;i<len;i++){
-				var layerElement=layers.GetArrayElementAtIndex(i);
+		private void importLayers(YamlSequenceNode layers,YamlSequenceNode myLayers,string projectName){
+			List<string> strings=new List<string>();
+			int i=0;
+			foreach(YamlScalarNode layer in layers){
 				if(i>=8){
-					setLayer(myTagManager,i,layerElement.stringValue);
+					setLayer(myLayers,i,layer.Value);
 				}
-				strings[i]=layerElement.stringValue;
+				strings.Add(layer.Value);
+				i++;
 			}
-
 			var layersData= ScriptableObject.CreateInstance<LayersData>();
-			layersData.list=strings;
+			layersData.list=strings.ToArray();
 			string layersDataPath=ProjectImporterEditor.resourcePath+"/"+projectName+"_layersData.asset";
 			AssetDatabase.CreateAsset(layersData,layersDataPath);
 		}
 
-		private void setLayer(SerializedObject myTagManager,int index,string layer){
-			if(string.IsNullOrEmpty(layer))return;
-
-			SerializedProperty it=myTagManager.FindProperty("layers");
-
-			int len=it.arraySize;
-		
-			SerializedProperty element=it.GetArrayElementAtIndex(index);
-			element.stringValue="layer_"+index;//重命名Layer
-			myTagManager.ApplyModifiedProperties();
+		private void setLayer(YamlSequenceNode myLayers,int index,string layerValue){
+			if(string.IsNullOrEmpty(layerValue))return;
+			int i=0;
+			foreach(YamlScalarNode myLayer in myLayers){
+				if(i==index){
+					myLayer.Value="layer_"+index;//重命名Layer
+					break;
+				}
+				i++;
+			}
 		}
 		#endregion importLayers
 
@@ -160,25 +130,27 @@
 		/// <param name="sortingLayers"></param>
 		/// <param name="mySortingLayers"></param>
 		/// <param name="projectName"></param>
-		private void importSortingLayers(SerializedProperty sortingLayers,SerializedObject mySortingLayers,string projectName){
-			int len=sortingLayers.arraySize;
-
-			var uSortingLayers=new USortingLayer[len];
-			for(int i=0;i<len;i++){
-				var sortingLayerElement=sortingLayers.GetArrayElementAtIndex(i);
-				var nameElement=sortingLayerElement.FindPropertyRelative("name");
-				var uniqueIDElement=sortingLayerElement.FindPropertyRelative("uniqueID");
+		private void importSortingLayers(YamlSequenceNode sortingLayers,YamlSequenceNode mySortingLayers,string projectName){
+			int i=0;
+			List<USortingLayer> uSortingLayers=new List<USortingLayer>();
+			foreach(YamlMappingNode sortingLayer in sortingLayers){
+				YamlScalarNode nameElement=(YamlScalarNode)sortingLayer["name"];
+				YamlScalarNode uniqueIDElement=(YamlScalarNode)sortingLayer["uniqueID"];
+				//YamlScalarNode lockedElement=(YamlScalarNode)sortingLayer["locked"];
 				if(i>=1){
-					setSortingLayerToCurrentProject(mySortingLayers,i,nameElement.stringValue);
+					setSortingLayerToCurrentProject(mySortingLayers,i,nameElement.Value);
 				}
+
 				var uSortingLayer=new USortingLayer();
-				uSortingLayer.name=nameElement.stringValue;
-				uSortingLayer.uniqueID=(uint)uniqueIDElement.intValue;//这里SerializedProperty不支持uintValue读取，所以只能读intValue再转换
-				uSortingLayers[i]=uSortingLayer;
+				uSortingLayer.name=nameElement.Value;
+				uSortingLayer.uniqueID=uint.Parse(uniqueIDElement.Value);
+				uSortingLayers.Add(uSortingLayer);
+
+				i++;
 			}
 
 			SortingLayersData sortingLayersData= ScriptableObject.CreateInstance<SortingLayersData>();
-			sortingLayersData.list=uSortingLayers;
+			sortingLayersData.list=uSortingLayers.ToArray();
 			string sortingLayersDataPath=ProjectImporterEditor.resourcePath+"/"+projectName+"_sortingLayersData.asset";
 			AssetDatabase.CreateAsset(sortingLayersData,sortingLayersDataPath);
 		}
@@ -186,42 +158,35 @@
 		/// <summary>
 		/// 设置index指定的SortingLayer到当前项目
 		/// </summary>
-		/// <param name="myTagManager"></param>
+		/// <param name="mySortingLayers"></param>
 		/// <param name="index"></param>
 		/// <param name="layer"></param>
-		private void setSortingLayerToCurrentProject(SerializedObject myTagManager,int index,string layer){
-			var mySortingLayers=myTagManager.FindProperty("m_SortingLayers");
+		private void setSortingLayerToCurrentProject(YamlSequenceNode mySortingLayers,int index,string layer){
+			//计算当前项目SortingLayer的长度
+			int mySortingLayersLen=0;
+			foreach(var item in mySortingLayers){ mySortingLayersLen++; }
 			//如果index超过当前项目的SortingLayers总数,则在尾部插入一个元素
-			int len=mySortingLayers.arraySize;
-			if(index>=len)mySortingLayers.InsertArrayElementAtIndex(len);
-			//需要设置的SortingLayer
-			var mySortingLayerElement=mySortingLayers.GetArrayElementAtIndex(index);
-			//改名
-			var nameElement=mySortingLayerElement.FindPropertyRelative("name");
-			nameElement.stringValue="sortLayer_"+index;//重命名SortingLayer
-			//设置一个唯一的id
-			var uniqueIDElement=mySortingLayerElement.FindPropertyRelative("uniqueID");
-			if(!isUniqueSortingLayerID((uint)uniqueIDElement.intValue,index,mySortingLayers)){
-				uniqueIDElement.intValue=getSortingLayerUniqueID(mySortingLayers,index);
+			//if(index>=mySortingLayersLen)mySortingLayers.InsertArrayElementAtIndex(mySortingLayersLen);
+			if(index>=mySortingLayersLen){
+				var nSortingLayer=new YamlMappingNode();
+				uint uniqueID=getSortingLayerUniqueID(mySortingLayers);
+				nSortingLayer.Add("name",new YamlScalarNode("sortLayer_"+index));
+				nSortingLayer.Add("uniqueID",new YamlScalarNode(uniqueID.ToString()));
+				nSortingLayer.Add("locked",new YamlScalarNode("0"));
+				mySortingLayers.Add(nSortingLayer);
 			}
-			//应用修改
-			myTagManager.ApplyModifiedProperties();
 		}
 
 		/// <summary>
 		/// 返回一个在当前项目SortingLayers中唯一的ID
 		/// </summary>
 		/// <param name="sortingLayers">"m_SortingLayers"序列化属性</param>
-		/// <param name="curIndex">当前层在sortingLayers中的下标</param>
 		/// <returns></returns>
-		private int getSortingLayerUniqueID(SerializedProperty sortingLayers,int curIndex){
-			int id=0;
+		private uint getSortingLayerUniqueID(YamlSequenceNode sortingLayers){
+			uint id=0;
 			while(true){
-				//uniqueID:取得区间[0,int.MaxValue]。
-				//注意：在编辑里设置的最大值是uint.MaxValue,
-				//但是SerializedProperty只支持设置intValue,所有这里选择int.MaxValue
-				id=Random.Range(0,int.MaxValue);
-				if(isUniqueSortingLayerID((uint)id,curIndex,sortingLayers)){
+				id=(uint)Random.Range(0,uint.MaxValue);
+				if(isUniqueSortingLayerID(id,sortingLayers)){
 					break;
 				}
 			}
@@ -232,21 +197,20 @@
 		/// 判断id在当前项目SortingLayers中是否唯一的
 		/// </summary>
 		/// <param name="sortingLayerID"></param>
-		/// <param name="curIndex">当前层在sortingLayers中的下标</param>
 		/// <param name="sortingLayers">"m_SortingLayers"序列化属性</param>
 		/// <returns></returns>
-		private bool isUniqueSortingLayerID(uint sortingLayerID,int curIndex,SerializedProperty sortingLayers){
+		private bool isUniqueSortingLayerID(uint sortingLayerID,YamlSequenceNode sortingLayers){
 			bool isUnique=true;
-			int i=sortingLayers.arraySize;
-			while(--i>=0){
-				if(i==curIndex)continue;
-				var element=sortingLayers.GetArrayElementAtIndex(i);
-				var uniqueIDElement=element.FindPropertyRelative("uniqueID");
-				//这里SerializedProperty不支持uintValue读取，所以只能读intValue再转换
-				if((uint)uniqueIDElement.intValue==sortingLayerID){
+			int i=0;
+			foreach(YamlMappingNode sortingLayer in sortingLayers){
+				YamlScalarNode nameElement=(YamlScalarNode)sortingLayer["name"];
+				YamlScalarNode uniqueIDElement=(YamlScalarNode)sortingLayer["uniqueID"];
+				//YamlScalarNode lockedElement=(YamlScalarNode)sortingLayer["locked"];
+				if(uint.Parse(uniqueIDElement.Value)==sortingLayerID){
 					isUnique=false;
 					break;
 				}
+				i++;
 			}
 			return isUnique;
 		}
