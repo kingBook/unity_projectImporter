@@ -29,7 +29,6 @@
 			YamlSequenceNode layers=(YamlSequenceNode)firstNode["layers"];
 			YamlSequenceNode sortingLayers=(YamlSequenceNode)firstNode["m_SortingLayers"];
 			
-			
 			//当前项目的TagManager.asset的路径
 			string myFilePath=ProjectImporterEditor.currentProjectPath+"/ProjectSettings/TagManager.asset";
 			streamReader=new StreamReader(myFilePath,Encoding.UTF8);
@@ -56,8 +55,8 @@
 			myYaml.Save(streamWriter,false);
 			streamWriter.Dispose();
 			streamWriter.Close();
-			//AssetDatabase.Refresh();
-			
+
+			AssetDatabase.Refresh();
 		}
 
 		#region importTags
@@ -115,7 +114,8 @@
 			int i=0;
 			foreach(YamlScalarNode myLayer in myLayers){
 				if(i==index){
-					myLayer.Value="layer_"+index;//重命名Layer
+					//此处将layer名称都改为"layer_xx"
+					myLayer.Value="layer_"+index;
 					break;
 				}
 				i++;

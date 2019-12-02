@@ -16,6 +16,8 @@
 			importCurrentProjectSettings();
 			//importProject("D:/kingBook/projects/unity_parkinggame");
 			//deleteProject("unity_parkinggame");
+
+			
 		}
 
 		/// <summary>
@@ -54,16 +56,17 @@
 				//导入Assets文件夹,并修改.cs文件解决冲突,必须在导入tags和Layers之后执行
 				var assetsImporter=new AssetsImporter();
 				assetsImporter.import(path,projectImporterTempPath,projectName);
-			}
+			}*/
+
 			//导入Time
 			var timeImporter=new TimeImporter();
-			timeImporter.import(path,projectImporterTempPath,projectName);
+			timeImporter.import(path,currentProjectTempPath,projectName);
 
 			//导入Physics
 			var physicsImporter=new PhysicsImporter();
-			physicsImporter.import(path,projectImporterTempPath,projectName);
+			physicsImporter.import(path,currentProjectTempPath,projectName);
 
-			//导入Physics2D
+			/*//导入Physics2D
 			var physics2DImporter=new Physics2DImporter();
 			physics2DImporter.import(path,projectImporterTempPath,projectName);
 
@@ -79,9 +82,6 @@
 
 			//所有事情完成，删除"ProjectImporter/temp"临时文件夹
 			AssetDatabase.DeleteAsset(projectImporterTempPath);
-
-			//保存场景，才能更新ProjectSettings里的.asset
-			//EditorSceneManager.SaveOpenScenes();//使用yaml不能保存，否则导致当前设置覆盖保存的yaml
 		}
 
 		/// <summary>

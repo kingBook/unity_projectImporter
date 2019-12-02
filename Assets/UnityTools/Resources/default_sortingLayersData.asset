@@ -15,7 +15,7 @@ MonoBehaviour:
   list:
   - name: Default
     uniqueID: 0
-  - name: sortLayer_1
+  - name: sortLayer_01
     uniqueID: 969535544
   - name: sortLayer_2
     uniqueID: 1095712323

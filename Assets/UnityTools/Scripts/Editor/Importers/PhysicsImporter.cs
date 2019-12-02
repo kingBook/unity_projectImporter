@@ -1,106 +1,122 @@
 ﻿namespace UnityTools{
 	using System;
-	using UnityEditor;
+    using System.IO;
+    using System.Text;
+    using UnityEditor;
 	using UnityEngine;
+    using YamlDotNet.RepresentationModel;
 
-	public class PhysicsImporter:Importer{
+    public class PhysicsImporter:Importer{
 		/// <summary>
 		/// 导入项目的PhysicsSettings
 		/// </summary>
 		/// <param name="path">需要导入PhysicsSettings的项目路径</param>
-		/// <param name="projectImporterTempPath">临时文件夹</param>
+		/// <param name="currentProjectTempPath">临时文件夹</param>
 		/// <param name="projectName">需要导入项目名称</param>
-		public override void import(string path,string projectImporterTempPath,string projectName){
-			//DynamicsManager.asset原来的位置
-			string sourceTagFilePath=path+"/ProjectSettings/DynamicsManager.asset";
-			//DynamicsManager.asset复制过来的位置
-			string destTagFilePath=projectImporterTempPath+"/DynamicsManager.asset";
-			//复制DynamicsManager.asset
-			FileUtil2.copyFile(sourceTagFilePath,destTagFilePath,true);
-			//加载并转换成SerializedObject
-			string destTagAssetPath=projectImporterTempPath+"/DynamicsManager.asset";
-			SerializedObject copyDynamicsManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destTagAssetPath));
+		public override void import(string path,string currentProjectTempPath,string projectName){
+			//需要导入的DynamicsManager.asset的路径
+			string settingsFilePath=path+"/ProjectSettings/DynamicsManager.asset";
+
+			StreamReader streamReader=new StreamReader(settingsFilePath,Encoding.UTF8);
+			YamlStream yaml=new YamlStream();
+			yaml.Load(streamReader);
+			streamReader.Dispose();
+			streamReader.Close();
+
+			YamlNode rootNode=yaml.Documents[0].RootNode;
+			YamlMappingNode firstNode=(YamlMappingNode)rootNode["PhysicsManager"];
 
 			PhysicsData physicsData=ScriptableObject.CreateInstance<PhysicsData>();
-
-			var it=copyDynamicsManager.GetIterator();
-			while (it.Next(true)){
-				string itName=it.name;
-				if(itName=="m_Gravity"){
+			foreach(var item in firstNode){
+				var keyNode=(YamlScalarNode)item.Key;
+				var valueNode=item.Value;
+				if(keyNode.Value=="m_Gravity"){
 					Vector3 v3=new Vector3();
-					v3.x=it.FindPropertyRelative("x").floatValue;
-					v3.y=it.FindPropertyRelative("y").floatValue;
-					v3.z=it.FindPropertyRelative("z").floatValue;
+					v3.x=float.Parse(valueNode["x"].ToString());
+					v3.y=float.Parse(valueNode["y"].ToString());
+					v3.z=float.Parse(valueNode["z"].ToString());
 					physicsData.gravity=v3;
-				}else if(itName=="m_DefaultMaterial"){
+				}else if(keyNode.Value=="m_DefaultMaterial"){
 					//获取默认物理材质
-					int fileId=it.FindPropertyRelative("m_FileID").intValue;
-					string defaultPhysicsMaterialPath = AssetDatabase.GetAssetPath(fileId);
+					int fileId=int.Parse(valueNode["fileID"].ToString());
+					string defaultPhysicsMaterialPath=AssetDatabase.GetAssetPath(fileId);
 					physicsData.defaultMaterial=AssetDatabase.LoadAssetAtPath<PhysicMaterial>(defaultPhysicsMaterialPath);//当没有设置时会自动为None
-				}else if(itName=="m_BounceThreshold"){
-					physicsData.bounceThreshold=it.floatValue;
-				}else if(itName=="m_SleepThreshold"){
-					physicsData.sleepThreshold=it.floatValue;
-				}else if(itName=="m_DefaultContactOffset"){
-					physicsData.defaultContactOffset=it.floatValue;
-				}else if(itName=="m_DefaultSolverIterations"){
-					physicsData.defaultSolverIterations=it.intValue;
-				}else if(itName=="m_DefaultSolverVelocityIterations"){
-					physicsData.defaultSolverVelocityIterations=it.intValue;
-				}else if(itName=="m_QueriesHitBackfaces"){
-					physicsData.queriesHitBackfaces=it.boolValue;
-				}else if(itName=="m_QueriesHitTriggers"){
-					physicsData.queriesHitTriggers=it.boolValue;
-				}else if(itName=="m_EnableAdaptiveForce"){
-					physicsData.enableAdaptiveForce=it.boolValue;
-				}else if(itName=="m_ClothInterCollisionDistance"){
-					physicsData.clothInterCollisionDistance=it.floatValue;
-				}else if(itName=="m_ClothInterCollisionStiffness"){
-					physicsData.clothInterCollisionStiffness=it.floatValue;
-				}else if(itName=="m_ContactsGeneration"){
-					physicsData.contactsGeneration=it.intValue;
-				}else if(itName=="m_LayerCollisionMatrix"){
-					int arraySize=it.arraySize;
-					int[] intList=new int[arraySize];
-					for(int i=0;i<arraySize;i++){
-						var element=it.GetArrayElementAtIndex(i);
-						intList[i]=element.intValue;
+				}else if(keyNode.Value=="m_BounceThreshold"){
+					physicsData.bounceThreshold=float.Parse(valueNode.ToString());
+				}else if(keyNode.Value=="m_SleepThreshold"){
+					physicsData.sleepThreshold=float.Parse(valueNode.ToString());
+				}else if(keyNode.Value=="m_DefaultContactOffset"){
+					physicsData.defaultContactOffset=float.Parse(valueNode.ToString());
+				}else if(keyNode.Value=="m_DefaultSolverIterations"){
+					physicsData.defaultSolverIterations=int.Parse(valueNode.ToString());
+				}else if(keyNode.Value=="m_DefaultSolverVelocityIterations"){
+					physicsData.defaultSolverVelocityIterations=int.Parse(valueNode.ToString());
+				}else if(keyNode.Value=="m_QueriesHitBackfaces"){
+					physicsData.queriesHitBackfaces=valueNode.ToString()=="1";
+				}else if(keyNode.Value=="m_QueriesHitTriggers"){
+					physicsData.queriesHitTriggers=valueNode.ToString()=="1";
+				}else if(keyNode.Value=="m_EnableAdaptiveForce"){
+					physicsData.enableAdaptiveForce=valueNode.ToString()=="1";
+				}else if(keyNode.Value=="m_ClothInterCollisionDistance"){
+					physicsData.clothInterCollisionDistance=float.Parse(valueNode.ToString());
+				}else if(keyNode.Value=="m_ClothInterCollisionStiffness"){
+					physicsData.clothInterCollisionStiffness=float.Parse(valueNode.ToString());
+				}else if(keyNode.Value=="m_ContactsGeneration"){
+					physicsData.contactsGeneration=int.Parse(valueNode.ToString());
+				}else if(keyNode.Value=="m_LayerCollisionMatrix"){
+					string matrixString=valueNode.ToString();
+					int[] intList=new int[32];
+					for(int i=0;i<32;i++){
+						intList[i]=Convert.ToInt32(matrixString.Substring(i*8,8),16);
 					}
 					physicsData.layerCollisionMatrix=intList;
-				}else if(itName=="m_AutoSimulation"){
-					physicsData.autoSimulation=it.boolValue;
-				}else if(itName=="m_AutoSyncTransforms"){
-					physicsData.autoSyncTransforms=it.boolValue;
-				}else if(itName=="m_ReuseCollisionCallbacks"){
-					physicsData.reuseCollisionCallbacks=it.boolValue;
-				}else if(itName=="m_ClothInterCollisionSettingsToggle"){
-					physicsData.clothInterCollisionSettingsToggle=it.boolValue;
-				}else if(itName=="m_ClothGravity"){
-					physicsData.clothGravity=it.vector3Value;
-				}else if(itName=="m_ContactPairsMode"){
-					physicsData.contactPairsMode=it.intValue;
-				}else if(itName=="m_BroadphaseType"){
-					physicsData.broadphaseType=it.intValue;
-				}else if(itName=="m_WorldBounds"){
-					physicsData.worldBounds=it.boundsValue;
-				}else if(itName=="m_WorldSubdivisions"){
-					physicsData.worldSubdivisions=it.intValue;
-				}else if(itName=="m_FrictionType"){
-					physicsData.frictionType=it.intValue;
-				}else if(itName=="m_EnableEnhancedDeterminism"){
-					physicsData.enableEnhancedDeterminism=it.boolValue;
-				}else if(itName=="m_EnableUnifiedHeightmaps"){
-					physicsData.enableUnifiedHeightmaps=it.boolValue;
-				}else if(itName=="m_DefaultMaxAngularSpeed"){
-					physicsData.defaultMaxAngularSpeed=it.floatValue;
+				}else if(keyNode.Value=="m_AutoSimulation"){
+					physicsData.autoSimulation=valueNode.ToString()=="1";
+				}else if(keyNode.Value=="m_AutoSyncTransforms"){
+					physicsData.autoSyncTransforms=valueNode.ToString()=="1";
+				}else if(keyNode.Value=="m_ReuseCollisionCallbacks"){
+					physicsData.reuseCollisionCallbacks=valueNode.ToString()=="1";
+				}else if(keyNode.Value=="m_ClothInterCollisionSettingsToggle"){
+					physicsData.clothInterCollisionSettingsToggle=valueNode.ToString()=="1";
+				}else if(keyNode.Value=="m_ClothGravity"){
+					Vector3 v3=new Vector3();
+					v3.x=float.Parse(valueNode["x"].ToString());
+					v3.y=float.Parse(valueNode["y"].ToString());
+					v3.z=float.Parse(valueNode["z"].ToString());
+					physicsData.clothGravity=v3;
+				}else if(keyNode.Value=="m_ContactPairsMode"){
+					physicsData.contactPairsMode=int.Parse(valueNode.ToString());
+				}else if(keyNode.Value=="m_BroadphaseType"){
+					physicsData.broadphaseType=int.Parse(valueNode.ToString());
+				}else if(keyNode.Value=="m_WorldBounds"){
+					var m_Center=valueNode["m_Center"];
+					Vector3 center=new Vector3();
+					center.x=float.Parse(m_Center["x"].ToString());
+					center.y=float.Parse(m_Center["y"].ToString());
+					center.z=float.Parse(m_Center["z"].ToString());
+
+					var m_Extent=valueNode["m_Extent"];
+					Vector3 extent=new Vector3();
+					extent.x=float.Parse(m_Extent["x"].ToString());
+					extent.y=float.Parse(m_Extent["y"].ToString());
+					extent.z=float.Parse(m_Extent["z"].ToString());
+					
+					physicsData.worldBounds=new Bounds(center,extent*2);
+				}else if(keyNode.Value=="m_WorldSubdivisions"){
+					physicsData.worldSubdivisions=int.Parse(valueNode.ToString());
+				}else if(keyNode.Value=="m_FrictionType"){
+					physicsData.frictionType=int.Parse(valueNode.ToString());
+				}else if(keyNode.Value=="m_EnableEnhancedDeterminism"){
+					physicsData.enableEnhancedDeterminism=valueNode.ToString()=="1";
+				}else if(keyNode.Value=="m_EnableUnifiedHeightmaps"){
+					physicsData.enableUnifiedHeightmaps=valueNode.ToString()=="1";
+				}else if(keyNode.Value=="m_DefaultMaxAngularSpeed"){
+					physicsData.defaultMaxAngularSpeed=float.Parse(valueNode.ToString());
 				}
 			}
 
 			AssetDatabase.CreateAsset(physicsData,ProjectImporterEditor.resourcePath+"/"+projectName+"_physicsData.asset");
-			//删除复制过来的"DynamicsManager.asset"
-			AssetDatabase.DeleteAsset(destTagFilePath);
 			AssetDatabase.Refresh();
-
 		}
 	}
 
