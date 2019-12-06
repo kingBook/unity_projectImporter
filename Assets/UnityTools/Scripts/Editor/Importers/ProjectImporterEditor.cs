@@ -52,11 +52,11 @@
 			var tagsAndLayersImporter=new TagsAndLayersImporter();
 			tagsAndLayersImporter.import(path,currentProjectTempPath,projectName);
 
-			/*if(isImportAssets){
+			if(isImportAssets){
 				//导入Assets文件夹,并修改.cs文件解决冲突,必须在导入tags和Layers之后执行
 				var assetsImporter=new AssetsImporter();
 				assetsImporter.import(path,projectImporterTempPath,projectName);
-			}*/
+			}
 
 			//导入Time
 			var timeImporter=new TimeImporter();
@@ -68,17 +68,17 @@
 
 			/*//导入Physics2D
 			var physics2DImporter=new Physics2DImporter();
-			physics2DImporter.import(path,projectImporterTempPath,projectName);
+			physics2DImporter.import(path,projectImporterTempPath,projectName);*/
 
 			//导入Quality
 			var qualityImporter=new QualityImporter();
-			qualityImporter.import(path,projectImporterTempPath,projectName);
+			qualityImporter.import(path,currentProjectTempPath,projectName);
 			
 			if(isImportBuildSettings){
 				//导入BuildSettings
 				var buildSettingsImporter=new BuildSettingsImporter();
-				buildSettingsImporter.import(path,projectImporterTempPath,projectName);
-			}*/
+				buildSettingsImporter.import(path,currentProjectTempPath,projectName);
+			}
 
 			//所有事情完成，删除"ProjectImporter/temp"临时文件夹
 			AssetDatabase.DeleteAsset(projectImporterTempPath);
