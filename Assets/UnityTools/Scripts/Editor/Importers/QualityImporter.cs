@@ -69,8 +69,14 @@
 			qualitySettings.shadowCascade4Split=shadowCascade4SplitV3;
 
 			qualitySettings.shadowmaskMode=int.Parse(item["shadowmaskMode"].ToString());
-			Debug.Log(item["skinWeights"]);
-			qualitySettings.skinWeights=int.Parse(item["skinWeights"].ToString());
+
+			//blendWeights/skinWeights,当建项目未做任何品质设置更改时是blendWeights,更改一次后是skinWeights
+			bool isSkinWeights=hasKeyWithinMappingNode(item,"skinWeights");
+			if(isSkinWeights){
+				qualitySettings.skinWeights=int.Parse(item["skinWeights"].ToString());
+			}else{
+				qualitySettings.skinWeights=int.Parse(item["blendWeights"].ToString());
+			}
 			qualitySettings.textureQuality=int.Parse(item["textureQuality"].ToString());
 			qualitySettings.anisotropicTextures=int.Parse(item["anisotropicTextures"].ToString());
 			qualitySettings.antiAliasing=int.Parse(item["antiAliasing"].ToString());
@@ -81,16 +87,26 @@
 			qualitySettings.vSyncCount=int.Parse(item["vSyncCount"].ToString());
 			qualitySettings.lodBias=float.Parse(item["lodBias"].ToString());
 			qualitySettings.maximumLODLevel=int.Parse(item["maximumLODLevel"].ToString());
-			qualitySettings.streamingMipmapsActive=item["streamingMipmapsActive"].ToString()=="1";
-			qualitySettings.streamingMipmapsAddAllCameras=item["streamingMipmapsAddAllCameras"].ToString()=="1";
-			qualitySettings.streamingMipmapsMemoryBudget=float.Parse(item["streamingMipmapsMemoryBudget"].ToString());
-			qualitySettings.streamingMipmapsRenderersPerFrame=int.Parse(item["streamingMipmapsRenderersPerFrame"].ToString());
-			qualitySettings.streamingMipmapsMaxLevelReduction=int.Parse(item["streamingMipmapsMaxLevelReduction"].ToString());
-			qualitySettings.streamingMipmapsMaxFileIORequests=int.Parse(item["streamingMipmapsMaxFileIORequests"].ToString());
+
+			//skinWeights,才有
+			if(isSkinWeights){
+				qualitySettings.streamingMipmapsActive=item["streamingMipmapsActive"].ToString()=="1";
+				qualitySettings.streamingMipmapsAddAllCameras=item["streamingMipmapsAddAllCameras"].ToString()=="1";
+				qualitySettings.streamingMipmapsMemoryBudget=float.Parse(item["streamingMipmapsMemoryBudget"].ToString());
+				qualitySettings.streamingMipmapsRenderersPerFrame=int.Parse(item["streamingMipmapsRenderersPerFrame"].ToString());
+				qualitySettings.streamingMipmapsMaxLevelReduction=int.Parse(item["streamingMipmapsMaxLevelReduction"].ToString());
+				qualitySettings.streamingMipmapsMaxFileIORequests=int.Parse(item["streamingMipmapsMaxFileIORequests"].ToString());
+			}
+
 			qualitySettings.particleRaycastBudget=int.Parse(item["particleRaycastBudget"].ToString());
 			qualitySettings.asyncUploadTimeSlice=int.Parse(item["asyncUploadTimeSlice"].ToString());
 			qualitySettings.asyncUploadBufferSize=int.Parse(item["asyncUploadBufferSize"].ToString());
-			qualitySettings.asyncUploadPersistentBuffer=item["asyncUploadPersistentBuffer"].ToString()=="1";
+
+			//skinWeights,才有
+			if(isSkinWeights){
+				qualitySettings.asyncUploadPersistentBuffer=item["asyncUploadPersistentBuffer"].ToString()=="1";
+			}
+
 			qualitySettings.resolutionScalingFixedDPIFactor=float.Parse(item["resolutionScalingFixedDPIFactor"].ToString());
 			//排除的平台，相当于在ProjectSettings->qualitySettings选项中未勾选的平台
 			YamlSequenceNode excludedTargetPlatformsNode=(YamlSequenceNode)item["excludedTargetPlatforms"];
@@ -116,6 +132,13 @@
 				list.Add(platformDefaultQuality);
 			}
 			return list.ToArray();
+		}
+
+		private bool hasKeyWithinMappingNode(YamlMappingNode node,string key){
+			foreach(var item in node) {
+				if(item.Key.ToString()==key)return true;
+			}
+			return false;
 		}
 	}
 }
