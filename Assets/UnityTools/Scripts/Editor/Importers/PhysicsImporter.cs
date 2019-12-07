@@ -31,11 +31,7 @@
 				var keyNode=(YamlScalarNode)item.Key;
 				var valueNode=item.Value;
 				if(keyNode.Value=="m_Gravity"){
-					Vector3 v3=new Vector3();
-					v3.x=float.Parse(valueNode["x"].ToString());
-					v3.y=float.Parse(valueNode["y"].ToString());
-					v3.z=float.Parse(valueNode["z"].ToString());
-					physicsData.gravity=v3;
+					physicsData.gravity=readVector3(valueNode);
 				}else if(keyNode.Value=="m_DefaultMaterial"){
 					//获取默认物理材质
 					int fileId=int.Parse(valueNode["fileID"].ToString());
@@ -79,28 +75,14 @@
 				}else if(keyNode.Value=="m_ClothInterCollisionSettingsToggle"){
 					physicsData.clothInterCollisionSettingsToggle=valueNode.ToString()=="1";
 				}else if(keyNode.Value=="m_ClothGravity"){
-					Vector3 v3=new Vector3();
-					v3.x=float.Parse(valueNode["x"].ToString());
-					v3.y=float.Parse(valueNode["y"].ToString());
-					v3.z=float.Parse(valueNode["z"].ToString());
-					physicsData.clothGravity=v3;
+					physicsData.clothGravity=readVector3(valueNode);
 				}else if(keyNode.Value=="m_ContactPairsMode"){
 					physicsData.contactPairsMode=int.Parse(valueNode.ToString());
 				}else if(keyNode.Value=="m_BroadphaseType"){
 					physicsData.broadphaseType=int.Parse(valueNode.ToString());
 				}else if(keyNode.Value=="m_WorldBounds"){
-					var m_Center=valueNode["m_Center"];
-					Vector3 center=new Vector3();
-					center.x=float.Parse(m_Center["x"].ToString());
-					center.y=float.Parse(m_Center["y"].ToString());
-					center.z=float.Parse(m_Center["z"].ToString());
-
-					var m_Extent=valueNode["m_Extent"];
-					Vector3 extent=new Vector3();
-					extent.x=float.Parse(m_Extent["x"].ToString());
-					extent.y=float.Parse(m_Extent["y"].ToString());
-					extent.z=float.Parse(m_Extent["z"].ToString());
-					
+					Vector3 center=readVector3(valueNode["m_Center"]);
+					Vector3 extent=readVector3(valueNode["m_Extent"]);
 					physicsData.worldBounds=new Bounds(center,extent*2);
 				}else if(keyNode.Value=="m_WorldSubdivisions"){
 					physicsData.worldSubdivisions=int.Parse(valueNode.ToString());
@@ -117,6 +99,14 @@
 
 			AssetDatabase.CreateAsset(physicsData,ProjectImporterEditor.resourcePath+"/"+projectName+"_physicsData.asset");
 			AssetDatabase.Refresh();
+		}
+
+		private Vector3 readVector3(YamlNode node){
+			Vector3 vector3=new Vector3();
+			vector3.x=float.Parse(node["x"].ToString());
+			vector3.y=float.Parse(node["y"].ToString());
+			vector3.z=float.Parse(node["z"].ToString());
+			return vector3;
 		}
 	}
 

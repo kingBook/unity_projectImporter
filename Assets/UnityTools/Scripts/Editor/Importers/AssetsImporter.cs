@@ -12,9 +12,9 @@
 		/// 导入项目的Assets文件夹，并修改.cs文件解决冲突
 		/// </summary>
 		/// <param name="path">需要导入Assets文件夹的项目路径</param>
-		/// <param name="projectImporterTempPath">临时文件夹</param>
+		/// <param name="currentProjectTempPath">临时文件夹</param>
 		/// <param name="projectName">需要导入项目名称</param>
-		public override void import(string path,string projectImporterTempPath,string projectName){
+		public override void import(string path,string currentProjectTempPath,string projectName){
 			//当前项目的Assets文件夹的全路径,路径中使用"/"分隔,不是"\"。
 			string assetsPath=Application.dataPath;
 			//备份当前项目的所有GUID用于判断是否重复

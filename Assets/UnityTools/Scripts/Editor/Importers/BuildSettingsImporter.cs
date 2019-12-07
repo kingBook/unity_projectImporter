@@ -55,48 +55,6 @@
 			//保存发布设置数据到本地
 			AssetDatabase.CreateAsset(buildSettingsData,ProjectImporterEditor.resourcePath+"/"+projectName+"_buildSettingsData.asset");
 			AssetDatabase.Refresh();
-			/*
-			//EditorBuildSettings.asset 原来的位置
-			string sourceTagFilePath=path+"/ProjectSettings/EditorBuildSettings.asset";
-			//EditorBuildSettings.asset 复制过来的位置
-			string destTagFilePath=currentProjectTempPath+"/EditorBuildSettings.asset";
-			//复制 EditorBuildSettings.asset
-			FileUtil2.copyFile(sourceTagFilePath,destTagFilePath,true);
-			//加载并转换成SerializedObject
-			string destTagAssetPath=currentProjectTempPath+"/EditorBuildSettings.asset";
-			SerializedObject copyDynamicsManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath(destTagAssetPath));
-			//BuildSettings窗口场景列表
-			List<EditorBuildSettingsScene> editorBuildsettingsscenes=new List<EditorBuildSettingsScene>();
-			editorBuildsettingsscenes.AddRange(EditorBuildSettings.scenes);
-			//创建发布设置数据
-			BuildSettingsData buildSettingsData=ScriptableObject.CreateInstance<BuildSettingsData>();
-			var it=copyDynamicsManager.GetIterator();
-			while (it.Next(true)){
-				string itName=it.name;
-				if(itName=="m_Scenes"){
-					int len=it.arraySize;
-					buildSettingsData.scenes=new SceneData[len];
-					for(int i=0;i<len;i++){
-						var element=it.GetArrayElementAtIndex(i);
-						//场景数据结构体
-						SceneData sceneData=new SceneData();
-						sceneData.enabled=element.FindPropertyRelative("enabled").boolValue;
-						sceneData.path="Assets/"+projectName+"/"+element.FindPropertyRelative("path").stringValue;
-						//添加到场景发布设置数据
-						buildSettingsData.scenes[i]=sceneData;
-						//合并到当前BuildSettings窗口列表
-						var editorBuildSettingsScene=new EditorBuildSettingsScene(sceneData.path,sceneData.enabled);
-						editorBuildsettingsscenes.Add(editorBuildSettingsScene);
-					}
-				}
-			}
-			//赋值到BuildSettings窗口场景列表
-			EditorBuildSettings.scenes=editorBuildsettingsscenes.ToArray();
-			//保存发布设置数据到本地
-			AssetDatabase.CreateAsset(buildSettingsData,ProjectImporterEditor.resourcePath+"/"+projectName+"_buildSettingsData.asset");
-			//删除复制过来的"EditorBuildSettings.asset"
-			AssetDatabase.DeleteAsset(destTagFilePath);
-			AssetDatabase.Refresh();*/
 		}
 	}
 }
