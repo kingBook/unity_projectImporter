@@ -63,7 +63,13 @@
 					string matrixString=valueNode.ToString();
 					int[] intList=new int[32];
 					for(int i=0;i<32;i++){
-						intList[i]=Convert.ToInt32(matrixString.Substring(i*8,8),16);
+						int value=Convert.ToInt32(matrixString.Substring(i*8,8),16);
+						int a=value&0xFF;
+						int r=value>>8&0xFF;
+						int g=value>>16&0xFF;
+						int b=value>>24&0xFF;
+						value=b|(g<<8)|(r<<16)|(a<<24);
+						intList[i]=value;
 					}
 					physicsData.layerCollisionMatrix=intList;
 				}else if(keyNode.Value=="m_AutoSimulation"){
