@@ -1,13 +1,12 @@
-﻿using System.Text;
-namespace UnityTools{
-	using UnityEngine;
+﻿namespace UnityTools {
+	using System;
+	using System.IO;
+	using System.Text;
 	using UnityEditor;
-    using System.Collections.Generic;
-    using System.IO;
-    using YamlDotNet.RepresentationModel;
-    using System;
+	using UnityEngine;
+	using YamlDotNet.RepresentationModel;
 
-    public class Physics2DImporter:Importer{
+	public class Physics2DImporter:Importer{
 		/// <summary>
 		/// 导入项目的Physics2DSettings
 		/// </summary>
