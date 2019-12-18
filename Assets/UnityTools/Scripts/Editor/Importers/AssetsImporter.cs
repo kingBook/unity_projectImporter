@@ -5,6 +5,7 @@
 	using System.Text.RegularExpressions;
 	using UnityEditor.SceneManagement;
 	using UnityEngine;
+	using UnityEditor;
 
 	public class AssetsImporter:Importer{
 		
@@ -18,14 +19,15 @@
 			//当前项目的Assets文件夹的全路径,路径中使用"/"分隔,不是"\"。
 			string assetsPath=Application.dataPath;
 			//备份当前项目的所有GUID用于判断是否重复
-			string[] oldGuidList=GuidUtil.getAllMetaFileGuidList(assetsPath);
+			string[] oldGuidList=GuidUtil.GetAllMetaFileGuidList(assetsPath,true);
 			//创建子项目目录,如果目录存在则先删除
 			string childProjectPath=assetsPath+"/"+projectName;
-			FileUtil2.createDirectory(childProjectPath,true);
+			FileUtil2.CreateDirectory(childProjectPath,true);
+			EditorUtility.ClearProgressBar();
 			//子项目Assets目录
 			string childProjectAssetsPath=childProjectPath+"/Assets";
 			//复制项目的Assets文件夹到子项目路径
-			FileUtil2.copyDirectory(path+"/Assets",childProjectAssetsPath);
+			FileUtil2.CopyDirectory(path+"/Assets",childProjectAssetsPath);
             //删除DOTweenSettings.asset
             DeleteDOTweenSettingsAsset(childProjectAssetsPath);
 			//删除不需要导入的文件夹，如Editor、Gizmos、Plugins等
@@ -71,6 +73,7 @@
         /// <param name="deleteRootNames">如果参数isCheckRoot为true,将删除名称匹配的文件夹</param>
         /// <param name="deleteNames">将在所有子级检测并删除名称匹配的文件夹</param>
 		private void ForeachAndDeleteFolders(DirectoryInfo rootFolder,bool isCheckRoot,string[] deleteRootNames,string[] deleteNames){
+			EditorUtility.DisplayProgressBar("Hold on...","Delete folders...",0f);
 			DirectoryInfo[] directories=rootFolder.GetDirectories();
 			int len=directories.Length;
 			for(int i=0;i<len;i++){
@@ -78,6 +81,7 @@
                 bool isDelete=Array.IndexOf(deleteNames,directory.Name)>-1;
                 isDelete=isDelete|| (isCheckRoot&&Array.IndexOf(deleteRootNames,directory.Name)>-1);
                 if(isDelete){
+					EditorUtility.DisplayProgressBar("Hold on...","Delete "+directory.Name,(i+1f)/(float)len);
                     Directory.Delete(@directory.FullName,true);//删除
                     //对应的.meta文件也删除
                     string metaFilePath=@directory.FullName+".meta";
@@ -86,6 +90,7 @@
 				    ForeachAndDeleteFolders(directory,false,deleteRootNames,deleteNames);//递归,不检测root
                 }
 			}
+			EditorUtility.ClearProgressBar();
 		}
         #endregion
 
@@ -96,14 +101,17 @@
 		/// <param name="folderPath">文件夹目录</param>
 		/// <param name="projectName">导入的项目名称</param>
 		private void ForeachAndEditCSharpFiles(string folderPath,string projectName){
+			EditorUtility.DisplayProgressBar("Hold on...","Edit .cs files...",0f);
 			var directoryInfo=new DirectoryInfo(folderPath);
 			var files=directoryInfo.GetFiles("*.cs",SearchOption.AllDirectories);
 			int len=files.Length;
 			for(int i=0;i<len;i++){
 				var file=files[i];
+				EditorUtility.DisplayProgressBar("Hold on...","Editing"+file.Name,(i+1f)/(float)len);
 				//修改.cs文件
 				EditCSharpFile(@file.FullName,projectName);
 			}
+			EditorUtility.ClearProgressBar();
 		}
 
 		/// <summary>
@@ -112,7 +120,7 @@
 		/// <param name="filePath">文件路径，如果是'\'路径,需要加@转换，如:editCSharpFile(@"E:\unity_tags\Assets\Main.cs")。</param>
 		/// <param name="projectName">导入的项目名称</param>
 		private void EditCSharpFile(string filePath,string projectName){
-			List<string> fileLines=FileUtil2.getFileLines(filePath,true);
+			List<string> fileLines=FileUtil2.GetFileLines(filePath,true);
 			//修正不兼容的"SortingLayer"代码,使用"SortingLayer2"替换
 			FixSortingLayerCode(fileLines);
 			//修正不兼容的"LayerMask"代码,使用"LayerMask2"替换
@@ -124,7 +132,7 @@
 			//检测并添加以项目命名的namespace到.cs文件
 			CheckAndAddNameSpaceToCSharpFile(fileLines,projectName,filePath);
 			//重新写入文件
-			FileUtil2.writeFileLines(fileLines.ToArray(),filePath);
+			FileUtil2.WriteFileLines(fileLines.ToArray(),filePath);
 		}
 
 		/// <summary>
@@ -290,6 +298,7 @@
 		/// <param name="folderPath">文件夹目录</param>
 		/// <param name="projectName">导入的项目名称</param>
 		private void ForeachAndEditUnityFiles(string folderPath,string projectName){
+			EditorUtility.DisplayProgressBar("Hold on...","Edit .unity files...",0f);
 			//Debug.Log(Directory.Exists(folderPath));
 			var directoryInfo=new DirectoryInfo(folderPath);
 			var files=directoryInfo.GetFiles("*.unity",SearchOption.AllDirectories);
@@ -298,9 +307,11 @@
 				//Debug.Log( "FullName:" + files[i].FullName );  
 				//Debug.Log( "DirectoryName:" + files[i].DirectoryName ); 
 				var file=files[i];
+				EditorUtility.DisplayProgressBar("Hold on...","Editing "+file.Name,(i+1f)/(float)len);
 				//修改.unity文件
 				EditUnityFile(@file.FullName,projectName);
 			}
+			EditorUtility.ClearProgressBar();
 		}
 
 		/// <summary>
@@ -321,11 +332,11 @@
 				}
 			}
 			//
-			List<string> fileLines=FileUtil2.getFileLines(filePath,true);
+			List<string> fileLines=FileUtil2.GetFileLines(filePath,true);
 			//修正引用的SortingLayer.id
 			FixSortingLayerID(fileLines);
 			//重新写入文件
-			FileUtil2.writeFileLines(fileLines.ToArray(),filePath);
+			FileUtil2.WriteFileLines(fileLines.ToArray(),filePath);
 		}
 
 		/// <summary>
@@ -365,10 +376,11 @@
 		/// <param name="folderPath">要修改的文件夹</param>
 		/// <param name="excludeGuidList">如果文件夹下各个文件的guid与该列表中项重复，则需要修改</param>
 		private void ForeachAndEditGuids(string folderPath,string[] excludeGuidList){
+			EditorUtility.DisplayProgressBar("Hold on...","Edit guids...",0f);
 			//重复的guid列表
 			string[] duplicateGuidList=GetDuplicateGuidList(folderPath,excludeGuidList);
 			//用于替换重复的guid列表
-			string[] replaceGuidList=GuidUtil.getUniqueNewGuids(duplicateGuidList);
+			string[] replaceGuidList=GuidUtil.GetUniqueNewGuids(duplicateGuidList);
 			//查找并替换guid的文件类型列表
 			string[] testExtensions=new string[]{".meta",".unity",".asset",".prefab",".mat"};
 			//
@@ -381,9 +393,11 @@
 				string filePath=fileInfo.FullName;
 				bool isTestFileType=Array.IndexOf(testExtensions,extension)>-1;
 				if(isTestFileType){
+					EditorUtility.DisplayProgressBar("Hold on...","Edit guid with "+fileInfo.Name,(i+1f)/(float)len);
 					ReplaceFileDuplicateGuid(filePath,duplicateGuidList,replaceGuidList);
 				}
 			}
+			EditorUtility.ClearProgressBar();
 		}
 
 		/// <summary>
@@ -394,7 +408,7 @@
 		/// <param name="replaceGuidList">要替换的guid列表，各个元素索引与duplicateGuidList一致</param>
 		private void ReplaceFileDuplicateGuid(string filePath,string[] duplicateGuidList,string[] replaceGuidList){
 			Regex regex=new Regex(@"guid:\s*");
-			List<string> fileLines=FileUtil2.getFileLines(filePath,true,-1);
+			List<string> fileLines=FileUtil2.GetFileLines(filePath,true,-1);
 			int len=fileLines.Count;
 			for(int i=0;i<len;i++){
 				string line=fileLines[i];
@@ -410,7 +424,7 @@
 					}
 				}
 			}
-			FileUtil2.writeFileLines(fileLines.ToArray(),filePath);
+			FileUtil2.WriteFileLines(fileLines.ToArray(),filePath);
 		}
 
 		/// <summary>
@@ -421,7 +435,7 @@
 		/// <returns></returns>
 		private string[] GetDuplicateGuidList(string folderPath,string[] excludeGuidList){
 			List<string> results=new List<string>();
-			string[] folderAllMetaGuids=GuidUtil.getAllMetaFileGuidList(folderPath);
+			string[] folderAllMetaGuids=GuidUtil.GetAllMetaFileGuidList(folderPath);
 			int i=folderAllMetaGuids.Length;
 			while(--i>=0){
 				string guidString=folderAllMetaGuids[i];

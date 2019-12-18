@@ -24,17 +24,17 @@
 		/// </summary>
 		public event Action<byte[][]> onCompleteAll;
 		
-		private bool _isDestroyed;
-		private FileStream _fileStream;
-		private bool _isLoading;
+		private bool m_isDestroyed;
+		private FileStream m_fileStream;
+		private bool m_isLoading;
 		
 		/// <summary>
 		/// 异步加载一个或多个本地文件
 		/// <br>如果文件不存在将在onComplete(byte[][] bytesList)事件参数bytesList添加一个null</br>
 		/// </summary>
 		/// <param name="filePaths">可变长度文件路径列表，如: @"C:\Users\Administrator\Desktop\views0.xml"</param>
-		public async void loadAsync(params string[] filePaths){
-			onLoadStart();
+		public async void LoadAsync(params string[] filePaths){
+			OnLoadStart();
 
 			byte[][] outBytesList=new byte[filePaths.Length][];
 			for(int i=0;i<filePaths.Length;i++){
@@ -42,54 +42,54 @@
 				string filePath=filePaths[i];
 				await Task.Run(()=>{
 					if(File.Exists(filePath)){
-						_fileStream=File.OpenRead(filePath);
+						m_fileStream=File.OpenRead(filePath);
 
-						int fileLength=(int)_fileStream.Length;
+						int fileLength=(int)m_fileStream.Length;
 						buffer=new byte[fileLength];
 
-						_fileStream.Read(buffer,0,fileLength);
+						m_fileStream.Read(buffer,0,fileLength);
 					}
 				});
-				if(_isDestroyed){
+				if(m_isDestroyed){
 					//加载过程中，删除该脚本绑定的对象时，打断
 					break;
 				}
 				outBytesList[i]=buffer;
 				onComplete?.Invoke(buffer,i);
-				dispose();
+				Dispose();
 			}
 
 			//所有加载完成
-			if(!_isDestroyed){
-				onLoadCompleteAll(outBytesList);
+			if(!m_isDestroyed){
+				OnLoadCompleteAll(outBytesList);
 			}
 		}
 
-		private void onLoadStart(){
-			_isLoading=true;
+		private void OnLoadStart(){
+			m_isLoading=true;
 		}
 
-		private void onLoadCompleteAll(byte[][] outBytesList){
-			_isLoading=false;
+		private void OnLoadCompleteAll(byte[][] outBytesList){
+			m_isLoading=false;
 			onCompleteAll?.Invoke(outBytesList);
 		}
 
-		private void dispose(){
-			if(_fileStream!=null){
-				_fileStream.Dispose();
-				_fileStream.Close();
-				_fileStream=null;
+		private void Dispose(){
+			if(m_fileStream!=null){
+				m_fileStream.Dispose();
+				m_fileStream.Close();
+				m_fileStream=null;
 			}
 		}
 		
-		public void destroy(){
-			if(_isDestroyed)return;
-			_isDestroyed=true;
+		public void Destroy(){
+			if(m_isDestroyed)return;
+			m_isDestroyed=true;
 			
-			dispose();
+			Dispose();
 		}
 		
-		public bool isLoading{ get => _isLoading; }
+		public bool isLoading{ get => m_isLoading; }
 
 	}
 }

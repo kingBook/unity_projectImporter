@@ -11,8 +11,8 @@
 		public static readonly string projectImporterTempPath="Assets/UnityTools/temp";
 		public static readonly string resourcePath="Assets/UnityTools/Resources";
 
-		[MenuItem("ProjectImporter/import")]
-		public static void Import(){
+		[MenuItem("Tools/TestImport")]
+		public static void TestImport(){
 			ImportCurrentProjectSettings();
 			//importProject("D:/kingBook/projects/unity_parkinggame");
 			//deleteProject("unity_parkinggame");
@@ -46,7 +46,7 @@
 			DeleteProject(projectName,isDeleteBuildSettingsScenes,isDeleteAssets);
 
 			//创建临时文件夹,如果文件夹存在则先删除
-			FileUtil2.createDirectory(projectImporterTempPath,true);
+			FileUtil2.CreateDirectory(projectImporterTempPath,true);
 
 			//导入tags和Layers
 			var tagsAndLayersImporter=new TagsAndLayersImporter();
@@ -129,13 +129,23 @@
 		/// </summary>
 		/// <param name="projectName"></param>
 		private static void DeleteProjectSettings(string projectName){
-			AssetDatabase.DeleteAsset(resourcePath+"/"+projectName+"_buildSettingsData.asset");
-			AssetDatabase.DeleteAsset(resourcePath+"/"+projectName+"_layersData.asset");
-			AssetDatabase.DeleteAsset(resourcePath+"/"+projectName+"_physics2dData.asset");
-			AssetDatabase.DeleteAsset(resourcePath+"/"+projectName+"_physicsData.asset");
-			AssetDatabase.DeleteAsset(resourcePath+"/"+projectName+"_qualityData.asset");
-			AssetDatabase.DeleteAsset(resourcePath+"/"+projectName+"_sortingLayersData.asset");
-			AssetDatabase.DeleteAsset(resourcePath+"/"+projectName+"_timeData.asset");
+			string[] settingsAssetNames=new string[]{
+				"_buildSettingsData.asset",
+				"_layersData.asset",
+				"_physics2dData.asset",
+				"_physicsData.asset",
+				"_qualityData.asset",
+				"_sortingLayersData.asset",
+				"_timeData.asset"
+			};
+			EditorUtility.DisplayProgressBar("Hold on...","deleting settings for "+projectName,0f);
+			int len=settingsAssetNames.Length;
+			for(int i=0;i<len;i++){
+				string namePath=projectName+settingsAssetNames[i];
+				EditorUtility.DisplayProgressBar("Hold on...","Delete "+namePath,(i+1f)/(float)len);
+				AssetDatabase.DeleteAsset(resourcePath+"/"+namePath);
+			}
+			EditorUtility.ClearProgressBar();
 		}
 
 

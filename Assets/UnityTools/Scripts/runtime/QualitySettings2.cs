@@ -84,17 +84,17 @@
 		*/
 		
 		#region custom
-		private static int _qualityLevel=-1;
+		private static int m_qualityLevel=-1;
 		
 		/// <summary>设置_qualityLevel的值。</summary>
 		public static void setQualityLevelValue(int value){
-			_qualityLevel=value;
+			m_qualityLevel=value;
 		}
 		#endregion
 		
 		/// <summary>降低当前的品质级别。</summary>
 		public static void DecreaseLevel(){
-			SetQualityLevel(--_qualityLevel);
+			SetQualityLevel(--m_qualityLevel);
 		}
 		
 		/// <summary>降低当前的品质级别。</summary>
@@ -104,12 +104,12 @@
 		}
 		
 		public static int GetQualityLevel(){
-			return _qualityLevel;
+			return m_qualityLevel;
 		}
 		
 		/// <summary>提高当前的品质级别。</summary>
 		public static void IncreaseLevel(){
-			SetQualityLevel(++_qualityLevel);
+			SetQualityLevel(++m_qualityLevel);
 		}
 		
 		/// <summary>提高当前的品质级别。</summary>
@@ -126,8 +126,8 @@
 		public static void SetQualityLevel(int index){
 			var settingsList=ProjectImporter.instance.qualityData.qualitySettings;
 			index=Mathf.Clamp(index,0,settingsList.Length-1);
-			ProjectImporter.instance.setQualityWithSettings(settingsList[index]);
-			_qualityLevel=index;
+			ProjectImporter.instance.SetQualityWithSettings(settingsList[index]);
+			m_qualityLevel=index;
 		}
 	}
 }

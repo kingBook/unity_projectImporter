@@ -42,7 +42,7 @@
 			if(m_fileLoader==null){
 				m_fileLoader=new FileLoader();
 			}
-			m_fileLoader.loadAsync(xmlPath);
+			m_fileLoader.LoadAsync(xmlPath);
 			m_fileLoader.onCompleteAll+=OnLoadXmlComplete;
 		}
 
@@ -51,7 +51,7 @@
 			byte[] bytes=bytesList[0];
 			if(bytes!=null){
 				string xmlString=System.Text.Encoding.UTF8.GetString(bytes);
-				m_xmlDoc=XmlUtil.createXmlDocument(xmlString,false);
+				m_xmlDoc=XmlUtil.CreateXmlDocument(xmlString,false);
 			}
 			m_isLoadXmlComplete=true;
 			
@@ -136,7 +136,7 @@
 						int len=DragAndDrop.paths.Length;
 						for(int i=0;i<len;i++){
 							string path=DragAndDrop.paths[i];
-							if(Directory.Exists(path)&&FileUtil2.isUnityProjectFolder(path)){
+							if(Directory.Exists(path)&&FileUtil2.IsUnityProjectFolder(path)){
 								AddProjectWithUnitProjectPath(path);
 							}
 						}
@@ -147,7 +147,7 @@
 
 		private void ShowInExplorer(XmlNode item,string projectFolderPath){
 			if(Directory.Exists(projectFolderPath)){
-				FileUtil2.showInExplorer(projectFolderPath);
+				FileUtil2.ShowInExplorer(projectFolderPath);
 			}else{
 				DisplayReassignDialog(item);
 				
@@ -162,7 +162,7 @@
 		/// <param name="projectName"></param>
 		private void OnReimportProject(XmlNode item,string projectFolderPath,string projectName){
 			if(Directory.Exists(projectFolderPath)){
-				if(FileUtil2.isUnityProjectFolder(projectFolderPath)){
+				if(FileUtil2.IsUnityProjectFolder(projectFolderPath)){
 					ProjectImporterEditor.DeleteProject(projectName);
 					ProjectImporterEditor.ImportCurrentProjectSettings();
 					ProjectImporterEditor.ImportProject(projectFolderPath);
@@ -188,7 +188,7 @@
 		/// </summary>
 		/// <param name="item"></param>
 		private void ReassignProjectFolderPath(XmlNode item){
-			string folderPath=FileUtil2.openSelectUnityProjectFolderPanel();
+			string folderPath=FileUtil2.OpenSelectUnityProjectFolderPanel();
 			if(folderPath!=null){
 				if(IsAlreadyExists(folderPath)){
 					DisplayAlreadyExistsDialog();
@@ -220,7 +220,7 @@
 		
 		/// <summary>点击导入项目按钮时</summary>
 		private void OnAddProject(){
-			string folderPath=FileUtil2.openSelectUnityProjectFolderPanel();
+			string folderPath=FileUtil2.OpenSelectUnityProjectFolderPanel();
 			AddProjectWithUnitProjectPath(folderPath);
 		}
 
@@ -263,7 +263,7 @@
 		/// <returns></returns>
 		private string GetEditorVersion(string folderPath){
 			string projectVersionTxtPath=folderPath+"/ProjectSettings/ProjectVersion.txt";
-			List<string> filelines=FileUtil2.getFileLines(projectVersionTxtPath,false,1);
+			List<string> filelines=FileUtil2.GetFileLines(projectVersionTxtPath,false,1);
 			string editorVersionLine=filelines[0];//第一行是版本号
 			Regex regex=new Regex(@"m_EditorVersion:\s*",RegexOptions.Compiled);
 			Match match=regex.Match(editorVersionLine);
@@ -277,7 +277,7 @@
 		/// <param name="projectName"></param>
 		/// <returns></returns>
 		private string GetRename(string projectName){
-			string endNumberString=StringUtil.getEndNumberString(projectName);
+			string endNumberString=StringUtil.GetEndNumberString(projectName);
 			if(string.IsNullOrEmpty(endNumberString)){
 				projectName+="1";
 			}else{
@@ -295,7 +295,7 @@
 		/// <param name="editorVersion">编辑器版本号</param>
 		private void AddItemToXml(string projectFolderPath,string projectName,string editorVersion){
 			if(m_xmlDoc==null){
-				m_xmlDoc=XmlUtil.createXmlDocument(false);
+				m_xmlDoc=XmlUtil.CreateXmlDocument(false);
 				m_xmlDoc.AppendChild(m_xmlDoc.CreateElement("Root"));
 			}
 			var itemElement=m_xmlDoc.CreateElement("Item");

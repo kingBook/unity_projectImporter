@@ -61,10 +61,20 @@
 
 		#region ImportTags
 		private void ImportTags(YamlSequenceNode tags){
+			List<string> tagValues=new List<string>();
 			foreach(YamlScalarNode tag in tags){
-				UnityEditorInternal.InternalEditorUtility.AddTag(tag.Value);
-				//AddTag(tag.Value);
+				tagValues.Add(tag.Value);
 			}
+			
+			EditorUtility.DisplayProgressBar("Hold on...","Import tags...",0);
+			int len=tagValues.Count;
+			for(int i=0;i<len;i++){
+				string tagValue=tagValues[i];
+				EditorUtility.DisplayProgressBar("Hold on...","Import tag "+tagValue,(i+1f)/(float)len);
+				UnityEditorInternal.InternalEditorUtility.AddTag(tagValue);
+				//AddTag(tagValue);
+			}
+			EditorUtility.ClearProgressBar();
 		}
 
 		/*private void AddTag(string tag){
@@ -94,6 +104,7 @@
 
 		#region ImportLayers
 		private void ImportLayers(YamlSequenceNode layers,YamlSequenceNode myLayers,string projectName){
+			EditorUtility.DisplayProgressBar("Hold on...","Import layers...",0f);
 			List<string> strings=new List<string>();
 			int i=0;
 			foreach(YamlScalarNode layer in layers){
@@ -103,10 +114,14 @@
 				strings.Add(layer.Value);
 				i++;
 			}
+			
+			EditorUtility.DisplayProgressBar("Hold on...","Create "+projectName+"_layersData.asset...",0.5f);
 			var layersData= ScriptableObject.CreateInstance<LayersData>();
 			layersData.list=strings.ToArray();
 			string layersDataPath=ProjectImporterEditor.resourcePath+"/"+projectName+"_layersData.asset";
 			AssetDatabase.CreateAsset(layersData,layersDataPath);
+			
+			EditorUtility.ClearProgressBar();
 		}
 
 		private void SetLayer(YamlSequenceNode myLayers,int index,string layerValue){

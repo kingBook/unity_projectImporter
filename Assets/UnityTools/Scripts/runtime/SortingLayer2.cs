@@ -12,22 +12,22 @@
 				for(int i=0;i<len;i++){
 					var uSortingLayer=list[i];
 					SortingLayer2 layer2=new SortingLayer2();
-					layer2._id=(int)uSortingLayer.uniqueID;
-					layer2._name=uSortingLayer.name;
-					layer2._value=i;
+					layer2.m_id=(int)uSortingLayer.uniqueID;
+					layer2.m_name=uSortingLayer.name;
+					layer2.m_value=i;
 				}
 				return layer2List;
 			}
 		}
 
-		private int _id;
-		public int id { get=>_id; }
+		private int m_id;
+		public int id { get=>m_id; }
 		
-		private string _name;
-		public string name { get=>_name; }
+		private string m_name;
+		public string name { get=>m_name; }
 
-		private int _value;
-		public int value { get=>_value; }
+		private int m_value;
+		public int value { get=>m_value; }
 
 		public static int GetLayerValueFromID(int id){
 			int layerValue=-1;
@@ -84,9 +84,9 @@
 
 		public static implicit operator SortingLayer2(SortingLayer sortingLayer){
 			var sortingLayer2=new SortingLayer2();
-			sortingLayer2._id=sortingLayer.id;
-			sortingLayer2._name=sortingLayer.name;
-			sortingLayer2._value=sortingLayer.value;
+			sortingLayer2.m_id=sortingLayer.id;
+			sortingLayer2.m_name=sortingLayer.name;
+			sortingLayer2.m_value=sortingLayer.value;
 			return sortingLayer2;
 		}
 		

@@ -3,27 +3,27 @@
 	using UnityEngine.SceneManagement;
 	
 	public class ProjectImporter:MonoBehaviour{
-		[Tooltip("场景加载器")]
-		[SerializeField]
-		private SceneLoader _sceneLoader=null;
 		
-		private static ProjectImporter _instance;
-
-		private BuildSettingsData _buildSettingsData;
-		private PhysicsData _physicsData;
-		private Physics2dData _physics2dData;
-		private QualityData _qualityData;
-		private SortingLayersData _sortingLayersData;
-		private LayersData _layersData;
-		private TimeData _timeData;
+		public static ProjectImporter instance{ get; private set; }
+		
+		[Tooltip("场景加载器")]
+		public SceneLoader sceneLoader;
+		
+		public BuildSettingsData buildSettingsData{ get; private set; }
+		public PhysicsData physicsData{ get; private set; }
+		public Physics2dData physics2dData{ get; private set; }
+		public QualityData qualityData{ get; private set; }
+		public SortingLayersData sortingLayersData{ get; private set; }
+		public LayersData layersData{ get; private set; }
+		public TimeData timeData{ get; private set; }
 
 		private void Awake(){
-			_instance=this;
+			instance=this;
 		}
 		
 		private void Start(){
 			//test
-			openProject("unity_wawawu");
+			OpenProject("unity_wawawu");
 			//Invoke("onTimeout",3);
 		}
 		/*private void onTimeout(){
@@ -35,51 +35,51 @@
 		/// 打开一个项目
 		/// </summary>
 		/// <param name="projectFolderName">项目文件夹名</param>
-		public void openProject(string projectFolderName){
+		public void OpenProject(string projectFolderName){
 			//加载BuildSettingsData
-			_buildSettingsData=Resources.Load<BuildSettingsData>(projectFolderName+"_buildSettingsData");
+			buildSettingsData=Resources.Load<BuildSettingsData>(projectFolderName+"_buildSettingsData");
 			//加载PhysicsData
-			_physicsData=Resources.Load<PhysicsData>(projectFolderName+"_physicsData");
-			setPhysicsWithData(_physicsData);
+			physicsData=Resources.Load<PhysicsData>(projectFolderName+"_physicsData");
+			SetPhysicsWithData(physicsData);
 			//加载Physics2dData
-			_physics2dData=Resources.Load<Physics2dData>(projectFolderName+"_physics2dData");
-			setPhysics2dWithData(_physics2dData);
+			physics2dData=Resources.Load<Physics2dData>(projectFolderName+"_physics2dData");
+			SetPhysics2dWithData(physics2dData);
 			//加载QualityData
-			_qualityData=Resources.Load<QualityData>(projectFolderName+"_qualityData");
-			int qualityLevel=getPlatformDefaultQualityLevel(qualityData);
+			qualityData=Resources.Load<QualityData>(projectFolderName+"_qualityData");
+			int qualityLevel=GetPlatformDefaultQualityLevel(qualityData);
 			QualitySettings2.setQualityLevelValue(qualityLevel);//初始化QualitySettings2.qualityLevel
-			setQualityWithSettings(qualityData.qualitySettings[qualityLevel]);
+			SetQualityWithSettings(qualityData.qualitySettings[qualityLevel]);
 			//加载SortingLayersData
-			_sortingLayersData=Resources.Load<SortingLayersData>(projectFolderName+"_sortingLayersData");
+			sortingLayersData=Resources.Load<SortingLayersData>(projectFolderName+"_sortingLayersData");
 			//加载LayersData
-			_layersData=Resources.Load<LayersData>(projectFolderName+"_layersData");
+			layersData=Resources.Load<LayersData>(projectFolderName+"_layersData");
 			//加载TimeData
-			_timeData=Resources.Load<TimeData>(projectFolderName+"_timeData");
-			setTimeWithData(_timeData);
+			timeData=Resources.Load<TimeData>(projectFolderName+"_timeData");
+			SetTimeWithData(timeData);
 			//加载项目的主场景
-			_sceneLoader.loadAsync(getMainSceneName(_buildSettingsData),LoadSceneMode.Additive);
+			sceneLoader.LoadAsync(GetMainSceneName(buildSettingsData),LoadSceneMode.Additive);
 		}
 
 		/// <summary>
 		/// 关闭一个项目
 		/// </summary>
 		/// <param name="projectFolderName">项目文件夹名</param>
-		public void closeProject(string projectFolderName){
+		public void CloseProject(string projectFolderName){
 			//卸载项目的所有场景
-			unloadProjectAllScenes(projectFolderName);
+			UnloadProjectAllScenes(projectFolderName);
 			//
 			var defaultPhysicsData=Resources.Load<PhysicsData>("default_physicsData");
-			setPhysicsWithData(defaultPhysicsData);
+			SetPhysicsWithData(defaultPhysicsData);
 			//
 			var defaultPhysics2dData=Resources.Load<Physics2dData>("default_physics2dData");
-			setPhysics2dWithData(defaultPhysics2dData);
+			SetPhysics2dWithData(defaultPhysics2dData);
 			//
 			var defaultQualityData=Resources.Load<QualityData>("default_qualityData");
-			int qualityLevel=getPlatformDefaultQualityLevel(defaultQualityData);
-			setQualityWithSettings(defaultQualityData.qualitySettings[qualityLevel]);
+			int qualityLevel=GetPlatformDefaultQualityLevel(defaultQualityData);
+			SetQualityWithSettings(defaultQualityData.qualitySettings[qualityLevel]);
 			//
 			var defaultTimeData=Resources.Load<TimeData>("default_timeData");
-			setTimeWithData(defaultTimeData);
+			SetTimeWithData(defaultTimeData);
 		}
 		
 		/// <summary>
@@ -87,7 +87,7 @@
 		/// </summary>
 		/// <param name="oldName">旧的名称</param>
 		/// <param name="newName">新的名称</param>
-		public void renameProject(string oldName, string newName){
+		public void RenameProject(string oldName, string newName){
 			
 		}
 
@@ -95,7 +95,7 @@
 		/// 卸载指定项目的所有场景
 		/// </summary>
 		/// <param name="projectFolderName"></param>
-		private void unloadProjectAllScenes(string projectFolderName){
+		private void UnloadProjectAllScenes(string projectFolderName){
 			var projectBuildSettingsData=Resources.Load<BuildSettingsData>(projectFolderName+"_buildSettingsData");
 			int i=projectBuildSettingsData.scenes.Length;
 			while(--i>=0){
@@ -112,7 +112,7 @@
 		/// </summary>
 		/// <param name="buildSettingsData"></param>
 		/// <returns></returns>
-		private string getMainSceneName(BuildSettingsData buildSettingsData){
+		private string GetMainSceneName(BuildSettingsData buildSettingsData){
 			string sceneName="";
 			var scenes=buildSettingsData.scenes;
 			int len=scenes.Length;
@@ -127,7 +127,7 @@
 		}
 		
 		/// <summary>根据指定的数据设置3d物理引擎参数</summary>
-		public void setPhysicsWithData(PhysicsData physicsData){
+		public void SetPhysicsWithData(PhysicsData physicsData){
 			Physics.gravity=physicsData.gravity;
 			//physicsData.defaultMaterial;
 			Physics.bounceThreshold=physicsData.bounceThreshold;
@@ -167,7 +167,7 @@
 		}
 		
 		/// <summary>根据指定的数据设置2d物理引擎参数</summary>
-		public void setPhysics2dWithData(Physics2dData physics2dData){
+		public void SetPhysics2dWithData(Physics2dData physics2dData){
 			Physics2D.gravity=physics2dData.gravity;
 			//physics2dData.defaultMaterial;
 			Physics2D.velocityIterations=physics2dData.velocityIterations;
@@ -230,12 +230,12 @@
 			}
 		}
 		
-		#region setQualityWithData
+		#region SetQualityWithData
 		/// <summary>
 		/// 根据一个UnityProjectImporter.QualitySettings设置品质
 		/// </summary>
 		/// <param name="qualitySettings">UnityProjectImporter.QualitySettings</param>
-		public void setQualityWithSettings(QualitySettings qualitySettings){
+		public void SetQualityWithSettings(QualitySettings qualitySettings){
 			UnityEngine.QualitySettings.pixelLightCount=qualitySettings.pixelLightCount;
 			UnityEngine.QualitySettings.shadows=(ShadowQuality)qualitySettings.shadows;
 			UnityEngine.QualitySettings.shadowResolution=(ShadowResolution)qualitySettings.shadowResolution;
@@ -272,31 +272,31 @@
 		}
 		
 		/// <summary>返回当前运行时平台的默认品质级别</summary>
-		public int getPlatformDefaultQualityLevel(QualityData qualityData){
+		public int GetPlatformDefaultQualityLevel(QualityData qualityData){
 			RuntimePlatform platform=Application.platform;
 			if(platform==RuntimePlatform.IPhonePlayer){
-				return getDefaultQualityLevelWithPlatformName(qualityData,"iPhone");
+				return GetDefaultQualityLevelWithPlatformName(qualityData,"iPhone");
 			}else if(platform==RuntimePlatform.Android){
-				return getDefaultQualityLevelWithPlatformName(qualityData,"Android");
+				return GetDefaultQualityLevelWithPlatformName(qualityData,"Android");
 			}else if(platform==RuntimePlatform.WebGLPlayer){
-				return getDefaultQualityLevelWithPlatformName(qualityData,"WebGL");
+				return GetDefaultQualityLevelWithPlatformName(qualityData,"WebGL");
 			}else if(platform==RuntimePlatform.WindowsPlayer||platform==RuntimePlatform.OSXPlayer||platform==RuntimePlatform.LinuxPlayer){
-				return getDefaultQualityLevelWithPlatformName(qualityData,"Standalone");
+				return GetDefaultQualityLevelWithPlatformName(qualityData,"Standalone");
 			}else if(platform==RuntimePlatform.PS4){
-				return getDefaultQualityLevelWithPlatformName(qualityData,"PS4");
+				return GetDefaultQualityLevelWithPlatformName(qualityData,"PS4");
 			}else if(platform==RuntimePlatform.WSAPlayerARM||platform==RuntimePlatform.WSAPlayerX86||platform==RuntimePlatform.WSAPlayerX64){
-				return getDefaultQualityLevelWithPlatformName(qualityData,"Windows Store Apps");
+				return GetDefaultQualityLevelWithPlatformName(qualityData,"Windows Store Apps");
 			}else if(platform==RuntimePlatform.XboxOne){
-				return getDefaultQualityLevelWithPlatformName(qualityData,"XboxOne");
+				return GetDefaultQualityLevelWithPlatformName(qualityData,"XboxOne");
 			}else if(platform==RuntimePlatform.tvOS){
-				return getDefaultQualityLevelWithPlatformName(qualityData,"tvOS");
+				return GetDefaultQualityLevelWithPlatformName(qualityData,"tvOS");
 			} 
 			//默认返回编辑器中高亮显示的品质设置
 			return qualityData.currentQuality;
 		}
 		
 		/// <summary>根据平台名称返回平台默认的品质级别</summary>
-		private int getDefaultQualityLevelWithPlatformName(QualityData qualityData,string platformName){
+		private int GetDefaultQualityLevelWithPlatformName(QualityData qualityData,string platformName){
 			PlatformDefaultQuality[] platformDefaultQualities=qualityData.perPlatformDefaultQuality;
 			int len=platformDefaultQualities.Length;
 			for(int i=0;i<len;i++){
@@ -310,7 +310,7 @@
 		}
 		#endregion setQualityWithData
 
-		private void setTimeWithData(TimeData timeData){
+		private void SetTimeWithData(TimeData timeData){
 			Time.fixedDeltaTime=timeData.fixedTimestep;
 			Time.maximumDeltaTime=timeData.maximumAllowedTimestep;
 			Time.timeScale=timeData.timeScale;
@@ -318,16 +318,9 @@
 		}
 
 		private void OnDestroy() {
-			_instance=null;
+			instance=null;
 		}
 		
-		public static ProjectImporter instance{ get => _instance; }
-		public SceneLoader sceneLoader{ get => _sceneLoader; }
-		public BuildSettingsData buildSettingsData{ get => _buildSettingsData; }
-		public PhysicsData physicsData{ get => _physicsData; }
-		public QualityData qualityData{ get => _qualityData; }
-		public SortingLayersData sortingLayersData{ get => _sortingLayersData; }
-		public LayersData layersData{ get => _layersData; }
-		public TimeData timeData{ get => _timeData; }
+		
 	}
 }

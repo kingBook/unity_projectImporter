@@ -13,7 +13,7 @@
         /// </summary>
         /// <param name="isAddXmlDeclaration">是否添加xml声明</param>
         /// <returns></returns>
-        public static XmlDocument createXmlDocument(bool isAddXmlDeclaration){
+        public static XmlDocument CreateXmlDocument(bool isAddXmlDeclaration){
             XmlDocument doc=new XmlDocument();
             if(isAddXmlDeclaration){
                 XmlDeclaration xmlDeclaration=doc.CreateXmlDeclaration("1.0","UTF-8",null);
@@ -28,8 +28,8 @@
         /// <param name="xml"></param>
         /// <param name="isAddXmlDeclaration"></param>
         /// <returns></returns>
-        public static XmlDocument createXmlDocument(string xml,bool isAddXmlDeclaration){
-            XmlDocument doc=createXmlDocument(isAddXmlDeclaration);
+        public static XmlDocument CreateXmlDocument(string xml,bool isAddXmlDeclaration){
+            XmlDocument doc=CreateXmlDocument(isAddXmlDeclaration);
             doc.LoadXml(xml);
             return doc;
         }
@@ -39,9 +39,9 @@
         /// </summary>
         /// <param name="xml">合法的xml字符串</param>
         /// <returns></returns>
-        public static string formatXml(string xml){
-            XmlDocument doc=createXmlDocument(xml,false);
-            return formatXml(doc);
+        public static string FormatXml(string xml){
+            XmlDocument doc=CreateXmlDocument(xml,false);
+            return FormatXml(doc);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@
         /// </summary>
         /// <param name="doc">XmlDocument</param>
         /// <returns></returns>
-        public static string formatXml(XmlDocument doc){
+        public static string FormatXml(XmlDocument doc){
             StringBuilder sb = new StringBuilder();
             StringWriter sw = new StringWriter(sb);  
             XmlTextWriter xtw = null;  

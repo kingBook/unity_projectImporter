@@ -5,8 +5,6 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Text.RegularExpressions;
-	using UnityEngine.UIElements;
-	using System.Linq.Expressions;
 
 	/// <summary>
 	/// CSharp混淆器
@@ -57,7 +55,7 @@
 				string shortFilePath=filePath.Replace(projectAssetsPath,"");
 				EditorUtility.DisplayProgressBar("Read Files","Reading "+shortFilePath,(float)(i+1)/len);
 				//读取文件到字符串
-				string fileString=FileUtil2.getFileString(filePath);
+				string fileString=FileUtil2.GetFileString(filePath);
 				//创建CSharpFile
 				CSharpFile cSharpFile=CreateCSharpFile(fileInfo,fileString);
 				//清除CSharpFile里的注释内容
@@ -357,15 +355,6 @@
 			}
 			return false;
 		}
-
-		/// <summary>
-		/// 混淆CSharpFile列表
-		/// </summary>
-		/// <param name="cSharpFiles">CSharpFile数组列表</param>
-		/// <param name="onComplete">混淆完成时的回调函数</param>
-		private void ObfuscateCSharpFiles(CSharpFile[] cSharpFiles,Action onComplete){
-			
-		}
 		
 		/// <summary>
 		/// 创建cCSharpFile
@@ -389,6 +378,8 @@
 			cSharpFile.usings=ReadUsings(cSharpFile,content);
 			
 			Segment[] bracesBlocks=ReadBracesBlocks(cSharpFile,content);
+			
+			//读取空命名空间里的对象
 			List<CSharpNameSpace> namespaces;
 			List<CSharpClass> classes;
 			List<CSharpStruct> structs;
@@ -508,8 +499,8 @@
 			CSharpEnum cSharpEnum=new CSharpEnum();
 			cSharpEnum.nameSpace=nameSpace;
 			int index;
-			cSharpEnum.name=(Segment)ReadTypeName(cSharpFile,"enum",leftBraceMatch,out index);
-			cSharpEnum.baseType=(Segment)ReadTypeExtends(cSharpFile,leftBraceMatch,index,out index);
+			cSharpEnum.name=ReadTypeName(cSharpFile,"enum",leftBraceMatch,out index);
+			cSharpEnum.baseType=ReadTypeExtends(cSharpFile,leftBraceMatch,index,out index);
 			return cSharpEnum;
 		}
 
@@ -1172,6 +1163,44 @@
 		}
 		#endregion
 
-
+		
+		#region ObfuscateCSharpFiles
+		/// <summary>
+		/// 混淆CSharpFile列表
+		/// </summary>
+		/// <param name="cSharpFiles">CSharpFile数组列表</param>
+		/// <param name="onComplete">混淆完成时的回调函数</param>
+		private void ObfuscateCSharpFiles(in CSharpFile[] cSharpFiles,Action onComplete){
+			int len=cSharpFiles.Length;
+			for(int i=0;i<len;i++){
+				ObfuscateCSharpFile(cSharpFiles,i);
+			}
+			
+			//onComplete();
+		}
+		
+		private void ObfuscateCSharpFile(in CSharpFile[] cSharpFiles,int index){
+			CSharpFile cSharpFile=cSharpFiles[index];
+			ObfuscateNameSpaces(cSharpFile.nameSpaces);
+			ObfuscateClasses(cSharpFile.classes);
+		}
+		
+		private void ObfuscateNameSpaces(in CSharpNameSpace[] nameSpaces){
+			
+		}
+		
+		private void ObfuscateClasses(in CSharpClass[] classes){
+			int len=classes.Length;
+			for(int i=0;i<len;i++){
+				ObfuscateClass(classes,i);
+			}
+		}
+		
+		private void ObfuscateClass(in CSharpClass[] classes,int index){
+			CSharpClass cSharpClass=classes[index];
+			//cSharpClass.name
+		}
+		
+		#endregion
 	}
 }

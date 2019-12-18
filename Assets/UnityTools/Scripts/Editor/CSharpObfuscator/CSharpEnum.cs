@@ -13,16 +13,15 @@
         
         /// <summary>
 		/// <para>单词</para>
-		/// <para><see cref="Segment"/></para>
 		/// <para>如："xxx"</para>
 		/// </summary>
-		public Segment name;
+		public IString name;
 
 		/// <summary>
 		/// 基类型,声明其成员的类型
 		/// 如：byte、sbyte、int、uint等
 		/// </summary>
-		public Segment baseType;
+		public IString baseType;
 
 
 

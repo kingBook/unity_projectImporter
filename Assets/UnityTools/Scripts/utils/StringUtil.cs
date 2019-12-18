@@ -6,7 +6,7 @@ namespace UnityTools{
 	/// <br>具体描述： https://docs.unity3d.com/Manual/BestPracticeUnderstandingPerformanceInUnity5.html (Inefficient built-in string APIs部分)</br>
 	/// </summary>
 	public static class StringUtil{
-		public static bool endsWith(string a, string b) {
+		public static bool EndsWith(string a, string b) {
 			int ap = a.Length - 1;
 			int bp = b.Length - 1;
 
@@ -19,7 +19,7 @@ namespace UnityTools{
 					(ap < 0 && b.Length >= a.Length);
 			}
 
-		public static bool startsWith(string a, string b) {
+		public static bool StartsWith(string a, string b) {
 			int aLen = a.Length;
 			int bLen = b.Length;
 			int ap = 0; int bp = 0;
@@ -39,7 +39,7 @@ namespace UnityTools{
 		/// </summary>
 		/// <param name="text"></param>
 		/// <returns></returns>
-		public static string getEndNumberString(string text){
+		public static string GetEndNumberString(string text){
 			var regex=new Regex(@"\d",RegexOptions.RightToLeft);
 		
 			string numberString="";

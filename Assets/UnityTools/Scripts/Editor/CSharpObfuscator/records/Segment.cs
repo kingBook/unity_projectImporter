@@ -6,6 +6,7 @@
 	/// 记录一段字符串在.cs文件字符中的起始索引和长度的结构体
 	/// </summary>
 	public struct Segment:IString{
+		public static readonly Segment none=new Segment();
 		
 		public int startIndex;
 		public int length;

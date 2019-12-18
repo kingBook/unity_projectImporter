@@ -19,10 +19,9 @@
 			window.Show();
 		}
 
-		[MenuItem("Tools/test")]
-		public static void Cest(){
-			var obj=AssetDatabase.LoadAssetAtPath<Object>("ProjectSettings/Physics2DSettingsB.asset");
-			Debug.Log(obj);//ouput Null
+		[MenuItem("Tools/CSharpObfuscatorUITest")]
+		public static void CSharpObfuscatorUITest(){
+			
 		}
 
 
@@ -41,7 +40,7 @@
 					m_isDuplicate=GUILayout.Toggle(m_isDuplicate,"Duplicate");
 					m_showInExplorerOnComplete=GUILayout.Toggle(m_showInExplorerOnComplete,"Show in explorer");
 					if(GUILayout.Button("Obfuscate a project")){
-						string projectFolderPath=FileUtil2.openSelectUnityProjectFolderPanel();
+						string projectFolderPath=FileUtil2.OpenSelectUnityProjectFolderPanel();
 						if(!string.IsNullOrEmpty(projectFolderPath)){
 							if(m_isDuplicate){
 								CopyAndObfuscateUnityProject(projectFolderPath,true);
@@ -103,7 +102,7 @@
 						int len=DragAndDrop.paths.Length;
 						for(int i=0;i<len;i++){
 							string path=DragAndDrop.paths[i];
-							if(Directory.Exists(path)&&FileUtil2.isUnityProjectFolder(path)){
+							if(Directory.Exists(path)&&FileUtil2.IsUnityProjectFolder(path)){
 								if(m_isDuplicate){
 									CopyAndObfuscateUnityProject(path,true);
 								}else{
@@ -126,7 +125,7 @@
 			string[] ignoreCopys=new string[]{"/.git","/Library"};
 			//目标文件夹名称,源文件夹名称加"_confusion"后缀
 			string duplicateFolderPath=unityProjectPath+"_confusion";
-			FileUtil2.replaceDirectory(unityProjectPath,duplicateFolderPath,true,ignoreCopys);
+			FileUtil2.ReplaceDirectory(unityProjectPath,duplicateFolderPath,true,ignoreCopys);
 			ObfuscateUnityProject(duplicateFolderPath,isCallComplete);
 		}
 
@@ -142,7 +141,7 @@
 				obfuscator.ObfuscateProject(assetsPath,()=>{
 					if(isCallComplete){
 						if(m_showInExplorerOnComplete){
-							FileUtil2.showInExplorer(unityProjectPath);
+							FileUtil2.ShowInExplorer(unityProjectPath);
 						}
 					}
 				});

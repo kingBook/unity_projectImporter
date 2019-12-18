@@ -10,7 +10,7 @@
 	/// 文件工具类
 	/// </summary>
 	public class FileUtil2 {
-		public static void copyFile(string source,string dest,bool isRefreshAsset=false,bool isExistReplace=true){
+		public static void CopyFile(string source,string dest,bool isRefreshAsset=false,bool isExistReplace=true){
 			if(isExistReplace&&File.Exists(dest)){
 				FileUtil.ReplaceFile(source,dest);
 			}else{
@@ -21,7 +21,7 @@
 			}
 		}
 
-		public static void copyDirectory(string source,string dest,bool isRefreshAsset=false){
+		public static void CopyDirectory(string source,string dest,bool isRefreshAsset=false){
 			//如果文件夹存在会自动删除
 			FileUtil.CopyFileOrDirectory(source,dest);
 			if(isRefreshAsset){
@@ -29,7 +29,7 @@
 			}
 		}
 
-		public static void createDirectory(string path,bool isExistDelete=true){
+		public static void CreateDirectory(string path,bool isExistDelete=true){
 			if(isExistDelete&&Directory.Exists(path)){
 				FileUtil.DeleteFileOrDirectory(path);
 			}
@@ -43,7 +43,7 @@
 		/// <param name="dest">目标目录路径，尾部不包含目录分隔符</param>
 		/// <param name="progressVisible">是否显示进度条</param>
 		/// <param name="filters">跳过复制操作的子文件或子文件夹，如"/Library","/test.txt"，将从源目录路径的尾部开始匹配，如果匹配成功则跳过复制</param>
-		public static void replaceDirectory(string source,string dest,bool progressVisible,params string[] filters){
+		public static void ReplaceDirectory(string source,string dest,bool progressVisible,params string[] filters){
 			source=source.Replace("\\","/");
 			dest=dest.Replace("\\","/");
 
@@ -95,7 +95,7 @@
 		/// <param name="isAddLineEndEnter">行尾是否添加回车</param>
 		/// <param name="readCount">读取的行数，-1或<0:读取所有行</param>
 		/// <returns></returns>
-		public static List<string> getFileLines(string filePath,bool isAddLineEndEnter,int readCount=-1){
+		public static List<string> GetFileLines(string filePath,bool isAddLineEndEnter,int readCount=-1){
 			StreamReader streamReader=File.OpenText(filePath);
 
 			List<string> fileLines=new List<string>();
@@ -123,7 +123,7 @@
 		/// </summary>
 		/// <param name="filePath">读取的文件路径</param>
 		/// <returns></returns>
-		public static string getFileString(string filePath){
+		public static string GetFileString(string filePath){
 			StreamReader streamReader=File.OpenText(filePath);
 			string fileString=streamReader.ReadToEnd();
 			streamReader.Dispose();
@@ -135,13 +135,13 @@
 		/// </summary>
 		/// <param name="fileLines">行字符数组</param>
 		/// <param name="filePath">写入文件的路径,如果是'\'路径,需要加@转换，如:getFileLines(@"E:\unity_tags\Assets\test.txt")</param>
-		public static void writeFileLines(string[] fileLines,string filePath){
+		public static void WriteFileLines(string[] fileLines,string filePath){
 			StringBuilder strBuilder=new StringBuilder();
 			int len=fileLines.Length;
 			for(int i=0;i<len;i++){
 				strBuilder.Append(fileLines[i]);
 			}
-			writeFileString(strBuilder.ToString(),filePath);
+			WriteFileString(strBuilder.ToString(),filePath);
 		}
 
 		/// <summary>
@@ -149,7 +149,7 @@
 		/// </summary>
 		/// <param name="text">需要写入本地的字符串</param>
 		/// <param name="filePath">写入文件的路径,如果是'\'路径,需要加@转换，如:getFileLines(@"E:\unity_tags\Assets\test.txt")</param>
-		public static void writeFileString(string text, string filePath){
+		public static void WriteFileString(string text, string filePath){
 			File.Delete(filePath);
 			FileStream fileStream=File.Create(filePath);
 
@@ -166,10 +166,10 @@
 		/// <br>选择非unity项目文件夹时，将弹出选择错误对话框</br>
 		/// </summary>
 		/// <returns>返回选择的unity项目文件夹路径</returns>
-		public static string openSelectUnityProjectFolderPanel(){
+		public static string OpenSelectUnityProjectFolderPanel(){
 			string folderPath=EditorUtility.OpenFolderPanel("Select a unity project","","");
 			if(!string.IsNullOrEmpty(folderPath)){
-				if(FileUtil2.isUnityProjectFolder(folderPath)){
+				if(FileUtil2.IsUnityProjectFolder(folderPath)){
 					return folderPath;
 				}else{
 					EditorUtility.DisplayDialog("Selection error","Invalid project path:\n"+folderPath,"OK");
@@ -183,7 +183,7 @@
 		/// </summary>
 		/// <param name="folderPath"></param>
 		/// <returns></returns>
-		public static bool isUnityProjectFolder(string folderPath){
+		public static bool IsUnityProjectFolder(string folderPath){
 			bool hasAssetsFolder=false;
 			bool hasProjectSettingsFolder=false;
 			string[] subFolders=Directory.GetDirectories(folderPath);
@@ -204,7 +204,7 @@
 		/// <summary>
 		/// 使用Windows的Explorer打开一个文件夹目录
 		/// </summary>
-		public static void showInExplorer(string folderPath){
+		public static void ShowInExplorer(string folderPath){
 			folderPath=folderPath.Replace("/","\\");
 			System.Diagnostics.Process.Start("explorer.exe",folderPath);
 		}
