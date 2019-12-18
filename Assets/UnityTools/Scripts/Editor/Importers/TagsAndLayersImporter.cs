@@ -13,7 +13,7 @@
 		/// <param name="path">需要导入TagsAndLayers的项目路径</param>
 		/// <param name="currentProjectTempPath">临时文件夹</param>
 		/// <param name="projectName">需要导入项目名称</param>
-		public override void import(string path,string currentProjectTempPath,string projectName){
+		public override void Import(string path,string currentProjectTempPath,string projectName){
 			//需要导入的TagManager.asset的路径
 			string settingsFilePath=path+"/ProjectSettings/TagManager.asset";
 
@@ -45,9 +45,9 @@
 			YamlSequenceNode myLayers=(YamlSequenceNode)myFirstNode["layers"];
 			YamlSequenceNode mySortingLayers=(YamlSequenceNode)myFirstNode["m_SortingLayers"];
 			
-			importTags(tags);
-			importSortingLayers(sortingLayers,mySortingLayers,projectName);
-			importLayers(layers,myLayers,projectName);
+			ImportTags(tags);
+			ImportSortingLayers(sortingLayers,mySortingLayers,projectName);
+			ImportLayers(layers,myLayers,projectName);
 
 			//保存修改到当前项目的TagManager.asset
 			StreamWriter streamWriter=new StreamWriter(myFilePath);
@@ -59,15 +59,15 @@
 			AssetDatabase.Refresh();
 		}
 
-		#region importTags
-		private void importTags(YamlSequenceNode tags){
+		#region ImportTags
+		private void ImportTags(YamlSequenceNode tags){
 			foreach(YamlScalarNode tag in tags){
 				UnityEditorInternal.InternalEditorUtility.AddTag(tag.Value);
-				//addTag(tag.Value);
+				//AddTag(tag.Value);
 			}
 		}
 
-		/*private void addTag(string tag){
+		/*private void AddTag(string tag){
 			if(isHasTag(tag))return;
 			SerializedObject tagManager=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
 			SerializedProperty it=tagManager.FindProperty("tags");
@@ -80,7 +80,7 @@
 			tagManager.ApplyModifiedProperties();
 		}*/
 
-		private bool isHasTag(string tag){
+		private bool IsHasTag(string tag){
 			string[] tags=UnityEditorInternal.InternalEditorUtility.tags;
 			int len=tags.Length;
 			for (int i=0;i<len;i++){
@@ -92,13 +92,13 @@
 		}
 		#endregion importTags
 
-		#region importLayers
-		private void importLayers(YamlSequenceNode layers,YamlSequenceNode myLayers,string projectName){
+		#region ImportLayers
+		private void ImportLayers(YamlSequenceNode layers,YamlSequenceNode myLayers,string projectName){
 			List<string> strings=new List<string>();
 			int i=0;
 			foreach(YamlScalarNode layer in layers){
 				if(i>=8){
-					setLayer(myLayers,i,layer.Value);
+					SetLayer(myLayers,i,layer.Value);
 				}
 				strings.Add(layer.Value);
 				i++;
@@ -109,7 +109,7 @@
 			AssetDatabase.CreateAsset(layersData,layersDataPath);
 		}
 
-		private void setLayer(YamlSequenceNode myLayers,int index,string layerValue){
+		private void SetLayer(YamlSequenceNode myLayers,int index,string layerValue){
 			if(string.IsNullOrEmpty(layerValue))return;
 			int i=0;
 			foreach(YamlScalarNode myLayer in myLayers){
@@ -123,14 +123,14 @@
 		}
 		#endregion importLayers
 
-		#region importSortingLayers
+		#region ImportSortingLayers
 		/// <summary>
 		/// 导入指定项目的SortingLayers到当前项目
 		/// </summary>
 		/// <param name="sortingLayers"></param>
 		/// <param name="mySortingLayers"></param>
 		/// <param name="projectName"></param>
-		private void importSortingLayers(YamlSequenceNode sortingLayers,YamlSequenceNode mySortingLayers,string projectName){
+		private void ImportSortingLayers(YamlSequenceNode sortingLayers,YamlSequenceNode mySortingLayers,string projectName){
 			int i=0;
 			List<USortingLayer> uSortingLayers=new List<USortingLayer>();
 			foreach(YamlMappingNode sortingLayer in sortingLayers){
@@ -138,7 +138,7 @@
 				YamlScalarNode uniqueIDElement=(YamlScalarNode)sortingLayer["uniqueID"];
 				//YamlScalarNode lockedElement=(YamlScalarNode)sortingLayer["locked"];
 				if(i>=1){
-					setSortingLayerToCurrentProject(mySortingLayers,i,nameElement.Value);
+					SetSortingLayerToCurrentProject(mySortingLayers,i,nameElement.Value);
 				}
 
 				var uSortingLayer=new USortingLayer();
@@ -161,7 +161,7 @@
 		/// <param name="mySortingLayers"></param>
 		/// <param name="index"></param>
 		/// <param name="layer"></param>
-		private void setSortingLayerToCurrentProject(YamlSequenceNode mySortingLayers,int index,string layer){
+		private void SetSortingLayerToCurrentProject(YamlSequenceNode mySortingLayers,int index,string layer){
 			//计算当前项目SortingLayer的长度
 			int mySortingLayersLen=0;
 			foreach(var item in mySortingLayers){ mySortingLayersLen++; }
@@ -169,7 +169,7 @@
 			//if(index>=mySortingLayersLen)mySortingLayers.InsertArrayElementAtIndex(mySortingLayersLen);
 			if(index>=mySortingLayersLen){
 				var nSortingLayer=new YamlMappingNode();
-				uint uniqueID=getSortingLayerUniqueID(mySortingLayers);
+				uint uniqueID=GetSortingLayerUniqueID(mySortingLayers);
 				nSortingLayer.Add("name",new YamlScalarNode("sortLayer_"+index));
 				nSortingLayer.Add("uniqueID",new YamlScalarNode(uniqueID.ToString()));
 				nSortingLayer.Add("locked",new YamlScalarNode("0"));
@@ -182,11 +182,11 @@
 		/// </summary>
 		/// <param name="sortingLayers">"m_SortingLayers"序列化属性</param>
 		/// <returns></returns>
-		private uint getSortingLayerUniqueID(YamlSequenceNode sortingLayers){
+		private uint GetSortingLayerUniqueID(YamlSequenceNode sortingLayers){
 			uint id=0;
 			while(true){
 				id=(uint)Random.Range(0,uint.MaxValue);
-				if(isUniqueSortingLayerID(id,sortingLayers)){
+				if(IsUniqueSortingLayerID(id,sortingLayers)){
 					break;
 				}
 			}
@@ -199,7 +199,7 @@
 		/// <param name="sortingLayerID"></param>
 		/// <param name="sortingLayers">"m_SortingLayers"序列化属性</param>
 		/// <returns></returns>
-		private bool isUniqueSortingLayerID(uint sortingLayerID,YamlSequenceNode sortingLayers){
+		private bool IsUniqueSortingLayerID(uint sortingLayerID,YamlSequenceNode sortingLayers){
 			bool isUnique=true;
 			int i=0;
 			foreach(YamlMappingNode sortingLayer in sortingLayers){
@@ -214,6 +214,6 @@
 			}
 			return isUnique;
 		}
-		#endregion importSortingLayers
+		#endregion ImportSortingLayers
 	}
 }

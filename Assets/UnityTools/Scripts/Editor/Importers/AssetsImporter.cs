@@ -14,7 +14,7 @@
 		/// <param name="path">需要导入Assets文件夹的项目路径</param>
 		/// <param name="currentProjectTempPath">临时文件夹</param>
 		/// <param name="projectName">需要导入项目名称</param>
-		public override void import(string path,string currentProjectTempPath,string projectName){
+		public override void Import(string path,string currentProjectTempPath,string projectName){
 			//当前项目的Assets文件夹的全路径,路径中使用"/"分隔,不是"\"。
 			string assetsPath=Application.dataPath;
 			//备份当前项目的所有GUID用于判断是否重复
@@ -27,41 +27,41 @@
 			//复制项目的Assets文件夹到子项目路径
 			FileUtil2.copyDirectory(path+"/Assets",childProjectAssetsPath);
             //删除DOTweenSettings.asset
-            deleteDOTweenSettingsAsset(childProjectAssetsPath);
+            DeleteDOTweenSettingsAsset(childProjectAssetsPath);
 			//删除不需要导入的文件夹，如Editor、Gizmos、Plugins等
-			foreachAndDeleteIgnoreFolders(childProjectAssetsPath);
+			ForeachAndDeleteIgnoreFolders(childProjectAssetsPath);
 			//修改文件夹下的.cs文件解决冲突
-			foreachAndEditCSharpFiles(childProjectAssetsPath,projectName);
+			ForeachAndEditCSharpFiles(childProjectAssetsPath,projectName);
 			//修改文件夹下的.unity文件,修正SortingLayer等
-			foreachAndEditUnityFiles(childProjectAssetsPath,projectName);
+			ForeachAndEditUnityFiles(childProjectAssetsPath,projectName);
 			//修改冲突的GUID
-			foreachAndEditGuids(childProjectAssetsPath,oldGuidList);
+			ForeachAndEditGuids(childProjectAssetsPath,oldGuidList);
 		}
 
 		/// <summary>
 		/// 删除DOTween在Assets/Resources下生成的DOTweenSettings.asset
 		/// </summary>
 		/// <param name="childProjectAssetsPath"></param>
-		private void deleteDOTweenSettingsAsset(string childProjectAssetsPath){
+		private void DeleteDOTweenSettingsAsset(string childProjectAssetsPath){
 			string doTweenSettingsAssetPath=childProjectAssetsPath+"/Resources/DOTweenSettings.asset";
             string doTweenSettingsAssetMetaPath=childProjectAssetsPath+"/Resources/DOTweenSettings.asset.meta";
             if(File.Exists(doTweenSettingsAssetPath))File.Delete(doTweenSettingsAssetPath);
             if(File.Exists(doTweenSettingsAssetMetaPath))File.Delete(doTweenSettingsAssetMetaPath);
 		}
         
-        #region foreachAndDeleteIgnoreFolders
+        #region ForeachAndDeleteIgnoreFolders
 		/// <summary>
 		/// 遍历删除不需要的子文件夹
 		/// </summary>
 		/// <param name="folderPath">遍历的文件夹目录</param>
-		private void foreachAndDeleteIgnoreFolders(string folderPath){
+		private void ForeachAndDeleteIgnoreFolders(string folderPath){
 			//只能在Assets文件夹下的一级子目录的特殊文件夹
 			string[] ignoreRootFolderNames=new string[]{"EditorDefaultResources","Gizmos","Plugins","StandardAssets","StreamingAssets"};
 			//可以在Assets文件夹下的任意子目录的特殊文件夹
 			string[] ignoreFolderNames=new string[]{"Editor","DOTween"};
 			//
 			DirectoryInfo rootFolder=new DirectoryInfo(folderPath);
-			foreacAndDeleteFolders(rootFolder,true,ignoreRootFolderNames,ignoreFolderNames);
+			ForeachAndDeleteFolders(rootFolder,true,ignoreRootFolderNames,ignoreFolderNames);
 		}
         /// <summary>
         /// 遍历删除不需要的子文件夹
@@ -70,7 +70,7 @@
         /// <param name="isCheckRoot">如果true,将删除名称匹配deleteRootNames的文件夹</param>
         /// <param name="deleteRootNames">如果参数isCheckRoot为true,将删除名称匹配的文件夹</param>
         /// <param name="deleteNames">将在所有子级检测并删除名称匹配的文件夹</param>
-		private void foreacAndDeleteFolders(DirectoryInfo rootFolder,bool isCheckRoot,string[] deleteRootNames,string[] deleteNames){
+		private void ForeachAndDeleteFolders(DirectoryInfo rootFolder,bool isCheckRoot,string[] deleteRootNames,string[] deleteNames){
 			DirectoryInfo[] directories=rootFolder.GetDirectories();
 			int len=directories.Length;
 			for(int i=0;i<len;i++){
@@ -83,26 +83,26 @@
                     string metaFilePath=@directory.FullName+".meta";
                     if(File.Exists(metaFilePath))File.Delete(metaFilePath);
                 }else{
-				    foreacAndDeleteFolders(directory,false,deleteRootNames,deleteNames);//递归,不检测root
+				    ForeachAndDeleteFolders(directory,false,deleteRootNames,deleteNames);//递归,不检测root
                 }
 			}
 		}
         #endregion
 
-		#region foreachAndEditCSharpFiles
+		#region ForeachAndEditCSharpFiles
 		/// <summary>
 		/// 遍历和修改文件夹下的.cs文件
 		/// </summary>
 		/// <param name="folderPath">文件夹目录</param>
 		/// <param name="projectName">导入的项目名称</param>
-		private void foreachAndEditCSharpFiles(string folderPath,string projectName){
+		private void ForeachAndEditCSharpFiles(string folderPath,string projectName){
 			var directoryInfo=new DirectoryInfo(folderPath);
 			var files=directoryInfo.GetFiles("*.cs",SearchOption.AllDirectories);
 			int len=files.Length;
 			for(int i=0;i<len;i++){
 				var file=files[i];
 				//修改.cs文件
-				editCSharpFile(@file.FullName,projectName);
+				EditCSharpFile(@file.FullName,projectName);
 			}
 		}
 
@@ -111,18 +111,18 @@
 		/// </summary>
 		/// <param name="filePath">文件路径，如果是'\'路径,需要加@转换，如:editCSharpFile(@"E:\unity_tags\Assets\Main.cs")。</param>
 		/// <param name="projectName">导入的项目名称</param>
-		private void editCSharpFile(string filePath,string projectName){
+		private void EditCSharpFile(string filePath,string projectName){
 			List<string> fileLines=FileUtil2.getFileLines(filePath,true);
 			//修正不兼容的"SortingLayer"代码,使用"SortingLayer2"替换
-			fixSortingLayerCode(fileLines);
+			FixSortingLayerCode(fileLines);
 			//修正不兼容的"LayerMask"代码,使用"LayerMask2"替换
-			fixLayerMaskCode(fileLines);
+			FixLayerMaskCode(fileLines);
 			//修正不兼容的"SceneManager"代码,使用"SceneManager2"类替换
-			fixSceneManagerCode(fileLines);
+			FixSceneManagerCode(fileLines);
 			//修正不兼容的"QualitySettings"代码,使用"QualitySettings2"类替换
-			fixQualitySettingsCode(fileLines);
+			FixQualitySettingsCode(fileLines);
 			//检测并添加以项目命名的namespace到.cs文件
-			checkAndAddNameSpaceToCSharpFile(fileLines,projectName,filePath);
+			CheckAndAddNameSpaceToCSharpFile(fileLines,projectName,filePath);
 			//重新写入文件
 			FileUtil2.writeFileLines(fileLines.ToArray(),filePath);
 		}
@@ -130,7 +130,7 @@
 		/// <summary>
 		/// 修正"SortingLayer"代码，将使用"SortingLayer2"替换
 		/// </summary>
-		private void fixSortingLayerCode(List<string> fileLines){
+		private void FixSortingLayerCode(List<string> fileLines){
 			Regex[] matchRegexs=new Regex[]{
 				//匹配"SortingLayer[] xxx=SortingLayer.layers"
 				new Regex(@"SortingLayer\s*\[\s*\]\s*\S+\s*=\s*SortingLayer\s*.\s*layers",RegexOptions.Compiled),
@@ -148,13 +148,13 @@
 				//匹配"(SortingLayer)xxx"
 				new Regex(@"\(\s*SortingLayer\s*\)\s*\S+",RegexOptions.Compiled)
 			};
-			replaceWithMatchRegexs(fileLines,matchRegexs,"SortingLayer","SortingLayer2");
+			ReplaceWithMatchRegexs(fileLines,matchRegexs,"SortingLayer","SortingLayer2");
 		}
 
 		/// <summary>
 		/// 修正"LayerMask"代码，将使用"LayerMask2"替换
 		/// </summary>
-		private void fixLayerMaskCode(List<string> fileLines){
+		private void FixLayerMaskCode(List<string> fileLines){
 			Regex[] matchRegexs=new Regex[]{
 				new Regex(@"LayerMask\s*.\s*GetMask",RegexOptions.Compiled),
 				new Regex(@"LayerMask\s*.\s*LayerToName",RegexOptions.Compiled),
@@ -165,14 +165,14 @@
 				//匹配"(LayerMask)xxx"
 				new Regex(@"\(\s*LayerMask\s*\)\s*\S+",RegexOptions.Compiled)
 			};
-			replaceWithMatchRegexs(fileLines,matchRegexs,"LayerMask","LayerMask2");
+			ReplaceWithMatchRegexs(fileLines,matchRegexs,"LayerMask","LayerMask2");
 		}
 
 		/// <summary>
 		/// 修正"SceneManager"代码，将使用"SceneManager2"类替换
 		/// </summary>
 		/// <param name="fileLines">.cs文件读取出来的行数组</param>
-		private void fixSceneManagerCode(List<string> fileLines){
+		private void FixSceneManagerCode(List<string> fileLines){
 			Regex[] matchRegexs=new Regex[]{
 				new Regex(@"SceneManager\s*.\s*LoadSceneAsync",RegexOptions.Compiled),
 				new Regex(@"SceneManager\s*.\s*LoadScene",RegexOptions.Compiled),
@@ -181,17 +181,17 @@
 				new Regex(@"SceneManager\s*.\s*GetSceneByName",RegexOptions.Compiled),
 				new Regex(@"SceneManager\s*.\s*GetSceneByPath",RegexOptions.Compiled)
 			};
-			replaceWithMatchRegexs(fileLines,matchRegexs,"SceneManager","SceneManager2");
+			ReplaceWithMatchRegexs(fileLines,matchRegexs,"SceneManager","SceneManager2");
 		}
 		
-		private void fixQualitySettingsCode(List<string> fileLines){
+		private void FixQualitySettingsCode(List<string> fileLines){
 			Regex[] matchRegexs=new Regex[]{
 				new Regex(@"QualitySettings\s*.\s*DecreaseLevel",RegexOptions.Compiled),
 				new Regex(@"QualitySettings\s*.\s*GetQualityLevel",RegexOptions.Compiled),
 				new Regex(@"QualitySettings\s*.\s*IncreaseLevel",RegexOptions.Compiled),
 				new Regex(@"QualitySettings\s*.\s*SetQualityLevel",RegexOptions.Compiled)
 			};
-			replaceWithMatchRegexs(fileLines,matchRegexs,"QualitySettings","QualitySettings2");
+			ReplaceWithMatchRegexs(fileLines,matchRegexs,"QualitySettings","QualitySettings2");
 		}
 
 		/// <summary>
@@ -202,7 +202,7 @@
 		/// <param name="matchRegexs">需要匹配的正则表达式数组</param>
 		/// <param name="oldStr">原来的字符串</param>
 		/// <param name="newStr">替换的字符串</param>
-		private void replaceWithMatchRegexs(List<string> fileLines,Regex[] matchRegexs,string oldStr,string newStr){
+		private void ReplaceWithMatchRegexs(List<string> fileLines,Regex[] matchRegexs,string oldStr,string newStr){
 			var matchEvaluator=new MatchEvaluator((Match m)=>{
 				string mStr=m.Value;
 				mStr=mStr.Replace(oldStr,newStr);
@@ -226,9 +226,9 @@
 		/// <param name="fileLines">.cs文件读取出来的行数组</param>
 		/// <param name="namespaceStr">需要添加的命名空间字符串</param>
 		/// <param name="filePath">.cs文件路径</param>
-		private void checkAndAddNameSpaceToCSharpFile(List<string> fileLines,string namespaceStr,string filePath){
-			if(getNameSpaceNull(fileLines.ToArray(),filePath)){ 
-				addNameSpaceToCSharpFile(fileLines,namespaceStr,filePath);
+		private void CheckAndAddNameSpaceToCSharpFile(List<string> fileLines,string namespaceStr,string filePath){
+			if(GetNameSpaceNull(fileLines.ToArray(),filePath)){ 
+				AddNameSpaceToCSharpFile(fileLines,namespaceStr,filePath);
 			}
 		}
 
@@ -238,7 +238,7 @@
 		/// <param name="fileLines">.cs文件读取出来的行数组</param>
 		/// <param name="namespaceStr">需要添加的命名空间字符串</param>
 		/// <param name="filePath">.cs文件路径</param>
-		private void addNameSpaceToCSharpFile(List<string> fileLines,string namespaceStr,string filePath){
+		private void AddNameSpaceToCSharpFile(List<string> fileLines,string namespaceStr,string filePath){
 			int len=fileLines.Count;
 			for(int i=0;i<len;i++){
 				//每一行首加入Tab
@@ -256,7 +256,7 @@
 		/// <param name="fileLines">.cs文件读取出来的行数组</param>
 		/// <param name="filePath">.cs文件路径</param>
 		/// <returns></returns>
-		private bool getNameSpaceNull(string[] fileLines,string filePath){
+		private bool GetNameSpaceNull(string[] fileLines,string filePath){
 			Regex namespaceRegex=new Regex(@"namespace\s+\S+",RegexOptions.Compiled);
 			Regex classRegex=new Regex(@"class\s+\S+",RegexOptions.Compiled);
 			Regex structRegex=new Regex(@"struct\s+\S+",RegexOptions.Compiled);
@@ -289,7 +289,7 @@
 		/// </summary>
 		/// <param name="folderPath">文件夹目录</param>
 		/// <param name="projectName">导入的项目名称</param>
-		private void foreachAndEditUnityFiles(string folderPath,string projectName){
+		private void ForeachAndEditUnityFiles(string folderPath,string projectName){
 			//Debug.Log(Directory.Exists(folderPath));
 			var directoryInfo=new DirectoryInfo(folderPath);
 			var files=directoryInfo.GetFiles("*.unity",SearchOption.AllDirectories);
@@ -299,7 +299,7 @@
 				//Debug.Log( "DirectoryName:" + files[i].DirectoryName ); 
 				var file=files[i];
 				//修改.unity文件
-				editUnityFile(@file.FullName,projectName);
+				EditUnityFile(@file.FullName,projectName);
 			}
 		}
 
@@ -309,7 +309,7 @@
 		/// </summary>
 		/// <param name="filePath">文件路径，如果是'\'路径,需要加@转换，如:editCSharpFile(@"E:\unity_tags\Assets\main.unity")。</param>
 		/// <param name="projectName">导入的项目名称</param>
-		private void editUnityFile(string filePath,string projectName){
+		private void EditUnityFile(string filePath,string projectName){
 			//是否在编辑器中打开.unity
 			string tempFilePath=filePath.Replace('\\','/');
 			int sceneCount=EditorSceneManager.sceneCount;
@@ -323,7 +323,7 @@
 			//
 			List<string> fileLines=FileUtil2.getFileLines(filePath,true);
 			//修正引用的SortingLayer.id
-			fixSortingLayerID(fileLines);
+			FixSortingLayerID(fileLines);
 			//重新写入文件
 			FileUtil2.writeFileLines(fileLines.ToArray(),filePath);
 		}
@@ -332,7 +332,7 @@
 		/// 修正SortingLayer.id
 		/// </summary>
 		/// <param name="fileLines">.unity文件读取出来的文本行数组</param>
-		private void fixSortingLayerID(List<string> fileLines){
+		private void FixSortingLayerID(List<string> fileLines){
 			Regex SortingLayerIDRegex=new Regex(@"m_SortingLayerID:\s\d+",RegexOptions.Compiled);
 			Regex sortingLayerValueRegex=new Regex(@"m_SortingLayer:\s\d+",RegexOptions.Compiled);
 			int len=fileLines.Count;
@@ -358,15 +358,15 @@
 		}
 		#endregion
 
-		#region foreachAndEditGuids
+		#region ForeachAndEditGuids
 		/// <summary>
 		/// 遍历和修改指定文件夹下各个文件有冲突的guid
 		/// </summary>
 		/// <param name="folderPath">要修改的文件夹</param>
 		/// <param name="excludeGuidList">如果文件夹下各个文件的guid与该列表中项重复，则需要修改</param>
-		private void foreachAndEditGuids(string folderPath,string[] excludeGuidList){
+		private void ForeachAndEditGuids(string folderPath,string[] excludeGuidList){
 			//重复的guid列表
-			string[] duplicateGuidList=getDuplicateGuidList(folderPath,excludeGuidList);
+			string[] duplicateGuidList=GetDuplicateGuidList(folderPath,excludeGuidList);
 			//用于替换重复的guid列表
 			string[] replaceGuidList=GuidUtil.getUniqueNewGuids(duplicateGuidList);
 			//查找并替换guid的文件类型列表
@@ -381,7 +381,7 @@
 				string filePath=fileInfo.FullName;
 				bool isTestFileType=Array.IndexOf(testExtensions,extension)>-1;
 				if(isTestFileType){
-					replaceFileDuplicateGuid(filePath,duplicateGuidList,replaceGuidList);
+					ReplaceFileDuplicateGuid(filePath,duplicateGuidList,replaceGuidList);
 				}
 			}
 		}
@@ -392,7 +392,7 @@
 		/// <param name="filePath">文件路径</param>
 		/// <param name="duplicateGuidList">重复有冲突的guid列表</param>
 		/// <param name="replaceGuidList">要替换的guid列表，各个元素索引与duplicateGuidList一致</param>
-		private void replaceFileDuplicateGuid(string filePath,string[] duplicateGuidList,string[] replaceGuidList){
+		private void ReplaceFileDuplicateGuid(string filePath,string[] duplicateGuidList,string[] replaceGuidList){
 			Regex regex=new Regex(@"guid:\s*");
 			List<string> fileLines=FileUtil2.getFileLines(filePath,true,-1);
 			int len=fileLines.Count;
@@ -419,7 +419,7 @@
 		/// <param name="folderPath">查找的文件夹路径</param>
 		/// <param name="excludeGuidList">用于判断重复的guid列表</param>
 		/// <returns></returns>
-		private string[] getDuplicateGuidList(string folderPath,string[] excludeGuidList){
+		private string[] GetDuplicateGuidList(string folderPath,string[] excludeGuidList){
 			List<string> results=new List<string>();
 			string[] folderAllMetaGuids=GuidUtil.getAllMetaFileGuidList(folderPath);
 			int i=folderAllMetaGuids.Length;

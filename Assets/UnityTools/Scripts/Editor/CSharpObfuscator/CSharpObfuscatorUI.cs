@@ -8,19 +8,19 @@
 	/// <summary>CSharp混淆器窗口UI</summary>
 	public class CSharpObfuscatorUI:EditorWindow{
 
-		private bool _isCopy=true;
-		private bool _showInExplorerOnComplete=true;
-		private Vector2 _scrollPosition;
+		private bool m_isDuplicate=true;
+		private bool m_showInExplorerOnComplete=true;
+		private Vector2 m_scrollPosition;
 
 		[MenuItem("Tools/CSharpObfuscator")]
-		public static void create(){
+		public static void Create(){
 			var window=GetWindow(typeof(CSharpObfuscatorUI),false,"CSharpObfuscator");
 			window.minSize=new Vector2(315,120);
 			window.Show();
 		}
 
 		[MenuItem("Tools/test")]
-		public static void test(){
+		public static void Cest(){
 			var obj=AssetDatabase.LoadAssetAtPath<Object>("ProjectSettings/Physics2DSettingsB.asset");
 			Debug.Log(obj);//ouput Null
 		}
@@ -28,7 +28,7 @@
 
 		private void OnEnable(){
 			if(ProjectImporterUI.xmlDocument==null){
-				ProjectImporterUI.loadXml();
+				ProjectImporterUI.LoadXml();
 			}
 		}
 
@@ -38,15 +38,15 @@
 				EditorGUILayout.Space();
 				EditorGUILayout.BeginHorizontal();
 				{ 
-					_isCopy=GUILayout.Toggle(_isCopy,"Is copy");
-					_showInExplorerOnComplete=GUILayout.Toggle(_showInExplorerOnComplete,"Show in explorer");
+					m_isDuplicate=GUILayout.Toggle(m_isDuplicate,"Duplicate");
+					m_showInExplorerOnComplete=GUILayout.Toggle(m_showInExplorerOnComplete,"Show in explorer");
 					if(GUILayout.Button("Obfuscate a project")){
 						string projectFolderPath=FileUtil2.openSelectUnityProjectFolderPanel();
 						if(!string.IsNullOrEmpty(projectFolderPath)){
-							if(_isCopy){
-								copyAndObfuscateUnityProject(projectFolderPath,true);
+							if(m_isDuplicate){
+								CopyAndObfuscateUnityProject(projectFolderPath,true);
 							}else{
-								obfuscateUnityProject(projectFolderPath,true);
+								ObfuscateUnityProject(projectFolderPath,true);
 							}
 						}
 					}
@@ -55,7 +55,7 @@
 				EditorGUILayout.Space();
 				if(ProjectImporterUI.xmlDocument!=null){
 					if(GUILayout.Button("Obfuscate all sub project")){
-						obfuscateAllSubProject();
+						ObfuscateAllSubProject();
 					}
 				}
 				//表头
@@ -65,7 +65,7 @@
 				GUILayout.Space(90);
 				EditorGUILayout.EndHorizontal();
 				//
-				_scrollPosition=EditorGUILayout.BeginScrollView(_scrollPosition);
+				m_scrollPosition=EditorGUILayout.BeginScrollView(m_scrollPosition);
 				
 				if(ProjectImporterUI.xmlDocument!=null){
 					var items=ProjectImporterUI.xmlDocument.FirstChild.ChildNodes;
@@ -80,7 +80,7 @@
 						GUILayout.Label(projectName,GUILayout.MinWidth(100),GUILayout.MaxWidth(150));
 						GUILayout.Label(obfuscated,GUILayout.Width(90));
 						if(GUILayout.Button("Obfuscate",GUILayout.Width(90))){
-							obfuscateSubProject(projectName,item);
+							ObfuscateSubProject(projectName,item);
 						}
 						EditorGUILayout.EndHorizontal();
 						GUILayout.Space(5);
@@ -90,10 +90,10 @@
 			}
 			EditorGUILayout.EndVertical();
 
-			checkDragAndDropOnGUI();
+			CheckDragAndDropOnGUI();
 		}
 
-		private void checkDragAndDropOnGUI(){
+		private void CheckDragAndDropOnGUI(){
 			if(mouseOverWindow==this){//鼠标位于当前窗口
 				if(Event.current.type==EventType.DragUpdated){//拖入窗口未松开鼠标
 					DragAndDrop.visualMode=DragAndDropVisualMode.Generic;//改变鼠标外观
@@ -104,10 +104,10 @@
 						for(int i=0;i<len;i++){
 							string path=DragAndDrop.paths[i];
 							if(Directory.Exists(path)&&FileUtil2.isUnityProjectFolder(path)){
-								if(_isCopy){
-									copyAndObfuscateUnityProject(path,true);
+								if(m_isDuplicate){
+									CopyAndObfuscateUnityProject(path,true);
 								}else{
-									obfuscateUnityProject(path,true);
+									ObfuscateUnityProject(path,true);
 								}
 							}
 						}
@@ -121,13 +121,13 @@
 		/// </summary>
 		/// <param name="unityProjectPath">unit项目文件夹路径</param>
 		/// <param name="isCallComplete">是否执行混淆完成回调</param>
-		private void copyAndObfuscateUnityProject(string unityProjectPath, bool isCallComplete){
+		private void CopyAndObfuscateUnityProject(string unityProjectPath, bool isCallComplete){
 			//跳过的文件或文件夹
 			string[] ignoreCopys=new string[]{"/.git","/Library"};
 			//目标文件夹名称,源文件夹名称加"_confusion"后缀
 			string duplicateFolderPath=unityProjectPath+"_confusion";
 			FileUtil2.replaceDirectory(unityProjectPath,duplicateFolderPath,true,ignoreCopys);
-			obfuscateUnityProject(duplicateFolderPath,isCallComplete);
+			ObfuscateUnityProject(duplicateFolderPath,isCallComplete);
 		}
 
 		/// <summary>
@@ -135,13 +135,13 @@
 		/// </summary>
 		/// <param name="unityProjectPath">unity项目文件夹路径</param>
 		/// <param name="isCallComplete">是否执行混淆完成回调</param>
-		private void obfuscateUnityProject(string unityProjectPath,bool isCallComplete){
+		private void ObfuscateUnityProject(string unityProjectPath,bool isCallComplete){
 			string assetsPath=unityProjectPath+"/Assets";
 			CSharpObfuscator obfuscator=new CSharpObfuscator();
 			try{
-				obfuscator.obfuscateProject(assetsPath,()=>{
+				obfuscator.ObfuscateProject(assetsPath,()=>{
 					if(isCallComplete){
-						if(_showInExplorerOnComplete){
+						if(m_showInExplorerOnComplete){
 							FileUtil2.showInExplorer(unityProjectPath);
 						}
 					}
@@ -157,7 +157,7 @@
 		/// <summary>
 		/// 混淆所有子项目
 		/// </summary>
-		private void obfuscateAllSubProject(){
+		private void ObfuscateAllSubProject(){
 			var items=ProjectImporterUI.xmlDocument.FirstChild.ChildNodes;
 			int len=items.Count;
 			for(int i=0;i<len;i++){
@@ -167,7 +167,7 @@
 				//string obfuscated=item.Attributes["obfuscated"].Value;
 				//string projectFolderPath=item.InnerText;
 
-				obfuscateSubProject(projectName,item);
+				ObfuscateSubProject(projectName,item);
 			}
 		}
 
@@ -176,11 +176,11 @@
 		/// </summary>
 		/// <param name="projectName"></param>
 		/// <param name="item"></param>
-		private void obfuscateSubProject(string projectName,XmlNode item){
+		private void ObfuscateSubProject(string projectName,XmlNode item){
 			string assetsPath=Application.dataPath+"/"+projectName+"/Assets";
 			CSharpObfuscator obfuscator=new CSharpObfuscator();
-			obfuscator.obfuscateProject(assetsPath,()=>{
-				onObfuscateSubProjectComplete(item);
+			obfuscator.ObfuscateProject(assetsPath,()=>{
+				OnObfuscateSubProjectComplete(item);
 			});
 		}
 
@@ -188,9 +188,9 @@
 		/// 一个子项目混淆完成
 		/// </summary>
 		/// <param name="item"></param>
-		private void onObfuscateSubProjectComplete(XmlNode item){
+		private void OnObfuscateSubProjectComplete(XmlNode item){
 			item.Attributes["obfuscated"].Value="Yes";
-			ProjectImporterUI.saveXml();
+			ProjectImporterUI.SaveXml();
 		}
 
 		private void OnDisable(){

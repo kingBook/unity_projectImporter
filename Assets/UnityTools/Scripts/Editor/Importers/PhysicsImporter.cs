@@ -13,7 +13,7 @@
 		/// <param name="path">需要导入PhysicsSettings的项目路径</param>
 		/// <param name="currentProjectTempPath">临时文件夹</param>
 		/// <param name="projectName">需要导入项目名称</param>
-		public override void import(string path,string currentProjectTempPath,string projectName){
+		public override void Import(string path,string currentProjectTempPath,string projectName){
 			//需要导入的DynamicsManager.asset的路径
 			string settingsFilePath=path+"/ProjectSettings/DynamicsManager.asset";
 
@@ -31,7 +31,7 @@
 				var keyNode=(YamlScalarNode)item.Key;
 				var valueNode=item.Value;
 				if(keyNode.Value=="m_Gravity"){
-					physicsData.gravity=readVector3(valueNode);
+					physicsData.gravity=ReadVector3(valueNode);
 				}else if(keyNode.Value=="m_DefaultMaterial"){
 					//获取默认物理材质
 					int fileId=int.Parse(valueNode["fileID"].ToString());
@@ -81,14 +81,14 @@
 				}else if(keyNode.Value=="m_ClothInterCollisionSettingsToggle"){
 					physicsData.clothInterCollisionSettingsToggle=valueNode.ToString()=="1";
 				}else if(keyNode.Value=="m_ClothGravity"){
-					physicsData.clothGravity=readVector3(valueNode);
+					physicsData.clothGravity=ReadVector3(valueNode);
 				}else if(keyNode.Value=="m_ContactPairsMode"){
 					physicsData.contactPairsMode=int.Parse(valueNode.ToString());
 				}else if(keyNode.Value=="m_BroadphaseType"){
 					physicsData.broadphaseType=int.Parse(valueNode.ToString());
 				}else if(keyNode.Value=="m_WorldBounds"){
-					Vector3 center=readVector3(valueNode["m_Center"]);
-					Vector3 extent=readVector3(valueNode["m_Extent"]);
+					Vector3 center=ReadVector3(valueNode["m_Center"]);
+					Vector3 extent=ReadVector3(valueNode["m_Extent"]);
 					physicsData.worldBounds=new Bounds(center,extent*2);
 				}else if(keyNode.Value=="m_WorldSubdivisions"){
 					physicsData.worldSubdivisions=int.Parse(valueNode.ToString());
@@ -107,7 +107,7 @@
 			AssetDatabase.Refresh();
 		}
 
-		private Vector3 readVector3(YamlNode node){
+		private Vector3 ReadVector3(YamlNode node){
 			Vector3 vector3=new Vector3();
 			vector3.x=float.Parse(node["x"].ToString());
 			vector3.y=float.Parse(node["y"].ToString());

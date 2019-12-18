@@ -13,7 +13,7 @@
 		/// <param name="path">需要导入QualitySettings的项目路径</param>
 		/// <param name="currentProjectTempPath">临时文件夹</param>
 		/// <param name="projectName">需要导入项目名称</param>
-		public override void import(string path,string currentProjectTempPath,string projectName){
+		public override void Import(string path,string currentProjectTempPath,string projectName){
 			//需要导入的QualitySettings.asset的路径
 			string settingsFilePath=path+"/ProjectSettings/QualitySettings.asset";
 
@@ -33,12 +33,12 @@
 			YamlSequenceNode qualitySettingsNode=(YamlSequenceNode)firstNode["m_QualitySettings"];
 			List<QualitySettings> qualitySettingsList=new List<QualitySettings>();
 			foreach(YamlMappingNode item in qualitySettingsNode){
-				qualitySettingsList.Add(readQualitySettings(item));
+				qualitySettingsList.Add(ReadQualitySettings(item));
 			}
 			qualityData.qualitySettings=qualitySettingsList.ToArray();
 			//
 			YamlMappingNode perPlatformDefaultQualityNode=(YamlMappingNode)firstNode["m_PerPlatformDefaultQuality"];
-			qualityData.perPlatformDefaultQuality=readPlatformDefaultQuality(perPlatformDefaultQualityNode);
+			qualityData.perPlatformDefaultQuality=ReadPlatformDefaultQuality(perPlatformDefaultQualityNode);
 			//
 			AssetDatabase.CreateAsset(qualityData,ProjectImporterEditor.resourcePath+"/"+projectName+"_qualityData.asset");
 			AssetDatabase.Refresh();
@@ -49,7 +49,7 @@
 		/// </summary>
 		/// <param name="item">包含某个品质级别的设置的数据对象</param>
 		/// <returns></returns>
-		private QualitySettings readQualitySettings(YamlMappingNode item){
+		private QualitySettings ReadQualitySettings(YamlMappingNode item){
 			var qualitySettings=new QualitySettings();
 			qualitySettings.name=item["name"].ToString();
 			qualitySettings.pixelLightCount=int.Parse(item["pixelLightCount"].ToString());
@@ -71,7 +71,7 @@
 			qualitySettings.shadowmaskMode=int.Parse(item["shadowmaskMode"].ToString());
 
 			//blendWeights/skinWeights,当建项目未做任何品质设置更改时是blendWeights,更改一次后是skinWeights
-			bool isSkinWeights=hasKeyWithinMappingNode(item,"skinWeights");
+			bool isSkinWeights=HasKeyWithinMappingNode(item,"skinWeights");
 			if(isSkinWeights){
 				qualitySettings.skinWeights=int.Parse(item["skinWeights"].ToString());
 			}else{
@@ -123,7 +123,7 @@
 		/// </summary>
 		/// <param name="item">包含平台默认品质级别数据对象</param>
 		/// <returns></returns>
-		private PlatformDefaultQuality[] readPlatformDefaultQuality(YamlMappingNode item){
+		private PlatformDefaultQuality[] ReadPlatformDefaultQuality(YamlMappingNode item){
 			List<PlatformDefaultQuality> list=new List<PlatformDefaultQuality>();
 			foreach(var platform in item){
 				PlatformDefaultQuality platformDefaultQuality=new PlatformDefaultQuality();
@@ -134,7 +134,7 @@
 			return list.ToArray();
 		}
 
-		private bool hasKeyWithinMappingNode(YamlMappingNode node,string key){
+		private bool HasKeyWithinMappingNode(YamlMappingNode node,string key){
 			foreach(var item in node) {
 				if(item.Key.ToString()==key)return true;
 			}

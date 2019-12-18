@@ -14,7 +14,7 @@
 		/// <param name="path">需要导入BuildSettings的项目路径</param>
 		/// <param name="currentProjectTempPath">临时文件夹</param>
 		/// <param name="projectName">需要导入项目名称</param>
-		public override void import(string path,string currentProjectTempPath,string projectName){
+		public override void Import(string path,string currentProjectTempPath,string projectName){
 			//需要导入的EditorBuildSettings.asset的路径
 			string settingsFilePath=path+"/ProjectSettings/EditorBuildSettings.asset";
 
