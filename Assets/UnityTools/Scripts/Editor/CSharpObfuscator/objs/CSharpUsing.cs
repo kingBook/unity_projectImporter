@@ -7,7 +7,7 @@
 	/// <summary>
 	/// Using，如：“using UnityEngine;”或“using System.Collections;”。
 	/// </summary>
-	public struct CSharpUsing:IUsing{
+	public class CSharpUsing:IUsing{
 		
 		public bool isStatic;
 		/// <summary>

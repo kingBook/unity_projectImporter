@@ -4,7 +4,7 @@
 	/// <summary>
 	/// 方法
 	/// </summary>
-	public struct CSharpMethod{
+	public class CSharpMethod{
 		
 		/// <summary>
 		/// 所在的命名空间

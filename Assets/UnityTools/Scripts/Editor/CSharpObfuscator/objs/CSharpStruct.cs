@@ -2,9 +2,9 @@
 	using UnityEngine;
 	using System.Collections;
 	/// <summary>
-	/// 接口
+	/// 结构体
 	/// </summary>
-	public struct CSharpInterface{
+	public class CSharpStruct{
 		
 		/// <summary>
 		/// 所在的命名空间
@@ -27,7 +27,13 @@
 		/// <summary>
 		/// 泛型约束列表
 		/// </summary>
-		public CSharpGenericConstraint[] genericConstraints;
+		public CSharpGenericConstraint[] genericConstraints;	
+
+
 		
+		//public CSharpProperty[] properties;
+		//public CsharpEvent[] events;
+		//public CSharpDelegate[] delegates;
+		//public CSharpMethod[] methods;
 	}
 }

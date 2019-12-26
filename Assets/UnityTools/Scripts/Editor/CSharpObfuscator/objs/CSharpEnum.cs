@@ -4,7 +4,7 @@
 	/// <summary>
 	/// 枚举
 	/// </summary>
-	public struct CSharpEnum{
+	public class CSharpEnum{
 		
 		/// <summary>
 		/// 所在的命名空间

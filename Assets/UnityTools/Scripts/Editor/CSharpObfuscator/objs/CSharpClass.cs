@@ -4,7 +4,7 @@
 	/// <summary>
 	/// 类
 	/// </summary>
-	public struct CSharpClass{
+	public class CSharpClass{
 
 		/// <summary>
 		/// 所在的命名空间

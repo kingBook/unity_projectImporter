@@ -4,7 +4,7 @@
 	/// <summary>
 	/// 委托
 	/// </summary>
-	public struct CSharpDelegate{
+	public class CSharpDelegate{
 		
 		/// <summary>
 		/// 所在的命名空间

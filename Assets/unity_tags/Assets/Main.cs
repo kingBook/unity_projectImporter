@@ -12,14 +12,26 @@ namespace unity_tags{
 	using Mathx=UnityEngine.Mathf;
 	
 	public delegate int Callee(int a);
-
+	public struct V2{
+		//namespace test{ }
+		interface ITest{ }
+		class Test{ }
+		struct V3{ }
+		enum TypeA{
+			
+		}
+		event Action fallEvent;
+		delegate int DoneCb();
+	}
 	/// <summary>
 	/// Main类
 	/// </summary>
 	public class Main : MonoBehaviour{
 		public SpriteRenderer spriteRenderer;
-
-		
+		public interface ITest{ }
+		public void testSay(){
+			
+		}
 		void Start(){
 			SortingLayer2 [] list0=SortingLayer2.layers;
 			SortingLayer2[ ] list1=SortingLayer2.layers;
@@ -37,6 +49,7 @@ namespace unity_tags{
 			joinString(@"aaa",@"b@""b""b","ccc");
 			/*
 			Regex regex=new Regex(@"/w+[(@"")]""\s*""");*/
+
 		}
 		
 		private string joinString(string a,string b,string c=null){
@@ -72,7 +85,7 @@ namespace XXSS {
 	using XXSS.OOAA.Koo;
 
 	namespace OOAA 
-		.    
+		.   
 		Koo  
 		{
 			///

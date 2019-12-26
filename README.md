@@ -120,23 +120,32 @@ public class Person
 public Person(string firstName) => this.FirstName = firstName;
 public string FullName => $"{FirstName} {LastName}";
 
-命名空间
-类
-结构
-接口
-枚举(Enum)
+=====C#概念=====
+.cs文件（using，命名空间，接口，类，结构，枚举，委托）
+using
+命名空间(using，命名空间，接口，类，结构，枚举，委托)
+接口(接口，类，结构，枚举，事件，委托，接口方法)
+类(接口，类，结构，枚举，事件，委托，属性，方法)
+结构(接口，类，结构，枚举，事件，委托，属性，方法)
+枚举
+事件(未实现)
 委托
-	方法
-	Lambda表达式
-	属性和var属性
-	索引器
-	事件
-
+属性
+方法
+------
+Lambda
+元组
+泛型
+索引器
+================
 
 
 泛型(接口、委托的泛型可以带“in”和"out"在尖括号)
-元组和弃元
+
+
 Iterators
+
+
 public abstract class BaseApp<T>:BaseMonoBehaviour where T:class,new(){
 public sealed class App:BaseApp<App>{
 

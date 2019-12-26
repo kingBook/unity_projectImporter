@@ -6,7 +6,7 @@
     /// <summary>
     /// Using别名，如:"using Project = PC.MyCompany.Project;"
     /// </summary>
-    public struct CSharpUsingAlias:IUsing{
+    public class CSharpUsingAlias:IUsing{
 		/// <summary>
 		/// 别名名称(包含空白,但不包含using后的第一个空格)
 		/// </summary>
