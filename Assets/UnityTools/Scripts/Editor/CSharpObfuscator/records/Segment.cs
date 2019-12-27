@@ -2,10 +2,11 @@
 	using UnityEngine;
 	using System.Collections;
 	using System.Text.RegularExpressions;
-	/// <summary>
-	/// 记录一段字符串在.cs文件字符中的起始索引和长度的结构体
-	/// </summary>
-	public struct Segment:IString{
+
+    /// <summary>
+    /// 记录一段字符串在.cs文件字符中的起始索引和长度的结构体
+    /// </summary>
+    public struct Segment:IString{
 		public static readonly Segment none=new Segment();
 		
 		public int startIndex;
@@ -19,6 +20,10 @@
 		public Segment(int startIndex,int length){
 			this.startIndex=startIndex;
 			this.length=length;
+		}
+
+		public override string ToString(){
+			throw new System.Exception("Please call ToString(string fileString)");
 		}
 
 		public string ToString(string fileString){

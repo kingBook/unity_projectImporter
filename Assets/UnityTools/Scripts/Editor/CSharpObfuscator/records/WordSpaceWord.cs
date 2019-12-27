@@ -16,6 +16,10 @@
 			words[0]=word1;
 			words[1]=word2;
 		}
+
+		public override string ToString(){
+			throw new System.Exception("Please call ToString(string fileString)");
+		}
 		
 		public string ToString(string fileString) {
 			return $"{words[0]} {words[1]}";

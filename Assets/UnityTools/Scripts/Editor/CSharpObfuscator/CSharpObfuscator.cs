@@ -376,7 +376,6 @@
 		private void ReadCSharpFileContent(CSharpFile cSharpFile){
 			Segment content=new Segment(0,cSharpFile.fileString.Length);
 			cSharpFile.usings=ReadUsings(cSharpFile,content);
-			
 			Segment[] bracesBlocks=ReadBracesBlocks(cSharpFile,content);
 			
 			//读取空命名空间里的对象
@@ -740,16 +739,29 @@
 		/// <param name="usingLine">using行内容块，如："using System.IO;"</param>
 		/// <returns></returns>
 		private CSharpUsing ReadUsing(CSharpFile cSharpFile,Segment usingLine){
-			string usingLineString=usingLine.ToString();
+			Regex regex=new Regex(@"using\s",RegexOptions.Compiled);
 			//匹配"using "。
-			Match headMatch=Regex.Match(usingLineString,@"using\s",RegexOptions.Compiled);
+			Match headMatch=regex.Match(cSharpFile.fileString,usingLine.startIndex,usingLine.length);
 			
 			int startIndex=usingLine.startIndex+headMatch.Length;
 			//长度为:减去"using "的长度，再减去";"的长度
 			int length=usingLine.length-headMatch.Length-1;
-			DotPath words=ReadDotPath(cSharpFile,new Segment(startIndex,length));
-			CSharpUsing usingString=new CSharpUsing(false,words);
-			
+			//
+			CSharpUsing usingString=null;
+			Match dotPathMatch=Regexes.dotPathRegex.Match(cSharpFile.fileString,startIndex,length);
+			if(dotPathMatch.Success){
+				DotPath words=ReadDotPath(cSharpFile,new Segment(startIndex,length));
+				usingString=new CSharpUsing(false,words);
+			}else{
+				Match wordMatch=Regexes.wordRegex.Match(cSharpFile.fileString,startIndex,length);
+				if(wordMatch.Success){
+					Segment word=new Segment(wordMatch.Index,wordMatch.Length);
+					usingString=new CSharpUsing(false,word);
+				}
+			}
+			if(usingString==null){
+				throw new System.Exception("读取Using失败");
+			}
 			return usingString;
 		}
 		
@@ -760,16 +772,29 @@
 		/// <param name="usingLine">using行内容块，如："using static UnityEngine.Mathf;"</param>
 		/// <returns></returns>
 		private CSharpUsing ReadStaticUsing(CSharpFile cSharpFile,Segment usingLine){
-			string usingLineString=usingLine.ToString();
+			Regex regex=new Regex(@"using\s+static\s",RegexOptions.Compiled);
 			//匹配"using static "。
-			Match headMatch=Regex.Match(usingLineString,@"using\s+static\s",RegexOptions.Compiled);
+			Match headMatch=regex.Match(cSharpFile.fileString,usingLine.startIndex,usingLine.length);
 			
 			int startIndex=usingLine.startIndex+headMatch.Length;
 			//长度为:减去"using static "的长度，再减去";"的长度
 			int length=usingLine.length-headMatch.Length-1;
-			DotPath words=ReadDotPath(cSharpFile,new Segment(startIndex,length));
-			CSharpUsing usingString=new CSharpUsing(true,words);
-			
+			//
+			CSharpUsing usingString=null;
+			Match dotPathMatch=Regexes.dotPathRegex.Match(cSharpFile.fileString,startIndex,length);
+			if(dotPathMatch.Success){
+				DotPath words=ReadDotPath(cSharpFile,new Segment(startIndex,length));
+				usingString=new CSharpUsing(true,words);
+			}else{
+				Match wordMatch=Regexes.wordRegex.Match(cSharpFile.fileString,startIndex,length);
+				if(wordMatch.Success){
+					Segment word=new Segment(wordMatch.Index,wordMatch.Length);
+					usingString=new CSharpUsing(true,word);
+				}
+			}
+			if(usingString==null){
+				throw new System.Exception("读取Using失败");
+			}
 			return usingString;
 		}
 		
@@ -780,21 +805,31 @@
 		/// <param name="usingLine">using行内容块，如："using static UnityEngine.Mathf;"</param>
 		/// <returns></returns>
 		private CSharpUsingAlias ReadUsingAlias(CSharpFile cSharpFile,Segment usingLine){
-			string usingLineString=usingLine.ToString();
+			Regex regex=new Regex(@"using\s+(?<name>\b\w+\b)\s*=\s*",RegexOptions.Compiled);
 			//匹配"using xxx="
-			Match headMatch=Regex.Match(usingLineString,@"using\s+\w+=",RegexOptions.Compiled);
+			Match headMatch=regex.Match(cSharpFile.fileString,usingLine.startIndex,usingLine.length);
+			Group nameGroup=headMatch.Groups["name"];
+			Segment name=new Segment(nameGroup.Index,nameGroup.Length);
 			
-			//开始索引:加上"using "的长度
-			int startIndex=usingLine.startIndex+6;
-			//name长度为:"using xxx="的长度-"using "长度-"="长度
-			int length=headMatch.Length-6-1;
-			Segment name=new Segment(startIndex,length);
-			
-			startIndex=usingLine.startIndex+headMatch.Length;
-			//长度为:减去"using xxx= "的长度，再减去";"的长度
-			length=usingLine.length-headMatch.Length-1;
-			DotPath words=ReadDotPath(cSharpFile,new Segment(startIndex,length));
-			CSharpUsingAlias usingAlias=new CSharpUsingAlias(name,words);
+			int startIndex=usingLine.startIndex+headMatch.Length;
+			//长度=usingLine的长度-headMatch的长度-";"的长度
+			int length=usingLine.length-headMatch.Length-1;
+			//
+			CSharpUsingAlias usingAlias=null;
+			Match dotPathMatch=Regexes.dotPathRegex.Match(cSharpFile.fileString,startIndex,length);
+			if(dotPathMatch.Success){
+				DotPath words=ReadDotPath(cSharpFile,new Segment(startIndex,length));
+				usingAlias=new CSharpUsingAlias(name,words);
+			}else{
+				Match wordMatch=Regexes.wordRegex.Match(cSharpFile.fileString,startIndex,length);
+				if(wordMatch.Success){
+					Segment word=new Segment(wordMatch.Index,wordMatch.Length);
+					usingAlias=new CSharpUsingAlias(name,word);
+				}
+			}
+			if(usingAlias==null){
+				throw new System.Exception("读取Using失败");
+			}
 			return usingAlias;
 		}
 		#endregion

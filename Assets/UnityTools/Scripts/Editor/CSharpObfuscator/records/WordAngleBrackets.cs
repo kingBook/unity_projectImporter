@@ -22,6 +22,10 @@
 			this.angleBrackets=angleBrackets;
 		}
 
+		public override string ToString(){
+			throw new System.Exception("Please call ToString(string fileString)");
+		}
+
 		public string ToString(string fileString){
 			return $"{word.ToString(fileString)}{angleBrackets.ToString(fileString)}";
 		}

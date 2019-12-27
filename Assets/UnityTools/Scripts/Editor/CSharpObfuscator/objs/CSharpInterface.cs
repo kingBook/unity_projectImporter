@@ -4,7 +4,7 @@
 	/// <summary>
 	/// 接口
 	/// </summary>
-	public class CSharpInterface{
+	public class CSharpInterface:IAlignObject{
 		
 		/// <summary>
 		/// 所在的命名空间

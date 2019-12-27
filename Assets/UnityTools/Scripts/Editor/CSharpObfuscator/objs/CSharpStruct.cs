@@ -4,7 +4,7 @@
 	/// <summary>
 	/// 结构体
 	/// </summary>
-	public class CSharpStruct{
+	public class CSharpStruct:IAlignObject{
 		
 		/// <summary>
 		/// 所在的命名空间

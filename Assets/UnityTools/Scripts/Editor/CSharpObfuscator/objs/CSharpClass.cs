@@ -4,7 +4,7 @@
 	/// <summary>
 	/// 类
 	/// </summary>
-	public class CSharpClass{
+	public class CSharpClass:IAlignObject{
 
 		/// <summary>
 		/// 所在的命名空间

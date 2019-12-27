@@ -4,7 +4,7 @@
 	/// <summary>
 	/// 方法
 	/// </summary>
-	public class CSharpMethod{
+	public class CSharpMethod:IAlignObject{
 		
 		/// <summary>
 		/// 所在的命名空间

@@ -6,7 +6,7 @@
 	/// <summary>
 	/// .cs文件
 	/// </summary>
-	public class CSharpFile{
+	public class CSharpFile:IAlignObject{
 		
 		public FileInfo fileInfo;
 		public string fileString;

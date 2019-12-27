@@ -22,6 +22,10 @@
 			this.tNames=tNames;
 		}
 
+		public override string ToString(){
+			throw new System.Exception("Please call ToString(string fileString)");
+		}
+
 		public string ToString(string fileString){
 			const char splitChar=',';
 			string strTNames="";

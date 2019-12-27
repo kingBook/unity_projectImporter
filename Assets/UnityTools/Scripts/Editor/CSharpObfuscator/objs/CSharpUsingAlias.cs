@@ -6,31 +6,31 @@
     /// <summary>
     /// Using别名，如:"using Project = PC.MyCompany.Project;"
     /// </summary>
-    public class CSharpUsingAlias:IUsing{
+    public class CSharpUsingAlias:IAlignObject,IUsing{
 		/// <summary>
-		/// 别名名称(包含空白,但不包含using后的第一个空格)
+		/// 别名名称(不包含空白)
 		/// </summary>
 		public Segment name;
 		/// <summary>
-		/// "="号后"."分隔的各个单词(包含空白)
+		/// "="号后"."分隔的一个单词<see cref="Segment"/>或<see cref="DotPath"/>
 		/// </summary>
-		public DotPath words;
+		public IString words;
 		
-		public CSharpUsingAlias(Segment name,DotPath words){
+		public CSharpUsingAlias(Segment name,IString words){
 			this.name=name;
 			this.words=words;
 		}
 
-		public string ToString(string fileString){
-			return ToString(fileString,true);
+		public override string ToString(){
+			throw new System.Exception("Please call ToString(string fileString)");
 		}
 
-		public string ToString(string fileString,bool includeWhitespace){
-			string name=this.name.ToString();
-			if(!includeWhitespace){
+		public string ToString(string fileString){
+			string name=this.name.ToString(fileString);
+			/*if(!includeWhitespace){
 				name=Regex.Replace(name,@"\s","");
-			}
-			return $"name:{name} wordStrings:{words.ToString(fileString)}";
+			}*/
+			return $"name:{name} words:{words.ToString(fileString)}";
 		}
 	}
 }

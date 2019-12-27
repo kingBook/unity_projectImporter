@@ -20,6 +20,10 @@ public struct DotPathAngleBrackets:IString{
 		this.angleBrackets=angleBrackets;
 	}
 
+	public override string ToString(){
+		throw new System.Exception("Please call ToString(string fileString)");
+	}
+
 	public string ToString(string fileString){
 		return $"{dotPath.ToString(fileString)}{angleBrackets.ToString(fileString)}";
 	}

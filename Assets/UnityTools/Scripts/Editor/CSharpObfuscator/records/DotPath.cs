@@ -17,17 +17,17 @@
 			this.words=words;
 		}
 
-		public string ToString(string fileString){
-			return ToString(fileString,true);
+		public override string ToString(){
+			throw new System.Exception("Please call ToString(string fileString)");
 		}
 
-		public string ToString(string fileString,bool includeWhitespace){
+		public string ToString(string fileString){
 			const char splitChar='.';
 			string text="";
 			int len=words.Length;
 			for(int i=0;i<len;i++){
 				string word=words[i].ToString(fileString);
-				if(!includeWhitespace)word=Regex.Replace(word,@"\s","",RegexOptions.Compiled);
+				//if(!includeWhitespace)word=Regex.Replace(word,@"\s","",RegexOptions.Compiled);
 				text+=word;
 				if(i<len-1)text+=splitChar;
 			}

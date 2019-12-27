@@ -4,7 +4,7 @@
 	/// <summary>
 	/// 枚举
 	/// </summary>
-	public class CSharpEnum{
+	public class CSharpEnum:IAlignObject{
 		
 		/// <summary>
 		/// 所在的命名空间

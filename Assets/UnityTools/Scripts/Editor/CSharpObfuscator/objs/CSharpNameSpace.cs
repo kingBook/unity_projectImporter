@@ -5,7 +5,7 @@
 	/// <summary>
 	/// 命名空间
 	/// </summary>
-    public class CSharpNameSpace{
+    public class CSharpNameSpace:IAlignObject{
 		
 		public static readonly CSharpNameSpace None=new CSharpNameSpace();
 	    

@@ -4,7 +4,7 @@
 	/// <summary>
 	/// 委托
 	/// </summary>
-	public class CSharpDelegate{
+	public class CSharpDelegate:IAlignObject{
 		
 		/// <summary>
 		/// 所在的命名空间
