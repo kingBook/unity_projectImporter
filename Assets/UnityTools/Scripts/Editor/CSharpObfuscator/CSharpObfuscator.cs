@@ -375,9 +375,9 @@
 		/// <param name="cSharpFile">CSharpFile</param>
 		private void ReadCSharpFileContent(CSharpFile cSharpFile){
 			Segment content=new Segment(0,cSharpFile.fileString.Length);
+
 			cSharpFile.usings=ReadUsings(cSharpFile,content);
 			Segment[] bracesBlocks=ReadBracesBlocks(cSharpFile,content);
-			
 			//读取空命名空间里的对象
 			List<CSharpNameSpace> namespaces;
 			List<CSharpClass> classes;
@@ -386,7 +386,6 @@
 			List<CSharpEnum> enums;
 			List<CSharpDelegate> delegates;
 			ReadNameSpaceSubObjects(cSharpFile,CSharpNameSpace.None,bracesBlocks,out namespaces,out classes,out structs,out interfaces,out enums,out delegates);
-			
 			cSharpFile.nameSpaces=namespaces.ToArray();
 			cSharpFile.classes=classes.ToArray();
 			cSharpFile.structs=structs.ToArray();
