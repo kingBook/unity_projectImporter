@@ -135,10 +135,9 @@
 		/// <param name="unityProjectPath">unity项目文件夹路径</param>
 		/// <param name="isCallComplete">是否执行混淆完成回调</param>
 		private void ObfuscateUnityProject(string unityProjectPath,bool isCallComplete){
-			string assetsPath=unityProjectPath+"/Assets";
 			CSharpObfuscator obfuscator=new CSharpObfuscator();
 			try{
-				obfuscator.ObfuscateProject(assetsPath,()=>{
+				obfuscator.ObfuscateProject(unityProjectPath,()=>{
 					if(isCallComplete){
 						if(m_showInExplorerOnComplete){
 							FileUtil2.ShowInExplorer(unityProjectPath);
@@ -176,9 +175,9 @@
 		/// <param name="projectName"></param>
 		/// <param name="item"></param>
 		private void ObfuscateSubProject(string projectName,XmlNode item){
-			string assetsPath=Application.dataPath+"/"+projectName+"/Assets";
+			string unityProjectPath=Application.dataPath+"/"+projectName;
 			CSharpObfuscator obfuscator=new CSharpObfuscator();
-			obfuscator.ObfuscateProject(assetsPath,()=>{
+			obfuscator.ObfuscateProject(unityProjectPath,()=>{
 				OnObfuscateSubProjectComplete(item);
 			});
 		}

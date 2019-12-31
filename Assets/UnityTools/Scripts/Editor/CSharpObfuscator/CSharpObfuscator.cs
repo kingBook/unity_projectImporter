@@ -20,14 +20,22 @@
 		/// <summary>
 		/// 混淆一个unity项目
 		/// </summary>
-		/// <param name="projectAssetsPath">unity项目的Assets文件夹路径</param>
+		/// <param name="unityProjectPath">unity项目的Assets文件夹路径</param>
 		/// <param name="onComplete">完成时的回调函数</param>
-		public void ObfuscateProject(string projectAssetsPath,Action onComplete){
-			projectAssetsPath=projectAssetsPath.Replace("\\","/");
+		public void ObfuscateProject(string unityProjectPath,Action onComplete){
+			unityProjectPath=unityProjectPath.Replace("\\","/");
+			string unityProjectAssetsPath=unityProjectPath+"/Assets";
+			//获取编译常量列表
+			string csprojPath=unityProjectPath+"/Assembly-CSharp.csproj";
+			if(!File.Exists(csprojPath)){
+				EditorUtility.DisplayDialog("Error",csprojPath+" does not exist","Cancel");
+				return;
+			}
+			string[] defineConstants=GetDefineConstants(unityProjectPath);
 			//
-			string[] files=Directory.GetFiles(projectAssetsPath,"*.cs",SearchOption.AllDirectories);
+			string[] files=Directory.GetFiles(unityProjectAssetsPath,"*.cs",SearchOption.AllDirectories);
 			//读取所有.cs文件，生成CSharpFile列表
-			CSharpFile[] cSharpFiles=ReadFiles(projectAssetsPath,files);
+			CSharpFile[] cSharpFiles=ReadFiles(unityProjectAssetsPath,files);
 			//混淆CSharpFile列表
 			ObfuscateCSharpFiles(cSharpFiles,onComplete);
 		}
@@ -58,6 +66,8 @@
 				string fileString=FileUtil2.GetFileString(filePath);
 				//创建CSharpFile
 				CSharpFile cSharpFile=CreateCSharpFile(fileInfo,fileString);
+				//删除非编译常量定义内容
+				ClearNonDefineConstantsContent(cSharpFile);
 				//清除CSharpFile里的注释内容
 				ClearFileStringComments(cSharpFile);
 				//读取CSharpFile里的内容
@@ -66,6 +76,15 @@
 			}
 			EditorUtility.ClearProgressBar();
 			return cSharpFiles;
+		}
+
+		private void ClearNonDefineConstantsContent(CSharpFile cSharpFile){
+			
+		}
+
+		private string[] GetDefineConstants(string projectPath){
+			
+			return null;
 		}
 		
 		#region clearFileStringComments
