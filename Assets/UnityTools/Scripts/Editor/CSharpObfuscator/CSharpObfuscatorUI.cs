@@ -1,5 +1,6 @@
 ﻿namespace UnityTools {
-	using System.IO;
+    using System;
+    using System.IO;
     using System.Text.RegularExpressions;
     using System.Xml;
 	using UnityEditor;
@@ -7,7 +8,8 @@
 
 	/// <summary>CSharp混淆器窗口UI</summary>
 	public class CSharpObfuscatorUI:EditorWindow{
-
+		public static readonly string currentProjectPath=Environment.CurrentDirectory.Replace('\\','/');
+		
 		private bool m_isDuplicate=true;
 		private bool m_showInExplorerOnComplete=true;
 		private Vector2 m_scrollPosition;
@@ -43,9 +45,9 @@
 						string projectFolderPath=FileUtil2.OpenSelectUnityProjectFolderPanel();
 						if(!string.IsNullOrEmpty(projectFolderPath)){
 							if(m_isDuplicate){
-								CopyAndObfuscateUnityProject(projectFolderPath,true);
+								CopyAndObfuscateUnityProject(projectFolderPath,true,true);
 							}else{
-								ObfuscateUnityProject(projectFolderPath,true);
+								ObfuscateUnityProject(projectFolderPath,true,true);
 							}
 						}
 					}
@@ -79,7 +81,7 @@
 						GUILayout.Label(projectName,GUILayout.MinWidth(100),GUILayout.MaxWidth(150));
 						GUILayout.Label(obfuscated,GUILayout.Width(90));
 						if(GUILayout.Button("Obfuscate",GUILayout.Width(90))){
-							ObfuscateSubProject(projectName,item);
+							ObfuscateSubProject(projectName,true,item);
 						}
 						EditorGUILayout.EndHorizontal();
 						GUILayout.Space(5);
@@ -104,9 +106,9 @@
 							string path=DragAndDrop.paths[i];
 							if(Directory.Exists(path)&&FileUtil2.IsUnityProjectFolder(path)){
 								if(m_isDuplicate){
-									CopyAndObfuscateUnityProject(path,true);
+									CopyAndObfuscateUnityProject(path,true,true);
 								}else{
-									ObfuscateUnityProject(path,true);
+									ObfuscateUnityProject(path,true,true);
 								}
 							}
 						}
@@ -119,25 +121,43 @@
 		/// 复制并混淆一个unity项目
 		/// </summary>
 		/// <param name="unityProjectPath">unit项目文件夹路径</param>
+		/// <param name="isCheckExistsAssemblyCSharpFile">是否检查存在"Assembly-CSharp.csproj"文件</param>
 		/// <param name="isCallComplete">是否执行混淆完成回调</param>
-		private void CopyAndObfuscateUnityProject(string unityProjectPath, bool isCallComplete){
+		private void CopyAndObfuscateUnityProject(string unityProjectPath,bool isCheckExistsAssemblyCSharpFile,bool isCallComplete){
+			//检查是否有"Assembly-CSharp.csproj"文件
+			if(isCheckExistsAssemblyCSharpFile){
+				if(!ExistsAssemblyCSharpFile(unityProjectPath)){
+					DisplayNotExistsAssemblyCSharpDialog(unityProjectPath);
+					return;
+				}
+			}
 			//跳过的文件或文件夹
 			string[] ignoreCopys=new string[]{"/.git","/Library"};
 			//目标文件夹名称,源文件夹名称加"_confusion"后缀
 			string duplicateFolderPath=unityProjectPath+"_confusion";
 			FileUtil2.ReplaceDirectory(unityProjectPath,duplicateFolderPath,true,ignoreCopys);
-			ObfuscateUnityProject(duplicateFolderPath,isCallComplete);
+			ObfuscateUnityProject(duplicateFolderPath,false,isCallComplete);
 		}
 
 		/// <summary>
 		/// <para>混淆一个unity项目</para>
 		/// </summary>
 		/// <param name="unityProjectPath">unity项目文件夹路径</param>
+		/// <param name="isCheckExistsAssemblyCSharpFile">是否检查存在"Assembly-CSharp.csproj"文件</param>
 		/// <param name="isCallComplete">是否执行混淆完成回调</param>
-		private void ObfuscateUnityProject(string unityProjectPath,bool isCallComplete){
+		private void ObfuscateUnityProject(string unityProjectPath,bool isCheckExistsAssemblyCSharpFile,bool isCallComplete){
+			//检查是否有"Assembly-CSharp.csproj"文件
+			if(isCheckExistsAssemblyCSharpFile){
+				if(!ExistsAssemblyCSharpFile(unityProjectPath)){
+					DisplayNotExistsAssemblyCSharpDialog(unityProjectPath);
+					return;
+				}
+			}
+			//
 			CSharpObfuscator obfuscator=new CSharpObfuscator();
+			string[] defineConstants=GetDefineConstants(unityProjectPath);
 			try{
-				obfuscator.ObfuscateProject(unityProjectPath,()=>{
+				obfuscator.ObfuscateProject(unityProjectPath,defineConstants,()=>{
 					if(isCallComplete){
 						if(m_showInExplorerOnComplete){
 							FileUtil2.ShowInExplorer(unityProjectPath);
@@ -156,6 +176,11 @@
 		/// 混淆所有子项目
 		/// </summary>
 		private void ObfuscateAllSubProject(){
+			//检查是否有"Assembly-CSharp.csproj"文件
+			if(!ExistsAssemblyCSharpFile(currentProjectPath)){
+				DisplayNotExistsAssemblyCSharpDialog(currentProjectPath);
+				return;
+			}
 			var items=ProjectImporterUI.xmlDocument.FirstChild.ChildNodes;
 			int len=items.Count;
 			for(int i=0;i<len;i++){
@@ -165,7 +190,7 @@
 				//string obfuscated=item.Attributes["obfuscated"].Value;
 				//string projectFolderPath=item.InnerText;
 
-				ObfuscateSubProject(projectName,item);
+				ObfuscateSubProject(projectName,false,item);
 			}
 		}
 
@@ -173,11 +198,22 @@
 		/// 混淆一个子项目
 		/// </summary>
 		/// <param name="projectName"></param>
+		/// <param name="isCheckExistsAssemblyCSharpFile"></param>
 		/// <param name="item"></param>
-		private void ObfuscateSubProject(string projectName,XmlNode item){
+		private void ObfuscateSubProject(string projectName,bool isCheckExistsAssemblyCSharpFile,XmlNode item){
+			Debug.Log(currentProjectPath);
+			//检查是否有"Assembly-CSharp.csproj"文件
+			if(isCheckExistsAssemblyCSharpFile){
+				if(!ExistsAssemblyCSharpFile(currentProjectPath)){
+					DisplayNotExistsAssemblyCSharpDialog(currentProjectPath);
+					return;
+				}
+			}
+			//
+			string[] defineConstants=GetDefineConstants(currentProjectPath);
 			string unityProjectPath=Application.dataPath+"/"+projectName;
 			CSharpObfuscator obfuscator=new CSharpObfuscator();
-			obfuscator.ObfuscateProject(unityProjectPath,()=>{
+			obfuscator.ObfuscateProject(unityProjectPath,defineConstants,()=>{
 				OnObfuscateSubProjectComplete(item);
 			});
 		}
@@ -189,6 +225,39 @@
 		private void OnObfuscateSubProjectComplete(XmlNode item){
 			item.Attributes["obfuscated"].Value="Yes";
 			ProjectImporterUI.SaveXml();
+		}
+		
+		/// <summary>
+		/// 是否存在Assembly-CSharp.csproj
+		/// </summary>
+		/// <param name="unityProjectPath"></param>
+		/// <returns></returns>
+		private bool ExistsAssemblyCSharpFile(string unityProjectPath){
+			string csprojPath=unityProjectPath+"/Assembly-CSharp.csproj";
+			return File.Exists(csprojPath);
+		}
+		
+		/// <summary>
+		/// 显示"未找到Assembly-CSharp.csproj"对话框
+		/// </summary>
+		/// <param name="unityProjectPath"></param>
+		private void DisplayNotExistsAssemblyCSharpDialog(string unityProjectPath){
+			string csprojPath=unityProjectPath+"/Assembly-CSharp.csproj";
+			EditorUtility.DisplayDialog("Error",csprojPath+" does not exist","Cancel");
+		}
+		
+		/// <summary>
+		/// 返回项目的条件编译常量列表
+		/// </summary>
+		/// <param name="unityProjectPath"></param>
+		/// <returns></returns>
+		private string[] GetDefineConstants(string unityProjectPath){
+			string csprojPath=unityProjectPath+"/Assembly-CSharp.csproj";
+			XmlDocument xmlDocument=new XmlDocument();
+			xmlDocument.Load(csprojPath);
+			string text=xmlDocument["Project"].ChildNodes[2]["DefineConstants"].InnerText;
+			string[] defineConstants=text.Split(';');
+			return defineConstants;
 		}
 
 		private void OnDisable(){

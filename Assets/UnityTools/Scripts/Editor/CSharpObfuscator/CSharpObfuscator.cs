@@ -21,21 +21,15 @@
 		/// 混淆一个unity项目
 		/// </summary>
 		/// <param name="unityProjectPath">unity项目的Assets文件夹路径</param>
+		/// <param name="defineConstants">条件编译常量列表</param>
 		/// <param name="onComplete">完成时的回调函数</param>
-		public void ObfuscateProject(string unityProjectPath,Action onComplete){
+		public void ObfuscateProject(string unityProjectPath,string[] defineConstants,Action onComplete){
 			unityProjectPath=unityProjectPath.Replace("\\","/");
 			string unityProjectAssetsPath=unityProjectPath+"/Assets";
-			//获取编译常量列表
-			string csprojPath=unityProjectPath+"/Assembly-CSharp.csproj";
-			if(!File.Exists(csprojPath)){
-				EditorUtility.DisplayDialog("Error",csprojPath+" does not exist","Cancel");
-				return;
-			}
-			string[] defineConstants=GetDefineConstants(unityProjectPath);
 			//
 			string[] files=Directory.GetFiles(unityProjectAssetsPath,"*.cs",SearchOption.AllDirectories);
 			//读取所有.cs文件，生成CSharpFile列表
-			CSharpFile[] cSharpFiles=ReadFiles(unityProjectAssetsPath,files);
+			CSharpFile[] cSharpFiles=ReadFiles(unityProjectAssetsPath,defineConstants,files);
 			//混淆CSharpFile列表
 			ObfuscateCSharpFiles(cSharpFiles,onComplete);
 		}
@@ -46,7 +40,7 @@
 		/// <param name="projectAssetsPath"></param>
 		/// <param name="files"></param>
 		/// <returns></returns>
-		private CSharpFile[] ReadFiles(string projectAssetsPath,string[] files){
+		private CSharpFile[] ReadFiles(string projectAssetsPath,string[] defineConstants,string[] files){
 			int len=files.Length;
 			CSharpFile[] cSharpFiles=new CSharpFile[len];
 			EditorUtility.DisplayProgressBar("Read Files","Readying...",0.0f);
@@ -67,7 +61,7 @@
 				//创建CSharpFile
 				CSharpFile cSharpFile=CreateCSharpFile(fileInfo,fileString);
 				//删除非编译常量定义内容
-				ClearNonDefineConstantsContent(cSharpFile);
+				ClearNonDefineConstantsContent(cSharpFile,defineConstants);
 				//清除CSharpFile里的注释内容
 				ClearFileStringComments(cSharpFile);
 				//读取CSharpFile里的内容
@@ -78,13 +72,9 @@
 			return cSharpFiles;
 		}
 
-		private void ClearNonDefineConstantsContent(CSharpFile cSharpFile){
+		private void ClearNonDefineConstantsContent(CSharpFile cSharpFile,string[] defineConstants){
 			
-		}
-
-		private string[] GetDefineConstants(string projectPath){
 			
-			return null;
 		}
 		
 		#region clearFileStringComments
