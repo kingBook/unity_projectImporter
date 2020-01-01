@@ -73,8 +73,9 @@
 		}
 
 		private void ClearNonDefineConstantsContent(CSharpFile cSharpFile,string[] defineConstants){
-			
-			
+			string fileString=cSharpFile.fileString;
+			Debug.Log(fileString);
+			cSharpFile.fileString=fileString;
 		}
 		
 		#region clearFileStringComments
@@ -442,7 +443,7 @@
 			csNameSpace.delegates=delegates.ToArray();
 			return csNameSpace;
 		}
-       
+	   
 		/// <summary>
 		/// 创建CSharpClass
 		/// </summary>

@@ -149,5 +149,14 @@
 		}
 
 
+		/// <summary>
+		/// 重命名项目
+		/// </summary>
+		/// <param name="oldName">旧的名称</param>
+		/// <param name="newName">新的名称</param>
+		public void RenameProject(string oldName, string newName){
+			
+		}
+
 	}
 }

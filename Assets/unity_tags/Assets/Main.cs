@@ -30,7 +30,18 @@ namespace unity_tags{
 		public SpriteRenderer spriteRenderer;
 		public interface ITest{ }
 		public void testSay(){
-			
+			#if UNITY_2019
+				Debug.Log("Say 2019");
+				#if UNITY_2019_1
+					Debug.Log("Say 2019.1");
+				#elif UNITY_2018_1
+					Debug.Log("Say 2018.1");
+				#endif
+			#elif UNITY_2018
+				Debug.Log("Say 2018");
+			#elif UNITY_2017
+				Debug.Log("Say 2017");
+			#endif
 		}
 		void Start(){
 			SortingLayer2 [] list0=SortingLayer2.layers;
