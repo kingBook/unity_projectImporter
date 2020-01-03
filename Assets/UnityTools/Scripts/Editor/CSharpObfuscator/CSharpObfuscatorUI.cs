@@ -23,7 +23,26 @@
 
 		[MenuItem("Tools/CSharpObfuscatorUITest")]
 		public static void CSharpObfuscatorUITest(){
-			
+			string text="#if UNITY_2017_2_OR_NEWER\n"+
+						"	#if UNITY_2019\n"+
+						"		unity2019\n"+
+						"	#elif UNITY_2018\n"+
+						"		unity2018\n"+
+						"	#else\n"+
+						"		unity2017.2\n"+
+						"	#endif\n"+
+						"#elif UNITY_5_6_OR_NEWER\n"+
+						"	unity5.6\n"+
+						"#elif UNITY_5_5_OR_NEWER\n"+
+						"	unity5.5\n"+
+						"#endif";
+			var regex=new Regex(@"#if[\s\S]*#endif",RegexOptions.Compiled);
+			var matches=regex.Matches(text);
+			for(int i=0;i<matches.Count;i++){
+				Debug.Log("i:"+matches[i].Value);
+				
+			}
+
 		}
 
 

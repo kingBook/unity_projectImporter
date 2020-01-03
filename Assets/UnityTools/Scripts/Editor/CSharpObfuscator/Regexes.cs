@@ -8,6 +8,11 @@
     public static class Regexes{
 		
 		/// <summary>
+		/// 匹配任何内容
+		/// </summary>
+		public static readonly Regex anyRegex=new Regex(@"[\s\S]",RegexOptions.Compiled);
+		
+		/// <summary>
 		/// 匹配一个单词的表达式
 		/// <para><c>Groups["word"] //表示单词</c></para>
 		/// </summary>
