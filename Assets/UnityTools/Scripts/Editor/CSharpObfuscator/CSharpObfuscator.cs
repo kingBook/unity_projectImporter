@@ -74,7 +74,33 @@
 
 		private void ClearNonDefineConstantsContent(CSharpFile cSharpFile,string[] defineConstants){
 			string fileString=cSharpFile.fileString;
-			Debug.Log(fileString);
+			int count=0;
+			Match match=Regexes.sharpIfRegex.Match(fileString);
+			while(match.Success){
+				count++;
+				match=Regexes.sharpIfRegex.Match(fileString,match.Index+match.Length);
+				if(match.Success){
+					count++;
+					match=Regexes.sharpElifRegex.Match(fileString,match.Index+match.Length);
+					if(match.Success){
+						if(count==1){
+							
+						}
+						match=Regexes.sharpElseRegex.Match(fileString,match.Index+match.Length);
+						if(match.Success){
+							if(count==1){
+								
+							}
+							match=Regexes.sharpEndifRegex.Match(fileString,match.Index+match.Length);
+							if(match.Success){
+								if(count==1){
+									
+								}
+							}
+						}
+					}
+				}
+			}
 			cSharpFile.fileString=fileString;
 		}
 		

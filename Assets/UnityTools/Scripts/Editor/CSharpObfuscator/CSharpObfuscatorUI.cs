@@ -10,7 +10,7 @@
 	public class CSharpObfuscatorUI:EditorWindow{
 		public static readonly string currentProjectPath=Environment.CurrentDirectory.Replace('\\','/');
 		
-		private bool m_isDuplicate=true;
+		private bool m_isClone=true;
 		private bool m_showInExplorerOnComplete=true;
 		private Vector2 m_scrollPosition;
 
@@ -58,12 +58,12 @@
 				EditorGUILayout.Space();
 				EditorGUILayout.BeginHorizontal();
 				{ 
-					m_isDuplicate=GUILayout.Toggle(m_isDuplicate,"Duplicate");
+					m_isClone=GUILayout.Toggle(m_isClone,"Clone");
 					m_showInExplorerOnComplete=GUILayout.Toggle(m_showInExplorerOnComplete,"Show in explorer");
 					if(GUILayout.Button("Obfuscate a project")){
 						string projectFolderPath=FileUtil2.OpenSelectUnityProjectFolderPanel();
 						if(!string.IsNullOrEmpty(projectFolderPath)){
-							if(m_isDuplicate){
+							if(m_isClone){
 								CopyAndObfuscateUnityProject(projectFolderPath,true,true);
 							}else{
 								ObfuscateUnityProject(projectFolderPath,true,true);
@@ -124,7 +124,7 @@
 						for(int i=0;i<len;i++){
 							string path=DragAndDrop.paths[i];
 							if(Directory.Exists(path)&&FileUtil2.IsUnityProjectFolder(path)){
-								if(m_isDuplicate){
+								if(m_isClone){
 									CopyAndObfuscateUnityProject(path,true,true);
 								}else{
 									ObfuscateUnityProject(path,true,true);
