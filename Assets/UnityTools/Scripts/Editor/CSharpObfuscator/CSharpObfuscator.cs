@@ -74,32 +74,57 @@
 
 		private void ClearNonDefineConstantsContent(CSharpFile cSharpFile,string[] defineConstants){
 			string fileString=cSharpFile.fileString;
-			int count=0;
+			List<Match> matches=new List<Match>();
+			int testCount=0;
+			int count=1;
 			Match match=Regexes.sharpIfRegex.Match(fileString);
 			while(match.Success){
-				count++;
+				Debug2.Log("A: "+match.Value);
+				testCount++;
+				if(testCount>100){
+					Debug.Log("死循环");
+					break;
+				}
+				matches.Add(match);
 				match=Regexes.sharpIfRegex.Match(fileString,match.Index+match.Length);
 				if(match.Success){
+					Debug.Log("B: "+match.Value);
 					count++;
+
+				}else{//non_#if
+					Debug.Log("C: non#if");
 					match=Regexes.sharpElifRegex.Match(fileString,match.Index+match.Length);
 					if(match.Success){
+						Debug.Log(match.Value);
 						if(count==1){
-							
+							matches.Add(match);
 						}
+					}else{//non_#elif
+						Debug.Log("non_#elif");
 						match=Regexes.sharpElseRegex.Match(fileString,match.Index+match.Length);
 						if(match.Success){
 							if(count==1){
-								
+								matches.Add(match);
 							}
+						}else{//non_#else
 							match=Regexes.sharpEndifRegex.Match(fileString,match.Index+match.Length);
 							if(match.Success){
-								if(count==1){
-									
+								count--;
+								if(count==0){
+									matches.Add(match);
 								}
+								break;
+							}else{//non_#endif
+								//error
 							}
 						}
 					}
 				}
+			}
+
+			//test output:
+			for(int i=0;i<matches.Count;i++){
+				//Debug.Log(matches[i].Value);
 			}
 			cSharpFile.fileString=fileString;
 		}
