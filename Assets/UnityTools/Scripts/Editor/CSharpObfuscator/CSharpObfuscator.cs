@@ -78,57 +78,62 @@
 
 		private void ClearNonDefineConstantsContent(CSharpFile cSharpFile,string[] defineConstants){
 			string fileString=cSharpFile.fileString;
-			List<Match> matches=new List<Match>();
-			int testCount=0;
+			Debug.Log(fileString);
+			Regex regex=new Regex(@"[^#if]");
 			
-			int count=1;
-			int startIndex=0;
-			Match match=Regexes.sharpIfRegex.Match(fileString);
-			while(match.Success){
-				startIndex=match.Index+match.Length;
-				matches.Add(match);
-				Debug2.Log("A: "+startIndex);
+			
+			int testCount=0;
+			List<Match> matches=new List<Match>();
+			int count=0,startIndex=0;
+			while(true){
 
 				testCount++;
-				if(testCount>100){
+				if(testCount>500){
 					Debug.Log("死循环");
 					break;
 				}
-				
-				match=Regexes.sharpIfRegex.Match(fileString,startIndex);
+				//Debug.Log("checkIF:"+startIndex);
+				Match match=Regexes.sharpIfRegex.Match(fileString,startIndex);
 				if(match.Success){
+					Debug2.Log(match.Value,startIndex);
+					Debug2.Log(fileString.Substring(startIndex));
 					startIndex=match.Index+match.Length;
 					count++;
-					Debug2.Log("B: "+startIndex);
+					matches.Add(match);
 				}else{//non_#if
-					Debug2.Log("C: non#if",startIndex);
+					//Debug.Log("non_#if");
 					match=Regexes.sharpElifRegex.Match(fileString,startIndex);
 					if(match.Success){
+						Debug2.Log(match.Value,startIndex);
+						Debug2.Log(fileString.Substring(startIndex));
 						startIndex=match.Index+match.Length;
-						Debug.Log(match.Value);
 						if(count==1){
 							matches.Add(match);
 						}
 					}else{//non_#elif
-						Debug.Log("non_#elif");
+						//Debug.Log("non_#elif");
 						match=Regexes.sharpElseRegex.Match(fileString,startIndex);
 						if(match.Success){
+							Debug2.Log(match.Value,startIndex);
+							Debug2.Log(fileString.Substring(startIndex));
 							startIndex=match.Index+match.Length;
 							if(count==1){
 								matches.Add(match);
 							}
 						}else{//non_#else
+							//Debug.Log("non_#else");
 							match=Regexes.sharpEndifRegex.Match(fileString,startIndex);
 							if(match.Success){
+								Debug2.Log(match.Value,startIndex);
+								Debug2.Log(fileString.Substring(startIndex));
 								startIndex=match.Index+match.Length;
 								count--;
-								Debug.Log(count);
 								if(count==0){
 									matches.Add(match);
+									//break;
 								}
-
-								break;
 							}else{//non_#endif
+								Debug.Log("non_#endif");
 								//error
 							}
 						}

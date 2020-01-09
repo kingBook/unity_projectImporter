@@ -100,10 +100,10 @@ namespace UnityTools{
 		public static readonly Regex genericConstraintRegex=new Regex(@"where\s+(?<genericConstraintName>\w+)\s*:\s*(?<genericConstraintSplitContent>"+dotPathAngleBrackets_wordAngleBrackets_dotPath_newParentheses_wordRegex+@")(\s*,\s*(?<genericConstraintSplitContent>"+dotPathAngleBrackets_wordAngleBrackets_dotPath_newParentheses_wordRegex+"))*",RegexOptions.Compiled);
 
 		
-		public static readonly Regex sharpIfRegex=new Regex(@"#if\s+(?<condition>(\s|\S)+?)(\r|\n)",RegexOptions.Compiled);
-		public static readonly Regex sharpElifRegex=new Regex(@"#elif\s+(?<condition>(\s|\S)+?)(\r|\n)",RegexOptions.Compiled);
-		public static readonly Regex sharpElseRegex=new Regex(@"#else\s+(?<condition>(\s|\S)+?)(\r|\n)",RegexOptions.Compiled);
-		public static readonly Regex sharpEndifRegex=new Regex(@"#endif(\r|\n)",RegexOptions.Compiled);
+		public static readonly Regex sharpIfRegex=new Regex(@"#if\s+(?<condition>[^\r\n]+?)[\r\n]",RegexOptions.Compiled);
+		public static readonly Regex sharpElifRegex=new Regex(@"#elif\s+(?<condition>[^\r\n]+?)[\r\n]",RegexOptions.Compiled);
+		public static readonly Regex sharpElseRegex=new Regex(@"#else\s+(?<condition>[^\r\n]+?)[\r\n]",RegexOptions.Compiled);
+		public static readonly Regex sharpEndifRegex=new Regex(@"#endif",RegexOptions.Compiled);
 
 	}
 }
