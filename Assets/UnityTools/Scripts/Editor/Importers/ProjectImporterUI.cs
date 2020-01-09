@@ -1,18 +1,20 @@
-﻿namespace UnityTools{
-    using System.Collections.Generic;
-    using System.IO;
-	using System.Text.RegularExpressions;
-	using System.Threading.Tasks;
-	using System.Xml;
-	using UnityEditor;
-	using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Xml;
+using UnityEditor;
+using UnityEngine;
 
+namespace UnityTools{
 	/// <inheritdoc />
 	/// <summary>项目导入器窗口UI</summary>
 	public class ProjectImporterUI:EditorWindow{
 
 		#region static member
-		public static readonly string xmlPath=System.Environment.CurrentDirectory+"/ProjectSettings/importProjects.xml";
+		public static readonly string xmlPath=Environment.CurrentDirectory+"/ProjectSettings/importProjects.xml";
 		
 		private static XmlDocument m_xmlDoc;
 		private static FileLoader m_fileLoader;
@@ -50,7 +52,7 @@
 			m_fileLoader.onCompleteAll-=OnLoadXmlComplete;
 			byte[] bytes=bytesList[0];
 			if(bytes!=null){
-				string xmlString=System.Text.Encoding.UTF8.GetString(bytes);
+				string xmlString=Encoding.UTF8.GetString(bytes);
 				m_xmlDoc=XmlUtil.CreateXmlDocument(xmlString,false);
 			}
 			m_isLoadXmlComplete=true;
@@ -230,7 +232,7 @@
 		/// <param name="unityProjectPath">文件夹路径</param>
 		private void AddProjectWithUnitProjectPath(string unityProjectPath){
 			if(unityProjectPath!=null){
-				string currentProjectPath=System.Environment.CurrentDirectory.Replace("\\","/");
+				string currentProjectPath=Environment.CurrentDirectory.Replace("\\","/");
 				bool isImport=true;
 				string projectName=unityProjectPath.Substring(unityProjectPath.LastIndexOf('/')+1);
 				string editorVersion=GetEditorVersion(unityProjectPath);

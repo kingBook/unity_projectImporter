@@ -1,12 +1,12 @@
-﻿namespace UnityTools {
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Text.RegularExpressions;
-	using UnityEditor.SceneManagement;
-	using UnityEngine;
-	using UnityEditor;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
 
+namespace UnityTools {
 	public class AssetsImporter:Importer{
 		
 		/// <summary>

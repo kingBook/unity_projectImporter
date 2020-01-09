@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
 using UnityTools;
+
 /// <summary>
 /// 点路径+尖括号，如："game.foo.BaseApp&lt;...&gt;"
 /// </summary>
@@ -21,7 +21,7 @@ public struct DotPathAngleBrackets:IString{
 	}
 
 	public override string ToString(){
-		throw new System.Exception("Please call ToString(string fileString)");
+		throw new Exception("Please call ToString(string fileString)");
 	}
 
 	public string ToString(string fileString){

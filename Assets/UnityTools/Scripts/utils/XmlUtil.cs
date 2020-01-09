@@ -1,8 +1,8 @@
-﻿namespace UnityTools{ 
-    using UnityEngine;
-    using System.Xml;
-    using System.IO;
-    using System.Text;
+﻿using System.IO;
+using System.Text;
+using System.Xml;
+
+namespace UnityTools{
     /// <summary>
     /// xml工具类
     /// </summary>
@@ -59,9 +59,8 @@
                 xtw.Indentation = 1;  
                 xtw.IndentChar = '\t';  
                 doc.WriteTo(xtw);  
-            }finally{  
-                if (xtw != null)  
-                    xtw.Close();  
+            }finally{
+                xtw?.Close();
             }  
             return sb.ToString();
         } 

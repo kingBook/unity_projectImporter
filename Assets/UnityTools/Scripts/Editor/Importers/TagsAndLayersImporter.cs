@@ -1,12 +1,13 @@
-﻿namespace UnityTools{
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
-    using UnityEditor;
-	using UnityEngine;
-    using YamlDotNet.RepresentationModel;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using UnityEditor;
+using UnityEditorInternal;
+using UnityEngine;
+using YamlDotNet.RepresentationModel;
 
-    public class TagsAndLayersImporter:Importer{
+namespace UnityTools{
+	public class TagsAndLayersImporter:Importer{
 		/// <summary>
 		/// 导入项目的TagsAndLayers 
 		/// </summary>
@@ -71,7 +72,7 @@
 			for(int i=0;i<len;i++){
 				string tagValue=tagValues[i];
 				EditorUtility.DisplayProgressBar("Hold on...","Import tag "+tagValue,(i+1f)/(float)len);
-				UnityEditorInternal.InternalEditorUtility.AddTag(tagValue);
+				InternalEditorUtility.AddTag(tagValue);
 				//AddTag(tagValue);
 			}
 			EditorUtility.ClearProgressBar();
@@ -91,7 +92,7 @@
 		}*/
 
 		private bool IsHasTag(string tag){
-			string[] tags=UnityEditorInternal.InternalEditorUtility.tags;
+			string[] tags=InternalEditorUtility.tags;
 			int len=tags.Length;
 			for (int i=0;i<len;i++){
 				if(tags[i].Equals(tag)){

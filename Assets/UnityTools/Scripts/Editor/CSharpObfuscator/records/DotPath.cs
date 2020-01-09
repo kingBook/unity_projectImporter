@@ -1,9 +1,7 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
-    using System.Text.RegularExpressions;
+﻿using System;
 
-    /// <summary>
+namespace UnityTools{
+	/// <summary>
     /// 表示带"."的全路径名称,如:"System.Collections.Generic.List"
     /// </summary>
     public struct DotPath:IString{
@@ -18,7 +16,7 @@
 		}
 
 		public override string ToString(){
-			throw new System.Exception("Please call ToString(string fileString)");
+			throw new Exception("Please call ToString(string fileString)");
 		}
 
 		public string ToString(string fileString){

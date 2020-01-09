@@ -1,12 +1,10 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using UnityEditor;
-	using System.Collections;
-    using System.Collections.Generic;
-	using System.IO;
-	using System.Text.RegularExpressions;
-	using System;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
+using UnityEditor;
 
+namespace UnityTools{
 	/// <summary>
 	/// Guid工具类
 	/// </summary>

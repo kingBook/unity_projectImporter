@@ -1,8 +1,4 @@
 ﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
-	using UnityTools;
-
 	/// <summary>
 	/// 泛型约束，如：“where T : class”、“where T : new()”、“where T : Base, new()”、“where T : <基类名>”
 	/// </summary>

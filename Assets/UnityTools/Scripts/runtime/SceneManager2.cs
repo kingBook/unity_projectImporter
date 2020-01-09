@@ -1,9 +1,8 @@
-﻿namespace UnityEngine.SceneManagement {
-	using System;
-	using UnityEngine;
-    using UnityTools;
+﻿using System;
+using UnityTools;
 
-    public class SceneManager2{
+namespace UnityEngine.SceneManagement {
+	public class SceneManager2{
 		public static Scene GetSceneByName(string name){
 			name=getBuildSettingsScenePath(name,false);
 			return SceneManager.GetSceneByName(name);

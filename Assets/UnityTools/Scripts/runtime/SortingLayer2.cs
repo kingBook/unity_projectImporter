@@ -1,7 +1,6 @@
-﻿namespace UnityEngine{ 
+﻿using UnityTools;
 
-	using UnityTools;
-
+namespace UnityEngine{
 	public struct SortingLayer2{
 		
 		public static SortingLayer2[] layers{

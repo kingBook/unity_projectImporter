@@ -1,6 +1,4 @@
 ﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
 	/// <summary>
 	/// 类
 	/// </summary>

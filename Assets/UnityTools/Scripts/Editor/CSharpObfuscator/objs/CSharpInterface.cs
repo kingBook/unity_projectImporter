@@ -1,6 +1,4 @@
 ﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
 	/// <summary>
 	/// 接口
 	/// </summary>

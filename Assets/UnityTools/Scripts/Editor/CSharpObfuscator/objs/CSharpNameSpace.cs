@@ -1,7 +1,4 @@
 ﻿namespace UnityTools {
-	using System.Collections.Generic;
-	using System.Text.RegularExpressions;
-    using UnityEngine;
 	/// <summary>
 	/// 命名空间
 	/// </summary>

@@ -1,13 +1,12 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
-    using UnityEditor;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
-    using YamlDotNet.RepresentationModel;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using UnityEditor;
+using UnityEngine;
+using YamlDotNet.RepresentationModel;
 
-    public class BuildSettingsImporter:Importer{
+namespace UnityTools{
+	public class BuildSettingsImporter:Importer{
 		/// <summary>
 		/// 导入项目的BuildSettings
 		/// </summary>

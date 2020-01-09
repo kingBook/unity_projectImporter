@@ -25,8 +25,8 @@ namespace UnityTools{
 			int ap = 0; int bp = 0;
 
 			while (ap < aLen && bp < bLen && a [ap] == b [bp]) {
-			ap++;
-			bp++;
+				ap++;
+				bp++;
 			}
 
 			return (bp == bLen && aLen >= bLen) || 

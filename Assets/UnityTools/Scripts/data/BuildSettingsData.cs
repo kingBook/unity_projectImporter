@@ -1,8 +1,8 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
+﻿using System;
+using UnityEngine;
 
-	[System.Serializable]
+namespace UnityTools{
+	[Serializable]
 	public struct SceneData{
 		public bool enabled;
 		public string path;

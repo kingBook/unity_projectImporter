@@ -1,9 +1,7 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
-    using System.Text.RegularExpressions;
+﻿using System;
 
-    /// <summary>
+namespace UnityTools{
+	/// <summary>
     /// Using别名，如:"using Project = PC.MyCompany.Project;"
     /// </summary>
     public class CSharpUsingAlias:IAlignObject,IUsing{
@@ -22,7 +20,7 @@
 		}
 
 		public override string ToString(){
-			throw new System.Exception("Please call ToString(string fileString)");
+			throw new Exception("Please call ToString(string fileString)");
 		}
 
 		public string ToString(string fileString){

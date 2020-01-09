@@ -1,11 +1,11 @@
-﻿namespace UnityTools {
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Text;
-	using UnityEditor;
-	using UnityEngine;
-	using YamlDotNet.RepresentationModel;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using UnityEditor;
+using UnityEngine;
+using YamlDotNet.RepresentationModel;
 
+namespace UnityTools {
 	public class QualityImporter:Importer{
 		/// <summary>
 		/// 导入项目的QualitySettings
@@ -32,7 +32,8 @@
 			//
 			YamlSequenceNode qualitySettingsNode=(YamlSequenceNode)firstNode["m_QualitySettings"];
 			List<QualitySettings> qualitySettingsList=new List<QualitySettings>();
-			foreach(YamlMappingNode item in qualitySettingsNode){
+			foreach(var yamlNode in qualitySettingsNode){
+				var item=(YamlMappingNode)yamlNode;
 				qualitySettingsList.Add(ReadQualitySettings(item));
 			}
 			qualityData.qualitySettings=qualitySettingsList.ToArray();

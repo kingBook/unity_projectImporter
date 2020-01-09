@@ -1,7 +1,8 @@
-﻿namespace UnityTools{ 
-	using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-	[System.Serializable]
+namespace UnityTools{
+	[Serializable]
 	public struct USortingLayer{
 		public string name;
 		public uint uniqueID;

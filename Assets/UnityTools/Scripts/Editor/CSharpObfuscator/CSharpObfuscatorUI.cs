@@ -183,10 +183,10 @@
 						}
 					}
 				});
-			}catch(System.Exception err){
+			}catch(Exception){
 				//出错时隐藏进度条
 				EditorUtility.ClearProgressBar();
-				throw err;
+				throw;
 			}
 			
 		}

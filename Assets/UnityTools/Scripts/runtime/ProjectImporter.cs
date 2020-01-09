@@ -1,7 +1,7 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using UnityEngine.SceneManagement;
-	
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+
+namespace UnityTools{
 	public class ProjectImporter:MonoBehaviour{
 		
 		public static ProjectImporter instance{ get; private set; }

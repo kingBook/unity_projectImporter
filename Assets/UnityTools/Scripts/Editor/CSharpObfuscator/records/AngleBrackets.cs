@@ -1,8 +1,6 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
-	using UnityEngine.UIElements;
+﻿using System;
 
+namespace UnityTools{
 	/// <summary>
 	/// 尖括号，如："&lt;...&gt;"
 	/// </summary>
@@ -23,7 +21,7 @@
 		}
 
 		public override string ToString(){
-			throw new System.Exception("Please call ToString(string fileString)");
+			throw new Exception("Please call ToString(string fileString)");
 		}
 
 		public string ToString(string fileString){

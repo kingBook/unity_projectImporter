@@ -1,6 +1,8 @@
-﻿namespace UnityTools{
-	using System.Diagnostics;
-	using UnityEngine;
+﻿using System.Diagnostics;
+using UnityEngine;
+using Debug=UnityEngine.Debug;
+
+namespace UnityTools{
 	/// <summary>
 	/// 自定义的Log类
 	/// <br>1.解决Debug.Log()/Debug.LogFormat()多参数不方便和在发布版本Log不剔除问题</br>
@@ -17,18 +19,16 @@
 			string str="";
 			for(int i=0;i<len;i++){
 				obj=args[i];
-				if(obj is Vector3){
-					Vector3 v3=(Vector3)obj;
-					str+=string.Format("({0},{1},{2})",v3.x,v3.y,v3.z);
-				}else if(obj is Vector2){
-					Vector2 v2=(Vector2)obj;
-					str+=string.Format("({0},{1})",v2.x,v2.y);
+				if(obj is Vector3 v3){
+					str+=$"({v3.x},{v3.y},{v3.z})";
+				}else if(obj is Vector2 v2){
+					str+=$"({v2.x},{v2.y})";
 				}else{
 					str+=(obj==null)?"Null":obj.ToString();
 				}
 				if(i<len-1)str+=' ';
 			}
-			UnityEngine.Debug.Log(str);
+			Debug.Log(str);
 		}
 
 		/// <summary>
@@ -53,7 +53,7 @@
 			string preStr=pre==null?"":pre.ToString();
 			string endStr=end==null?"":end.ToString();
 			str=preStr+" "+str+" "+endStr;
-			UnityEngine.Debug.Log(str);
+			Debug.Log(str);
 		}
 	}
 }

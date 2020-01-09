@@ -1,10 +1,8 @@
-﻿namespace UnityTools{
-	using System;
-    using System.Collections.Generic;
-    using UnityEditor;
-    using UnityEditor.SceneManagement;
-    using UnityEngine;
-	
+﻿using System;
+using System.Collections.Generic;
+using UnityEditor;
+
+namespace UnityTools{
 	public class ProjectImporterEditor:Editor{
 		public static readonly string currentProjectPath=Environment.CurrentDirectory.Replace('\\','/');
 		public static readonly string currentProjectTempPath=currentProjectPath+"/Temp";

@@ -1,7 +1,6 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
+﻿using UnityEngine;
 
+namespace UnityTools{
 	public class PhysicsData:ScriptableObject{
 		public Vector3 gravity;
 		public PhysicMaterial defaultMaterial;

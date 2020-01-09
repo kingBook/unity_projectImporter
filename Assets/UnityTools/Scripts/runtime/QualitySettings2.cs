@@ -1,9 +1,7 @@
-﻿namespace UnityEngine{
-	using System;
-	using System.ComponentModel;
-    using UnityTools;
+﻿using UnityTools;
 
-    public class QualitySettings2{
+namespace UnityEngine{
+	public static class QualitySettings2{
 		/*public static int particleRaycastBudget { get; set; }
 		
 		public static bool softVegetation { get; set; }

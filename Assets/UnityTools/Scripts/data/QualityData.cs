@@ -1,8 +1,8 @@
-﻿namespace UnityTools{ 
-	using UnityEngine;
-	using System.Collections;
+﻿using System;
+using UnityEngine;
 
-	[System.Serializable]
+namespace UnityTools{
+	[Serializable]
 	public struct QualitySettings{
 		public string name;
 		public int pixelLightCount;
@@ -40,7 +40,7 @@
 		public string[] excludedTargetPlatforms;
 	}
 
-	[System.Serializable]
+	[Serializable]
 	public struct PlatformDefaultQuality{
 		public string platform;
 		public int qualityLevel;

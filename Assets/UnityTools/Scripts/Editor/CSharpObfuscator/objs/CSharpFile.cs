@@ -1,8 +1,6 @@
-﻿namespace UnityTools {
-	using System.IO;
-	using UnityEngine;
-	using System.Collections.Generic;
+﻿using System.IO;
 
+namespace UnityTools {
 	/// <summary>
 	/// .cs文件
 	/// </summary>

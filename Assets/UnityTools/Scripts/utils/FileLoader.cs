@@ -1,9 +1,8 @@
-﻿namespace UnityTools{
-	using System;
-	using System.IO;
-	using System.Threading.Tasks;
-	using UnityEngine;
-	
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+
+namespace UnityTools{
 	/// <summary>
 	/// 文件加载器
 	/// </summary>

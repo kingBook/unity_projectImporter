@@ -1,6 +1,7 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	
+﻿using System;
+using Random=UnityEngine.Random;
+
+namespace UnityTools{
 	/// <summary>
 	/// 名称工具类
 	/// </summary>
@@ -54,7 +55,7 @@
 		public static string GetUniqueStartLowerName(string[] excludeList){
 			string name=GetStartLowerName();
 			while(true){
-				bool isHas=System.Array.IndexOf(excludeList,name)>-1;
+				bool isHas=Array.IndexOf(excludeList,name)>-1;
 				if(isHas){
 					name=GetStartLowerName();
 				}else{
@@ -72,7 +73,7 @@
 		public static string GetUniqueStartUpperName(string[] excludeList){
 			string name=GetStartUpperName();
 			while(true){
-				bool isHas=System.Array.IndexOf(excludeList,name)>-1;
+				bool isHas=Array.IndexOf(excludeList,name)>-1;
 				if(isHas){
 					name=GetStartUpperName();
 				}else{

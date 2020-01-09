@@ -1,9 +1,8 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
-    using System.Collections.Generic;
+﻿using System;
+using UnityEngine;
 
-	[System.Serializable]
+namespace UnityTools{
+	[Serializable]
 	public struct JobOptions{
 		public bool useMultithreading;
 		public bool useConsistencySorting;

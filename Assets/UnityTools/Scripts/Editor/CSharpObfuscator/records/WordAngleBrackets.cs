@@ -1,8 +1,6 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
-	using System.Text.RegularExpressions;
+﻿using System;
 
+namespace UnityTools{
 	/// <summary>
 	/// 单词+尖括号如："BaseApp&lt;App,Bpp&gt;"
 	/// </summary>
@@ -23,7 +21,7 @@
 		}
 
 		public override string ToString(){
-			throw new System.Exception("Please call ToString(string fileString)");
+			throw new Exception("Please call ToString(string fileString)");
 		}
 
 		public string ToString(string fileString){

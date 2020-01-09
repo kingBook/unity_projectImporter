@@ -1,7 +1,7 @@
-﻿namespace UnityEngine{
-	using System.Collections.Generic;
-	using UnityTools;
+﻿using System.Collections.Generic;
+using UnityTools;
 
+namespace UnityEngine{
 	public struct LayerMask2{
 		public int value;
 

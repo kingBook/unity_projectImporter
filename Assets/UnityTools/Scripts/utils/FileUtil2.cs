@@ -1,11 +1,11 @@
-﻿namespace UnityTools {
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.IO;
-	using System.Text;
-	using System.Threading.Tasks;
-	using UnityEditor;
-	
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
+using UnityEditor;
+
+namespace UnityTools {
 	/// <summary>
 	/// 文件工具类
 	/// </summary>
@@ -77,7 +77,7 @@
 				string destFilePath=filePath.Replace(source,dest);
 				try{
 					File.Copy(filePath,destFilePath,true);
-				}catch(System.Exception err){
+				}catch(Exception err){
 					//尝试复制文件时发生错误，关闭进度条抛出错误
 					if(progressVisible)EditorUtility.ClearProgressBar();
 					throw err;
@@ -169,7 +169,7 @@
 		public static string OpenSelectUnityProjectFolderPanel(){
 			string folderPath=EditorUtility.OpenFolderPanel("Select a unity project","","");
 			if(!string.IsNullOrEmpty(folderPath)){
-				if(FileUtil2.IsUnityProjectFolder(folderPath)){
+				if(IsUnityProjectFolder(folderPath)){
 					return folderPath;
 				}else{
 					EditorUtility.DisplayDialog("Selection error","Invalid project path:\n"+folderPath,"OK");
@@ -206,7 +206,7 @@
 		/// </summary>
 		public static void ShowInExplorer(string folderPath){
 			folderPath=folderPath.Replace("/","\\");
-			System.Diagnostics.Process.Start("explorer.exe",folderPath);
+			Process.Start("explorer.exe",folderPath);
 		}
 
 	}

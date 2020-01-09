@@ -1,9 +1,8 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
-	using UnityEngine.SceneManagement;
-	using UnityEngine.UI;
-	using UnityEngine.Events;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+namespace UnityTools{
 	/// <summary>
 	/// 场景加载器
 	/// </summary>

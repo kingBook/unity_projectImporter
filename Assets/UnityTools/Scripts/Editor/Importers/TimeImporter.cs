@@ -1,11 +1,10 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using UnityEditor;
-    using System.IO;
-    using YamlDotNet.RepresentationModel;
-    using System.Text;
-	using System.Collections.Generic;
+﻿using System.IO;
+using System.Text;
+using UnityEditor;
+using UnityEngine;
+using YamlDotNet.RepresentationModel;
 
+namespace UnityTools{
 	public class TimeImporter:Importer{
 		/// <summary>
 		/// 导入项目的TimeSettings

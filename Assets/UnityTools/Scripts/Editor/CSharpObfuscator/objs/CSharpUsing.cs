@@ -1,9 +1,6 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
-	using UnityTools;
-	using UnityEngine.UIElements;
-	using System.Text.RegularExpressions;
+﻿using System;
+
+namespace UnityTools{
 	/// <summary>
 	/// Using，如：“using UnityEngine;”或“using System.Collections;”。
 	/// </summary>
@@ -23,7 +20,7 @@
 		}
 
 		public override string ToString(){
-			throw new System.Exception("Please call ToString(string fileString)");
+			throw new Exception("Please call ToString(string fileString)");
 		}
 		
 		public string ToString(string fileString){

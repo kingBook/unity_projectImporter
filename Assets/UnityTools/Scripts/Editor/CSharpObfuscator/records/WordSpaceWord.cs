@@ -1,6 +1,6 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
+﻿using System;
+
+namespace UnityTools{
 	/// <summary>
 	/// 单词+空白+单词
 	/// </summary>
@@ -18,7 +18,7 @@
 		}
 
 		public override string ToString(){
-			throw new System.Exception("Please call ToString(string fileString)");
+			throw new Exception("Please call ToString(string fileString)");
 		}
 		
 		public string ToString(string fileString) {

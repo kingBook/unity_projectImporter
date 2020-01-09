@@ -1,9 +1,7 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
-	using System.Text.RegularExpressions;
+﻿using System;
 
-    /// <summary>
+namespace UnityTools{
+	/// <summary>
     /// 记录一段字符串在.cs文件字符中的起始索引和长度的结构体
     /// </summary>
     public struct Segment:IString{
@@ -23,7 +21,7 @@
 		}
 
 		public override string ToString(){
-			throw new System.Exception("Please call ToString(string fileString)");
+			throw new Exception("Please call ToString(string fileString)");
 		}
 
 		public string ToString(string fileString){

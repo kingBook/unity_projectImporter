@@ -1,7 +1,6 @@
-﻿namespace UnityTools{
-	using UnityEngine;
-	using System.Collections;
-    using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
+
+namespace UnityTools{
 	/// <summary>
 	/// 正则表达式集合
 	/// </summary>

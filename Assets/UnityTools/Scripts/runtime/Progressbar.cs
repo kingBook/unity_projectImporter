@@ -1,7 +1,7 @@
-﻿namespace UnityTools{
-    using UnityEngine;
-    using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
+namespace UnityTools{
     public class Progressbar:MonoBehaviour{
 
         [Tooltip("进度条滑块")]
