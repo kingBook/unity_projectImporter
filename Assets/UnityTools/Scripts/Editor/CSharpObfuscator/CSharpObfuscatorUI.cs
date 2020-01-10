@@ -1,11 +1,11 @@
-﻿namespace UnityTools {
-    using System;
-    using System.IO;
-    using System.Text.RegularExpressions;
-    using System.Xml;
-	using UnityEditor;
-	using UnityEngine;
+﻿using System;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Xml;
+using UnityEditor;
+using UnityEngine;
 
+namespace UnityTools {
 	/// <summary>CSharp混淆器窗口UI</summary>
 	public class CSharpObfuscatorUI:EditorWindow{
 		public static readonly string currentProjectPath=Environment.CurrentDirectory.Replace('\\','/');

@@ -1,11 +1,11 @@
-﻿namespace UnityTools{
-	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Text.RegularExpressions;
-	using UnityEditor;
-	using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
+using UnityEditor;
+using UnityEngine;
 
+namespace UnityTools{
 	/// <summary>
 	/// CSharp混淆器
 	/// <br>一个混淆器只用于一个unity项目</br>
@@ -75,18 +75,17 @@
 			EditorUtility.ClearProgressBar();
 			return cSharpFiles;
 		}
-
+		
 		private void ClearNonDefineConstantsContent(CSharpFile cSharpFile,string[] defineConstants){
 			string fileString=cSharpFile.fileString;
-			Debug.Log(fileString);
-			Regex regex=new Regex(@"[^#if]");
-			
-			
+
+			//var match2=Regexes.sharpIfRegex.Match(fileString,0);
+			//Debug2.Log(match2.Value);
 			int testCount=0;
 			List<Match> matches=new List<Match>();
 			int count=0,startIndex=0;
 			while(true){
-
+				
 				testCount++;
 				if(testCount>500){
 					Debug.Log("死循环");
@@ -96,7 +95,7 @@
 				Match match=Regexes.sharpIfRegex.Match(fileString,startIndex);
 				if(match.Success){
 					Debug2.Log(match.Value,startIndex);
-					Debug2.Log(fileString.Substring(startIndex));
+					//Debug2.Log(fileString.Substring(startIndex));
 					startIndex=match.Index+match.Length;
 					count++;
 					matches.Add(match);
@@ -105,7 +104,7 @@
 					match=Regexes.sharpElifRegex.Match(fileString,startIndex);
 					if(match.Success){
 						Debug2.Log(match.Value,startIndex);
-						Debug2.Log(fileString.Substring(startIndex));
+						//Debug2.Log(fileString.Substring(startIndex));
 						startIndex=match.Index+match.Length;
 						if(count==1){
 							matches.Add(match);
@@ -115,7 +114,7 @@
 						match=Regexes.sharpElseRegex.Match(fileString,startIndex);
 						if(match.Success){
 							Debug2.Log(match.Value,startIndex);
-							Debug2.Log(fileString.Substring(startIndex));
+							//Debug2.Log(fileString.Substring(startIndex));
 							startIndex=match.Index+match.Length;
 							if(count==1){
 								matches.Add(match);
@@ -125,7 +124,7 @@
 							match=Regexes.sharpEndifRegex.Match(fileString,startIndex);
 							if(match.Success){
 								Debug2.Log(match.Value,startIndex);
-								Debug2.Log(fileString.Substring(startIndex));
+								//Debug2.Log(fileString.Substring(startIndex));
 								startIndex=match.Index+match.Length;
 								count--;
 								if(count==0){
@@ -241,25 +240,25 @@
 						if(isLastOver&&matchValue[i-1]=='@'){
 							//如果上一段字符患上查找结束，上一个字符是"@"的一定是字符串引号(")
 							isQuotationMark=true;
-						} else if(i+1<len-1){//非最后一个字符
+						}else if(i+1<len-1){//非最后一个字符
 							if(matchValue[i+1]=='"'){
 								//在@符号后的双引号转义使用两个"，所以当前和下一个都是引号(")则不是字符串引号(")，
 								//i+=1，跳过检查下一个索引
 								i+=1;
-							} else{
+							}else{
 								//下一个不是引号(")时，当前则是字符串引号(")
 								isQuotationMark=true;
 							}
-						} else{
+						}else{
 							//最后一个字符，一定是字符串引号(")
 							isQuotationMark=true;
 						}
-					} else{
+					}else{
 						if(i>0){
 							//常规字符串(非@模式字符串)，上一个不是转义符(\)则是字符串引号(")
 							if(matchValue[i-1]!='\\')
 								isQuotationMark=true;
-						} else{
+						}else{
 							isQuotationMark=true;
 						}
 					}
@@ -272,7 +271,7 @@
 						isLastOver=false;
 						//第一个字符串引号(")，设置开始索引
 						startIndex=i;
-					} else{
+					}else{
 						//第二个字符串引号(")，截取字符串
 						int strStartIndex=match.Index+startIndex;
 						int strLength=i-startIndex+1;
@@ -336,7 +335,7 @@
 					isBlockCommentBegan=false;
 					Segment segmentString=new Segment(blockCommentStartIndex,index-blockCommentStartIndex+2);
 					segmentStrings.Add(segmentString);
-				} else if(!IndexWithinSegmentStrings(index,2,strings)){
+				}else if(!IndexWithinSegmentStrings(index,2,strings)){
 					blockCommentStartIndex=index;
 					searchString="*/";
 					isBlockCommentBegan=true;
@@ -567,7 +566,7 @@
 				if(implements.Length>0)
 					implements.CopyTo(list,1);
 				cSharpStruct.implements=list;
-			} else{
+			}else{
 				cSharpStruct.implements=implements;
 			}
 
@@ -590,7 +589,7 @@
 				if(implements.Length>0)
 					implements.CopyTo(list,1);
 				cSharpInterface.implements=list;
-			} else{
+			}else{
 				cSharpInterface.implements=implements;
 			}
 
@@ -628,7 +627,7 @@
 				index=wordAngleBracketsGroup.Index+wordAngleBracketsGroup.Length;
 				result=ReadWordAngleBrackets(cSharpFile,
 					new Segment(wordAngleBracketsGroup.Index,wordAngleBracketsGroup.Length));
-			} else{
+			}else{
 				//匹配"type xxx"
 				Regex typeWordRegex=new Regex(type+@"\s+"+Regexes.wordRegex,RegexOptions.Compiled);
 				Match typeWordMatch=
@@ -637,7 +636,7 @@
 					Group wordGroup=typeWordMatch.Groups["word"];
 					index=wordGroup.Index+wordGroup.Length;
 					result=new Segment(wordGroup.Index,wordGroup.Length);
-				} else{
+				}else{
 					Debug.LogError("错误：没找到匹配项");
 				}
 			}
@@ -665,7 +664,7 @@
 				index=dotPathAngleBracketsGroup.Index+dotPathAngleBracketsGroup.Length;
 				result=ReadDotPathAngleBrackets(cSharpFile,
 					new Segment(dotPathAngleBracketsGroup.Index,dotPathAngleBracketsGroup.Length));
-			} else{
+			}else{
 				//匹配":xxx<...>"
 				Regex colonWordAngleBracketsRegex=
 					new Regex(@":\s*"+Regexes.wordAngleBracketsRegex,RegexOptions.Compiled);
@@ -676,7 +675,7 @@
 					index=wordAngleBracketsGroup.Index+wordAngleBracketsGroup.Length;
 					result=ReadWordAngleBrackets(cSharpFile,
 						new Segment(wordAngleBracketsGroup.Index,wordAngleBracketsGroup.Length));
-				} else{
+				}else{
 					//匹配":xxx.xxx.xxx..."
 					Regex colonDotPathRegex=new Regex(@":\s*"+Regexes.dotPathRegex,RegexOptions.Compiled);
 					Match colonDoPathMatch=colonDotPathRegex.Match(cSharpFile.fileString,startIndex,searchLength);
@@ -684,7 +683,7 @@
 						Group dotPathGroup=colonDoPathMatch.Groups["dotPath"];
 						index=dotPathGroup.Index+dotPathGroup.Length;
 						result=ReadDotPath(cSharpFile,new Segment(dotPathGroup.Index,dotPathGroup.Length));
-					} else{
+					}else{
 						//匹配":xxx"
 						Regex colonWordRegex=new Regex(@":\s*"+Regexes.wordRegex,RegexOptions.Compiled);
 						Match colonWordMatch=colonWordRegex.Match(cSharpFile.fileString,startIndex,searchLength);
@@ -721,20 +720,20 @@
 					DotPathAngleBrackets dotPathAngleBrackets=
 						ReadDotPathAngleBrackets(cSharpFile,new Segment(group.Index,group.Length));
 					strings.Add(dotPathAngleBrackets);
-				} else{
+				}else{
 					//"xxx<...>"
 					group=match.Groups["wordAngleBrackets"];
 					if(group.Success){
 						WordAngleBrackets wordAngleBrackets=
 							ReadWordAngleBrackets(cSharpFile,new Segment(group.Index,group.Length));
 						strings.Add(wordAngleBrackets);
-					} else{
+					}else{
 						//"xxx.xxx.xxx"
 						group=match.Groups["dotPath"];
 						if(group.Success){
 							DotPath dotPath=ReadDotPath(cSharpFile,new Segment(group.Index,group.Length));
 							strings.Add(dotPath);
-						} else{
+						}else{
 							//"xxx"
 							group=match.Groups["word"];
 							if(group.Success){
@@ -774,7 +773,7 @@
 						DotPathAngleBrackets dotPathAngleBrackets=ReadDotPathAngleBrackets(cSharpFile,
 							new Segment(dotPathAngleBracketsGroup.Index,dotPathAngleBracketsGroup.Length));
 						words.Add(dotPathAngleBrackets);
-					} else{
+					}else{
 						//匹配":xxx<...>"
 						Match wordAngleBracketsMatch=Regexes.wordAngleBracketsRegex.Match(cSharpFile.fileString,
 							wordCapture.Index,wordCapture.Length);
@@ -783,7 +782,7 @@
 							WordAngleBrackets wordAngleBrackets=ReadWordAngleBrackets(cSharpFile,
 								new Segment(wordAngleBracketsGroup.Index,wordAngleBracketsGroup.Length));
 							words.Add(wordAngleBrackets);
-						} else{
+						}else{
 							//匹配":xxx.xxx.xxx..."
 							Match doPathMatch=Regexes.dotPathRegex.Match(cSharpFile.fileString,wordCapture.Index,
 								wordCapture.Length);
@@ -792,7 +791,7 @@
 								DotPath dotPath=ReadDotPath(cSharpFile,
 									new Segment(dotPathGroup.Index,dotPathGroup.Length));
 								words.Add(dotPath);
-							} else{
+							}else{
 								Match newParenthesesMatch=Regexes.newParenthesesRegex.Match(cSharpFile.fileString,
 									wordCapture.Index,wordCapture.Length);
 								if(newParenthesesMatch.Success){
@@ -800,7 +799,7 @@
 									Segment newParentheses=new Segment(newParenthesesGroup.Index,
 										newParenthesesGroup.Length);
 									words.Add(newParentheses);
-								} else{
+								}else{
 									//匹配":xxx"
 									Match wordMatch=Regexes.wordRegex.Match(cSharpFile.fileString,wordCapture.Index,
 										wordCapture.Length);
@@ -855,13 +854,13 @@
 				if(usingAliasRegex.IsMatch(usingLineString)){//using别名，如:"using xx=xxx;"或"using xx=xxx.xxx.xxx;"
 					CSharpUsingAlias usingAlias=ReadUsingAlias(cSharpFile,usingLine);
 					usings.Add(usingAlias);
-				} else{
+				}else{
 					//是不是静态using
 					bool isStatic=usingLineString.Substring(0,6)=="static";
 					if(isStatic){//静态using，如:"using static xx;"或"using static xxx.xxx.xxx;"
 						CSharpUsing usingString=ReadStaticUsing(cSharpFile,usingLine);
 						usings.Add(usingString);
-					} else{//普通using，如:"using xx;"或"using xxx.xxx.xxx;"
+					}else{//普通using，如:"using xx;"或"using xxx.xxx.xxx;"
 						CSharpUsing usingString=ReadUsing(cSharpFile,usingLine);
 						usings.Add(usingString);
 					}
@@ -893,7 +892,7 @@
 			if(dotPathMatch.Success){
 				DotPath words=ReadDotPath(cSharpFile,new Segment(startIndex,length));
 				usingString=new CSharpUsing(false,words);
-			} else{
+			}else{
 				Match wordMatch=Regexes.wordRegex.Match(cSharpFile.fileString,startIndex,length);
 				if(wordMatch.Success){
 					Segment word=new Segment(wordMatch.Index,wordMatch.Length);
@@ -928,7 +927,7 @@
 			if(dotPathMatch.Success){
 				DotPath words=ReadDotPath(cSharpFile,new Segment(startIndex,length));
 				usingString=new CSharpUsing(true,words);
-			} else{
+			}else{
 				Match wordMatch=Regexes.wordRegex.Match(cSharpFile.fileString,startIndex,length);
 				if(wordMatch.Success){
 					Segment word=new Segment(wordMatch.Index,wordMatch.Length);
@@ -965,7 +964,7 @@
 			if(dotPathMatch.Success){
 				DotPath words=ReadDotPath(cSharpFile,new Segment(startIndex,length));
 				usingAlias=new CSharpUsingAlias(name,words);
-			} else{
+			}else{
 				Match wordMatch=Regexes.wordRegex.Match(cSharpFile.fileString,startIndex,length);
 				if(wordMatch.Success){
 					Segment word=new Segment(wordMatch.Index,wordMatch.Length);
@@ -1012,19 +1011,19 @@
 				if(MatchNameSpaceDeclare(cSharpFile,bracesBlock,out leftBraceMatch)){
 					CSharpNameSpace cSharpNameSpace=CreateNameSpace(cSharpFile,nameSpace,leftBraceMatch,bracesBlock);
 					namespaces.Add(cSharpNameSpace);
-				} else if(MatchClassDeclare(cSharpFile,bracesBlock,out leftBraceMatch)){
+				}else if(MatchClassDeclare(cSharpFile,bracesBlock,out leftBraceMatch)){
 					CSharpClass cSharpClass=CreateClass(cSharpFile,nameSpace,leftBraceMatch,bracesBlock);
 					classes.Add(cSharpClass);
-				} else if(MatchStructDeclare(cSharpFile,bracesBlock,out leftBraceMatch)){
+				}else if(MatchStructDeclare(cSharpFile,bracesBlock,out leftBraceMatch)){
 					CSharpStruct cSharpStruct=CreateStruct(cSharpFile,nameSpace,leftBraceMatch,bracesBlock);
 					structs.Add(cSharpStruct);
-				} else if(MatchInterfaceDeclare(cSharpFile,bracesBlock,out leftBraceMatch)){
+				}else if(MatchInterfaceDeclare(cSharpFile,bracesBlock,out leftBraceMatch)){
 					CSharpInterface cSharpInterface=CreateInterface(cSharpFile,nameSpace,leftBraceMatch,bracesBlock);
 					interfaces.Add(cSharpInterface);
-				} else if(MatchEnumDeclare(cSharpFile,bracesBlock,out leftBraceMatch)){
+				}else if(MatchEnumDeclare(cSharpFile,bracesBlock,out leftBraceMatch)){
 					CSharpEnum cSharpEnum=CreateEnum(cSharpFile,nameSpace,leftBraceMatch,bracesBlock);
 					enums.Add(cSharpEnum);
-				} else if(MatchDelegateDeclare(cSharpFile,bracesBlock,out leftBraceMatch)){
+				}else if(MatchDelegateDeclare(cSharpFile,bracesBlock,out leftBraceMatch)){
 					CSharpDelegate cSharpDelegate=CreateDelegate(cSharpFile,nameSpace,leftBraceMatch,bracesBlock);
 					delegates.Add(cSharpDelegate);
 				}
@@ -1049,7 +1048,7 @@
 			Match match;
 			if(bracketMatch.Success){
 				match=regex.Match(cSharpFile.fileString,bracketMatch.Index+1,startIndex-bracketMatch.Index);
-			} else{
+			}else{
 				match=regex.Match(cSharpFile.fileString,startIndex);
 			}
 
@@ -1082,7 +1081,7 @@
 			Match match;
 			if(bracketMatch.Success){
 				match=regex.Match(cSharpFile.fileString,bracketMatch.Index+1,startIndex-bracketMatch.Index);
-			} else{
+			}else{
 				match=regex.Match(cSharpFile.fileString,startIndex);
 			}
 
@@ -1114,7 +1113,7 @@
 			Match match;
 			if(bracketMatch.Success){
 				match=regex.Match(cSharpFile.fileString,bracketMatch.Index+1,startIndex-bracketMatch.Index);
-			} else{
+			}else{
 				match=regex.Match(cSharpFile.fileString,startIndex);
 			}
 
@@ -1146,7 +1145,7 @@
 			Match match;
 			if(bracketMatch.Success){
 				match=regex.Match(cSharpFile.fileString,bracketMatch.Index+1,startIndex-bracketMatch.Index);
-			} else{
+			}else{
 				match=regex.Match(cSharpFile.fileString,startIndex);
 			}
 
@@ -1178,7 +1177,7 @@
 			Match match;
 			if(bracketMatch.Success){
 				match=regex.Match(cSharpFile.fileString,bracketMatch.Index+1,startIndex-bracketMatch.Index);
-			} else{
+			}else{
 				match=regex.Match(cSharpFile.fileString,startIndex);
 			}
 
@@ -1210,7 +1209,7 @@
 			Match match;
 			if(bracketMatch.Success){
 				match=regex.Match(cSharpFile.fileString,bracketMatch.Index+1,startIndex-bracketMatch.Index);
-			} else{
+			}else{
 				match=regex.Match(cSharpFile.fileString,startIndex);
 			}
 
@@ -1252,19 +1251,19 @@
 					Regexes.dotPathAngleBracketsRegex.Match(cSharpFile.fileString,capture.Index,capture.Length);
 				if(dotPathAngleBracketsMatch.Success){
 					tNames[i]=ReadDotPathAngleBrackets(cSharpFile,dotPathAngleBracketsMatch);
-				} else{
+				}else{
 					//"xxx<...>"
 					Match wordAngleBracketsMatch=
 						Regexes.wordAngleBracketsRegex.Match(cSharpFile.fileString,capture.Index,capture.Length);
 					if(wordAngleBracketsMatch.Success){
 						tNames[i]=ReadWordAngleBrackets(cSharpFile,wordAngleBracketsMatch);
-					} else{
+					}else{
 						//"xxx.xxx.xxx"
 						Match dotPathMatch=
 							Regexes.dotPathRegex.Match(cSharpFile.fileString,capture.Index,capture.Length);
 						if(dotPathMatch.Success){
 							tNames[i]=readDotPath(cSharpFile,dotPathMatch);
-						} else{
+						}else{
 							//"xxx xxx"
 							Match word_wordMatch=
 								Regexes.wordSpaceword.Match(cSharpFile.fileString,capture.Index,capture.Length);
@@ -1273,13 +1272,13 @@
 								Segment word1=new Segment(wordCaptures[0].Index,wordCaptures[0].Length);
 								Segment word2=new Segment(wordCaptures[1].Index,wordCaptures[1].Length);
 								tNames[i]=new WordSpaceWord(word1,word2);
-							} else{
+							}else{
 								//"xxx"
 								Match wordMatch=Regexes.wordRegex.Match(cSharpFile.fileString,capture.Index,
 									capture.Length);
 								if(wordMatch.Success){
 									tNames[i]=new Segment(wordMatch.Index,wordMatch.Length);
-								} else{
+								}else{
 									Debug.LogError("错误：没有找到可匹配的项");
 								}
 							}
