@@ -1399,7 +1399,6 @@ namespace UnityTools{
 		}
 
 		private void ObfuscateNameSpaces(in CSharpNameSpace[] nameSpaces){
-			
 		}
 
 		private void ObfuscateClasses(in CSharpClass[] classes){
