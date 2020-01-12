@@ -78,7 +78,7 @@ namespace UnityTools{
 		
 		private void ClearNonDefineConstantsContent(CSharpFile cSharpFile,string[] defineConstants){
 			string fileString=cSharpFile.fileString;
-
+			
 			//var match2=Regexes.sharpIfRegex.Match(fileString,0);
 			//Debug2.Log(match2.Value);
 			int testCount=0;
@@ -1329,8 +1329,7 @@ namespace UnityTools{
 			Group dotPathGroup=match.Groups["dotPath"];
 			DotPath dotPath=ReadDotPath(cSharpFile,new Segment(dotPathGroup.Index,dotPathGroup.Length));
 			Group angleBracketsGroup=match.Groups["angleBrackets"];
-			AngleBrackets angleBrackets=
-				ReadAngleBrackets(cSharpFile,new Segment(angleBracketsGroup.Index,angleBracketsGroup.Length));
+			AngleBrackets angleBrackets=ReadAngleBrackets(cSharpFile,new Segment(angleBracketsGroup.Index,angleBracketsGroup.Length));
 			return new DotPathAngleBrackets(match.Index,match.Length,dotPath,angleBrackets);
 		}
 
