@@ -143,7 +143,7 @@ namespace XXSS {
 
 				protected readonly struct HelloEStruct{}
 
-				protected interface HelloEInterface{}
+				protected interface IHelloEInterface{}
 
 				private enum HelloEEnumA{A,B,C,D}
 				private enum HelloEEnumB:int{A,B,C,D}
