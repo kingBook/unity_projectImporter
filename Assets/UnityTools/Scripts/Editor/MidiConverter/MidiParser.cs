@@ -10,7 +10,7 @@ public class MidiParser{
 	}
 
 	private static (int id,int length,string data)ReadChunk(FileStream stream){
-		stream.reaString
+		return (1,1,"");
 	}
 	
 }
