@@ -2,5 +2,8 @@ Library/
 Temp/
 .vs/
 obj/
+Recordings/
 *.csproj
 *.sln
+*.zip
+*.rar

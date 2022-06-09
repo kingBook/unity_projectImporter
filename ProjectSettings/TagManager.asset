@@ -16,11 +16,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - ''
+  - 
   - Water
   - UI
-  - ''
-  - ''
+  - 
+  - 
   - layer_8
   - layer_9
   - layer_10
@@ -32,19 +32,19 @@ TagManager:
   - layer_16
   - layer_17
   - layer_18
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0
@@ -76,4 +76,3 @@ TagManager:
   - name: sortLayer_9
     uniqueID: 3510514688
     locked: 0
-...
